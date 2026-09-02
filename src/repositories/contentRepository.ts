@@ -22,8 +22,8 @@ export class DexieContentRepository implements ContentRepository {
     await db.transaction('rw', db.questions, db.materials, db.meta, async () => {
       await db.questions.clear();
       await db.materials.clear();
-      await db.questions.bulkPut(dataset.questions as Question[]);
-      await db.materials.bulkPut(dataset.materials as Material[]);
+      await db.questions.bulkPut(dataset.questions);
+      await db.materials.bulkPut(dataset.materials);
       await db.meta.put({ key: 'datasetVersion', value: dataset.datasetVersion });
       await db.meta.put({ key: 'schemaVersion', value: dataset.schemaVersion });
     });
