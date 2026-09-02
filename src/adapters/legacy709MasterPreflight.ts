@@ -1,6 +1,7 @@
 import { readXlsxWorkbook, type XlsxCellValue } from './xlsxWorkbookReader';
 
 const LEGACY_SHEET = '統合709_学習マスター';
+const LEGACY_SHEETS = new Set<string>([LEGACY_SHEET]);
 
 const REQUIRED_LEGACY_HEADERS = [
   '学習ID',
@@ -56,7 +57,7 @@ export interface Legacy709PreflightReport {
 export async function preflightLegacy709MasterXlsx(
   buffer: ArrayBuffer
 ): Promise<Legacy709PreflightReport | null> {
-  const workbook = await readXlsxWorkbook(buffer);
+  const workbook = await readXlsxWorkbook(buffer, LEGACY_SHEETS);
   const rows = workbook.get(LEGACY_SHEET);
   if (!rows) return null;
   const headerRowIndex = rows.findIndex((row) => row.some((cell) => !isBlank(cell)));
