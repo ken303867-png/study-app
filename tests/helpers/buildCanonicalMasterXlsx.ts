@@ -1,19 +1,20 @@
 import type { CanonicalMasterExport } from '../../src/schemas/masterDataSchemas';
 
-type WorkbookCell = string | number | boolean | null | undefined;
+export type WorkbookCell = string | number | boolean | null | undefined;
 
 export async function buildCanonicalMasterXlsx(master: CanonicalMasterExport): Promise<Uint8Array> {
-  const sheetEntries: Array<{ name: string; xml: string }> = [];
-  sheetEntries.push({
-    name: 'README',
-    xml: worksheetXml([
-      ['key', 'value'],
-      ['masterDataVersion', master.masterDataVersion],
-      ['explanationTemplateVersion', master.explanationTemplateVersion],
-      ['formalDataSpecVersion', master.formalDataSpecVersion],
-      ['deliveryDatasetVersion', master.deliveryDatasetVersion]
-    ])
-  });
+  const sheets: Array<{ name: string; rows: WorkbookCell[][] }> = [
+    {
+      name: 'README',
+      rows: [
+        ['key', 'value'],
+        ['masterDataVersion', master.masterDataVersion],
+        ['explanationTemplateVersion', master.explanationTemplateVersion],
+        ['formalDataSpecVersion', master.formalDataSpecVersion],
+        ['deliveryDatasetVersion', master.deliveryDatasetVersion]
+      ]
+    }
+  ];
 
   for (const sheetName of [
     'QUESTIONS',
@@ -28,9 +29,16 @@ export async function buildCanonicalMasterXlsx(master: CanonicalMasterExport): P
     'MEDIA'
   ] as const) {
     const records = master.sheets[sheetName] as unknown as Array<Record<string, unknown>>;
-    sheetEntries.push({ name: sheetName, xml: recordsWorksheetXml(records) });
+    sheets.push({ name: sheetName, rows: recordsToRows(records) });
   }
 
+  return buildWorkbookXlsx(sheets);
+}
+
+export async function buildWorkbookXlsx(
+  sheets: Array<{ name: string; rows: WorkbookCell[][] }>
+): Promise<Uint8Array> {
+  const sheetEntries = sheets.map((sheet) => ({ name: sheet.name, xml: worksheetXml(sheet.rows) }));
   const workbookXml = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships">
   <sheets>${sheetEntries
@@ -63,8 +71,8 @@ export async function buildCanonicalMasterXlsx(master: CanonicalMasterExport): P
   return buildZip(entries, true);
 }
 
-function recordsWorksheetXml(records: Array<Record<string, unknown>>) {
-  if (records.length === 0) return worksheetXml([]);
+function recordsToRows(records: Array<Record<string, unknown>>): WorkbookCell[][] {
+  if (records.length === 0) return [];
   const headers: string[] = [];
   for (const record of records) {
     for (const key of Object.keys(record)) {
@@ -83,7 +91,7 @@ function recordsWorksheetXml(records: Array<Record<string, unknown>>) {
       })
     );
   }
-  return worksheetXml(rows);
+  return rows;
 }
 
 function worksheetXml(rows: WorkbookCell[][]) {
