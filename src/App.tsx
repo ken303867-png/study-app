@@ -2,10 +2,7 @@ import { useEffect, useMemo, useState, type ChangeEvent } from 'react';
 import { sampleDataset } from './data/sampleDataset';
 import { db } from './db/database';
 import { contentRepository } from './repositories/contentRepository';
-import {
-  DatasetImportError,
-  importDatasetJsonText
-} from './services/datasetImportService';
+import { DatasetImportError, importDatasetFile } from './services/datasetImportService';
 import type {
   ExplanationPlacement,
   FormalExplanation,
@@ -76,7 +73,7 @@ export default function App() {
     setMessage('Schema 0.5対応の画面確認用サンプルを読み込みました。正式問題データではありません。');
   };
 
-  const importJsonFile = async (event: ChangeEvent<HTMLInputElement>) => {
+  const importDataFile = async (event: ChangeEvent<HTMLInputElement>) => {
     const input = event.currentTarget;
     const file = input.files?.[0];
     if (!file) return;
@@ -85,11 +82,12 @@ export default function App() {
     setMessage('');
     setImportError([]);
     try {
-      const result = await importDatasetJsonText(await file.text());
+      const result = await importDatasetFile(file);
       await refresh();
       const kindLabel = result.kind === 'canonical-master' ? 'Canonical Master' : 'Delivery';
+      const formatLabel = result.sourceFormat === 'xlsx' ? 'Excel正本' : 'JSON';
       setMessage(
-        `${kindLabel}を読み込みました: ${result.questionCount}問 / ${result.sourceOccurrenceCount}出題出現 / Schema ${result.schemaVersion}`
+        `${formatLabel} → ${kindLabel}を読み込みました: ${result.questionCount}問 / ${result.sourceOccurrenceCount}出題出現 / Schema ${result.schemaVersion}`
       );
     } catch (error) {
       if (error instanceof DatasetImportError) {
@@ -109,7 +107,7 @@ export default function App() {
         <div>
           <p className="eyebrow">Study App</p>
           <h1>学習アプリ v0.7.1</h1>
-          <p className="muted">Delivery Schema 0.5 / Canonical Master Import v1</p>
+          <p className="muted">Delivery Schema 0.5 / Excel Master Adapter Pilot v1</p>
         </div>
         <span className="status-badge">LOCAL ONLY</span>
       </header>
@@ -254,16 +252,16 @@ export default function App() {
             <article className="panel">
               <h3>正式データImport</h3>
               <p>
-                Canonical Master JSON Export、またはDelivery Schema 0.5 JSONを選択します。Masterの場合はQA後にDeliveryへ変換し、Zod検証後にIndexedDBへ保存します。
+                Excel正本（.xlsx）、Canonical Master JSON Export、またはDelivery Schema 0.5 JSONを選択します。Excel正本はCanonical QAとDelivery QAを連続実行し、全検証PASS後のみIndexedDBへ保存します。
               </p>
               <label className="file-import">
-                <span>{importing ? '検証・変換中' : 'JSONファイルを選択'}</span>
+                <span>{importing ? '検証・変換中' : 'Excel / JSONファイルを選択'}</span>
                 <input
-                  aria-label="正式データJSONファイル"
+                  aria-label="正式データExcelまたはJSONファイル"
                   type="file"
-                  accept="application/json,.json"
+                  accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.json,application/json"
                   disabled={importing}
-                  onChange={(event) => void importJsonFile(event)}
+                  onChange={(event) => void importDataFile(event)}
                 />
               </label>
               {message && (
