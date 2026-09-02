@@ -56,7 +56,7 @@ export async function parseCanonicalMasterXlsx(
     const workbook = await readXlsxWorkbook(buffer);
     const missingSheets = REQUIRED_SHEETS.filter((sheetName) => !workbook.has(sheetName));
     if (missingSheets.length > 0) {
-      throw new XlsxMasterError('Excel正本に必須シートが不足しています。', missingSheets);
+      throw new XlsxMasterError('Excel正本に必須シートが不足しています。', [...missingSheets]);
     }
 
     const rowsBySheet = new Map<string, XlsxCellValue[][]>();
@@ -207,8 +207,8 @@ function parseArrayCell(
   if (!trimmed) return [];
   if (trimmed.startsWith('[')) {
     try {
-      const parsed = JSON.parse(trimmed) as unknown;
-      if (!Array.isArray(parsed) || parsed.some((item) => typeof item !== 'string')) throw new Error();
+      const parsed: unknown = JSON.parse(trimmed);
+      if (!isStringArray(parsed)) throw new Error('not a string array');
       return parsed.map((item) => item.trim()).filter(Boolean);
     } catch {
       throw new XlsxMasterError(`${location}: ${field} のJSON配列が不正です。`);
@@ -218,6 +218,10 @@ function parseArrayCell(
     .split('|')
     .map((item) => item.trim())
     .filter(Boolean);
+}
+
+function isStringArray(value: unknown): value is string[] {
+  return Array.isArray(value) && value.every((item: unknown) => typeof item === 'string');
 }
 
 function parseBooleanCell(
