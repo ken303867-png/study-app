@@ -1,5 +1,30 @@
 # Changelog
 
+## [Unreleased]
+
+### Added
+- Delivery Data Schema 0.4
+- Explanation Template v1.0に準拠した構造化解答解説TypeScript型
+- 各選択肢解説の `judgement` / `reason` / `correction_condition` / 任意補助項目
+- Formal Data Specification v1.1の `SOURCES` / `SOURCE_OCCURRENCES` Delivery構造
+- MEDIA metadataとIndexedDB Blob分離保存
+- 正式解答解説の10ブロック表示順UI
+- 任意解説ブロックの空見出し抑止
+- MEDIA `placement_after` 表示ロジック
+- Schema 0.4 / Source traceability / MEDIAのZod QA
+- Dexie保存・復元とMEDIA Blobの単体テスト
+- 正式解答解説表示のPlaywright E2Eテスト
+
+### Changed
+- 旧 `explanation: string` からExplanation Template v1.0構造へ移行
+- Dexie schemaをversion 2へ拡張
+- サンプルDeliveryデータをSchema 0.4へ更新
+
+### Compatibility
+- Schema 0.3を0.4へ暗黙変換しない
+- 旧Schema保存データはUIで再変換・再投入を案内する
+- 学習履歴は教材Deliveryデータとは独立して保持する
+
 ## [0.7.1] - 2026-09-02
 
 ### Changed
