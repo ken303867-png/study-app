@@ -1,4 +1,5 @@
 import { ZodError } from 'zod';
+import { preflightLegacy709MasterXlsx } from '../adapters/legacy709MasterPreflight';
 import { parseCanonicalMasterXlsx, XlsxMasterError } from '../adapters/xlsxMasterAdapter';
 import { convertMasterToDelivery, MasterConversionError } from '../converters/masterToDelivery';
 import { contentRepository } from '../repositories/contentRepository';
@@ -33,10 +34,24 @@ export class DatasetImportError extends Error {
 export async function importDatasetFile(file: File): Promise<DatasetImportResult> {
   const lowerName = file.name.toLowerCase();
   if (lowerName.endsWith('.xlsx')) {
+    const buffer = await file.arrayBuffer();
     try {
-      const master = await parseCanonicalMasterXlsx(await file.arrayBuffer(), file.name);
+      const master = await parseCanonicalMasterXlsx(buffer, file.name);
       return await persistNormalized(master, 'canonical-master', 'xlsx');
     } catch (error) {
+      if (error instanceof XlsxMasterError) {
+        const legacy = await preflightLegacy709MasterXlsx(buffer).catch(() => null);
+        if (legacy) {
+          throw new DatasetImportError(
+            '旧v1.47系709問Excel正本を検出しました。正式Canonical v1.1へ損失なく移行するためImportを中止しました。',
+            [
+              `Preflight: ${legacy.questionCount}問 / A〜D+正答完備 ${legacy.fourChoiceCompleteCount}問 / 解答解説コア完備 ${legacy.coreExplanationCompleteCount}問`,
+              `旧独自フィールド: 比較して覚える ${legacy.legacyComparePopulatedCount}問 / 間違いやすいポイント ${legacy.legacyPitfallsPopulatedCount}問`,
+              ...legacy.blockers
+            ]
+          );
+        }
+      }
       throw normalizeImportError(error);
     }
   }
@@ -67,9 +82,10 @@ async function persistNormalized(
   kind: ImportKind,
   sourceFormat: ImportSourceFormat
 ): Promise<DatasetImportResult> {
-  const dataset = kind === 'canonical-master'
-    ? convertMasterToDelivery(raw as CanonicalMasterExportInput)
-    : datasetSchema.parse(raw);
+  const dataset =
+    kind === 'canonical-master'
+      ? convertMasterToDelivery(raw as CanonicalMasterExportInput)
+      : datasetSchema.parse(raw);
   return persistDataset(dataset, kind, sourceFormat);
 }
 
@@ -122,7 +138,10 @@ function normalizeImportError(error: unknown): DatasetImportError {
     return new DatasetImportError(error.message, error.issues);
   }
   if (error instanceof MasterConversionError) {
-    return new DatasetImportError('Canonical MasterのDelivery変換QAでエラーを検出しました。', error.issues);
+    return new DatasetImportError(
+      'Canonical MasterのDelivery変換QAでエラーを検出しました。',
+      error.issues
+    );
   }
   if (error instanceof ZodError) {
     return new DatasetImportError(
