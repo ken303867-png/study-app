@@ -1,6 +1,6 @@
 import { Buffer } from 'node:buffer';
+import { readFile } from 'node:fs/promises';
 import { expect, test } from '@playwright/test';
-import fixture from '../fixtures/canonical-master-sample.json';
 import { canonicalMasterExportSchema } from '../../src/schemas/masterDataSchemas';
 import {
   buildCanonicalMasterXlsx,
@@ -47,7 +47,7 @@ test('imports canonical master JSON, converts it, and stores delivery data', asy
 });
 
 test('imports a deflated canonical master xlsx end-to-end in Chromium', async ({ page }) => {
-  const master = canonicalMasterExportSchema.parse(fixture);
+  const master = await loadCanonicalFixture();
   const xlsx = await buildCanonicalMasterXlsx(master);
 
   await page.goto('/');
@@ -100,3 +100,12 @@ test('legacy 709 xlsx preflight blocks lossy conversion and keeps prior data', a
   await expect(page.getByText('正式Deliveryデータを実行時検証するライブラリはどれですか。')).toBeVisible();
   await expect(page.getByText('非正式旧正本QA問題')).toHaveCount(0);
 });
+
+async function loadCanonicalFixture() {
+  const text = await readFile(
+    new URL('../fixtures/canonical-master-sample.json', import.meta.url),
+    'utf8'
+  );
+  const parsed: unknown = JSON.parse(text);
+  return canonicalMasterExportSchema.parse(parsed);
+}
