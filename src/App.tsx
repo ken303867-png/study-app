@@ -1,7 +1,11 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState, type ChangeEvent } from 'react';
 import { sampleDataset } from './data/sampleDataset';
 import { db } from './db/database';
 import { contentRepository } from './repositories/contentRepository';
+import {
+  DatasetImportError,
+  importDatasetJsonText
+} from './services/datasetImportService';
 import type {
   ExplanationPlacement,
   FormalExplanation,
@@ -21,6 +25,8 @@ export default function App() {
   const [datasetVersion, setDatasetVersion] = useState('未登録');
   const [schemaVersion, setSchemaVersion] = useState('未登録');
   const [message, setMessage] = useState('');
+  const [importError, setImportError] = useState<string[]>([]);
+  const [importing, setImporting] = useState(false);
 
   const refresh = async () => {
     const [q, m, mediaRecords, occurrences, datasetMeta, schemaMeta] = await Promise.all([
@@ -64,9 +70,37 @@ export default function App() {
   }, []);
 
   const loadSample = async () => {
+    setImportError([]);
     await contentRepository.replaceDataset(sampleDataset);
     await refresh();
-    setMessage('Schema 0.4対応の画面確認用サンプルを読み込みました。正式問題データではありません。');
+    setMessage('Schema 0.5対応の画面確認用サンプルを読み込みました。正式問題データではありません。');
+  };
+
+  const importJsonFile = async (event: ChangeEvent<HTMLInputElement>) => {
+    const input = event.currentTarget;
+    const file = input.files?.[0];
+    if (!file) return;
+
+    setImporting(true);
+    setMessage('');
+    setImportError([]);
+    try {
+      const result = await importDatasetJsonText(await file.text());
+      await refresh();
+      const kindLabel = result.kind === 'canonical-master' ? 'Canonical Master' : 'Delivery';
+      setMessage(
+        `${kindLabel}を読み込みました: ${result.questionCount}問 / ${result.sourceOccurrenceCount}出題出現 / Schema ${result.schemaVersion}`
+      );
+    } catch (error) {
+      if (error instanceof DatasetImportError) {
+        setImportError([error.message, ...error.issues]);
+      } else {
+        setImportError(['データImport中に予期しないエラーが発生しました。']);
+      }
+    } finally {
+      setImporting(false);
+      input.value = '';
+    }
   };
 
   return (
@@ -75,7 +109,7 @@ export default function App() {
         <div>
           <p className="eyebrow">Study App</p>
           <h1>学習アプリ v0.7.1</h1>
-          <p className="muted">Formal Data Schema 0.4 / Explanation Template v1.0 同期版</p>
+          <p className="muted">Delivery Schema 0.5 / Canonical Master Import v1</p>
         </div>
         <span className="status-badge">LOCAL ONLY</span>
       </header>
@@ -206,34 +240,60 @@ export default function App() {
             </div>
             <article className="panel warning-panel">
               <h3>正式問題データはGitHubに保存しません</h3>
-              <p>Private repositoryでも、正式問題本文・教材本文はローカルデータ領域で管理します。</p>
+              <p>正本Excel・Canonical Master JSON・正式Delivery JSONはローカルデータ領域で管理します。</p>
             </article>
-            {schemaVersion !== '未登録' && schemaVersion !== '0.4' && (
+            {schemaVersion !== '未登録' && schemaVersion !== '0.5' && (
               <article className="panel warning-panel" role="alert">
                 <h3>旧Schemaデータを検出しました</h3>
                 <p>
-                  現在の保存データはSchema {schemaVersion}です。正式Schema 0.4へ変換したDeliveryデータを再投入してください。
+                  現在の保存データはSchema {schemaVersion}です。正式Schema 0.5へ変換したDeliveryデータを再投入してください。
                   学習履歴は教材データとは別テーブルで保持されます。
                 </p>
               </article>
             )}
+            <article className="panel">
+              <h3>正式データImport</h3>
+              <p>
+                Canonical Master JSON Export、またはDelivery Schema 0.5 JSONを選択します。Masterの場合はQA後にDeliveryへ変換し、Zod検証後にIndexedDBへ保存します。
+              </p>
+              <label className="file-import">
+                <span>{importing ? '検証・変換中' : 'JSONファイルを選択'}</span>
+                <input
+                  aria-label="正式データJSONファイル"
+                  type="file"
+                  accept="application/json,.json"
+                  disabled={importing}
+                  onChange={(event) => void importJsonFile(event)}
+                />
+              </label>
+              {message && (
+                <p className="success-message" role="status">
+                  {message}
+                </p>
+              )}
+              {importError.length > 0 && (
+                <div className="import-error" role="alert">
+                  <strong>Importを中止しました</strong>
+                  <ul>
+                    {importError.map((issue, index) => (
+                      <li key={`${issue}-${index}`}>{issue}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </article>
             <article className="panel">
               <h3>サンプルデータ</h3>
               <p>正式解説・Source occurrence・MEDIA・IndexedDB保存を確認するための非正式ダミーデータです。</p>
               <button type="button" onClick={() => void loadSample()}>
                 サンプルを読み込む
               </button>
-              {message && (
-                <p className="success-message" role="status">
-                  {message}
-                </p>
-              )}
             </article>
           </section>
         )}
       </main>
 
-      <footer>App v0.7.1 / Schema 0.4 / Explanation Template 1.0 / Cloud disabled</footer>
+      <footer>App v0.7.1 / Schema 0.5 / Explanation Template 1.0 / Cloud disabled</footer>
     </div>
   );
 }
@@ -270,7 +330,7 @@ function FormalExplanationView({ question, media }: { question: Question; media:
       <div className="explanation-stack">
         <div className="explanation-block warning-panel" role="alert">
           <h4>旧Schemaの解答解説</h4>
-          <p>この問題は正式Explanation Template v1.0へ未変換です。Schema 0.4 Deliveryデータを再投入してください。</p>
+          <p>この問題は正式Explanation Template v1.0へ未変換です。Schema 0.5 Deliveryデータを再投入してください。</p>
         </div>
       </div>
     );

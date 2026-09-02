@@ -1,0 +1,17 @@
+{
+  "masterDataVersion": "MASTER-YYYYMMDD-v1.0",
+  "explanationTemplateVersion": "1.0",
+  "formalDataSpecVersion": "1.1",
+  "deliveryDatasetVersion": "DELIVERY-YYYYMMDD-v1.0",
+  "sheets": {
+    "QUESTIONS": [],
+    "SOURCE_OCCURRENCES": [],
+    "CHOICES": [],
+    "EXPLANATIONS": [],
+    "CHOICE_EXPLANATIONS": [],
+    "SOURCES": [],
+    "QA_LEDGER": [],
+    "TAXONOMY": [],
+    "MEDIA": []
+  }
+}

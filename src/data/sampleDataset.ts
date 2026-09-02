@@ -1,8 +1,8 @@
 import type { DatasetInput } from '../schemas/contentSchemas';
 
 export const sampleDataset: DatasetInput = {
-  datasetVersion: 'sample-0.8-formal-schema',
-  schemaVersion: '0.4',
+  datasetVersion: 'sample-0.9-master-import',
+  schemaVersion: '0.5',
   questions: [
     {
       id: 'SAMPLE-Q-001',
@@ -17,7 +17,7 @@ export const sampleDataset: DatasetInput = {
       explanation: {
         answer: 'B. Zod',
         question_intent: '外部から取り込む正式データを、TypeScript型だけでなく実行時にも検証する仕組みを理解しているかを確認する。',
-        reasoning: 'TypeScriptの型はビルド後には消えるため、CSV/JSON由来のデータはZod Schemaで実行時検証してからIndexedDBへ保存する。',
+        reasoning: 'TypeScriptの型はビルド後には消えるため、Canonical Masterから生成したDeliveryデータはZod Schemaで実行時検証してからIndexedDBへ保存する。',
         choice_explanations: [
           {
             target_key: 'A',
@@ -55,16 +55,16 @@ export const sampleDataset: DatasetInput = {
             mapping_provenance: 'source_structured'
           }
         ],
-        surrounding_knowledge: '正式データはExcel等の監査可能なMaster Dataを正本とし、アプリ用JSONはDeliveryデータとして再生成する。',
+        surrounding_knowledge: '正式データはExcel等の監査可能なMaster Dataを正本とし、Canonical Master JSON ExportとDelivery JSONは再生成可能な中間・配信データとして扱う。',
         clinical_notes: 'このサンプルはアプリ構造確認用であり、医療・看護の正式教材データではない。',
-        key_points: '外部データはZodで検証してからDexie/IndexedDBへ保存する。',
-        mnemonic: 'Zod = Zero-trust object data validation と覚える。',
-        references: 'Study App Architecture v0.7 / Explanation Template v1.0 / Formal Data Spec v1.1',
+        key_points: 'Canonical Master → Delivery変換 → Zod検証 → IndexedDB保存の順で正式データを扱う。',
+        mnemonic: 'Masterは正本、Deliveryは再生成可能と覚える。',
+        references: 'Study App / Explanation Template v1.0 / Formal Data Spec v1.1 / Delivery Schema 0.5',
         source_explanation_raw: '画面確認用に作成した非正式サンプル解説。'
       },
       relatedMaterialIds: ['SAMPLE-M-001'],
       tags: ['sample'],
-      revision: 2,
+      revision: 3,
       choices: ['Dexie', 'Zod', 'Playwright', 'Prettier'],
       correctChoiceIndexes: [1]
     }
@@ -76,10 +76,10 @@ export const sampleDataset: DatasetInput = {
       unit: 'サンプル単元',
       title: '正式データ処理フロー',
       importance: 'S',
-      body: 'Excel正本 → Delivery変換 → Zod検証 → Dexie/IndexedDB保存の順で正式データを扱います。',
+      body: 'Excel正本 → Canonical Master JSON Export → Delivery変換 → Zod検証 → Dexie/IndexedDB保存の順で正式データを扱います。',
       relatedQuestionIds: ['SAMPLE-Q-001'],
       tags: ['sample'],
-      revision: 2
+      revision: 3
     }
   ],
   sources: [
@@ -100,7 +100,7 @@ export const sampleDataset: DatasetInput = {
       canonical_question_id: 'SAMPLE-Q-001',
       source_id: 'SAMPLE-SOURCE-001',
       source_set_id: 'SAMPLE-SOURCE-001-SET01',
-      source_set_label: 'Schema 0.4 QA sample',
+      source_set_label: 'Schema 0.5 QA sample',
       source_set_order: 1,
       source_question_no: 1,
       source_question_label: 'Q1',
@@ -118,7 +118,7 @@ export const sampleDataset: DatasetInput = {
       placement_after: 'reasoning',
       display_order: 1,
       file_name_or_blob_ref: 'sample-data-flow.svg',
-      alt_text: 'Excel正本からZod検証を経てIndexedDBへ保存するデータフロー図のプレースホルダー',
+      alt_text: 'Excel正本からCanonical Master JSON Export、Zod検証を経てIndexedDBへ保存するデータフロー図のプレースホルダー',
       caption: 'MEDIA placement確認用の非正式プレースホルダー',
       source_id: 'SAMPLE-SOURCE-001',
       revision: 1

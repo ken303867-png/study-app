@@ -1,8 +1,12 @@
 export const SOURCE_TYPES = [
   'japan-nursing-association',
+  's-que',
   'gakken',
   'past-exam',
-  'predicted'
+  'predicted',
+  'textbook',
+  'guideline',
+  'other'
 ] as const;
 
 export const QUESTION_FORMATS = [

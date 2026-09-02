@@ -236,7 +236,7 @@ export const mediaSchema = z.object({
 export const datasetSchema = z
   .object({
     datasetVersion: textSchema,
-    schemaVersion: z.literal('0.4'),
+    schemaVersion: z.literal('0.5'),
     questions: z.array(questionSchema),
     materials: z.array(materialSchema),
     sources: z.array(sourceSchema),

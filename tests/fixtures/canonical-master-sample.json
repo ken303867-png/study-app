@@ -1,0 +1,154 @@
+{
+  "masterDataVersion": "fixture-master-0.1",
+  "explanationTemplateVersion": "1.0",
+  "formalDataSpecVersion": "1.1",
+  "deliveryDatasetVersion": "fixture-delivery-0.1",
+  "sheets": {
+    "QUESTIONS": [
+      {
+        "canonical_question_id": "FIX-Q-001",
+        "source_question_id": "FIX-SRC-Q1",
+        "subject": "サンプル科目",
+        "unit": "データ管理",
+        "topic": "Delivery変換",
+        "source_group": "S-QUE",
+        "source_id": "FIX-SOURCE-SQUE",
+        "question_format": "single-choice",
+        "importance": "S",
+        "source_prompt": "Canonical MasterからDeliveryへ変換する工程はどれですか。",
+        "canonical_prompt": "Canonical MasterからDeliveryへ変換する工程はどれですか。",
+        "source_answer": "B",
+        "final_answer": "B",
+        "answer_discrepancy": "none",
+        "revision": 1,
+        "record_status": "adopted",
+        "tags": ["fixture"],
+        "related_material_ids": []
+      },
+      {
+        "canonical_question_id": "FIX-Q-EXCLUDED",
+        "source_question_id": "FIX-SRC-QX",
+        "subject": "サンプル科目",
+        "unit": "データ管理",
+        "topic": "除外確認",
+        "source_group": "S-QUE",
+        "source_id": "FIX-SOURCE-SQUE",
+        "question_format": "single-choice",
+        "importance": "B",
+        "source_prompt": "除外問題です。",
+        "canonical_prompt": "除外問題です。",
+        "source_answer": "A",
+        "final_answer": "A",
+        "answer_discrepancy": "none",
+        "revision": 1,
+        "record_status": "excluded",
+        "exclusion_reason": "QA fixture",
+        "tags": ["fixture"],
+        "related_material_ids": []
+      }
+    ],
+    "SOURCE_OCCURRENCES": [
+      {
+        "source_occurrence_id": "FIX-SQUE-SET01-Q01",
+        "canonical_question_id": "FIX-Q-001",
+        "source_id": "FIX-SOURCE-SQUE",
+        "source_set_id": "FIX-SQUE-SET01",
+        "source_set_label": "非正式QAセット",
+        "source_set_order": 1,
+        "source_question_no": 1,
+        "source_question_label": "Q1",
+        "source_occurrence_order": 1,
+        "section_type": "development-sample",
+        "source_answer": "B"
+      }
+    ],
+    "CHOICES": [
+      {
+        "canonical_question_id": "FIX-Q-001",
+        "choice_key": "A",
+        "choice_order": 1,
+        "source_choice_text": "直接IndexedDBへ保存する",
+        "canonical_choice_text": "直接IndexedDBへ保存する",
+        "is_source_correct": false,
+        "is_final_correct": false
+      },
+      {
+        "canonical_question_id": "FIX-Q-001",
+        "choice_key": "B",
+        "choice_order": 2,
+        "source_choice_text": "Deliveryへ変換してZod検証する",
+        "canonical_choice_text": "Deliveryへ変換してZod検証する",
+        "is_source_correct": true,
+        "is_final_correct": true
+      }
+    ],
+    "EXPLANATIONS": [
+      {
+        "canonical_question_id": "FIX-Q-001",
+        "answer_summary": "B. Deliveryへ変換してZod検証する",
+        "question_intent": "CanonicalとDeliveryの責務分離を確認する。",
+        "reasoning": "正本は直接アプリ保存形式にせず、再生成可能なDeliveryへ変換してから実行時検証する。",
+        "surrounding_knowledge": "Master Dataは監査・編集用、Deliveryは配信用である。",
+        "key_points": "Master → Delivery → Zod → IndexedDBの順序を保持する。",
+        "references": "Explanation Template v1.0 / Formal Data Spec v1.1",
+        "explanation_revision": 1,
+        "source_explanation_raw": "非正式QA fixture。"
+      }
+    ],
+    "CHOICE_EXPLANATIONS": [
+      {
+        "canonical_question_id": "FIX-Q-001",
+        "choice_key": "A",
+        "display_order": 1,
+        "final_judgement": "incorrect",
+        "reason": "Canonical Masterを直接保存形式にすると正本とDeliveryの責務が混在する。",
+        "correction_condition": "Delivery変換とZod検証後にIndexedDBへ保存するなら正しい。",
+        "corrected_statement": "Deliveryへ変換しZod検証後にIndexedDBへ保存する。",
+        "mapping_provenance": "source_structured"
+      },
+      {
+        "canonical_question_id": "FIX-Q-001",
+        "choice_key": "B",
+        "display_order": 2,
+        "final_judgement": "correct",
+        "reason": "正式データ処理フローに一致する。",
+        "correction_condition": "N/A",
+        "mapping_provenance": "source_structured"
+      }
+    ],
+    "SOURCES": [
+      {
+        "source_id": "FIX-SOURCE-SQUE",
+        "source_group": "S-QUE",
+        "title": "非正式S-QUE形式QA fixture",
+        "edition_year": "2026",
+        "publisher_org": "Study App development fixture",
+        "source_location": "tests/fixtures/canonical-master-sample.json",
+        "answer_authority": "reference-only",
+        "notes": "正式教材本文を含まない。"
+      }
+    ],
+    "QA_LEDGER": [
+      {
+        "canonical_question_id": "FIX-Q-001",
+        "structure_qa": "pass",
+        "answer_qa": "pass",
+        "explanation_qa": "pass",
+        "choice_explanation_qa": "pass",
+        "currentness_qa": "not-applicable",
+        "duplicate_qa": "pass",
+        "source_traceability_qa": "pass",
+        "final_qa": "pass",
+        "audited_at": "2026-09-03"
+      }
+    ],
+    "TAXONOMY": [
+      {
+        "subject": "サンプル科目",
+        "unit": "データ管理",
+        "topic": "Delivery変換"
+      }
+    ],
+    "MEDIA": []
+  }
+}

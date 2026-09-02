@@ -2,13 +2,20 @@ import { describe, expect, it } from 'vitest';
 import { sampleDataset } from '../../src/data/sampleDataset';
 import { datasetSchema } from '../../src/schemas/contentSchemas';
 
-describe('datasetSchema 0.4', () => {
+describe('datasetSchema 0.5', () => {
   it('accepts a valid formal dataset', () => {
     const parsed = datasetSchema.parse(sampleDataset);
     expect(parsed.questions).toHaveLength(1);
     expect(parsed.sourceOccurrences).toHaveLength(1);
     expect(parsed.media).toHaveLength(1);
     expect(parsed.questions[0]?.explanation.key_points).toBeTruthy();
+  });
+
+  it('accepts formal source types added for master conversion', () => {
+    const valid = structuredClone(sampleDataset);
+    const first = valid.questions[0];
+    if (first) first.sourceType = 's-que';
+    expect(datasetSchema.parse(valid).questions[0]?.sourceType).toBe('s-que');
   });
 
   it('rejects an out-of-range answer index', () => {

@@ -17,7 +17,7 @@ describe('contentRepository formal schema persistence', () => {
     ]);
   });
 
-  it('saves and restores the complete schema 0.4 delivery dataset', async () => {
+  it('saves and restores the complete schema 0.5 delivery dataset', async () => {
     await contentRepository.replaceDataset(sampleDataset);
 
     const [questions, sources, occurrences, media, schemaMeta, templateMeta, dataSpecMeta] =
@@ -35,7 +35,7 @@ describe('contentRepository formal schema persistence', () => {
     expect(sources[0]?.source_id).toBe('SAMPLE-SOURCE-001');
     expect(occurrences[0]?.canonical_question_id).toBe('SAMPLE-Q-001');
     expect(media[0]?.placement_after).toBe('reasoning');
-    expect(schemaMeta?.value).toBe('0.4');
+    expect(schemaMeta?.value).toBe('0.5');
     expect(templateMeta?.value).toBe('1.0');
     expect(dataSpecMeta?.value).toBe('1.1');
   });

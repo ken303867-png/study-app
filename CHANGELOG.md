@@ -3,7 +3,7 @@
 ## [Unreleased]
 
 ### Added
-- Delivery Data Schema 0.4
+- Delivery Data Schema 0.5
 - Explanation Template v1.0に準拠した構造化解答解説TypeScript型
 - 各選択肢解説の `judgement` / `reason` / `correction_condition` / 任意補助項目
 - Formal Data Specification v1.1の `SOURCES` / `SOURCE_OCCURRENCES` Delivery構造
@@ -11,19 +11,27 @@
 - 正式解答解説の10ブロック表示順UI
 - 任意解説ブロックの空見出し抑止
 - MEDIA `placement_after` 表示ロジック
-- Schema 0.4 / Source traceability / MEDIAのZod QA
-- Dexie保存・復元とMEDIA Blobの単体テスト
-- 正式解答解説表示のPlaywright E2Eテスト
+- Canonical Master JSON Export Schema
+- Canonical Master → Delivery変換QA
+- `record_status=adopted` + `final_qa=pass` のDelivery gate
+- TAXONOMY / Source occurrence / choice explanation整合性監査
+- S-QUE / textbook / guideline / other を含む正式sourceType
+- Canonical Master JSON / Delivery JSONのローカルImport UI
+- Import失敗時に既存IndexedDB contentを置換しない非破壊性QA
+- Canonical Master ImportのVitest / Playwright E2Eテスト
+- 空Canonical Master JSON Exportテンプレート
 
 ### Changed
 - 旧 `explanation: string` からExplanation Template v1.0構造へ移行
 - Dexie schemaをversion 2へ拡張
-- サンプルDeliveryデータをSchema 0.4へ更新
+- サンプルDeliveryデータをSchema 0.5へ更新
+- 旧Schema検出基準をSchema 0.5へ更新
 
 ### Compatibility
-- Schema 0.3を0.4へ暗黙変換しない
+- Schema 0.3 / 0.4を0.5へ暗黙変換しない
 - 旧Schema保存データはUIで再変換・再投入を案内する
 - 学習履歴は教材Deliveryデータとは独立して保持する
+- 正式問題本文を含むMaster / DeliveryデータはGitHubへ保存しない
 
 ## [0.7.1] - 2026-09-02
 

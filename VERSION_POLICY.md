@@ -5,13 +5,13 @@
 アプリ本体・データ・schemaを独立してVersion管理します。
 
 - App Version: `0.7.1`
-- Schema Version: `0.4`
+- Schema Version: `0.5`
 - Explanation Template Version: `1.0`
 - Formal Data Specification Version: `1.1`
 - Dataset Version: 正式データ作成時に別途付与
 - Material Version: 正式資料作成時に別途付与
 
-Schema 0.4は、Explanation Template v1.0とFormal Data Specification v1.1をTypeScript / Zod / Dexie / UIへ接続するためのDelivery schemaです。
+Schema 0.5は、Schema 0.4の構造化解答解説・Source traceability・MEDIA構造を維持しつつ、Canonical Master DataからDeliveryを再生成するための正式変換・Import境界を追加したDelivery schemaです。
 App Versionとは独立して管理します。
 
 ## Semantic versioning
@@ -24,9 +24,19 @@ App Versionとは独立して管理します。
 
 - Schema 0.3: 旧 `explanation: string` と問題・資料中心のDelivery構造
 - Schema 0.4: 構造化解答解説、SOURCES、SOURCE_OCCURRENCES、MEDIAを追加
-- Schema 0.3データを0.4として暗黙変換しない
+- Schema 0.5: Canonical Master → Delivery変換、正式sourceType拡張、ローカルImport QAを追加
+- Schema 0.3 / 0.4データを0.5として暗黙変換しない
 - 旧SchemaがIndexedDBに残っている場合、UIで再Delivery変換・再投入を要求する
 - 教材データを再投入しても、学習履歴テーブルは独立保持する
+
+## Canonical Master policy
+
+- 正式Excel Master Dataを正本とする
+- Canonical Master JSON ExportはExcel各sheetを損失なく表す再生成可能な中間データとする
+- Delivery JSONはCanonical Masterから再生成可能な配信データとする
+- 正式問題本文を含むMaster JSON / Delivery JSONをGitHubへ保存しない
+- `record_status=adopted` かつ `final_qa=pass` の問題だけをDeliveryへ出力する
+- Master変換QAまたはZod validationが失敗した場合、IndexedDB contentを置換しない
 
 ## Reproducibility policy
 
@@ -48,8 +58,10 @@ App Versionとは独立して管理します。
 4. Vitest
 5. Production build
 6. Playwright E2E
-7. Data schema validation
-8. CHANGELOG更新
+7. Delivery Data schema validation
+8. Canonical Master conversion QA
+9. Import失敗時の非破壊性QA
+10. CHANGELOG更新
 
 Prettierは開発時の整形ツールとして使用し、CI release gateへの追加は別Versionで検証後に行います。
 
