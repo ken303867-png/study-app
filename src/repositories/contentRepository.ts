@@ -74,7 +74,7 @@ export class DexieContentRepository implements ContentRepository {
           db.mediaBlobs.clear()
         ]);
         await db.questions.bulkPut(dataset.questions as Question[]);
-        await db.materials.bulkPut(dataset.materials as Material[]);
+        await db.materials.bulkPut(dataset.materials);
         await db.sources.bulkPut(dataset.sources as SourceRecord[]);
         await db.sourceOccurrences.bulkPut(dataset.sourceOccurrences as SourceOccurrence[]);
         await db.media.bulkPut(dataset.media as MediaRecord[]);
