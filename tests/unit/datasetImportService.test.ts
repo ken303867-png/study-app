@@ -88,10 +88,17 @@ describe('datasetImportService', () => {
       }
     ]);
 
-    await expect(importDatasetFile(fileLike('legacy-v1.47.xlsx', bytes))).rejects.toMatchObject({
-      message: expect.stringMatching(/旧v1\.47系709問Excel正本/),
-      issues: expect.arrayContaining([expect.stringMatching(/SOURCE_OCCURRENCES/)])
-    });
+    let caught: unknown;
+    try {
+      await importDatasetFile(fileLike('legacy-v1.47.xlsx', bytes));
+    } catch (error) {
+      caught = error;
+    }
+
+    expect(caught).toBeInstanceOf(DatasetImportError);
+    if (!(caught instanceof DatasetImportError)) throw new Error('DatasetImportError expected');
+    expect(caught.message).toMatch(/旧v1\.47系709問Excel正本/);
+    expect(caught.issues.join('\n')).toMatch(/SOURCE_OCCURRENCES/);
 
     expect((await contentRepository.getQuestions())[0]?.id).toBe('SAMPLE-Q-001');
     expect((await db.meta.get('datasetVersion'))?.value).toBe(sampleDataset.datasetVersion);
@@ -125,7 +132,7 @@ function fileLike(name: string, bytes: Uint8Array): File {
     type: name.endsWith('.xlsx')
       ? 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
       : 'application/octet-stream',
-    arrayBuffer: async () => copy.buffer,
-    text: async () => new TextDecoder().decode(copy)
+    arrayBuffer: () => Promise.resolve(copy.buffer),
+    text: () => Promise.resolve(new TextDecoder().decode(copy))
   } as File;
 }
