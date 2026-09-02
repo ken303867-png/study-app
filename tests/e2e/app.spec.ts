@@ -2,7 +2,10 @@ import { Buffer } from 'node:buffer';
 import { expect, test } from '@playwright/test';
 import fixture from '../fixtures/canonical-master-sample.json';
 import { canonicalMasterExportSchema } from '../../src/schemas/masterDataSchemas';
-import { buildCanonicalMasterXlsx } from '../helpers/buildCanonicalMasterXlsx';
+import {
+  buildCanonicalMasterXlsx,
+  buildWorkbookXlsx
+} from '../helpers/buildCanonicalMasterXlsx';
 
 test('loads schema 0.5 sample and renders formal explanation order', async ({ page }) => {
   await page.goto('/');
@@ -64,4 +67,36 @@ test('imports a deflated canonical master xlsx end-to-end in Chromium', async ({
   ).toBeVisible();
   await expect(page.getByText('非正式S-QUE形式QA fixture')).toBeVisible();
   await expect(page.getByText('除外問題です。')).toHaveCount(0);
+});
+
+test('legacy 709 xlsx preflight blocks lossy conversion and keeps prior data', async ({ page }) => {
+  const legacyXlsx = await buildWorkbookXlsx([
+    {
+      name: '統合709_学習マスター',
+      rows: [
+        ['学習ID', '問題文', '選択肢A', '選択肢B', '選択肢C', '選択肢D', '正答'],
+        ['LEGACY-001', '非正式旧正本QA問題', 'A', 'B', 'C', 'D', 'B']
+      ]
+    }
+  ]);
+
+  await page.goto('/');
+  await page.getByRole('button', { name: 'データ管理' }).click();
+  await page.getByRole('button', { name: 'サンプルを読み込む' }).click();
+  await expect(page.getByRole('status')).toContainText('Schema 0.5対応');
+
+  await page.getByLabel('正式データExcelまたはJSONファイル').setInputFiles({
+    name: 'legacy-v1.47.xlsx',
+    mimeType: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    buffer: Buffer.from(legacyXlsx)
+  });
+
+  const alert = page.getByRole('alert');
+  await expect(alert).toContainText('旧v1.47系709問Excel正本');
+  await expect(alert).toContainText('SOURCE_OCCURRENCES');
+  await expect(alert).toContainText('source_answer');
+
+  await page.getByRole('button', { name: '問題' }).click();
+  await expect(page.getByText('正式Deliveryデータを実行時検証するライブラリはどれですか。')).toBeVisible();
+  await expect(page.getByText('非正式旧正本QA問題')).toHaveCount(0);
 });
