@@ -1,4 +1,8 @@
+import { Buffer } from 'node:buffer';
 import { expect, test } from '@playwright/test';
+import fixture from '../fixtures/canonical-master-sample.json';
+import { canonicalMasterExportSchema } from '../../src/schemas/masterDataSchemas';
+import { buildCanonicalMasterXlsx } from '../helpers/buildCanonicalMasterXlsx';
 
 test('loads schema 0.5 sample and renders formal explanation order', async ({ page }) => {
   await page.goto('/');
@@ -25,10 +29,33 @@ test('imports canonical master JSON, converts it, and stores delivery data', asy
   await page.getByRole('button', { name: 'データ管理' }).click();
 
   await page
-    .getByLabel('正式データJSONファイル')
+    .getByLabel('正式データExcelまたはJSONファイル')
     .setInputFiles('tests/fixtures/canonical-master-sample.json');
 
-  await expect(page.getByRole('status')).toContainText('Canonical Masterを読み込みました');
+  await expect(page.getByRole('status')).toContainText('JSON → Canonical Masterを読み込みました');
+  await expect(page.getByRole('status')).toContainText('1問 / 1出題出現 / Schema 0.5');
+
+  await page.getByRole('button', { name: '問題' }).click();
+  await expect(
+    page.getByText('Canonical MasterからDeliveryへ変換する工程はどれですか。')
+  ).toBeVisible();
+  await expect(page.getByText('非正式S-QUE形式QA fixture')).toBeVisible();
+  await expect(page.getByText('除外問題です。')).toHaveCount(0);
+});
+
+test('imports a deflated canonical master xlsx end-to-end in Chromium', async ({ page }) => {
+  const master = canonicalMasterExportSchema.parse(fixture);
+  const xlsx = await buildCanonicalMasterXlsx(master);
+
+  await page.goto('/');
+  await page.getByRole('button', { name: 'データ管理' }).click();
+  await page.getByLabel('正式データExcelまたはJSONファイル').setInputFiles({
+    name: 'pilot-master.xlsx',
+    mimeType: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    buffer: Buffer.from(xlsx)
+  });
+
+  await expect(page.getByRole('status')).toContainText('Excel正本 → Canonical Masterを読み込みました');
   await expect(page.getByRole('status')).toContainText('1問 / 1出題出現 / Schema 0.5');
 
   await page.getByRole('button', { name: '問題' }).click();
