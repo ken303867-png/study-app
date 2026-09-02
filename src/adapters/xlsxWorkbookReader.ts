@@ -7,7 +7,10 @@ export class XlsxWorkbookError extends Error {
   }
 }
 
-export async function readXlsxWorkbook(buffer: ArrayBuffer): Promise<Map<string, XlsxCellValue[][]>> {
+export async function readXlsxWorkbook(
+  buffer: ArrayBuffer,
+  requestedSheetNames?: ReadonlySet<string>
+): Promise<Map<string, XlsxCellValue[][]>> {
   const archive = ZipArchive.open(buffer);
   const workbookDocument = parseXml(await archive.text('xl/workbook.xml'), 'xl/workbook.xml');
   const relationshipsDocument = parseXml(
@@ -22,6 +25,7 @@ export async function readXlsxWorkbook(buffer: ArrayBuffer): Promise<Map<string,
   const workbookSheets = mapWorkbookSheets(workbookDocument, relationshipsDocument);
   const result = new Map<string, XlsxCellValue[][]>();
   for (const [sheetName, target] of workbookSheets) {
+    if (requestedSheetNames && !requestedSheetNames.has(sheetName)) continue;
     const worksheetDocument = parseXml(await archive.text(target), target);
     result.set(sheetName, parseWorksheet(worksheetDocument, sharedStrings, sheetName));
   }
