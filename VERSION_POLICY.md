@@ -5,15 +5,28 @@
 アプリ本体・データ・schemaを独立してVersion管理します。
 
 - App Version: `0.7.1`
-- Schema Version: `0.3`
+- Schema Version: `0.4`
+- Explanation Template Version: `1.0`
+- Formal Data Specification Version: `1.1`
 - Dataset Version: 正式データ作成時に別途付与
 - Material Version: 正式資料作成時に別途付与
+
+Schema 0.4は、Explanation Template v1.0とFormal Data Specification v1.1をTypeScript / Zod / Dexie / UIへ接続するためのDelivery schemaです。
+App Versionとは独立して管理します。
 
 ## Semantic versioning
 
 - Patch: 不具合修正、開発環境固定、schema互換性を維持する変更
 - Minor: 後方互換のある機能追加
 - Major: 大規模な互換性変更
+
+## Schema compatibility
+
+- Schema 0.3: 旧 `explanation: string` と問題・資料中心のDelivery構造
+- Schema 0.4: 構造化解答解説、SOURCES、SOURCE_OCCURRENCES、MEDIAを追加
+- Schema 0.3データを0.4として暗黙変換しない
+- 旧SchemaがIndexedDBに残っている場合、UIで再Delivery変換・再投入を要求する
+- 教材データを再投入しても、学習履歴テーブルは独立保持する
 
 ## Reproducibility policy
 
