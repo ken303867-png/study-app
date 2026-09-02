@@ -9,7 +9,10 @@ import {
   importDatasetFile,
   importDatasetJsonText
 } from '../../src/services/datasetImportService';
-import { buildCanonicalMasterXlsx } from '../helpers/buildCanonicalMasterXlsx';
+import {
+  buildCanonicalMasterXlsx,
+  buildWorkbookXlsx
+} from '../helpers/buildCanonicalMasterXlsx';
 
 describe('datasetImportService', () => {
   beforeEach(async () => {
@@ -70,6 +73,27 @@ describe('datasetImportService', () => {
 
     const questions = await contentRepository.getQuestions();
     expect(questions.map((question) => question.id)).toEqual(['SAMPLE-Q-001']);
+    expect((await db.meta.get('datasetVersion'))?.value).toBe(sampleDataset.datasetVersion);
+  });
+
+  it('detects legacy 709 xlsx, reports migration blockers, and keeps current data', async () => {
+    await contentRepository.replaceDataset(sampleDataset);
+    const bytes = await buildWorkbookXlsx([
+      {
+        name: '統合709_学習マスター',
+        rows: [
+          ['学習ID', '問題文', '選択肢A', '選択肢B', '選択肢C', '選択肢D', '正答'],
+          ['LEGACY-001', '非正式旧正本QA問題', 'A', 'B', 'C', 'D', 'B']
+        ]
+      }
+    ]);
+
+    await expect(importDatasetFile(fileLike('legacy-v1.47.xlsx', bytes))).rejects.toMatchObject({
+      message: expect.stringMatching(/旧v1\.47系709問Excel正本/),
+      issues: expect.arrayContaining([expect.stringMatching(/SOURCE_OCCURRENCES/)])
+    });
+
+    expect((await contentRepository.getQuestions())[0]?.id).toBe('SAMPLE-Q-001');
     expect((await db.meta.get('datasetVersion'))?.value).toBe(sampleDataset.datasetVersion);
   });
 
