@@ -394,7 +394,7 @@ function ExplanationTextBlock({
   media
 }: {
   title: string;
-  value?: string;
+  value: string | undefined;
   placement: ExplanationPlacement;
   media: MediaRecord[];
 }) {
