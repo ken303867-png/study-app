@@ -123,6 +123,21 @@ const masterSourceOccurrenceSchema = z
     }
   });
 
+const masterRelationSchema = z.object({
+  question_id: idSchema,
+  related_question_id: idSchema,
+  relation_type: z.enum(['duplicate', 'similar', 'prerequisite', 'follow-up', 'same-case', 'related']),
+  duplicate_class: z.enum([
+    'unique',
+    'exact_duplicate',
+    'high_similarity',
+    'same_topic_distinct',
+    'merge_candidate'
+  ]),
+  canonical_keep_id: idSchema.optional(),
+  rationale: textSchema
+});
+
 const masterQaLedgerSchema = z
   .object({
     canonical_question_id: idSchema,
@@ -198,6 +213,7 @@ export const canonicalMasterExportSchema = z.object({
     EXPLANATIONS: z.array(masterExplanationSchema),
     CHOICE_EXPLANATIONS: z.array(masterChoiceExplanationSchema),
     SOURCES: z.array(masterSourceSchema),
+    RELATIONS: z.array(masterRelationSchema).default([]),
     QA_LEDGER: z.array(masterQaLedgerSchema),
     TAXONOMY: z.array(masterTaxonomySchema),
     MEDIA: z.array(masterMediaSchema).default([])
