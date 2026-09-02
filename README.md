@@ -18,6 +18,14 @@
 v0.1〜v0.6で確定した機能仕様を、保守性の高い正式アーキテクチャへ移行するVersionです。
 v0.7.0でReact + TypeScript基盤へ移行し、v0.7.1で実行環境と依存関係の再現性を固定します。
 
+## Formal data specification
+
+正式問題・解答解説をアプリへ投入する前の整理・監査基準は、以下を上位仕様とします。
+
+- `docs/FORMAL_QUESTION_EXPLANATION_DATA_SPEC_v1.0.md`
+
+正本はExcel等の監査可能なMaster Dataとし、アプリ用JSON/IndexedDBデータは正本から再生成するDeliveryデータとして扱います。
+
 ## Reproducible development environment
 
 正式開発環境は以下で固定します。
