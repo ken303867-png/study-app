@@ -22,7 +22,10 @@ v0.7.0でReact + TypeScript基盤へ移行し、v0.7.1で実行環境と依存�
 
 正式問題・解答解説をアプリへ投入する前の整理・監査基準は、以下を上位仕様とします。
 
-- `docs/FORMAL_QUESTION_EXPLANATION_DATA_SPEC_v1.0.md`
+- `docs/FORMAL_QUESTION_EXPLANATION_DATA_SPEC_v1.1.md`
+- `docs/EXPLANATION_TEMPLATE_SPEC_v1.0.md`
+
+v1.1では、同一資料内で設問番号が再利用される教材や、複数講義・複数年度での再出題を安全に追跡するため、`SOURCE_OCCURRENCES` を正式Master Data構造として追加しています。
 
 正本はExcel等の監査可能なMaster Dataとし、アプリ用JSON/IndexedDBデータは正本から再生成するDeliveryデータとして扱います。
 
