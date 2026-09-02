@@ -8,10 +8,7 @@ describe('xlsxMasterAdapter', () => {
   it('parses a deflated .xlsx master into the canonical master schema', async () => {
     const master = canonicalMasterExportSchema.parse(fixture);
     const xlsx = await buildCanonicalMasterXlsx(master);
-    const parsed = await parseCanonicalMasterXlsx(
-      xlsx.buffer.slice(xlsx.byteOffset, xlsx.byteOffset + xlsx.byteLength),
-      'pilot-master.xlsx'
-    );
+    const parsed = await parseCanonicalMasterXlsx(toArrayBuffer(xlsx), 'pilot-master.xlsx');
 
     expect(parsed.masterDataVersion).toBe('fixture-master-0.1');
     expect(parsed.deliveryDatasetVersion).toBe('fixture-delivery-0.1');
@@ -39,16 +36,18 @@ describe('xlsxMasterAdapter', () => {
       }
     });
     const xlsx = await buildCanonicalMasterXlsx(master);
-    const parsed = await parseCanonicalMasterXlsx(
-      xlsx.buffer.slice(xlsx.byteOffset, xlsx.byteOffset + xlsx.byteLength)
-    );
+    const parsed = await parseCanonicalMasterXlsx(toArrayBuffer(xlsx));
 
     expect(parsed.sheets.RELATIONS).toHaveLength(1);
     expect(parsed.sheets.RELATIONS[0]?.relation_type).toBe('similar');
   });
 
   it('rejects a non-xlsx buffer', async () => {
-    const buffer = new TextEncoder().encode('not an xlsx').buffer;
+    const buffer = new Uint8Array(new TextEncoder().encode('not an xlsx')).buffer;
     await expect(parseCanonicalMasterXlsx(buffer, 'broken.xlsx')).rejects.toThrow(/xlsx|ZIP/i);
   });
 });
+
+function toArrayBuffer(bytes: Uint8Array): ArrayBuffer {
+  return new Uint8Array(bytes).buffer;
+}
