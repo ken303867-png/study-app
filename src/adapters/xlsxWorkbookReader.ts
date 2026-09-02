@@ -8,7 +8,7 @@ export class XlsxWorkbookError extends Error {
 }
 
 export async function readXlsxWorkbook(buffer: ArrayBuffer): Promise<Map<string, XlsxCellValue[][]>> {
-  const archive = await ZipArchive.open(buffer);
+  const archive = ZipArchive.open(buffer);
   const workbookDocument = parseXml(await archive.text('xl/workbook.xml'), 'xl/workbook.xml');
   const relationshipsDocument = parseXml(
     await archive.text('xl/_rels/workbook.xml.rels'),
@@ -166,7 +166,7 @@ class ZipArchive {
     private readonly entries: Map<string, ZipEntry>
   ) {}
 
-  static async open(buffer: ArrayBuffer) {
+  static open(buffer: ArrayBuffer) {
     const bytes = new Uint8Array(buffer);
     const view = new DataView(buffer);
     const eocdOffset = findEndOfCentralDirectory(bytes);
