@@ -2,6 +2,7 @@ import { ZodError } from 'zod';
 import { convertMasterToDelivery, MasterConversionError } from '../converters/masterToDelivery';
 import { contentRepository } from '../repositories/contentRepository';
 import { datasetSchema, type Dataset } from '../schemas/contentSchemas';
+import type { CanonicalMasterExportInput } from '../schemas/masterDataSchemas';
 
 export type ImportKind = 'canonical-master' | 'delivery';
 
@@ -69,7 +70,7 @@ function normalizeImport(raw: unknown): { dataset: Dataset; kind: ImportKind } {
 
   if ('masterDataVersion' in raw && 'sheets' in raw) {
     return {
-      dataset: convertMasterToDelivery(raw),
+      dataset: convertMasterToDelivery(raw as CanonicalMasterExportInput),
       kind: 'canonical-master'
     };
   }
