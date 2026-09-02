@@ -13,17 +13,27 @@
 - Cloud: initial releaseでは使用しない
 - In-app AI: initial releaseでは使用しない
 
-## v0.7.0 の位置づけ
+## v0.7系の位置づけ
 
-v0.1〜v0.6で確定した機能仕様を、保守性の高い正式アーキテクチャへ移行する最初のVersionです。
-v0.7では新機能追加よりも、型安全・保存層分離・データ検証・自動QAを優先します。
+v0.1〜v0.6で確定した機能仕様を、保守性の高い正式アーキテクチャへ移行するVersionです。
+v0.7.0でReact + TypeScript基盤へ移行し、v0.7.1で実行環境と依存関係の再現性を固定します。
 
-## Local development
+## Reproducible development environment
 
-Node.js 22.12+ を使用します。
+正式開発環境は以下で固定します。
+
+- Node.js: `.nvmrc` に記載されたVersion
+- npm: `package.json` の `packageManager` に記載されたVersion
+- Dependencies: `package.json` でexact固定
+- Transitive dependencies: `package-lock.json` で固定
+- CI installation: `npm ci`
+
+ローカル開発ではNode/npm Versionを一致させた後、lockfileから依存関係を復元します。
 
 ```bash
-npm install
+nvm use
+npm install --global npm@11.19.1
+npm ci
 npm run dev
 ```
 
@@ -33,6 +43,8 @@ npm run dev
 npm run qa
 npm run test:e2e
 ```
+
+依存パッケージを意図的に変更する場合のみ `package.json` を更新して `npm install` を実行し、更新された `package-lock.json` を同じPRに含めます。
 
 ## Important data policy
 
