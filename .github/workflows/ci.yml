@@ -22,6 +22,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
+      - run: npm install --global npm@11.19.1 --no-audit --no-fund
+      - run: npm --version
       - run: npm install --package-lock-only --ignore-scripts --no-audit --no-fund
       - run: |
           git config user.name "github-actions[bot]"
@@ -41,6 +43,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
+      - run: npm install --global npm@11.19.1 --no-audit --no-fund
+      - run: npm --version
       - run: npm install --no-audit --no-fund
       - run: npm run typecheck
       - run: npm run lint
@@ -54,6 +58,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
+      - run: npm install --global npm@11.19.1 --no-audit --no-fund
+      - run: npm --version
       - run: npm install --no-audit --no-fund
       - run: npx playwright install --with-deps chromium
       - run: npm run build
