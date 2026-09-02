@@ -55,13 +55,15 @@ export class DexieContentRepository implements ContentRepository {
     const dataset = datasetSchema.parse(input);
     await db.transaction(
       'rw',
-      db.questions,
-      db.materials,
-      db.sources,
-      db.sourceOccurrences,
-      db.media,
-      db.mediaBlobs,
-      db.meta,
+      [
+        db.questions,
+        db.materials,
+        db.sources,
+        db.sourceOccurrences,
+        db.media,
+        db.mediaBlobs,
+        db.meta
+      ],
       async () => {
         await Promise.all([
           db.questions.clear(),
