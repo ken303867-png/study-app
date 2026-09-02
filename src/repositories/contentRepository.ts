@@ -1,4 +1,3 @@
-import type { Table } from 'dexie';
 import { db } from '../db/database';
 import { datasetSchema, type DatasetInput } from '../schemas/contentSchemas';
 import type { Material, Question } from '../types/domain';
@@ -10,17 +9,12 @@ export interface ContentRepository {
 }
 
 export class DexieContentRepository implements ContentRepository {
-  constructor(
-    private readonly questionTable: Table<Question, string> = db.questions,
-    private readonly materialTable: Table<Material, string> = db.materials
-  ) {}
-
   async getQuestions(): Promise<Question[]> {
-    return this.questionTable.toArray();
+    return db.questions.toArray();
   }
 
   async getMaterials(): Promise<Material[]> {
-    return this.materialTable.toArray();
+    return db.materials.toArray();
   }
 
   async replaceDataset(input: DatasetInput): Promise<void> {
