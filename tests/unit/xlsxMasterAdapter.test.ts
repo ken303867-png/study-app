@@ -15,7 +15,7 @@ describe('xlsxMasterAdapter', () => {
     expect(parsed.sheets.QUESTIONS).toHaveLength(2);
     expect(parsed.sheets.QUESTIONS[0]?.tags).toEqual(['fixture']);
     expect(parsed.sheets.CHOICES[1]?.is_final_correct).toBe(true);
-    expect(parsed.sheets.SOURCE_OCCURRENCES[0]?.source_question_no).toBe(1);
+    expect(parsed.sheets.SOURCE_OCCURRENCES[0]?.source_question_no).toBe('1');
     expect(parsed.sheets.QA_LEDGER[0]?.final_qa).toBe('pass');
   });
 
