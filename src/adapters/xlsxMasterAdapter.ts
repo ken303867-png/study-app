@@ -53,37 +53,32 @@ export async function parseCanonicalMasterXlsx(
   fileName = 'master.xlsx'
 ): Promise<CanonicalMasterExport> {
   try {
-    const workbook = await readXlsxWorkbook(buffer);
+    const workbook = await readXlsxWorkbook(buffer, SUPPORTED_SHEETS);
     const missingSheets = REQUIRED_SHEETS.filter((sheetName) => !workbook.has(sheetName));
     if (missingSheets.length > 0) {
       throw new XlsxMasterError('Excel正本に必須シートが不足しています。', [...missingSheets]);
     }
 
-    const rowsBySheet = new Map<string, XlsxCellValue[][]>();
-    for (const [sheetName, rows] of workbook) {
-      if (SUPPORTED_SHEETS.has(sheetName)) rowsBySheet.set(sheetName, rows);
-    }
-
-    const metadata = parseReadme(rowsBySheet.get('README') ?? []);
+    const metadata = parseReadme(workbook.get('README') ?? []);
     const rawMaster = {
       ...metadata,
       sheets: {
-        QUESTIONS: rowsToRecords('QUESTIONS', rowsBySheet.get('QUESTIONS') ?? []),
+        QUESTIONS: rowsToRecords('QUESTIONS', workbook.get('QUESTIONS') ?? []),
         SOURCE_OCCURRENCES: rowsToRecords(
           'SOURCE_OCCURRENCES',
-          rowsBySheet.get('SOURCE_OCCURRENCES') ?? []
+          workbook.get('SOURCE_OCCURRENCES') ?? []
         ),
-        CHOICES: rowsToRecords('CHOICES', rowsBySheet.get('CHOICES') ?? []),
-        EXPLANATIONS: rowsToRecords('EXPLANATIONS', rowsBySheet.get('EXPLANATIONS') ?? []),
+        CHOICES: rowsToRecords('CHOICES', workbook.get('CHOICES') ?? []),
+        EXPLANATIONS: rowsToRecords('EXPLANATIONS', workbook.get('EXPLANATIONS') ?? []),
         CHOICE_EXPLANATIONS: rowsToRecords(
           'CHOICE_EXPLANATIONS',
-          rowsBySheet.get('CHOICE_EXPLANATIONS') ?? []
+          workbook.get('CHOICE_EXPLANATIONS') ?? []
         ),
-        SOURCES: rowsToRecords('SOURCES', rowsBySheet.get('SOURCES') ?? []),
-        RELATIONS: rowsToRecords('RELATIONS', rowsBySheet.get('RELATIONS') ?? []),
-        QA_LEDGER: rowsToRecords('QA_LEDGER', rowsBySheet.get('QA_LEDGER') ?? []),
-        TAXONOMY: rowsToRecords('TAXONOMY', rowsBySheet.get('TAXONOMY') ?? []),
-        MEDIA: rowsToRecords('MEDIA', rowsBySheet.get('MEDIA') ?? [])
+        SOURCES: rowsToRecords('SOURCES', workbook.get('SOURCES') ?? []),
+        RELATIONS: rowsToRecords('RELATIONS', workbook.get('RELATIONS') ?? []),
+        QA_LEDGER: rowsToRecords('QA_LEDGER', workbook.get('QA_LEDGER') ?? []),
+        TAXONOMY: rowsToRecords('TAXONOMY', workbook.get('TAXONOMY') ?? []),
+        MEDIA: rowsToRecords('MEDIA', workbook.get('MEDIA') ?? [])
       }
     };
 
