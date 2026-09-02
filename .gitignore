@@ -1,0 +1,16 @@
+node_modules/
+dist/
+coverage/
+playwright-report/
+test-results/
+*.local
+.env
+.env.*
+!.env.example
+.DS_Store
+
+# 正式問題・教材データはGitHubへ保存しない
+data/official/
+data/private/
+imports/private/
+backups/
