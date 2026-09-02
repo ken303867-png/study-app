@@ -1,13 +1,16 @@
 import { ZodError } from 'zod';
+import { parseCanonicalMasterXlsx, XlsxMasterError } from '../adapters/xlsxMasterAdapter';
 import { convertMasterToDelivery, MasterConversionError } from '../converters/masterToDelivery';
 import { contentRepository } from '../repositories/contentRepository';
 import { datasetSchema, type Dataset } from '../schemas/contentSchemas';
 import type { CanonicalMasterExportInput } from '../schemas/masterDataSchemas';
 
 export type ImportKind = 'canonical-master' | 'delivery';
+export type ImportSourceFormat = 'json' | 'xlsx';
 
 export interface DatasetImportResult {
   kind: ImportKind;
+  sourceFormat: ImportSourceFormat;
   datasetVersion: string;
   schemaVersion: '0.5';
   questionCount: number;
@@ -27,6 +30,22 @@ export class DatasetImportError extends Error {
   }
 }
 
+export async function importDatasetFile(file: File): Promise<DatasetImportResult> {
+  const lowerName = file.name.toLowerCase();
+  if (lowerName.endsWith('.xlsx')) {
+    try {
+      const master = await parseCanonicalMasterXlsx(await file.arrayBuffer(), file.name);
+      return await persistNormalized(master, 'canonical-master', 'xlsx');
+    } catch (error) {
+      throw normalizeImportError(error);
+    }
+  }
+  if (lowerName.endsWith('.json') || file.type === 'application/json') {
+    return importDatasetJsonText(await file.text());
+  }
+  throw new DatasetImportError('対応ファイルは .xlsx または .json です。');
+}
+
 export async function importDatasetJsonText(text: string): Promise<DatasetImportResult> {
   let raw: unknown;
   try {
@@ -37,30 +56,40 @@ export async function importDatasetJsonText(text: string): Promise<DatasetImport
 
   try {
     const { dataset, kind } = normalizeImport(raw);
-    await contentRepository.replaceDataset(dataset);
-    return {
-      kind,
-      datasetVersion: dataset.datasetVersion,
-      schemaVersion: dataset.schemaVersion,
-      questionCount: dataset.questions.length,
-      materialCount: dataset.materials.length,
-      sourceCount: dataset.sources.length,
-      sourceOccurrenceCount: dataset.sourceOccurrences.length,
-      mediaCount: dataset.media.length
-    };
+    return await persistDataset(dataset, kind, 'json');
   } catch (error) {
-    if (error instanceof DatasetImportError) throw error;
-    if (error instanceof MasterConversionError) {
-      throw new DatasetImportError('Canonical MasterのDelivery変換QAでエラーを検出しました。', error.issues);
-    }
-    if (error instanceof ZodError) {
-      throw new DatasetImportError(
-        'Schema検証でエラーを検出しました。',
-        error.issues.map((issue) => `${issue.path.join('.') || '(root)'}: ${issue.message}`)
-      );
-    }
-    throw error;
+    throw normalizeImportError(error);
   }
+}
+
+async function persistNormalized(
+  raw: unknown,
+  kind: ImportKind,
+  sourceFormat: ImportSourceFormat
+): Promise<DatasetImportResult> {
+  const dataset = kind === 'canonical-master'
+    ? convertMasterToDelivery(raw as CanonicalMasterExportInput)
+    : datasetSchema.parse(raw);
+  return persistDataset(dataset, kind, sourceFormat);
+}
+
+async function persistDataset(
+  dataset: Dataset,
+  kind: ImportKind,
+  sourceFormat: ImportSourceFormat
+): Promise<DatasetImportResult> {
+  await contentRepository.replaceDataset(dataset);
+  return {
+    kind,
+    sourceFormat,
+    datasetVersion: dataset.datasetVersion,
+    schemaVersion: dataset.schemaVersion,
+    questionCount: dataset.questions.length,
+    materialCount: dataset.materials.length,
+    sourceCount: dataset.sources.length,
+    sourceOccurrenceCount: dataset.sourceOccurrences.length,
+    mediaCount: dataset.media.length
+  };
 }
 
 function normalizeImport(raw: unknown): { dataset: Dataset; kind: ImportKind } {
@@ -85,6 +114,23 @@ function normalizeImport(raw: unknown): { dataset: Dataset; kind: ImportKind } {
   throw new DatasetImportError(
     'Canonical Master JSON ExportまたはDelivery Schema 0.5 JSONとして識別できません。'
   );
+}
+
+function normalizeImportError(error: unknown): DatasetImportError {
+  if (error instanceof DatasetImportError) return error;
+  if (error instanceof XlsxMasterError) {
+    return new DatasetImportError(error.message, error.issues);
+  }
+  if (error instanceof MasterConversionError) {
+    return new DatasetImportError('Canonical MasterのDelivery変換QAでエラーを検出しました。', error.issues);
+  }
+  if (error instanceof ZodError) {
+    return new DatasetImportError(
+      'Schema検証でエラーを検出しました。',
+      error.issues.map((issue) => `${issue.path.join('.') || '(root)'}: ${issue.message}`)
+    );
+  }
+  return new DatasetImportError('データImport中に予期しないエラーが発生しました。');
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {
