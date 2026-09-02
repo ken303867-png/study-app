@@ -176,7 +176,7 @@ export function convertMasterToDelivery(input: CanonicalMasterExportInput): Data
       relatedMaterialIds: [],
       tags: row.tags,
       revision: row.revision
-    } as const;
+    };
 
     if (['single-choice', 'multiple-choice', 'true-false'].includes(row.question_format)) {
       if (masterChoices.length < 2) {
