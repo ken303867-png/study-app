@@ -1,5 +1,22 @@
 # Changelog
 
+## [0.7.1] - 2026-09-02
+
+### Changed
+- Node.js runtimeを `.nvmrc` で固定
+- npmを11.19.1へ固定
+- 直接依存パッケージをexact Version指定へ変更
+- Vite 8 / plugin-react 6 / vite-plugin-pwa 1.3の互換構成へ整理
+- typescript-eslintをESLint 10互換構成へ更新
+- `package-lock.json` を正式導入
+- GitHub Actionsの依存復元を `npm ci` へ変更
+- npm cacheをlockfileベースで有効化
+
+### Policy
+- `--force` / `--legacy-peer-deps` は正式依存解決に使用しない
+- package.json変更時はpackage-lock.jsonを同じPRで更新する
+- Cloud / In-app AIは引き続き無効
+
 ## [0.7.0] - 2026-09-02
 
 ### Added
