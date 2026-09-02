@@ -3,10 +3,16 @@ import fixture from '../fixtures/canonical-master-sample.json';
 import { sampleDataset } from '../../src/data/sampleDataset';
 import { db } from '../../src/db/database';
 import { contentRepository } from '../../src/repositories/contentRepository';
+import { canonicalMasterExportSchema } from '../../src/schemas/masterDataSchemas';
 import {
   DatasetImportError,
+  importDatasetFile,
   importDatasetJsonText
 } from '../../src/services/datasetImportService';
+import {
+  buildCanonicalMasterXlsx,
+  buildWorkbookXlsx
+} from '../helpers/buildCanonicalMasterXlsx';
 
 describe('datasetImportService', () => {
   beforeEach(async () => {
@@ -27,6 +33,7 @@ describe('datasetImportService', () => {
     const questions = await contentRepository.getQuestions();
 
     expect(result.kind).toBe('canonical-master');
+    expect(result.sourceFormat).toBe('json');
     expect(result.schemaVersion).toBe('0.5');
     expect(result.questionCount).toBe(1);
     expect(questions.map((question) => question.id)).toEqual(['FIX-Q-001']);
@@ -36,8 +43,23 @@ describe('datasetImportService', () => {
     const result = await importDatasetJsonText(JSON.stringify(sampleDataset));
 
     expect(result.kind).toBe('delivery');
+    expect(result.sourceFormat).toBe('json');
     expect(result.questionCount).toBe(1);
     expect((await db.meta.get('schemaVersion'))?.value).toBe('0.5');
+  });
+
+  it('imports a canonical master .xlsx through the same atomic pipeline', async () => {
+    const master = canonicalMasterExportSchema.parse(fixture);
+    const bytes = await buildCanonicalMasterXlsx(master);
+    const file = fileLike('pilot-master.xlsx', bytes);
+
+    const result = await importDatasetFile(file);
+
+    expect(result.kind).toBe('canonical-master');
+    expect(result.sourceFormat).toBe('xlsx');
+    expect(result.questionCount).toBe(1);
+    expect((await contentRepository.getQuestions())[0]?.id).toBe('FIX-Q-001');
+    expect((await db.meta.get('datasetVersion'))?.value).toBe('fixture-delivery-0.1');
   });
 
   it('does not overwrite the current dataset when master conversion QA fails', async () => {
@@ -54,6 +76,44 @@ describe('datasetImportService', () => {
     expect((await db.meta.get('datasetVersion'))?.value).toBe(sampleDataset.datasetVersion);
   });
 
+  it('detects legacy 709 xlsx, reports migration blockers, and keeps current data', async () => {
+    await contentRepository.replaceDataset(sampleDataset);
+    const bytes = await buildWorkbookXlsx([
+      {
+        name: '統合709_学習マスター',
+        rows: [
+          ['学習ID', '問題文', '選択肢A', '選択肢B', '選択肢C', '選択肢D', '正答'],
+          ['LEGACY-001', '非正式旧正本QA問題', 'A', 'B', 'C', 'D', 'B']
+        ]
+      }
+    ]);
+
+    let caught: unknown;
+    try {
+      await importDatasetFile(fileLike('legacy-v1.47.xlsx', bytes));
+    } catch (error) {
+      caught = error;
+    }
+
+    expect(caught).toBeInstanceOf(DatasetImportError);
+    if (!(caught instanceof DatasetImportError)) throw new Error('DatasetImportError expected');
+    expect(caught.message).toMatch(/旧v1\.47系709問Excel正本/);
+    expect(caught.issues.join('\n')).toMatch(/SOURCE_OCCURRENCES/);
+
+    expect((await contentRepository.getQuestions())[0]?.id).toBe('SAMPLE-Q-001');
+    expect((await db.meta.get('datasetVersion'))?.value).toBe(sampleDataset.datasetVersion);
+  });
+
+  it('does not overwrite the current dataset when xlsx parsing fails', async () => {
+    await contentRepository.replaceDataset(sampleDataset);
+    const file = fileLike('broken.xlsx', new TextEncoder().encode('broken'));
+
+    await expect(importDatasetFile(file)).rejects.toBeInstanceOf(DatasetImportError);
+
+    expect((await contentRepository.getQuestions())[0]?.id).toBe('SAMPLE-Q-001');
+    expect((await db.meta.get('datasetVersion'))?.value).toBe(sampleDataset.datasetVersion);
+  });
+
   it('rejects unrecognized JSON without touching storage', async () => {
     await contentRepository.replaceDataset(sampleDataset);
 
@@ -64,3 +124,15 @@ describe('datasetImportService', () => {
     expect((await contentRepository.getQuestions())[0]?.id).toBe('SAMPLE-Q-001');
   });
 });
+
+function fileLike(name: string, bytes: Uint8Array): File {
+  const copy = new Uint8Array(bytes);
+  return {
+    name,
+    type: name.endsWith('.xlsx')
+      ? 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+      : 'application/octet-stream',
+    arrayBuffer: () => Promise.resolve(copy.buffer),
+    text: () => Promise.resolve(new TextDecoder().decode(copy))
+  } as File;
+}

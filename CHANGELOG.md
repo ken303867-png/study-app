@@ -20,18 +20,26 @@
 - Import失敗時に既存IndexedDB contentを置換しない非破壊性QA
 - Canonical Master ImportのVitest / Playwright E2Eテスト
 - 空Canonical Master JSON Exportテンプレート
+- 新規npm依存なしのCanonical Master `.xlsx` 直接Adapter
+- `RELATIONS` のCanonical Master保持Schema
+- 旧v1.47系 `統合709_学習マスター` のLegacy Migration Preflight
+- Excel正本→Canonical→Delivery→IndexedDBのChromium E2E QA
+- 旧709 Preflight停止時のIndexedDB非破壊性QA
 
 ### Changed
 - 旧 `explanation: string` からExplanation Template v1.0構造へ移行
 - Dexie schemaをversion 2へ拡張
 - サンプルDeliveryデータをSchema 0.5へ更新
 - 旧Schema検出基準をSchema 0.5へ更新
+- 正式データImport UIを `.xlsx` / Canonical JSON / Delivery JSON対応へ拡張
 
 ### Compatibility
 - Schema 0.3 / 0.4を0.5へ暗黙変換しない
 - 旧Schema保存データはUIで再変換・再投入を案内する
 - 学習履歴は教材Deliveryデータとは独立して保持する
 - 正式問題本文を含むMaster / DeliveryデータはGitHubへ保存しない
+- 旧v1.47系709問正本をFormal Data Spec v1.1へ暗黙変換しない
+- source lineageが不足した旧正本はPreflightで停止し、推測で `source_id` / `source_answer` / `SOURCE_OCCURRENCES` を生成しない
 
 ## [0.7.1] - 2026-09-02
 
