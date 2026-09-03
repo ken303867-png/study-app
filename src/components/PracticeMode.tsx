@@ -16,6 +16,7 @@ import {
   canSubmitPracticeAnswer,
   choiceLabel,
   evaluatePracticeAnswer,
+  formatCorrectAnswer,
   type PracticeAnswer,
   type PracticeEvaluation
 } from '../utils/practiceEngine';
@@ -25,10 +26,12 @@ import {
   type ExamResultSummary
 } from '../utils/examSession';
 import type { ExamTimerMinutes, PracticeSessionMode } from '../utils/practiceSets';
+import { classifyQuestion } from '../utils/questionCategories';
 
 interface PracticeResponse {
   answer: PracticeAnswer;
   evaluation: PracticeEvaluation;
+  result: LearningResult;
 }
 
 interface ExamCompletion {
@@ -63,6 +66,7 @@ export function PracticeMode({
   const [index, setIndex] = useState(0);
   const [answers, setAnswers] = useState<Map<string, PracticeAnswer>>(() => new Map());
   const [responses, setResponses] = useState<Map<string, PracticeResponse>>(() => new Map());
+  const [revealedAnswers, setRevealedAnswers] = useState<Set<string>>(() => new Set());
   const [submitting, setSubmitting] = useState(false);
   const [completed, setCompleted] = useState(false);
   const [examCompletion, setExamCompletion] = useState<ExamCompletion | null>(null);
@@ -73,11 +77,23 @@ export function PracticeMode({
   const currentQuestion = queue[index];
   const isExam = sessionMode === 'exam';
   const wrongQuestions = useMemo(
-    () => queue.filter((question) => responses.get(question.id)?.evaluation.correct === false),
+    () =>
+      queue.filter((question) => {
+        const response = responses.get(question.id);
+        return response ? response.result !== 'correct' : false;
+      }),
     [queue, responses]
   );
   const correctCount = useMemo(
-    () => [...responses.values()].filter((response) => response.evaluation.correct).length,
+    () => [...responses.values()].filter((response) => response.result === 'correct').length,
+    [responses]
+  );
+  const incorrectCount = useMemo(
+    () => [...responses.values()].filter((response) => response.result === 'incorrect').length,
+    [responses]
+  );
+  const uncertainCount = useMemo(
+    () => [...responses.values()].filter((response) => response.result === 'uncertain').length,
     [responses]
   );
   const examAnsweredCount = useMemo(
@@ -182,14 +198,15 @@ export function PracticeMode({
           <div className="practice-result-grid">
             <div><strong>{answeredCount}</strong><span>回答</span></div>
             <div><strong>{correctCount}</strong><span>正解</span></div>
-            <div><strong>{answeredCount - correctCount}</strong><span>不正解</span></div>
+            <div><strong>{incorrectCount}</strong><span>不正解</span></div>
+            <div><strong>{uncertainCount}</strong><span>要復習</span></div>
             <div><strong>{accuracy}%</strong><span>正答率</span></div>
           </div>
         </div>
         <div className="panel practice-summary-actions">
           {wrongQuestions.length > 0 && (
             <button type="button" onClick={() => restart(wrongQuestions)}>
-              間違えた{wrongQuestions.length}問を再挑戦
+              正解以外の{wrongQuestions.length}問を再挑戦
             </button>
           )}
           <button type="button" onClick={() => restart(questions)}>同じ条件でもう一度</button>
@@ -204,6 +221,8 @@ export function PracticeMode({
   const response = responses.get(currentQuestion.id);
   const answer = answers.get(currentQuestion.id) ?? emptyAnswer(currentQuestion);
   const history = historyByQuestionId.get(currentQuestion.id);
+  const isClozeSelfAssessment = !isExam && classifyQuestion(currentQuestion) === 'common-cloze';
+  const clozeAnswerRevealed = revealedAnswers.has(currentQuestion.id);
   const progress = ((index + 1) / queue.length) * 100;
 
   const setAnswer = (next: PracticeAnswer) => {
@@ -217,12 +236,46 @@ export function PracticeMode({
   const submit = async () => {
     if (isExam || response || !canSubmitPracticeAnswer(currentQuestion, answer)) return;
     const evaluation = evaluatePracticeAnswer(currentQuestion, answer);
+    const result: LearningResult = evaluation.correct ? 'correct' : 'incorrect';
     setSubmitting(true);
     try {
-      await onRecordResult(currentQuestion.id, evaluation.correct ? 'correct' : 'incorrect');
+      await onRecordResult(currentQuestion.id, result);
       setResponses((current) => {
         const updated = new Map(current);
-        updated.set(currentQuestion.id, { answer, evaluation });
+        updated.set(currentQuestion.id, { answer, evaluation, result });
+        return updated;
+      });
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  const revealClozeAnswer = () => {
+    if (!isClozeSelfAssessment || response) return;
+    setRevealedAnswers((current) => {
+      const updated = new Set(current);
+      updated.add(currentQuestion.id);
+      return updated;
+    });
+  };
+
+  const selfAssessCloze = async (result: LearningResult) => {
+    if (!isClozeSelfAssessment || response || !clozeAnswerRevealed) return;
+    const evaluation: PracticeEvaluation = {
+      correct: result === 'correct',
+      correctAnswerLabel: formatCorrectAnswer(currentQuestion)
+    };
+    const selfAssessmentAnswer: PracticeAnswer = { kind: 'text', value: '' };
+    setSubmitting(true);
+    try {
+      await onRecordResult(currentQuestion.id, result);
+      setResponses((current) => {
+        const updated = new Map(current);
+        updated.set(currentQuestion.id, {
+          answer: selfAssessmentAnswer,
+          evaluation,
+          result
+        });
         return updated;
       });
     } finally {
@@ -273,14 +326,61 @@ export function PracticeMode({
         <p className="material-id">{currentQuestion.id}</p>
         <h3>{currentQuestion.prompt}</h3>
 
-        <PracticeAnswerInput
-          question={currentQuestion}
-          answer={answer}
-          disabled={submitting || (!isExam && response !== undefined)}
-          onChange={setAnswer}
-        />
+        {isClozeSelfAssessment ? (
+          !response && (
+            <div className="cloze-self-assessment">
+              {!clozeAnswerRevealed ? (
+                <button
+                  type="button"
+                  className="practice-submit"
+                  disabled={submitting}
+                  onClick={revealClozeAnswer}
+                >
+                  答えを見る
+                </button>
+              ) : (
+                <>
+                  <div className="cloze-answer-reveal" role="status">
+                    <span>正答</span>
+                    <strong>{formatCorrectAnswer(currentQuestion)}</strong>
+                  </div>
+                  <div className="cloze-self-grade" aria-label="自己採点">
+                    <button
+                      type="button"
+                      disabled={submitting}
+                      onClick={() => void selfAssessCloze('correct')}
+                    >
+                      正解
+                    </button>
+                    <button
+                      type="button"
+                      disabled={submitting}
+                      onClick={() => void selfAssessCloze('incorrect')}
+                    >
+                      不正解
+                    </button>
+                    <button
+                      type="button"
+                      disabled={submitting}
+                      onClick={() => void selfAssessCloze('uncertain')}
+                    >
+                      要復習
+                    </button>
+                  </div>
+                </>
+              )}
+            </div>
+          )
+        ) : (
+          <PracticeAnswerInput
+            question={currentQuestion}
+            answer={answer}
+            disabled={submitting || (!isExam && response !== undefined)}
+            onChange={setAnswer}
+          />
+        )}
 
-        {!isExam && !response && (
+        {!isExam && !isClozeSelfAssessment && !response && (
           <button
             type="button"
             className="practice-submit"
@@ -293,10 +393,16 @@ export function PracticeMode({
 
         {!isExam && response && (
           <div
-            className={`practice-feedback ${response.evaluation.correct ? 'correct' : 'incorrect'}`}
+            className={`practice-feedback ${response.result}`}
             role="status"
           >
-            <strong>{response.evaluation.correct ? '正解' : '不正解'}</strong>
+            <strong>
+              {response.result === 'correct'
+                ? '正解'
+                : response.result === 'incorrect'
+                  ? '不正解'
+                  : '要復習'}
+            </strong>
             <p>正答：{response.evaluation.correctAnswerLabel}</p>
           </div>
         )}
@@ -363,6 +469,7 @@ export function PracticeMode({
     setIndex(0);
     setAnswers(new Map());
     setResponses(new Map());
+    setRevealedAnswers(new Set());
     setExamCompletion(null);
     setCompleted(false);
     setRemainingSeconds(timerMinutes * 60);
