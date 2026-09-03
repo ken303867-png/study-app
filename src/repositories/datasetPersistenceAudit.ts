@@ -1,5 +1,10 @@
 import type { Dataset } from '../schemas/contentSchemas';
 
+export interface DatasetPersistenceMetadata {
+  explanationTemplateVersion: string;
+  formalDataSpecVersion: string;
+}
+
 export interface DatasetPersistenceSnapshot {
   questions: Dataset['questions'];
   materials: Dataset['materials'];
@@ -39,7 +44,11 @@ export class DatasetPersistenceAuditError extends Error {
 
 export function auditDatasetPersistence(
   expected: Dataset,
-  actual: DatasetPersistenceSnapshot
+  actual: DatasetPersistenceSnapshot,
+  expectedMetadata: DatasetPersistenceMetadata = {
+    explanationTemplateVersion: '1.0',
+    formalDataSpecVersion: '1.1'
+  }
 ): DatasetPersistenceAudit {
   const issues: string[] = [];
 
@@ -57,8 +66,18 @@ export function auditDatasetPersistence(
 
   compareMeta('datasetVersion', expected.datasetVersion, actual.meta.datasetVersion, issues);
   compareMeta('schemaVersion', expected.schemaVersion, actual.meta.schemaVersion, issues);
-  compareMeta('explanationTemplateVersion', '1.0', actual.meta.explanationTemplateVersion, issues);
-  compareMeta('formalDataSpecVersion', '1.1', actual.meta.formalDataSpecVersion, issues);
+  compareMeta(
+    'explanationTemplateVersion',
+    expectedMetadata.explanationTemplateVersion,
+    actual.meta.explanationTemplateVersion,
+    issues
+  );
+  compareMeta(
+    'formalDataSpecVersion',
+    expectedMetadata.formalDataSpecVersion,
+    actual.meta.formalDataSpecVersion,
+    issues
+  );
 
   if (issues.length > 0) throw new DatasetPersistenceAuditError(issues);
 
