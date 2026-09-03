@@ -5,10 +5,14 @@ import { convertMasterToDelivery, MasterConversionError } from '../converters/ma
 import { contentRepository } from '../repositories/contentRepository';
 import {
   DatasetPersistenceAuditError,
-  type DatasetPersistenceAudit
+  type DatasetPersistenceAudit,
+  type DatasetPersistenceMetadata
 } from '../repositories/datasetPersistenceAudit';
 import { datasetSchema, type Dataset } from '../schemas/contentSchemas';
-import type { CanonicalMasterExportInput } from '../schemas/masterDataSchemas';
+import {
+  canonicalMasterExportSchema,
+  type CanonicalMasterExportInput
+} from '../schemas/masterDataSchemas';
 
 export type ImportKind = 'canonical-master' | 'delivery';
 export type ImportSourceFormat = 'json' | 'xlsx';
@@ -18,6 +22,7 @@ export interface DatasetImportResult {
   sourceFormat: ImportSourceFormat;
   datasetVersion: string;
   schemaVersion: '0.5';
+  formalDataSpecVersion: string;
   questionCount: number;
   materialCount: number;
   sourceCount: number;
@@ -42,13 +47,13 @@ export async function importDatasetFile(file: File): Promise<DatasetImportResult
     const buffer = await file.arrayBuffer();
     try {
       const master = await parseCanonicalMasterXlsx(buffer, file.name);
-      return await persistNormalized(master, 'canonical-master', 'xlsx');
+      return await persistCanonicalMaster(master, 'xlsx');
     } catch (error) {
       if (error instanceof XlsxMasterError) {
         const legacy = await preflightLegacy709MasterXlsx(buffer).catch(() => null);
         if (legacy) {
           throw new DatasetImportError(
-            '旧v1.47系709問Excel正本を検出しました。正式Canonical v1.1へ損失なく移行するためImportを中止しました。',
+            '旧v1.47系709問Excel正本を検出しました。正式Canonicalへ損失なく移行するためImportを中止しました。',
             [
               `Preflight: ${legacy.questionCount}問 / A〜D+正答完備 ${legacy.fourChoiceCompleteCount}問 / 解答解説コア完備 ${legacy.coreExplanationCompleteCount}問`,
               `旧独自フィールド: 比較して覚える ${legacy.legacyComparePopulatedCount}問 / 間違いやすいポイント ${legacy.legacyPitfallsPopulatedCount}問`,
@@ -75,36 +80,46 @@ export async function importDatasetJsonText(text: string): Promise<DatasetImport
   }
 
   try {
-    const { dataset, kind } = normalizeImport(raw);
-    return await persistDataset(dataset, kind, 'json');
+    const normalized = normalizeImport(raw);
+    return await persistDataset(
+      normalized.dataset,
+      normalized.kind,
+      'json',
+      normalized.metadata
+    );
   } catch (error) {
     throw normalizeImportError(error);
   }
 }
 
-async function persistNormalized(
-  raw: unknown,
-  kind: ImportKind,
+async function persistCanonicalMaster(
+  raw: CanonicalMasterExportInput,
   sourceFormat: ImportSourceFormat
 ): Promise<DatasetImportResult> {
-  const dataset =
-    kind === 'canonical-master'
-      ? convertMasterToDelivery(raw as CanonicalMasterExportInput)
-      : datasetSchema.parse(raw);
-  return persistDataset(dataset, kind, sourceFormat);
+  const master = canonicalMasterExportSchema.parse(raw);
+  const dataset = convertMasterToDelivery(master);
+  return persistDataset(dataset, 'canonical-master', sourceFormat, {
+    explanationTemplateVersion: master.explanationTemplateVersion,
+    formalDataSpecVersion: master.formalDataSpecVersion
+  });
 }
 
 async function persistDataset(
   dataset: Dataset,
   kind: ImportKind,
-  sourceFormat: ImportSourceFormat
+  sourceFormat: ImportSourceFormat,
+  metadata: DatasetPersistenceMetadata = {
+    explanationTemplateVersion: '1.0',
+    formalDataSpecVersion: '1.1'
+  }
 ): Promise<DatasetImportResult> {
-  const persistenceAudit = await contentRepository.replaceDataset(dataset);
+  const persistenceAudit = await contentRepository.replaceDataset(dataset, metadata);
   return {
     kind,
     sourceFormat,
     datasetVersion: dataset.datasetVersion,
     schemaVersion: dataset.schemaVersion,
+    formalDataSpecVersion: metadata.formalDataSpecVersion,
     questionCount: dataset.questions.length,
     materialCount: dataset.materials.length,
     sourceCount: dataset.sources.length,
@@ -114,22 +129,35 @@ async function persistDataset(
   };
 }
 
-function normalizeImport(raw: unknown): { dataset: Dataset; kind: ImportKind } {
+function normalizeImport(raw: unknown): {
+  dataset: Dataset;
+  kind: ImportKind;
+  metadata: DatasetPersistenceMetadata;
+} {
   if (!isRecord(raw)) {
     throw new DatasetImportError('JSONのルートはobjectである必要があります。');
   }
 
   if ('masterDataVersion' in raw && 'sheets' in raw) {
+    const master = canonicalMasterExportSchema.parse(raw);
     return {
-      dataset: convertMasterToDelivery(raw as CanonicalMasterExportInput),
-      kind: 'canonical-master'
+      dataset: convertMasterToDelivery(master),
+      kind: 'canonical-master',
+      metadata: {
+        explanationTemplateVersion: master.explanationTemplateVersion,
+        formalDataSpecVersion: master.formalDataSpecVersion
+      }
     };
   }
 
   if ('datasetVersion' in raw && 'schemaVersion' in raw) {
     return {
       dataset: datasetSchema.parse(raw),
-      kind: 'delivery'
+      kind: 'delivery',
+      metadata: {
+        explanationTemplateVersion: '1.0',
+        formalDataSpecVersion: '1.1'
+      }
     };
   }
 
