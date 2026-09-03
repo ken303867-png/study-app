@@ -91,7 +91,7 @@ test('imports and read-back verifies a 709-question canonical master xlsx in Chr
   await expect(page.locator('.metric-grid').getByText('709', { exact: true }).first()).toBeVisible();
 
   const indexedDbCounts = await page.evaluate(async () => {
-    const request = indexedDB.open('study-app-db');
+    const request = indexedDB.open('study-app');
     const database = await new Promise<IDBDatabase>((resolve, reject) => {
       request.onsuccess = () => resolve(request.result);
       request.onerror = () => reject(request.error ?? new Error('IndexedDB open failed'));
