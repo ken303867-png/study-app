@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
   pages: write
   id-token: write
 
@@ -15,26 +15,6 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  patch-cloze-self-assessment:
-    if: github.event.head_commit.message == 'chore: apply cloze self-assessment via pages workflow'
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - uses: actions/setup-node@v4
-        with:
-          node-version-file: '.nvmrc'
-      - name: Apply cloze self-assessment codemod
-        run: node scripts/apply-cloze-self-assessment.mjs
-      - name: Commit implementation
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add src/components/PracticeMode.tsx src/components/PracticeSetBuilder.tsx src/styles.css tests/unit/PracticeMode.clozeSelfAssessment.test.tsx
-          git commit -m "feat: add cloze answer reveal self-assessment"
-          git push
-
   build:
     runs-on: ubuntu-latest
     steps:
