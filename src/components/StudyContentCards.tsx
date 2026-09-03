@@ -88,7 +88,7 @@ export function QuestionCard({
         </RelatedLinks>
       )}
       <details className="explanation-details">
-        <summary>解答解説を表示</summary>
+        <summary>{question.tags.includes('answer-only') ? '解答を表示' : '解答解説を表示'}</summary>
         <FormalExplanationView question={question} media={media} />
       </details>
     </article>
@@ -186,6 +186,17 @@ function RelatedLinks({
 }
 
 export function FormalExplanationView({ question, media }: { question: Question; media: MediaRecord[] }) {
+  if (question.tags.includes('answer-only') && 'acceptedAnswers' in question) {
+    return (
+      <div className="explanation-stack">
+        <section className="explanation-block">
+          <h4>解答</h4>
+          <p>{question.acceptedAnswers.join(' / ')}</p>
+        </section>
+      </div>
+    );
+  }
+
   if (typeof question.explanation === 'string') {
     return (
       <div className="explanation-stack">
