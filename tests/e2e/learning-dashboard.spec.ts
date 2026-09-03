@@ -1,4 +1,4 @@
-import { expect, test, type Page } from '@playwright/test';
+import { expect, test, type Locator, type Page } from '@playwright/test';
 
 const questionPrompt = '正式Deliveryデータを実行時検証するライブラリはどれですか。';
 
@@ -17,6 +17,38 @@ async function recordWrongPracticeAttempt(page: Page) {
   await page.getByRole('radio', { name: /A\s*Dexie/i }).check();
   await page.getByRole('button', { name: '回答を確定する' }).click();
   await expect(page.getByRole('status')).toContainText('不正解');
+}
+
+async function logMobileHitTest(page: Page, locator: Locator, label: string) {
+  if ((page.viewportSize()?.width ?? 9999) > 760) return;
+  await locator.scrollIntoViewIfNeeded();
+  const diagnostic = await locator.evaluate((element) => {
+    const rect = element.getBoundingClientRect();
+    const x = rect.left + rect.width / 2;
+    const y = rect.top + rect.height / 2;
+    const style = window.getComputedStyle(element);
+    const nav = document.querySelector('.top-nav');
+    const navStyle = nav ? window.getComputedStyle(nav) : null;
+    return {
+      viewport: { width: window.innerWidth, height: window.innerHeight, scrollY: window.scrollY },
+      target: {
+        tag: element.tagName,
+        className: element.className,
+        rect: { left: rect.left, top: rect.top, width: rect.width, height: rect.height },
+        display: style.display,
+        position: style.position,
+        zIndex: style.zIndex
+      },
+      nav: navStyle ? { position: navStyle.position, zIndex: navStyle.zIndex } : null,
+      point: { x, y },
+      stack: document.elementsFromPoint(x, y).slice(0, 8).map((node) => ({
+        tag: node.tagName,
+        className: (node as HTMLElement).className,
+        text: node.textContent?.trim().slice(0, 60) ?? ''
+      }))
+    };
+  });
+  console.log(`[dashboard-hit-test:${label}] ${JSON.stringify(diagnostic)}`);
 }
 
 test('summarizes learning history and launches a review set from the weakest subject', async ({ page }) => {
@@ -43,7 +75,9 @@ test('summarizes learning history and launches a review set from the weakest sub
   await expect(recentAttention).toContainText(questionPrompt);
   await expect(recentAttention).toContainText('不正解');
 
-  await subjectPriority.getByRole('button', { name: '復習セット' }).click();
+  const reviewButton = subjectPriority.getByRole('button', { name: '復習セット' });
+  await logMobileHitTest(page, reviewButton, 'review-button');
+  await reviewButton.click();
   await expect(page.getByRole('heading', { name: '演習セットを作成' })).toBeVisible();
   await expect(page.getByText('母集団：サンプル科目 / 1問')).toBeVisible();
   await expect(page.getByRole('radio', { name: /要復習/ })).toBeChecked();
@@ -56,7 +90,9 @@ test('opens a recent incorrect question directly from the dashboard', async ({ p
 
   await page.getByRole('button', { name: '分析' }).click();
   const dashboard = page.getByRole('region', { name: '学習ダッシュボード' });
-  await dashboard.locator('.dashboard-attention-item').click();
+  const attentionItem = dashboard.locator('.dashboard-attention-item');
+  await logMobileHitTest(page, attentionItem, 'attention-item');
+  await attentionItem.click();
 
   await expect(page.getByText(questionPrompt)).toBeVisible();
   await expect(page.locator('.question-card.targeted')).toContainText('SAMPLE-Q-001');
