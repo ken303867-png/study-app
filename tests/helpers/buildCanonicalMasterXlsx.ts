@@ -26,7 +26,9 @@ export async function buildCanonicalMasterXlsx(master: CanonicalMasterExport): P
     'RELATIONS',
     'QA_LEDGER',
     'TAXONOMY',
-    'MEDIA'
+    'MEDIA',
+    'MATERIALS',
+    'MATERIAL_BLOCKS'
   ] as const) {
     const records = master.sheets[sheetName] as unknown as Array<Record<string, unknown>>;
     sheets.push({ name: sheetName, rows: recordsToRows(records) });
