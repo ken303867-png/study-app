@@ -1,4 +1,12 @@
 import { IMPORTANCE_LEVELS } from '../types/domain';
+import {
+  LEARNING_AREA_LABELS,
+  QUESTION_KIND_LABELS,
+  QUESTION_KINDS,
+  QUESTION_KINDS_BY_AREA,
+  type LearningArea,
+  type QuestionKind
+} from '../utils/questionCategories';
 import type { QuestionFilterState } from '../utils/contentFilters';
 
 export function QuestionFilterPanel({
@@ -18,6 +26,11 @@ export function QuestionFilterPanel({
   onChange: (next: QuestionFilterState) => void;
   onReset: () => void;
 }) {
+  const visibleKinds =
+    filters.learningArea === 'all'
+      ? QUESTION_KINDS
+      : QUESTION_KINDS_BY_AREA[filters.learningArea];
+
   return (
     <section className="filter-panel" aria-label="問題の検索と絞り込み">
       <div className="filter-panel-heading">
@@ -36,6 +49,44 @@ export function QuestionFilterPanel({
             placeholder="問題文、論点、IDなど"
             onChange={(event) => onChange({ ...filters, query: event.currentTarget.value })}
           />
+        </label>
+        <label className="filter-field">
+          <span>学習分野</span>
+          <select
+            value={filters.learningArea}
+            onChange={(event) =>
+              onChange({
+                ...filters,
+                learningArea: event.currentTarget.value as 'all' | LearningArea,
+                questionKind: 'all'
+              })
+            }
+          >
+            <option value="all">すべて</option>
+            <option value="common">{LEARNING_AREA_LABELS.common}</option>
+            <option value="specialty">{LEARNING_AREA_LABELS.specialty}</option>
+          </select>
+        </label>
+        <label className="filter-field">
+          <span>問題の種類</span>
+          <select
+            value={filters.questionKind}
+            onChange={(event) =>
+              onChange({
+                ...filters,
+                questionKind: event.currentTarget.value as 'all' | QuestionKind
+              })
+            }
+          >
+            <option value="all">すべて</option>
+            {visibleKinds.map((kind) => (
+              <option key={kind} value={kind}>
+                {filters.learningArea === 'all'
+                  ? `${kind.startsWith('common-') ? '共通' : '専門'}：${QUESTION_KIND_LABELS[kind]}`
+                  : QUESTION_KIND_LABELS[kind]}
+              </option>
+            ))}
+          </select>
         </label>
         <label className="filter-field">
           <span>科目</span>
@@ -74,22 +125,6 @@ export function QuestionFilterPanel({
             {IMPORTANCE_LEVELS.map((importance) => (
               <option key={importance} value={importance}>{importance}</option>
             ))}
-          </select>
-        </label>
-        <label className="filter-field">
-          <span>出典区分</span>
-          <select
-            value={filters.origin}
-            onChange={(event) =>
-              onChange({
-                ...filters,
-                origin: event.currentTarget.value as QuestionFilterState['origin']
-              })
-            }
-          >
-            <option value="all">すべて</option>
-            <option value="source">正式・既存問題</option>
-            <option value="predicted">予想問題</option>
           </select>
         </label>
         <label className="filter-field">
