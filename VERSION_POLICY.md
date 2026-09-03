@@ -4,7 +4,7 @@
 
 アプリ本体・データ・schemaを独立してVersion管理します。
 
-- App Version: `0.13.0`
+- App Version: `0.14.0`
 - Schema Version: `0.5`
 - Explanation Template Version: `1.0`
 - Formal Data Specification Version: `1.2`
@@ -19,6 +19,8 @@ Formal Data Specification 1.2は1.1のSource lineage構造を維持したまま�
 App 0.12.0はDelivery / Formal Schemaを変更せず、既存`learningHistory`から全体成績・科目別/単元別成績・復習優先順位・直近不正解/不確実を再計算する学習ダッシュボードを追加します。分析結果は派生表示であり、Formal Master / Deliveryへ書き戻さず、クラウドへ送信しません。
 
 App 0.13.0はDelivery / Formal Schemaを変更せず、通常演習と独立した試験モードを追加します。試験中は正誤・正答・正式解説を表示せず、任意タイマー、終了時一括採点、科目別集計、誤答・未回答一覧を提供します。試験セッション要約は教材データと分離したIndexedDB `examSessions`へローカル保存します。
+
+App 0.14.0はDelivery / Formal Schemaを変更せず、既存`vite-plugin-pwa`のgenerateSW構成を正式なオフライン層として完成させます。manifest installability、192/512 PNGアイコン、maskable指定、iOS metadata、install prompt、接続状態表示、Service Worker制御後の実オフライン再読込とIndexedDB学習継続をrelease gateで検証します。
 
 ## Semantic versioning
 
@@ -112,6 +114,21 @@ App 0.13.0はDelivery / Formal Schemaを変更せず、通常演習と独立し�
 - 試験セッション要約は`examSessions`へ保存し、問題本文・正答・正式解説を複製保存しない
 - 試験中断は採点・学習履歴記録・試験セッション保存を行わず終了する
 
+## Offline PWA policy
+
+- Service Workerは`vite-plugin-pwa` / Workbox `generateSW`を使用し、独自Service Workerとの二重管理を行わない
+- `registerType=autoUpdate`、旧cache cleanup、navigation fallbackを維持する
+- production buildのapp shell・JS/CSS・manifest・PWA iconsをprecacheし、Service Worker制御後はネットワーク切断状態でもアプリを再読込できること
+- 正式問題・資料はIndexedDBに保存されたDeliveryを参照し、オフライン化のために正式教材本文をGitHub bundleへ複製しない
+- オフライン中の演習・試験・お気に入り・要復習・履歴更新は既存IndexedDBへ保存し、オンライン復帰を必須条件としない
+- manifestは`id` / `start_url` / `scope` / `display=standalone`を明示する
+- PWAアイコンは192×192 / 512×512 PNGを持ち、512×512をmaskableとしても宣言する
+- iOS向け`apple-touch-icon`とmobile-web-app metadataをHTMLへ含める
+- `beforeinstallprompt`が利用可能な環境ではアプリ内インストール操作を表示し、利用できない環境では通常UIを妨げない
+- `navigator.onLine`とonline/offline eventに基づき接続状態を表示する
+- 接続状態UIは既存の採点・Import用`role=status`と競合させない
+- オフラインQAはproduction preview上でService Workerが実際にpageをcontrolした後、ネットワークを切断し、reloadと学習状態永続化まで検証する
+
 ## Reproducibility policy
 
 - Node.js Versionは `.nvmrc` で固定する
@@ -157,7 +174,12 @@ App 0.13.0はDelivery / Formal Schemaを変更せず、通常演習と独立し�
 29. 試験回答済み問題だけが`learningHistory`へ1attemptとして記録され、未回答がattemptへ加算されないこと
 30. `examSessions`が教材再Import後も保持されること
 31. 任意タイマー表示と時間切れ共通採点経路が二重保存を起こさないこと
-32. CHANGELOG更新
+32. manifest `id/start_url/scope/standalone`、192/512 PNG、maskable、iOS metadataが存在すること
+33. `beforeinstallprompt`を利用したインストール操作がdesktop / mobile Chromium E2Eで動作すること
+34. production Service Workerがpageをcontrolした後、ネットワーク切断状態でreloadできること
+35. オフラインreload後もIndexedDB教材を表示でき、オフライン回答が保存・再読込されること
+36. 接続状態表示がonline/offline eventに追従し既存status roleを破壊しないこと
+37. CHANGELOG更新
 
 Prettierは開発時の整形ツールとして使用し、CI release gateへの追加は別Versionで検証後に行います。
 
