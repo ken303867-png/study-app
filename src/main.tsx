@@ -5,6 +5,7 @@ import { PwaControls } from './components/PwaControls';
 import './styles.css';
 import './practiceSets.css';
 import './pwa.css';
+import './progressiveRendering.css';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
