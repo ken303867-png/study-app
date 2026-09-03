@@ -12,11 +12,11 @@ import {
 
 test('loads schema 0.5 sample and renders formal explanation order', async ({ page }) => {
   await page.goto('/');
-  await expect(page.getByRole('heading', { name: '学習アプリ v0.9.0' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: '学習アプリ v0.10.0' })).toBeVisible();
   await page.getByRole('button', { name: 'データ管理' }).click();
   await page.getByRole('button', { name: 'サンプルを読み込む' }).click();
   await expect(page.getByRole('status')).toContainText('Schema 0.5対応');
-  await page.getByRole('button', { name: '問題' }).click();
+  await page.getByRole('button', { name: '問題', exact: true }).click();
   await expect(page.getByText('正式Deliveryデータを実行時検証するライブラリはどれですか。')).toBeVisible();
 
   await page.getByText('解答解説を表示').click();
@@ -41,7 +41,7 @@ test('imports canonical master JSON, converts it, and stores delivery data', asy
   await expect(page.getByRole('status')).toContainText('JSON → Canonical Masterを読み込みました');
   await expect(page.getByRole('status')).toContainText('1問 / 1出題出現 / Schema 0.5');
 
-  await page.getByRole('button', { name: '問題' }).click();
+  await page.getByRole('button', { name: '問題', exact: true }).click();
   await expect(
     page.getByText('Canonical MasterからDeliveryへ変換する工程はどれですか。')
   ).toBeVisible();
@@ -64,7 +64,7 @@ test('imports a deflated canonical master xlsx end-to-end in Chromium', async ({
   await expect(page.getByRole('status')).toContainText('Excel正本 → Canonical Masterを読み込みました');
   await expect(page.getByRole('status')).toContainText('1問 / 1出題出現 / Schema 0.5');
 
-  await page.getByRole('button', { name: '問題' }).click();
+  await page.getByRole('button', { name: '問題', exact: true }).click();
   await expect(
     page.getByText('Canonical MasterからDeliveryへ変換する工程はどれですか。')
   ).toBeVisible();
@@ -144,7 +144,7 @@ test('legacy 709 xlsx preflight blocks lossy conversion and keeps prior data', a
   await expect(alert).toContainText('SOURCE_OCCURRENCES');
   await expect(alert).toContainText('source_answer');
 
-  await page.getByRole('button', { name: '問題' }).click();
+  await page.getByRole('button', { name: '問題', exact: true }).click();
   await expect(page.getByText('正式Deliveryデータを実行時検証するライブラリはどれですか。')).toBeVisible();
   await expect(page.getByText('非正式旧正本QA問題')).toHaveCount(0);
 });

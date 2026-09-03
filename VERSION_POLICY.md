@@ -4,7 +4,7 @@
 
 アプリ本体・データ・schemaを独立してVersion管理します。
 
-- App Version: `0.9.0`
+- App Version: `0.10.0`
 - Schema Version: `0.5`
 - Explanation Template Version: `1.0`
 - Formal Data Specification Version: `1.2`
@@ -16,7 +16,7 @@ App Versionとは独立して管理します。
 
 Formal Data Specification 1.2は1.1のSource lineage構造を維持したまま、`MATERIALS` / `MATERIAL_BLOCKS` と問題↔資料の双方向参照を追加します。Delivery Schema 0.5は既にMaterial配信構造を持つため、Formal 1.2導入だけを理由にDelivery Schemaを変更しません。
 
-App 0.9.0はDelivery / Formal Schemaを変更せず、ローカル検索・絞り込みと`learningHistory`による学習状態管理を追加します。学習履歴は教材データとは独立し、教材再Import時に削除しません。
+App 0.10.0はDelivery / Formal Schemaを変更せず、1問ずつの回答入力・自動正誤判定・正式解答解説表示・セッション集計・誤答再挑戦を追加します。演習結果は既存`learningHistory`へ記録し、Formal Master / Deliveryの問題・正答・解説は変更しません。
 
 ## Semantic versioning
 
@@ -58,6 +58,17 @@ App 0.9.0はDelivery / Formal Schemaを変更せず、ローカル検索・絞�
 - 正解時に`needsReview`を自動解除せず、ユーザーが復習完了を明示するまで保持する
 - お気に入り・要復習・回答回数・直近結果はクラウドへ送信せずIndexedDBにのみ保存する
 - 学習状態はFormal Master / Deliveryの正答・解説内容を書き換えない
+- 1問演習の自動判定結果は1回答につき1回だけ`learningHistory`へ記録する
+- 誤答再挑戦は新しい回答attemptとして記録し、過去のattemptを上書きしない
+
+## Practice evaluation policy
+
+- 単一選択・真偽問題は正答indexと単一回答indexの完全一致で判定する
+- 複数選択は回答index集合と正答index集合の完全一致で判定し、順序は問わない
+- 穴埋め・短答はNFKC正規化・前後空白除去・大文字小文字正規化・連続空白圧縮後に`acceptedAnswers`と完全一致で判定する
+- 正答表示・正式解説はDeliveryに保存済みの正式データを参照し、演習UI側に正答内容を複製しない
+- 回答確定後のみ正答・正式解説を表示する
+- セッション開始時点の絞り込み結果を固定queueとして使用し、演習途中の履歴更新で出題集合を変化させない
 
 ## Reproducibility policy
 
@@ -90,7 +101,11 @@ App 0.9.0はDelivery / Formal Schemaを変更せず、ローカル検索・絞�
 15. 問題↔資料の双方向リンクQAとChromium往復ナビゲーションE2E
 16. 学習履歴が教材再Import後も保持されること
 17. 検索・絞り込みと学習状態のdesktop / mobile Chromium E2E
-18. CHANGELOG更新
+18. 単一選択・複数選択・穴埋め/短答の演習判定Vitest
+19. 1問表示→回答確定→自動正誤判定→正式解説→次問→結果表示のdesktop / mobile Chromium E2E
+20. 不正解時の要復習自動設定と誤答のみ再挑戦E2E
+21. 演習回答が`learningHistory`へ重複記録されないこと
+22. CHANGELOG更新
 
 Prettierは開発時の整形ツールとして使用し、CI release gateへの追加は別Versionで検証後に行います。
 
