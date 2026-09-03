@@ -35,7 +35,7 @@
 .dashboard-result.uncertain { background: #fff4d8; color: #775b13; }
 .dashboard-empty-note, .dashboard-empty p { color: #667b8f; margin-bottom: 0; }
 @media (max-width: 760px) {
-  .top-nav {
+  .app-shell .top-nav {
     grid-template-columns: repeat(2, 1fr);
     position: static;
     backdrop-filter: none;
