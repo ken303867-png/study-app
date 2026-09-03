@@ -1,0 +1,34 @@
+.practice-set-builder { max-width: 860px; margin: 0 auto; }
+.practice-set-heading { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+.practice-set-heading h2 { margin-bottom: 6px; }
+.practice-set-heading p:last-child { margin-bottom: 0; }
+.practice-set-preview { flex: 0 0 auto; display: grid; min-width: 120px; padding: 16px; border-radius: 16px; background: #eef3f8; text-align: center; }
+.practice-set-preview strong { font-size: 2rem; line-height: 1; }
+.practice-set-preview span { margin-top: 5px; color: #667b8f; font-size: .8rem; font-weight: 700; }
+.practice-set-fieldset { margin: 0; padding: 0; border: 0; }
+.practice-set-fieldset legend { margin-bottom: 12px; font-size: .9rem; font-weight: 800; }
+.practice-preset-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.practice-preset-option { display: flex; align-items: center; gap: 10px; min-width: 0; padding: 13px; border: 1px solid #d8e2ec; border-radius: 14px; background: #fbfcfe; cursor: pointer; }
+.practice-preset-option:has(input:checked) { border-color: #7898b5; background: #eef4f9; box-shadow: 0 0 0 2px rgba(83, 113, 141, .08); }
+.practice-preset-option input { flex: 0 0 auto; }
+.practice-preset-option span { display: grid; gap: 2px; min-width: 0; }
+.practice-preset-option strong { overflow-wrap: anywhere; }
+.practice-preset-option small { color: #667b8f; }
+.practice-set-options { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.practice-set-options label { display: grid; gap: 6px; }
+.practice-set-options label > span { font-size: .8rem; font-weight: 800; color: #53718d; }
+.practice-set-options select { width: 100%; border: 1px solid #cad5df; border-radius: 12px; padding: 11px 12px; background: #fbfcfe; color: #17324d; }
+.practice-set-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+.practice-set-builder .warning-panel p { margin: 6px 0 0; }
+
+@media (max-width: 680px) {
+  .practice-set-heading { align-items: stretch; flex-direction: column; }
+  .practice-set-preview { width: 100%; }
+  .practice-preset-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .practice-set-options { grid-template-columns: 1fr; }
+  .practice-set-actions { display: grid; grid-template-columns: 1fr; }
+}
+
+@media (max-width: 420px) {
+  .practice-preset-grid { grid-template-columns: 1fr; }
+}
