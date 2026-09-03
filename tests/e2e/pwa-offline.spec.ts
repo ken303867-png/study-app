@@ -56,11 +56,13 @@ test('serves a complete installable manifest and final PWA icons', async ({ requ
 
 test('surfaces beforeinstallprompt as an install action', async ({ page }) => {
   await page.goto('/');
+  await expect(page.getByLabel('接続状態: オンライン')).toBeVisible();
   await page.evaluate(() => {
     const event = new Event('beforeinstallprompt', { cancelable: true });
     Object.defineProperty(event, 'prompt', {
-      value: async () => {
+      value: () => {
         (window as unknown as { __installPromptCalled?: boolean }).__installPromptCalled = true;
+        return Promise.resolve();
       }
     });
     Object.defineProperty(event, 'userChoice', {
