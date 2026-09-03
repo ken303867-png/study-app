@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [0.8.0] - 2026-09-03
+
 ### Added
 - Delivery Data Schema 0.5
 - Explanation Template v1.0に準拠した構造化解答解説TypeScript型
@@ -41,6 +43,11 @@
 - Phase3 114単元Canonical JSONからFormal 1.2 Material Masterを生成するMigration Adapter
 - Canonical Material blocksからDelivery 0.5 `materials[].body`を決定的再生成する変換ロジック
 - Canonical 1.2のformalDataSpecVersionをIndexedDB保存後read-back監査まで伝播するmetadata経路
+- 問題カードから関連学習資料へ直接移動する双方向Material navigation
+- 資料カードから関連問題へ戻るdirect navigationと遷移先フォーカス表示
+- 関連問題から開いた資料本文の自動展開
+- Delivery Material本文のsection / paragraph / table再構成UI
+- Material navigationのVitest / Chromium往復E2E
 
 ### Changed
 - 旧 `explanation: string` からExplanation Template v1.0構造へ移行
@@ -51,12 +58,13 @@
 - `replaceDataset` は保存完了だけでなくread-back監査PASSを返して初めてImport成功とする
 - Canonical Master Excel Adapterを `MATERIALS` / `MATERIAL_BLOCKS` / nested `table_rows` 対応へ拡張
 - Formal Data Spec 1.1 Import互換性を維持したまま1.2を追加
+- 114単元を一括展開せず、資料ごとの折りたたみ表示を標準UIとする
 
 ### Compatibility
 - Schema 0.3 / 0.4を0.5へ暗黙変換しない
 - 旧Schema保存データはUIで再変換・再投入を案内する
 - 学習履歴は教材Deliveryデータとは独立して保持する
-- 正式問題本文を含むMaster / DeliveryデータはGitHubへ保存しない
+- 正式問題本文・正式資料本文を含むMaster / DeliveryデータはGitHubへ保存しない
 - 旧v1.47系709問正本をFormal Data Spec v1.1へ暗黙変換しない
 - source lineageが不足した旧正本はPreflightで停止し、推測で `source_id` / `source_answer` / `SOURCE_OCCURRENCES` を生成しない
 - Lineage Reconstruction CoreはQA reportを返すだけでIndexedDBを更新せず、Formal Canonical Master全体のQA完了前にDeliveryへ昇格しない
