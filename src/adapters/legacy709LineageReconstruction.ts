@@ -248,6 +248,7 @@ export async function reconstructLegacy709SourceLineage(input: {
     });
 
     const sourceLocation = buildSourceLocation(locator, sourceQuestionId, legacyGroup);
+    const currentnessNote = optionalText(finalRow, '現行性/品質注意');
     questions.push({
       canonicalQuestionId,
       integratedId,
@@ -270,9 +271,7 @@ export async function reconstructLegacy709SourceLineage(input: {
       choices,
       sourceReferences: requiredText(finalRow, '根拠資料'),
       ...(sourceExplanationRaw ? { sourceExplanationRaw } : {}),
-      ...(optionalText(finalRow, '現行性/品質注意')
-        ? { currentnessNote: optionalText(finalRow, '現行性/品質注意') }
-        : {}),
+      ...(currentnessNote ? { currentnessNote } : {}),
       ...(locator?.question_page ? { sourceQuestionPage: locator.question_page } : {}),
       ...(locator?.answer_page ? { sourceAnswerPage: locator.answer_page } : {}),
       ...(sourceLocation ? { sourceLocation } : {}),
@@ -382,9 +381,9 @@ function readTable(sheetName: string, rows: XlsxCellValue[][] | undefined, requi
 function resolveSourceAnswer(input: {
   legacyGroup: SupportedGroup;
   sourceQuestionId: string;
-  sourceExplanationRaw?: string;
-  locatorAnswer?: string;
-  auditedPredictionAnswer?: string;
+  sourceExplanationRaw: string | undefined;
+  locatorAnswer: string | undefined;
+  auditedPredictionAnswer: string | undefined;
 }): { answer: string; provenance: LegacyLineageQuestion['answerSource'] } | null {
   if (input.legacyGroup === '既存520') {
     const explicit = input.sourceExplanationRaw ? parseExplicitSourceAnswer(input.sourceExplanationRaw) : null;
