@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState, type ChangeEvent } from 'react';
+import { LearningDashboard } from './components/LearningDashboard';
 import { MaterialFilterPanel } from './components/MaterialFilterPanel';
 import { PracticeMode } from './components/PracticeMode';
 import { PracticeSetBuilder } from './components/PracticeSetBuilder';
@@ -36,9 +37,17 @@ import {
   type PracticePreset,
   type PracticeSetOptions
 } from './utils/practiceSets';
+import './dashboard.css';
 
-const APP_VERSION = '0.11.0';
-type View = 'home' | 'questions' | 'practice-setup' | 'practice' | 'materials' | 'data';
+const APP_VERSION = '0.12.0';
+type View =
+  | 'home'
+  | 'dashboard'
+  | 'questions'
+  | 'practice-setup'
+  | 'practice'
+  | 'materials'
+  | 'data';
 
 export default function App() {
   const [view, setView] = useState<View>('home');
@@ -182,7 +191,7 @@ export default function App() {
     setView('materials');
   };
 
-  const openView = (nextView: 'home' | 'questions' | 'materials' | 'data') => {
+  const openView = (nextView: 'home' | 'dashboard' | 'questions' | 'materials' | 'data') => {
     setFocusedQuestionId(null);
     setFocusedMaterialId(null);
     setView(nextView);
@@ -275,7 +284,7 @@ export default function App() {
         <div>
           <p className="eyebrow">Study App</p>
           <h1>学習アプリ v{APP_VERSION}</h1>
-          <p className="muted">Delivery Schema 0.5 / Practice Sets, Random & Review Mode</p>
+          <p className="muted">Delivery Schema 0.5 / Learning Dashboard & Weakness Analysis</p>
         </div>
         <span className="status-badge">LOCAL ONLY</span>
       </header>
@@ -283,6 +292,13 @@ export default function App() {
       <nav className="top-nav" aria-label="メインナビゲーション">
         <button type="button" className={view === 'home' ? 'active' : ''} onClick={() => openView('home')}>
           ホーム
+        </button>
+        <button
+          type="button"
+          className={view === 'dashboard' ? 'active' : ''}
+          onClick={() => openView('dashboard')}
+        >
+          分析
         </button>
         <button type="button" className={view === 'questions' ? 'active' : ''} onClick={() => openView('questions')}>
           問題
@@ -357,6 +373,13 @@ export default function App() {
                 </div>
               </article>
               <article className="panel">
+                <h3>学習分析</h3>
+                <p>正答率・要復習・科目別/単元別の復習優先範囲を学習履歴から確認できます。</p>
+                <button type="button" onClick={() => openView('dashboard')}>
+                  ダッシュボードを見る
+                </button>
+              </article>
+              <article className="panel">
                 <h3>学習資料</h3>
                 <p>114単元を科目・重要度・関連問題数で検索し、関連問題へ双方向に移動できます。</p>
                 <button type="button" onClick={() => openView('materials')}>
@@ -365,6 +388,15 @@ export default function App() {
               </article>
             </div>
           </section>
+        )}
+
+        {view === 'dashboard' && (
+          <LearningDashboard
+            questions={questions}
+            historyByQuestionId={historyByQuestionId}
+            onPractice={openPracticeSetup}
+            onOpenQuestion={openQuestion}
+          />
         )}
 
         {view === 'questions' && (

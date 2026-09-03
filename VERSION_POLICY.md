@@ -4,7 +4,7 @@
 
 アプリ本体・データ・schemaを独立してVersion管理します。
 
-- App Version: `0.11.0`
+- App Version: `0.12.0`
 - Schema Version: `0.5`
 - Explanation Template Version: `1.0`
 - Formal Data Specification Version: `1.2`
@@ -16,7 +16,7 @@ App Versionとは独立して管理します。
 
 Formal Data Specification 1.2は1.1のSource lineage構造を維持したまま、`MATERIALS` / `MATERIAL_BLOCKS` と問題↔資料の双方向参照を追加します。Delivery Schema 0.5は既にMaterial配信構造を持つため、Formal 1.2導入だけを理由にDelivery Schemaを変更しません。
 
-App 0.11.0はDelivery / Formal Schemaを変更せず、v0.10.0の1問演習を基盤に、演習セット作成・ランダム出題・要復習/未回答/お気に入り/直近不正解/直近不確実からの学習状態別出題を追加します。演習集合はローカル`learningHistory`から選択し、Formal Master / Deliveryの問題・正答・解説は変更しません。
+App 0.12.0はDelivery / Formal Schemaを変更せず、既存`learningHistory`から全体成績・科目別/単元別成績・復習優先順位・直近不正解/不確実を再計算する学習ダッシュボードを追加します。分析結果は派生表示であり、Formal Master / Deliveryへ書き戻さず、クラウドへ送信しません。
 
 ## Semantic versioning
 
@@ -60,6 +60,18 @@ App 0.11.0はDelivery / Formal Schemaを変更せず、v0.10.0の1問演習を�
 - 学習状態はFormal Master / Deliveryの正答・解説内容を書き換えない
 - 1問演習の自動判定結果は1回答につき1回だけ`learningHistory`へ記録する
 - 誤答再挑戦は新しい回答attemptとして記録し、過去のattemptを上書きしない
+
+## Learning analytics policy
+
+- 学習ダッシュボードは`questions`と`learningHistory`から毎回再計算する派生表示とし、分析専用の正本データを新設しない
+- 学習済み率は`attempts > 0`の問題数 / 全問題数とする
+- 正答率は累計`correctCount` / 累計`attempts`とし、不確実回答もattempt分母に含める
+- 未回答問題は誤答・弱点として扱わず、未回答として独立表示する
+- 要復習件数は`needsReview=true`の全問題を数える
+- 復習優先順位で用いる要復習率は、回答済み問題のうち`needsReview=true`の割合とする。未回答に手動で要復習を付けても弱点率を押し上げない
+- 復習優先順位は、回答履歴がある科目/単元のみを対象に「要復習率の高い順 → 非正答率（誤答+不確実）の高い順 → 正答率の低い順 → 回答回数の多い順」で決定する
+- 直近要注意問題は`lastResult=incorrect/uncertain`かつ`lastAnsweredAt`がある問題を新しい順に表示する
+- 分析結果から演習セットを作成する場合も、既存Practice set policyを経由し、Formal Master / Deliveryへ分析結果を書き戻さない
 
 ## Practice evaluation policy
 
@@ -120,7 +132,10 @@ App 0.11.0はDelivery / Formal Schemaを変更せず、v0.10.0の1問演習を�
 21. 演習回答が`learningHistory`へ重複記録されないこと
 22. 学習状態別演習セット抽出・出題数上限・非破壊shuffleのVitest
 23. 要復習専用セット作成・ランダム指定・0件セット開始防止のdesktop / mobile Chromium E2E
-24. CHANGELOG更新
+24. 全体・科目別・単元別の学習集計、未回答除外、復習優先順位、直近要注意順のVitest
+25. 不正解回答→ダッシュボード反映→弱点科目の要復習セット作成のdesktop / mobile Chromium E2E
+26. ダッシュボードの直近要注意問題から問題カードへ直接移動できること
+27. CHANGELOG更新
 
 Prettierは開発時の整形ツールとして使用し、CI release gateへの追加は別Versionで検証後に行います。
 
