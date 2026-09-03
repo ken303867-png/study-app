@@ -25,6 +25,10 @@
 - 旧v1.47系 `統合709_学習マスター` のLegacy Migration Preflight
 - Excel正本→Canonical→Delivery→IndexedDBのChromium E2E QA
 - 旧709 Preflight停止時のIndexedDB非破壊性QA
+- 旧709正本＋source baseline＋locator indexからsource/canonical snapshotを分離するLineage Reconstruction Core
+- 原解説明示正答・再照合override・予想問題監査済正答を区別するsource-answer provenance
+- source prompt / source choices / source answerをfinal canonical revisionで上書きしないlineage QA report
+- Legacy 709 Source Lineage Reconstruction v1仕様書と非正式Vitest fixture
 
 ### Changed
 - 旧 `explanation: string` からExplanation Template v1.0構造へ移行
@@ -40,6 +44,7 @@
 - 正式問題本文を含むMaster / DeliveryデータはGitHubへ保存しない
 - 旧v1.47系709問正本をFormal Data Spec v1.1へ暗黙変換しない
 - source lineageが不足した旧正本はPreflightで停止し、推測で `source_id` / `source_answer` / `SOURCE_OCCURRENCES` を生成しない
+- Lineage Reconstruction CoreはQA reportを返すだけでIndexedDBを更新せず、Formal Canonical Master全体のQA完了前にDeliveryへ昇格しない
 
 ## [0.7.1] - 2026-09-02
 
