@@ -85,12 +85,12 @@ test('reloads offline from the service worker and keeps IndexedDB study progress
   await loadSample(page);
 
   await context.setOffline(true);
-  await expect(page.getByRole('status').filter({ hasText: 'オフライン' })).toBeVisible();
+  await expect(page.getByLabel('接続状態: オフライン')).toBeVisible();
   await page.reload();
 
   await expect(page.getByRole('button', { name: 'ホーム' })).toBeVisible();
   await expect(page.getByText('sample-0.9-master-import')).toBeVisible();
-  await expect(page.getByRole('status').filter({ hasText: 'オフライン' })).toBeVisible();
+  await expect(page.getByLabel('接続状態: オフライン')).toBeVisible();
 
   await page.getByRole('button', { name: '問題', exact: true }).click();
   await expect(page.getByText(questionPrompt)).toBeVisible();
