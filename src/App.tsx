@@ -423,6 +423,7 @@ function MaterialCard({
   const relatedQuestions = material.relatedQuestionIds
     .map((questionId) => questionMap.get(questionId))
     .filter((question): question is Question => question !== undefined);
+  const bodyId = `${domTargetId('material', material.id)}-body`;
 
   return (
     <article
@@ -442,14 +443,20 @@ function MaterialCard({
         <span className="link-count">関連問題 {relatedQuestions.length}件</span>
       </div>
 
-      <details
-        className="material-details"
-        open={bodyOpen}
-        onToggle={(event) => setBodyOpen(event.currentTarget.open)}
+      <button
+        type="button"
+        className="material-toggle"
+        aria-expanded={bodyOpen}
+        aria-controls={bodyId}
+        onClick={() => setBodyOpen((open) => !open)}
       >
-        <summary>{bodyOpen ? '資料本文を閉じる' : '資料本文を開く'}</summary>
-        <MaterialBodyView body={material.body} />
-      </details>
+        {bodyOpen ? '資料本文を閉じる' : '資料本文を開く'}
+      </button>
+      {bodyOpen && (
+        <div className="material-body-panel" id={bodyId}>
+          <MaterialBodyView body={material.body} />
+        </div>
+      )}
 
       {relatedQuestions.length > 0 && (
         <RelatedLinks title={`関連問題 ${relatedQuestions.length}件`} compact>
