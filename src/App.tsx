@@ -348,7 +348,7 @@ export default function App() {
       } else {
         const kindLabel = result.kind === 'canonical-master' ? 'Canonical Master' : 'Delivery';
         setMessage(
-          `${formatLabel} → ${kindLabel}を読み込みました: ${result.questionCount}問 / ${result.materialCount}資料 / ${result.sourceOccurrenceCount}出題出現 / Schema ${result.schemaVersion}`
+          `${formatLabel} → ${kindLabel}を読み込みました: ${result.questionCount}問 / ${result.sourceOccurrenceCount}出題出現 / Schema ${result.schemaVersion} / ${result.materialCount}資料`
         );
       }
     } catch (error) {
