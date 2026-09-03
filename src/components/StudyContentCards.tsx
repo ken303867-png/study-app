@@ -9,6 +9,7 @@ import type {
   MediaRecord,
   Question
 } from '../types/domain';
+import { domTargetId } from '../utils/domTargetId';
 import { LearningStateControls } from './LearningStateControls';
 import { MaterialBodyView } from './MaterialBodyView';
 
@@ -387,8 +388,4 @@ export function EmptyState({ text }: { text: string }) {
       <p>{text}</p>
     </div>
   );
-}
-
-export function domTargetId(type: 'question' | 'material', id: string) {
-  return `${type}-${encodeURIComponent(id)}`;
 }
