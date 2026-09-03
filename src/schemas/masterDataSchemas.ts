@@ -201,10 +201,74 @@ const masterMediaSchema = z.object({
   source_page: positiveIntegerSchema.optional()
 });
 
+const masterMaterialSchema = z.object({
+  material_id: idSchema,
+  subject: textSchema,
+  unit: textSchema,
+  title: textSchema,
+  importance: z.enum(IMPORTANCE_LEVELS),
+  revision: positiveIntegerSchema,
+  source_file_name: optionalTextSchema,
+  source_file_sha256: optionalTextSchema,
+  source_heading: optionalTextSchema,
+  source_related_problem_raw: optionalTextSchema,
+  related_question_ids: z.array(idSchema).default([]),
+  tags: z.array(textSchema).default([])
+});
+
+const tableRowsSchema = z.array(z.array(z.string()).min(1)).min(1);
+
+const masterMaterialBlockSchema = z
+  .object({
+    block_id: idSchema,
+    material_id: idSchema,
+    section_key: idSchema,
+    section_order: positiveIntegerSchema,
+    section_heading: textSchema,
+    block_order: positiveIntegerSchema,
+    block_type: z.enum(['paragraph', 'table']),
+    text: optionalTextSchema,
+    table_rows: tableRowsSchema.optional()
+  })
+  .superRefine((block, ctx) => {
+    if (block.block_type === 'paragraph') {
+      if (block.text === undefined) {
+        ctx.addIssue({
+          code: 'custom',
+          path: ['text'],
+          message: 'paragraph blockにはtextが必要です。'
+        });
+      }
+      if (block.table_rows !== undefined) {
+        ctx.addIssue({
+          code: 'custom',
+          path: ['table_rows'],
+          message: 'paragraph blockにはtable_rowsを登録しません。'
+        });
+      }
+      return;
+    }
+
+    if (block.table_rows === undefined) {
+      ctx.addIssue({
+        code: 'custom',
+        path: ['table_rows'],
+        message: 'table blockにはtable_rowsが必要です。'
+      });
+    }
+    if (block.text !== undefined) {
+      ctx.addIssue({
+        code: 'custom',
+        path: ['text'],
+        message: 'table blockにはtextを登録しません。'
+      });
+    }
+  });
+
 export const canonicalMasterExportSchema = z.object({
   masterDataVersion: textSchema,
   explanationTemplateVersion: z.literal('1.0'),
-  formalDataSpecVersion: z.literal('1.1'),
+  formalDataSpecVersion: z.enum(['1.1', '1.2']),
   deliveryDatasetVersion: textSchema,
   sheets: z.object({
     QUESTIONS: z.array(masterQuestionSchema),
@@ -216,7 +280,9 @@ export const canonicalMasterExportSchema = z.object({
     RELATIONS: z.array(masterRelationSchema).default([]),
     QA_LEDGER: z.array(masterQaLedgerSchema),
     TAXONOMY: z.array(masterTaxonomySchema),
-    MEDIA: z.array(masterMediaSchema).default([])
+    MEDIA: z.array(masterMediaSchema).default([]),
+    MATERIALS: z.array(masterMaterialSchema).default([]),
+    MATERIAL_BLOCKS: z.array(masterMaterialBlockSchema).default([])
   })
 });
 
