@@ -11,23 +11,7 @@ const explanation = {
   references: 'ref'
 };
 
-const questions: Question[] = Array.from({ length: 5 }, (_, index) => ({
-  id: `Q${index + 1}`,
-  subject: '科目',
-  unit: '単元',
-  topic: `論点${index + 1}`,
-  sourceType: 'predicted',
-  sourceLabel: 'fixture',
-  questionFormat: 'single-choice',
-  importance: 'S',
-  prompt: `問題${index + 1}`,
-  explanation,
-  relatedMaterialIds: [],
-  tags: [],
-  revision: 1,
-  choices: ['A', 'B'],
-  correctChoiceIndexes: [0]
-}));
+const questions: Question[] = Array.from({ length: 5 }, (_, index) => makeQuestion(`Q${index + 1}`));
 
 const histories = new Map<string, LearningHistory>([
   ['Q1', history('Q1', { attempts: 2, lastResult: 'incorrect', needsReview: true })],
@@ -57,15 +41,21 @@ describe('practiceSets', () => {
   });
 
   it('applies the question limit after preset filtering', () => {
-    const set = buildPracticeSet(questions, histories, { preset: 'review', order: 'sequential', limit: 10 });
-    expect(ids(set)).toEqual(['Q1', 'Q3', 'Q5']);
+    const reviewSet = buildPracticeSet(questions, histories, {
+      preset: 'review',
+      order: 'sequential',
+      limit: 10
+    });
+    expect(ids(reviewSet)).toEqual(['Q1', 'Q3', 'Q5']);
 
-    const allLimited = buildPracticeSet(questions, histories, {
+    const twelveQuestions = Array.from({ length: 12 }, (_, index) => makeQuestion(`L${index + 1}`));
+    const limited = buildPracticeSet(twelveQuestions, new Map(), {
       preset: 'all',
       order: 'sequential',
       limit: 10
     });
-    expect(allLimited).toHaveLength(5);
+    expect(limited).toHaveLength(10);
+    expect(ids(limited)).toEqual(Array.from({ length: 10 }, (_, index) => `L${index + 1}`));
   });
 
   it('randomizes a copied queue without mutating the source order', () => {
@@ -76,6 +66,26 @@ describe('practiceSets', () => {
     expect(ids(shuffled).sort()).toEqual([...original].sort());
   });
 });
+
+function makeQuestion(id: string): Question {
+  return {
+    id,
+    subject: '科目',
+    unit: '単元',
+    topic: `論点${id}`,
+    sourceType: 'predicted',
+    sourceLabel: 'fixture',
+    questionFormat: 'single-choice',
+    importance: 'S',
+    prompt: `問題${id}`,
+    explanation,
+    relatedMaterialIds: [],
+    tags: [],
+    revision: 1,
+    choices: ['A', 'B'],
+    correctChoiceIndexes: [0]
+  };
+}
 
 function options(preset: 'review' | 'unanswered' | 'favorite' | 'incorrect' | 'uncertain') {
   return { preset, order: 'sequential' as const, limit: 'all' as const };
