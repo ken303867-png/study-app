@@ -4,7 +4,7 @@
 
 アプリ本体・データ・schemaを独立してVersion管理します。
 
-- App Version: `0.10.0`
+- App Version: `0.11.0`
 - Schema Version: `0.5`
 - Explanation Template Version: `1.0`
 - Formal Data Specification Version: `1.2`
@@ -16,7 +16,7 @@ App Versionとは独立して管理します。
 
 Formal Data Specification 1.2は1.1のSource lineage構造を維持したまま、`MATERIALS` / `MATERIAL_BLOCKS` と問題↔資料の双方向参照を追加します。Delivery Schema 0.5は既にMaterial配信構造を持つため、Formal 1.2導入だけを理由にDelivery Schemaを変更しません。
 
-App 0.10.0はDelivery / Formal Schemaを変更せず、1問ずつの回答入力・自動正誤判定・正式解答解説表示・セッション集計・誤答再挑戦を追加します。演習結果は既存`learningHistory`へ記録し、Formal Master / Deliveryの問題・正答・解説は変更しません。
+App 0.11.0はDelivery / Formal Schemaを変更せず、v0.10.0の1問演習を基盤に、演習セット作成・ランダム出題・要復習/未回答/お気に入り/直近不正解/直近不確実からの学習状態別出題を追加します。演習集合はローカル`learningHistory`から選択し、Formal Master / Deliveryの問題・正答・解説は変更しません。
 
 ## Semantic versioning
 
@@ -68,7 +68,20 @@ App 0.10.0はDelivery / Formal Schemaを変更せず、1問ずつの回答入力
 - 穴埋め・短答はNFKC正規化・前後空白除去・大文字小文字正規化・連続空白圧縮後に`acceptedAnswers`と完全一致で判定する
 - 正答表示・正式解説はDeliveryに保存済みの正式データを参照し、演習UI側に正答内容を複製しない
 - 回答確定後のみ正答・正式解説を表示する
-- セッション開始時点の絞り込み結果を固定queueとして使用し、演習途中の履歴更新で出題集合を変化させない
+- セッション開始時点の出題集合を固定queueとして使用し、演習途中の履歴更新で出題集合を変化させない
+
+## Practice set policy
+
+- 演習セットの母集団は「全問題」または問題一覧の現在の絞り込み結果とする
+- 学習状態による対象は `すべて / 要復習 / 未回答 / お気に入り / 直近不正解 / 直近不確実` の6種類とする
+- `要復習` は `learningHistory.needsReview=true` の問題のみを対象とする
+- `未回答` は履歴が存在しない、または `attempts=0` の問題を対象とする
+- `お気に入り` は `favorite=true`、直近結果系は`lastResult`で判定する
+- 対象抽出後に出題順を適用し、その後に出題数上限を適用する
+- ランダム出題は元の問題配列を破壊せず、演習用queueのコピーだけをshuffleする
+- 出題数は `全件 / 10 / 20 / 50問` とし、対象件数より大きい指定では対象全件を使用する
+- 0件の演習セットは開始不可とし、別条件の選択を促す
+- 演習セット構成はローカルUI状態であり、Formal Master / Deliveryへ保存しない
 
 ## Reproducibility policy
 
@@ -105,7 +118,9 @@ App 0.10.0はDelivery / Formal Schemaを変更せず、1問ずつの回答入力
 19. 1問表示→回答確定→自動正誤判定→正式解説→次問→結果表示のdesktop / mobile Chromium E2E
 20. 不正解時の要復習自動設定と誤答のみ再挑戦E2E
 21. 演習回答が`learningHistory`へ重複記録されないこと
-22. CHANGELOG更新
+22. 学習状態別演習セット抽出・出題数上限・非破壊shuffleのVitest
+23. 要復習専用セット作成・ランダム指定・0件セット開始防止のdesktop / mobile Chromium E2E
+24. CHANGELOG更新
 
 Prettierは開発時の整形ツールとして使用し、CI release gateへの追加は別Versionで検証後に行います。
 
