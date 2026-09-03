@@ -59,7 +59,6 @@ test('release QA: formal 726 + 114 materials + cloze 1917 persist as 2643 questi
     firstClozeAnswer: '答v2-1'
   });
 
-  // Canonical Masterの再ImportはBaseを置換するため、supplementalが消えることを確認する。
   await uploadJson(page, 'synthetic-formal-726-reimport.json', formalMaster);
   await expect(page.getByRole('status')).toContainText(
     'JSON → Canonical Masterを読み込みました: 726問 / 726出題出現 / Schema 0.5 / 114資料'
@@ -75,7 +74,6 @@ test('release QA: formal 726 + 114 materials + cloze 1917 persist as 2643 questi
     firstClozeAnswer: null
   });
 
-  // 正式運用順序どおり、Base更新後にsupplementalを再Importして最終状態へ戻す。
   await uploadJson(page, 'synthetic-cloze-1917-v3.json', clozeV3);
   await expect(page.getByRole('status')).toContainText(
     '追加1917問 / 置換0問 / 現在2643問 / Schema 0.5'
@@ -84,18 +82,18 @@ test('release QA: formal 726 + 114 materials + cloze 1917 persist as 2643 questi
   await expect(page.getByText(/共通穴抜き: OK/)).toBeVisible();
 
   await page.reload();
-  await expect(page.locator('.metric-grid div').filter({ hasText: '全問題' }).locator('strong')).toHaveText(
-    '2643'
-  );
-  await expect(page.locator('.metric-grid div').filter({ hasText: '正式Base' }).locator('strong')).toHaveText(
-    '726'
-  );
-  await expect(page.locator('.metric-grid div').filter({ hasText: '追加問題' }).locator('strong')).toHaveText(
-    '1917'
-  );
-  await expect(page.locator('.metric-grid div').filter({ hasText: '資料' }).locator('strong')).toHaveText(
-    '114'
-  );
+  await expect(
+    page.locator('.metric-grid div').filter({ hasText: '全問題' }).locator('strong')
+  ).toHaveText('2643');
+  await expect(
+    page.locator('.metric-grid div').filter({ hasText: '正式Base' }).locator('strong')
+  ).toHaveText('726');
+  await expect(
+    page.locator('.metric-grid div').filter({ hasText: '追加問題' }).locator('strong')
+  ).toHaveText('1917');
+  await expect(
+    page.locator('.metric-grid div').filter({ hasText: '資料' }).locator('strong')
+  ).toHaveText('114');
 
   persisted = await readReleaseState(page);
   expect(persisted).toMatchObject({
@@ -341,7 +339,11 @@ async function uploadJson(page: Page, name: string, value: unknown) {
 
 async function seedLearningHistory(page: Page, questionId: string) {
   await page.evaluate(async (id) => {
-    const database = await openStudyDb();
+    const database = await new Promise<IDBDatabase>((resolve, reject) => {
+      const request = indexedDB.open('study-app');
+      request.onsuccess = () => resolve(request.result);
+      request.onerror = () => reject(request.error ?? new Error('IndexedDB open failed'));
+    });
     const transaction = database.transaction('learningHistory', 'readwrite');
     transaction.objectStore('learningHistory').put({
       questionId: id,
@@ -355,18 +357,34 @@ async function seedLearningHistory(page: Page, questionId: string) {
       favorite: true,
       needsReview: false
     });
-    await transactionDone(transaction);
+    await new Promise<void>((resolve, reject) => {
+      transaction.oncomplete = () => resolve();
+      transaction.onerror = () =>
+        reject(transaction.error ?? new Error('IndexedDB transaction failed'));
+      transaction.onabort = () =>
+        reject(transaction.error ?? new Error('IndexedDB transaction aborted'));
+    });
     database.close();
   }, questionId);
 }
 
 async function readReleaseState(page: Page) {
   return page.evaluate(async () => {
-    const database = await openStudyDb();
+    const database = await new Promise<IDBDatabase>((resolve, reject) => {
+      const request = indexedDB.open('study-app');
+      request.onsuccess = () => resolve(request.result);
+      request.onerror = () => reject(request.error ?? new Error('IndexedDB open failed'));
+    });
     const transaction = database.transaction(
       ['questions', 'materials', 'sourceOccurrences', 'learningHistory', 'meta'],
       'readonly'
     );
+    const requestValue = <T,>(request: IDBRequest<T>) =>
+      new Promise<T>((resolve, reject) => {
+        request.onsuccess = () => resolve(request.result);
+        request.onerror = () => reject(request.error ?? new Error('IndexedDB request failed'));
+      });
+
     const questions = await requestValue(transaction.objectStore('questions').count());
     const materials = await requestValue(transaction.objectStore('materials').count());
     const sourceOccurrences = await requestValue(
@@ -375,13 +393,21 @@ async function readReleaseState(page: Page) {
     const history = await requestValue(
       transaction.objectStore('learningHistory').get('SYN-FORMAL-001')
     );
-    const firstCloze = await requestValue(transaction.objectStore('questions').get('SYN-CLOZE-0001'));
+    const firstCloze = await requestValue(
+      transaction.objectStore('questions').get('SYN-CLOZE-0001')
+    );
     const datasetVersion = await requestValue(transaction.objectStore('meta').get('datasetVersion'));
     const schemaVersion = await requestValue(transaction.objectStore('meta').get('schemaVersion'));
     const formalDataSpecVersion = await requestValue(
       transaction.objectStore('meta').get('formalDataSpecVersion')
     );
-    await transactionDone(transaction);
+    await new Promise<void>((resolve, reject) => {
+      transaction.oncomplete = () => resolve();
+      transaction.onerror = () =>
+        reject(transaction.error ?? new Error('IndexedDB transaction failed'));
+      transaction.onabort = () =>
+        reject(transaction.error ?? new Error('IndexedDB transaction aborted'));
+    });
     database.close();
 
     const clozeRecord = firstCloze as { acceptedAnswers?: string[] } | undefined;
@@ -397,28 +423,5 @@ async function readReleaseState(page: Page) {
       historyAttempts: historyRecord?.attempts ?? 0,
       firstClozeAnswer: clozeRecord?.acceptedAnswers?.[0] ?? null
     };
-  });
-}
-
-function openStudyDb(): Promise<IDBDatabase> {
-  return new Promise((resolve, reject) => {
-    const request = indexedDB.open('study-app');
-    request.onsuccess = () => resolve(request.result);
-    request.onerror = () => reject(request.error ?? new Error('IndexedDB open failed'));
-  });
-}
-
-function requestValue<T>(request: IDBRequest<T>): Promise<T> {
-  return new Promise((resolve, reject) => {
-    request.onsuccess = () => resolve(request.result);
-    request.onerror = () => reject(request.error ?? new Error('IndexedDB request failed'));
-  });
-}
-
-function transactionDone(transaction: IDBTransaction): Promise<void> {
-  return new Promise((resolve, reject) => {
-    transaction.oncomplete = () => resolve();
-    transaction.onerror = () => reject(transaction.error ?? new Error('IndexedDB transaction failed'));
-    transaction.onabort = () => reject(transaction.error ?? new Error('IndexedDB transaction aborted'));
   });
 }
