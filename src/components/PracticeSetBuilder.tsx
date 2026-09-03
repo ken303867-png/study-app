@@ -23,16 +23,18 @@ export function PracticeSetBuilder({
   questions,
   historyByQuestionId,
   sourceLabel,
+  initialPreset = 'all',
   onStart,
   onCancel
 }: {
   questions: Question[];
   historyByQuestionId: ReadonlyMap<string, LearningHistory>;
   sourceLabel: string;
+  initialPreset?: PracticePreset;
   onStart: (options: PracticeSetOptions) => void;
   onCancel: () => void;
 }) {
-  const [preset, setPreset] = useState<PracticePreset>('all');
+  const [preset, setPreset] = useState<PracticePreset>(initialPreset);
   const [order, setOrder] = useState<PracticeOrder>('sequential');
   const [limit, setLimit] = useState<PracticeLimit>('all');
   const summary = useMemo(
