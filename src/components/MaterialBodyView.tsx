@@ -15,11 +15,17 @@ export function MaterialBodyView({ body }: { body: string }) {
                 <p key={`p-${chunkIndex}`}>{chunk.text}</p>
               ) : (
                 <div className="material-table-scroll" key={`t-${chunkIndex}`}>
-                  <table className="material-table">
+                  <table className="material-table" role="table">
                     <thead>
                       <tr>
                         {(chunk.rows[0] ?? []).map((cell, cellIndex) => (
-                          <th key={`${cell}-${cellIndex}`}>{cell}</th>
+                          <th
+                            key={`${cell}-${cellIndex}`}
+                            scope="col"
+                            role="columnheader"
+                          >
+                            {cell}
+                          </th>
                         ))}
                       </tr>
                     </thead>
@@ -27,7 +33,9 @@ export function MaterialBodyView({ body }: { body: string }) {
                       {chunk.rows.slice(1).map((row, rowIndex) => (
                         <tr key={`row-${rowIndex}`}>
                           {row.map((cell, cellIndex) => (
-                            <td key={`${cellIndex}-${cell}`}>{cell}</td>
+                            <td key={`${cellIndex}-${cell}`} role="cell">
+                              {cell}
+                            </td>
                           ))}
                         </tr>
                       ))}
