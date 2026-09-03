@@ -31,6 +31,11 @@ interface PracticeResponse {
   evaluation: PracticeEvaluation;
 }
 
+interface ExamCompletion {
+  summary: ExamResultSummary;
+  session: ExamSession;
+}
+
 export function PracticeMode({
   questions,
   historyByQuestionId,
@@ -60,7 +65,7 @@ export function PracticeMode({
   const [responses, setResponses] = useState<Map<string, PracticeResponse>>(() => new Map());
   const [submitting, setSubmitting] = useState(false);
   const [completed, setCompleted] = useState(false);
-  const [examSummary, setExamSummary] = useState<ExamResultSummary | null>(null);
+  const [examCompletion, setExamCompletion] = useState<ExamCompletion | null>(null);
   const [remainingSeconds, setRemainingSeconds] = useState(timerMinutes * 60);
   const startedAtRef = useRef(new Date().toISOString());
   const finishingExamRef = useRef(false);
@@ -123,7 +128,7 @@ export function PracticeMode({
           completionReason
         };
         await onSaveExamSession?.(session);
-        setExamSummary(summary);
+        setExamCompletion({ summary, session });
         setCompleted(true);
       } finally {
         setSubmitting(false);
@@ -155,15 +160,11 @@ export function PracticeMode({
     );
   }
 
-  if (completed && isExam && examSummary) {
+  if (completed && isExam && examCompletion) {
     return (
       <ExamSummaryView
-        summary={examSummary}
-        completionReason={remainingSeconds === 0 && timerMinutes > 0 ? 'timeout' : 'submitted'}
-        elapsedSeconds={Math.max(
-          0,
-          Math.round((Date.now() - Date.parse(startedAtRef.current)) / 1000)
-        )}
+        summary={examCompletion.summary}
+        session={examCompletion.session}
         onRestart={() => restart(questions)}
         onExit={onExit}
       />
@@ -275,7 +276,7 @@ export function PracticeMode({
         <PracticeAnswerInput
           question={currentQuestion}
           answer={answer}
-          disabled={!isExam && (response !== undefined || submitting)}
+          disabled={submitting || (!isExam && response !== undefined)}
           onChange={setAnswer}
         />
 
@@ -362,7 +363,7 @@ export function PracticeMode({
     setIndex(0);
     setAnswers(new Map());
     setResponses(new Map());
-    setExamSummary(null);
+    setExamCompletion(null);
     setCompleted(false);
     setRemainingSeconds(timerMinutes * 60);
     startedAtRef.current = new Date().toISOString();
@@ -372,14 +373,12 @@ export function PracticeMode({
 
 function ExamSummaryView({
   summary,
-  completionReason,
-  elapsedSeconds,
+  session,
   onRestart,
   onExit
 }: {
   summary: ExamResultSummary;
-  completionReason: ExamSession['completionReason'];
-  elapsedSeconds: number;
+  session: ExamSession;
   onRestart: () => void;
   onExit: () => void;
 }) {
@@ -389,14 +388,14 @@ function ExamSummaryView({
       <div className="panel">
         <p className="eyebrow">Exam Complete</p>
         <h2>試験結果</h2>
-        {completionReason === 'timeout' && <p className="exam-timeout-note">制限時間終了により自動採点しました。</p>}
+        {session.completionReason === 'timeout' && <p className="exam-timeout-note">制限時間終了により自動採点しました。</p>}
         <div className="practice-result-grid exam-result-grid">
           <div><strong>{summary.totalQuestions}</strong><span>出題</span></div>
           <div><strong>{summary.correctCount}</strong><span>正解</span></div>
           <div><strong>{summary.incorrectCount}</strong><span>不正解</span></div>
           <div><strong>{summary.unansweredCount}</strong><span>未回答</span></div>
           <div><strong>{summary.accuracy}%</strong><span>正答率</span></div>
-          <div><strong>{formatExamTime(elapsedSeconds)}</strong><span>所要時間</span></div>
+          <div><strong>{formatExamTime(session.elapsedSeconds)}</strong><span>所要時間</span></div>
         </div>
       </div>
 
