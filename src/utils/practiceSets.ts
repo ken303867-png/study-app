@@ -10,15 +10,21 @@ export const PRACTICE_PRESETS = [
 ] as const;
 
 export const PRACTICE_ORDERS = ['sequential', 'random'] as const;
+export const PRACTICE_SESSION_MODES = ['practice', 'exam'] as const;
+export const EXAM_TIMER_MINUTES = [0, 30, 60, 90, 120] as const;
 
 export type PracticePreset = (typeof PRACTICE_PRESETS)[number];
 export type PracticeOrder = (typeof PRACTICE_ORDERS)[number];
 export type PracticeLimit = 'all' | 10 | 20 | 50;
+export type PracticeSessionMode = (typeof PRACTICE_SESSION_MODES)[number];
+export type ExamTimerMinutes = (typeof EXAM_TIMER_MINUTES)[number];
 
 export interface PracticeSetOptions {
   preset: PracticePreset;
   order: PracticeOrder;
   limit: PracticeLimit;
+  mode?: PracticeSessionMode;
+  timerMinutes?: ExamTimerMinutes;
 }
 
 export interface PracticeSetSummary {
