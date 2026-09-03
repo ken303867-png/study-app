@@ -30,6 +30,15 @@ test('imports Formal 1.2 material master xlsx and navigates question to material
   await expect(page.getByRole('status')).toContainText('Excel正本 → Canonical Masterを読み込みました');
   await expect(page.getByRole('status')).toContainText('1問 / 1出題出現 / Schema 0.5');
 
+  const persistedBeforeNavigation = await readPersistedMaterialState(page);
+  expect(persistedBeforeNavigation.materialCount).toBe(1);
+  expect(persistedBeforeNavigation.formalDataSpecVersion).toBe('1.2');
+  expect(persistedBeforeNavigation.body).toContain('① 最初に覚えること');
+  expect(persistedBeforeNavigation.body).toContain('正本を先に確定する。');
+  expect(persistedBeforeNavigation.body).toContain('② 比較表');
+  expect(persistedBeforeNavigation.body).toContain('項目 | 正式内容');
+  expect(persistedBeforeNavigation.body).toContain('Formal Data Spec | 1.2');
+
   await page.getByRole('button', { name: '問題' }).click();
   await expect(
     page.getByText('Canonical MasterからDeliveryへ変換する工程はどれですか。')
@@ -41,6 +50,7 @@ test('imports Formal 1.2 material master xlsx and navigates question to material
   await expect(materialCard).toHaveClass(/targeted/);
   await expect(page.getByRole('heading', { name: 'Material連携QA' })).toBeVisible();
   await expect(page.getByText('正本を先に確定する。')).toBeVisible();
+  await expect(page.getByRole('heading', { name: '② 比較表' })).toBeVisible();
   await expect(page.getByRole('columnheader', { name: '項目' })).toBeVisible();
   await expect(page.getByRole('cell', { name: '0.5' })).toBeVisible();
   await expect(page.getByRole('cell', { name: '1.2' })).toBeVisible();
@@ -52,20 +62,26 @@ test('imports Formal 1.2 material master xlsx and navigates question to material
   await expect(
     page.getByText('Canonical MasterからDeliveryへ変換する工程はどれですか。')
   ).toBeVisible();
+});
 
-  const persisted = await page.evaluate(async () => {
+async function readPersistedMaterialState(page: import('@playwright/test').Page) {
+  return page.evaluate(async () => {
     const request = indexedDB.open('study-app');
     const database = await new Promise<IDBDatabase>((resolve, reject) => {
       request.onsuccess = () => resolve(request.result);
       request.onerror = () => reject(request.error ?? new Error('IndexedDB open failed'));
     });
     const transaction = database.transaction(['materials', 'meta'], 'readonly');
-    const materialCountRequest = transaction.objectStore('materials').count();
+    const materialRequest = transaction.objectStore('materials').getAll();
     const metaRequest = transaction.objectStore('meta').get('formalDataSpecVersion');
-    const materialCount = await requestValue(materialCountRequest);
+    const materials = (await requestValue(materialRequest)) as Array<{ body?: string }>;
     const meta = (await requestValue(metaRequest)) as { key: string; value: string } | undefined;
     database.close();
-    return { materialCount, formalDataSpecVersion: meta?.value };
+    return {
+      materialCount: materials.length,
+      body: materials[0]?.body ?? '',
+      formalDataSpecVersion: meta?.value
+    };
 
     function requestValue<T>(idbRequest: IDBRequest<T>): Promise<T> {
       return new Promise<T>((resolve, reject) => {
@@ -75,9 +91,7 @@ test('imports Formal 1.2 material master xlsx and navigates question to material
       });
     }
   });
-
-  expect(persisted).toEqual({ materialCount: 1, formalDataSpecVersion: '1.2' });
-});
+}
 
 const phase3Fixture = {
   schemaVersion: '1.0',
