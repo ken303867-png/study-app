@@ -22,8 +22,20 @@ const REQUIRED_SHEETS = [
   'QA_LEDGER',
   'TAXONOMY'
 ] as const;
-const SUPPORTED_SHEETS = new Set<string>([...REQUIRED_SHEETS, 'RELATIONS', 'MEDIA']);
-const ARRAY_FIELDS = new Set(['tags', 'accepted_answers', 'related_material_ids']);
+const SUPPORTED_SHEETS = new Set<string>([
+  ...REQUIRED_SHEETS,
+  'RELATIONS',
+  'MEDIA',
+  'MATERIALS',
+  'MATERIAL_BLOCKS'
+]);
+const ARRAY_FIELDS = new Set([
+  'tags',
+  'accepted_answers',
+  'related_material_ids',
+  'related_question_ids'
+]);
+const JSON_FIELDS = new Set(['table_rows']);
 const BOOLEAN_FIELDS = new Set(['is_source_correct', 'is_final_correct']);
 const INTEGER_FIELDS = new Set([
   'revision',
@@ -35,7 +47,9 @@ const INTEGER_FIELDS = new Set([
   'source_year',
   'source_page_start',
   'source_page_end',
-  'source_page'
+  'source_page',
+  'section_order',
+  'block_order'
 ]);
 
 export class XlsxMasterError extends Error {
@@ -78,7 +92,12 @@ export async function parseCanonicalMasterXlsx(
         RELATIONS: rowsToRecords('RELATIONS', workbook.get('RELATIONS') ?? []),
         QA_LEDGER: rowsToRecords('QA_LEDGER', workbook.get('QA_LEDGER') ?? []),
         TAXONOMY: rowsToRecords('TAXONOMY', workbook.get('TAXONOMY') ?? []),
-        MEDIA: rowsToRecords('MEDIA', workbook.get('MEDIA') ?? [])
+        MEDIA: rowsToRecords('MEDIA', workbook.get('MEDIA') ?? []),
+        MATERIALS: rowsToRecords('MATERIALS', workbook.get('MATERIALS') ?? []),
+        MATERIAL_BLOCKS: rowsToRecords(
+          'MATERIAL_BLOCKS',
+          workbook.get('MATERIAL_BLOCKS') ?? []
+        )
       }
     };
 
@@ -182,6 +201,7 @@ function coerceCell(
   location: string
 ): unknown {
   if (ARRAY_FIELDS.has(field)) return parseArrayCell(value, field, location);
+  if (JSON_FIELDS.has(field)) return parseJsonCell(value, field, location);
   if (BOOLEAN_FIELDS.has(field)) return parseBooleanCell(value, field, location);
   if (INTEGER_FIELDS.has(field)) return parsePositiveInteger(value, field, location);
   if (field === 'audited_at' && typeof value === 'number') return excelSerialToIsoDate(value);
@@ -213,6 +233,21 @@ function parseArrayCell(
     .split('|')
     .map((item) => item.trim())
     .filter(Boolean);
+}
+
+function parseJsonCell(
+  value: Exclude<XlsxCellValue, null>,
+  field: string,
+  location: string
+): unknown {
+  if (typeof value !== 'string') {
+    throw new XlsxMasterError(`${location}: ${field} はJSONで入力してください。`);
+  }
+  try {
+    return JSON.parse(value.trim()) as unknown;
+  } catch {
+    throw new XlsxMasterError(`${location}: ${field} のJSONが不正です。`);
+  }
 }
 
 function isStringArray(value: unknown): value is string[] {
