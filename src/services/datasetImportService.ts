@@ -2,6 +2,7 @@ import { ZodError } from 'zod';
 import { preflightLegacy709MasterXlsx } from '../adapters/legacy709MasterPreflight';
 import { parseCanonicalMasterXlsx, XlsxMasterError } from '../adapters/xlsxMasterAdapter';
 import { convertMasterToDelivery, MasterConversionError } from '../converters/masterToDelivery';
+import { db } from '../db/database';
 import { contentRepository } from '../repositories/contentRepository';
 import {
   DatasetPersistenceAuditError,
@@ -14,7 +15,7 @@ import {
   type CanonicalMasterExportInput
 } from '../schemas/masterDataSchemas';
 
-export type ImportKind = 'canonical-master' | 'delivery';
+export type ImportKind = 'canonical-master' | 'delivery' | 'supplemental-delivery';
 export type ImportSourceFormat = 'json' | 'xlsx';
 
 export interface DatasetImportResult {
@@ -29,6 +30,9 @@ export interface DatasetImportResult {
   sourceOccurrenceCount: number;
   mediaCount: number;
   persistenceAudit: DatasetPersistenceAudit;
+  supplementalKey?: string;
+  supplementalQuestionCount?: number;
+  replacedSupplementalQuestionCount?: number;
 }
 
 export class DatasetImportError extends Error {
@@ -81,6 +85,14 @@ export async function importDatasetJsonText(text: string): Promise<DatasetImport
 
   try {
     const normalized = normalizeImport(raw);
+    if (normalized.kind === 'supplemental-delivery') {
+      return await persistSupplementalDataset(
+        normalized.dataset,
+        normalized.supplementalKey!,
+        'json',
+        normalized.metadata
+      );
+    }
     return await persistDataset(
       normalized.dataset,
       normalized.kind,
@@ -106,7 +118,7 @@ async function persistCanonicalMaster(
 
 async function persistDataset(
   dataset: Dataset,
-  kind: ImportKind,
+  kind: Exclude<ImportKind, 'supplemental-delivery'>,
   sourceFormat: ImportSourceFormat,
   metadata: DatasetPersistenceMetadata = {
     explanationTemplateVersion: '1.0',
@@ -129,10 +141,115 @@ async function persistDataset(
   };
 }
 
+async function persistSupplementalDataset(
+  dataset: Dataset,
+  supplementalKey: string,
+  sourceFormat: ImportSourceFormat,
+  metadata: DatasetPersistenceMetadata
+): Promise<DatasetImportResult> {
+  const supplementalTag = `supplemental:${supplementalKey}`;
+  if (dataset.questions.length === 0) {
+    throw new DatasetImportError('追加データセットに問題がありません。');
+  }
+  if (dataset.materials.length > 0) {
+    throw new DatasetImportError('追加データセットではmaterialsを登録できません。');
+  }
+  if (dataset.questions.some((question) => !question.tags.includes(supplementalTag))) {
+    throw new DatasetImportError(
+      `追加問題には識別tag「${supplementalTag}」を付与してください。`
+    );
+  }
+  if (dataset.sources.some((source) => source.source_group !== supplementalTag)) {
+    throw new DatasetImportError(
+      `追加データのsource_groupは「${supplementalTag}」に統一してください。`
+    );
+  }
+
+  const [
+    currentQuestions,
+    currentMaterials,
+    currentSources,
+    currentOccurrences,
+    currentMedia,
+    datasetMeta,
+    schemaMeta
+  ] = await Promise.all([
+    contentRepository.getQuestions(),
+    contentRepository.getMaterials(),
+    contentRepository.getSources(),
+    contentRepository.getSourceOccurrences(),
+    contentRepository.getMedia(),
+    db.meta.get('datasetVersion'),
+    db.meta.get('schemaVersion')
+  ]);
+
+  if (currentQuestions.length > 0 && schemaMeta?.value !== '0.5') {
+    throw new DatasetImportError(
+      '既存データがSchema 0.5ではないため、追加Importを中止しました。先に正式Schema 0.5データを投入してください。'
+    );
+  }
+
+  const replacedQuestionIds = new Set(
+    currentQuestions
+      .filter((question) => question.tags.includes(supplementalTag))
+      .map((question) => question.id)
+  );
+  const replacedSourceIds = new Set(
+    currentSources
+      .filter((source) => source.source_group === supplementalTag)
+      .map((source) => source.source_id)
+  );
+
+  const merged = datasetSchema.parse({
+    datasetVersion: datasetMeta?.value ?? dataset.datasetVersion,
+    schemaVersion: '0.5',
+    questions: [
+      ...currentQuestions.filter((question) => !replacedQuestionIds.has(question.id)),
+      ...dataset.questions
+    ],
+    materials: currentMaterials,
+    sources: [
+      ...currentSources.filter((source) => !replacedSourceIds.has(source.source_id)),
+      ...dataset.sources
+    ],
+    sourceOccurrences: [
+      ...currentOccurrences.filter(
+        (occurrence) =>
+          !replacedQuestionIds.has(occurrence.canonical_question_id) &&
+          !replacedSourceIds.has(occurrence.source_id)
+      ),
+      ...dataset.sourceOccurrences
+    ],
+    media: [
+      ...currentMedia.filter((media) => !replacedQuestionIds.has(media.canonical_question_id)),
+      ...dataset.media
+    ]
+  });
+
+  const persistenceAudit = await contentRepository.replaceDataset(merged, metadata);
+  return {
+    kind: 'supplemental-delivery',
+    sourceFormat,
+    datasetVersion: dataset.datasetVersion,
+    schemaVersion: dataset.schemaVersion,
+    formalDataSpecVersion: metadata.formalDataSpecVersion,
+    questionCount: merged.questions.length,
+    materialCount: merged.materials.length,
+    sourceCount: merged.sources.length,
+    sourceOccurrenceCount: merged.sourceOccurrences.length,
+    mediaCount: merged.media.length,
+    persistenceAudit,
+    supplementalKey,
+    supplementalQuestionCount: dataset.questions.length,
+    replacedSupplementalQuestionCount: replacedQuestionIds.size
+  };
+}
+
 function normalizeImport(raw: unknown): {
   dataset: Dataset;
   kind: ImportKind;
   metadata: DatasetPersistenceMetadata;
+  supplementalKey?: string;
 } {
   if (!isRecord(raw)) {
     throw new DatasetImportError('JSONのルートはobjectである必要があります。');
@@ -151,8 +268,27 @@ function normalizeImport(raw: unknown): {
   }
 
   if ('datasetVersion' in raw && 'schemaVersion' in raw) {
+    const dataset = datasetSchema.parse(raw);
+    if (raw.importMode === 'supplemental-replace') {
+      const supplementalKey =
+        typeof raw.supplementalKey === 'string' ? raw.supplementalKey.trim() : '';
+      if (!supplementalKey) {
+        throw new DatasetImportError(
+          '追加DeliveryにはsupplementalKeyが必要です。'
+        );
+      }
+      return {
+        dataset,
+        kind: 'supplemental-delivery',
+        supplementalKey,
+        metadata: {
+          explanationTemplateVersion: '1.0',
+          formalDataSpecVersion: '1.1'
+        }
+      };
+    }
     return {
-      dataset: datasetSchema.parse(raw),
+      dataset,
       kind: 'delivery',
       metadata: {
         explanationTemplateVersion: '1.0',
