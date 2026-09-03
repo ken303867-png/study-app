@@ -159,11 +159,19 @@ async function loadCanonicalFixture() {
 }
 
 function scaleCanonicalFixture(base: CanonicalMasterExport, count: number): CanonicalMasterExport {
-  const question = base.sheets.QUESTIONS[0];
-  const explanation = base.sheets.EXPLANATIONS[0];
-  const qa = base.sheets.QA_LEDGER[0];
-  const occurrence = base.sheets.SOURCE_OCCURRENCES[0];
-  if (!question || !explanation || !qa || !occurrence) {
+  const question = base.sheets.QUESTIONS.find((row) => row.record_status === 'adopted');
+  if (!question) throw new Error('canonical fixture requires one adopted question');
+
+  const explanation = base.sheets.EXPLANATIONS.find(
+    (row) => row.canonical_question_id === question.canonical_question_id
+  );
+  const qa = base.sheets.QA_LEDGER.find(
+    (row) => row.canonical_question_id === question.canonical_question_id
+  );
+  const occurrence = base.sheets.SOURCE_OCCURRENCES.find(
+    (row) => row.canonical_question_id === question.canonical_question_id
+  );
+  if (!explanation || !qa || !occurrence) {
     throw new Error('canonical fixture requires one complete adopted question');
   }
 
@@ -173,8 +181,8 @@ function scaleCanonicalFixture(base: CanonicalMasterExport, count: number): Cano
   const baseChoiceExplanations = base.sheets.CHOICE_EXPLANATIONS.filter(
     (choice) => choice.canonical_question_id === question.canonical_question_id
   );
-  if (baseChoices.length !== 4 || baseChoiceExplanations.length !== 4) {
-    throw new Error('canonical fixture requires four choices and four choice explanations');
+  if (baseChoices.length < 2 || baseChoices.length !== baseChoiceExplanations.length) {
+    throw new Error('canonical fixture requires matching choice and choice-explanation rows');
   }
 
   const questions: CanonicalMasterExport['sheets']['QUESTIONS'] = [];
