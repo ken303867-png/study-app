@@ -13,7 +13,6 @@ const SUBITEM_KEYS = ['a', 'b', 'c', 'd', 'e'] as const;
 
 type ChoiceKey = (typeof CHOICE_KEYS)[number];
 type SubitemKey = (typeof SUBITEM_KEYS)[number];
-type MasterChoiceExplanation = CanonicalMasterExport['sheets']['CHOICE_EXPLANATIONS'][number];
 type MasterQaRow = CanonicalMasterExport['sheets']['QA_LEDGER'][number];
 
 const REQUIRED_FINAL_HEADERS = [
