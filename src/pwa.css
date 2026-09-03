@@ -1,12 +1,11 @@
 .pwa-controls {
-  position: fixed;
-  top: 14px;
-  right: 18px;
-  z-index: 50;
   display: flex;
   align-items: center;
+  justify-content: flex-end;
   gap: 8px;
-  max-width: calc(100vw - 36px);
+  width: min(100%, 1180px);
+  margin: 8px auto -4px;
+  padding: 0 18px;
 }
 
 .connection-badge,
@@ -56,10 +55,6 @@
 
 @media (max-width: 680px) {
   .pwa-controls {
-    position: static;
-    justify-content: flex-end;
-    width: min(100%, 1180px);
-    margin: 8px auto -4px;
     padding: 0 14px;
   }
 
