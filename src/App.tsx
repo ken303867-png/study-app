@@ -328,6 +328,10 @@ export default function App() {
                   <strong>{practiceSummary.review}</strong>
                   <span>要復習</span>
                 </div>
+                <div>
+                  <strong>{sourceOccurrenceCount}</strong>
+                  <span>出題出現</span>
+                </div>
               </div>
             </div>
             <div className="grid-two">
