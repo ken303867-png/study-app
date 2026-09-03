@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState, type ChangeEvent } from 'react';
 import { MaterialFilterPanel } from './components/MaterialFilterPanel';
 import { PracticeMode } from './components/PracticeMode';
+import { PracticeSetBuilder } from './components/PracticeSetBuilder';
 import { QuestionFilterPanel } from './components/QuestionFilterPanel';
 import {
   EmptyState,
@@ -29,9 +30,15 @@ import {
   type QuestionFilterState
 } from './utils/contentFilters';
 import { domTargetId } from './utils/domTargetId';
+import {
+  buildPracticeSet,
+  summarizePracticePool,
+  type PracticePreset,
+  type PracticeSetOptions
+} from './utils/practiceSets';
 
-const APP_VERSION = '0.10.0';
-type View = 'home' | 'questions' | 'practice' | 'materials' | 'data';
+const APP_VERSION = '0.11.0';
+type View = 'home' | 'questions' | 'practice-setup' | 'practice' | 'materials' | 'data';
 
 export default function App() {
   const [view, setView] = useState<View>('home');
@@ -45,6 +52,9 @@ export default function App() {
   const [materialFilters, setMaterialFilters] = useState<MaterialFilterState>(
     DEFAULT_MATERIAL_FILTERS
   );
+  const [practicePoolQuestions, setPracticePoolQuestions] = useState<Question[]>([]);
+  const [practicePoolLabel, setPracticePoolLabel] = useState('全問題');
+  const [practiceInitialPreset, setPracticeInitialPreset] = useState<PracticePreset>('all');
   const [practiceQuestions, setPracticeQuestions] = useState<Question[]>([]);
   const [practiceSessionKey, setPracticeSessionKey] = useState(0);
   const [sourceOccurrenceCount, setSourceOccurrenceCount] = useState(0);
@@ -59,6 +69,10 @@ export default function App() {
   const historyByQuestionId = useMemo(
     () => new Map(learningHistory.map((history) => [history.questionId, history])),
     [learningHistory]
+  );
+  const practiceSummary = useMemo(
+    () => summarizePracticePool(questions, historyByQuestionId),
+    [questions, historyByQuestionId]
   );
   const questionSubjects = useMemo(
     () => uniqueSorted(questions.map((question) => question.subject)),
@@ -168,16 +182,29 @@ export default function App() {
     setView('materials');
   };
 
-  const openView = (nextView: Exclude<View, 'practice'>) => {
+  const openView = (nextView: 'home' | 'questions' | 'materials' | 'data') => {
     setFocusedQuestionId(null);
     setFocusedMaterialId(null);
     setView(nextView);
   };
 
-  const startPractice = (selectedQuestions: Question[]) => {
+  const openPracticeSetup = (
+    pool: Question[],
+    label: string,
+    initialPreset: PracticePreset = 'all'
+  ) => {
     setFocusedQuestionId(null);
     setFocusedMaterialId(null);
-    setPracticeQuestions([...selectedQuestions]);
+    setPracticePoolQuestions([...pool]);
+    setPracticePoolLabel(label);
+    setPracticeInitialPreset(initialPreset);
+    setPracticeSessionKey((current) => current + 1);
+    setView('practice-setup');
+  };
+
+  const startConfiguredPractice = (options: PracticeSetOptions) => {
+    const nextQuestions = buildPracticeSet(practicePoolQuestions, historyByQuestionId, options);
+    setPracticeQuestions(nextQuestions);
     setPracticeSessionKey((current) => current + 1);
     setView('practice');
   };
@@ -240,39 +267,39 @@ export default function App() {
     }
   };
 
+  const practiceNavActive = view === 'practice-setup' || view === 'practice';
+
   return (
     <div className="app-shell">
       <header className="app-header">
         <div>
           <p className="eyebrow">Study App</p>
           <h1>学習アプリ v{APP_VERSION}</h1>
-          <p className="muted">Delivery Schema 0.5 / One Question Practice & Local Learning State</p>
+          <p className="muted">Delivery Schema 0.5 / Practice Sets, Random & Review Mode</p>
         </div>
         <span className="status-badge">LOCAL ONLY</span>
       </header>
 
       <nav className="top-nav" aria-label="メインナビゲーション">
-        {(
-          [
-            ['home', 'ホーム'],
-            ['questions', '問題'],
-            ['practice', '演習'],
-            ['materials', '資料'],
-            ['data', 'データ管理']
-          ] as const
-        ).map(([key, label]) => (
-          <button
-            key={key}
-            type="button"
-            className={view === key ? 'active' : ''}
-            onClick={() => {
-              if (key === 'practice') startPractice(questions);
-              else openView(key);
-            }}
-          >
-            {label}
-          </button>
-        ))}
+        <button type="button" className={view === 'home' ? 'active' : ''} onClick={() => openView('home')}>
+          ホーム
+        </button>
+        <button type="button" className={view === 'questions' ? 'active' : ''} onClick={() => openView('questions')}>
+          問題
+        </button>
+        <button
+          type="button"
+          className={practiceNavActive ? 'active' : ''}
+          onClick={() => openPracticeSetup(questions, '全問題')}
+        >
+          演習
+        </button>
+        <button type="button" className={view === 'materials' ? 'active' : ''} onClick={() => openView('materials')}>
+          資料
+        </button>
+        <button type="button" className={view === 'data' ? 'active' : ''} onClick={() => openView('data')}>
+          データ管理
+        </button>
       </nav>
 
       <main>
@@ -298,6 +325,10 @@ export default function App() {
                   <span>学習済み</span>
                 </div>
                 <div>
+                  <strong>{practiceSummary.review}</strong>
+                  <span>要復習</span>
+                </div>
+                <div>
                   <strong>{sourceOccurrenceCount}</strong>
                   <span>出題出現</span>
                 </div>
@@ -306,11 +337,22 @@ export default function App() {
             <div className="grid-two">
               <article className="panel">
                 <h3>問題演習</h3>
-                <p>一覧で条件を絞り込むほか、1問ずつ回答・正誤判定・正式解説確認まで連続して進められます。</p>
+                <p>対象・出題順・問題数を組み合わせて演習セットを作成できます。</p>
                 <div className="home-actions">
                   <button type="button" onClick={() => openView('questions')}>問題一覧を見る</button>
-                  <button type="button" disabled={questions.length === 0} onClick={() => startPractice(questions)}>
-                    全問題を1問ずつ演習
+                  <button
+                    type="button"
+                    disabled={questions.length === 0}
+                    onClick={() => openPracticeSetup(questions, '全問題')}
+                  >
+                    演習セットを作成
+                  </button>
+                  <button
+                    type="button"
+                    disabled={practiceSummary.review === 0}
+                    onClick={() => openPracticeSetup(questions, '全問題', 'review')}
+                  >
+                    要復習 {practiceSummary.review}問から作成
                   </button>
                 </div>
               </article>
@@ -346,11 +388,14 @@ export default function App() {
             {filteredQuestions.length > 0 && (
               <div className="panel practice-launch">
                 <div>
-                  <strong>現在の絞り込み結果で1問ずつ演習</strong>
-                  <span>{filteredQuestions.length}問をこの順番で出題します。</span>
+                  <strong>現在の絞り込み結果から演習セットを作成</strong>
+                  <span>{filteredQuestions.length}問を母集団にして、対象・順序・出題数を選べます。</span>
                 </div>
-                <button type="button" onClick={() => startPractice(filteredQuestions)}>
-                  {filteredQuestions.length}問の演習を開始
+                <button
+                  type="button"
+                  onClick={() => openPracticeSetup(filteredQuestions, '現在の絞り込み結果')}
+                >
+                  {filteredQuestions.length}問からセットを作成
                 </button>
               </div>
             )}
@@ -376,6 +421,18 @@ export default function App() {
               ))
             )}
           </section>
+        )}
+
+        {view === 'practice-setup' && (
+          <PracticeSetBuilder
+            key={practiceSessionKey}
+            questions={practicePoolQuestions}
+            historyByQuestionId={historyByQuestionId}
+            sourceLabel={practicePoolLabel}
+            initialPreset={practiceInitialPreset}
+            onStart={startConfiguredPractice}
+            onCancel={() => openView('questions')}
+          />
         )}
 
         {view === 'practice' && (
