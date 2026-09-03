@@ -10,6 +10,15 @@ import {
   type PracticeSessionMode,
   type PracticeSetOptions
 } from '../utils/practiceSets';
+import {
+  LEARNING_AREA_LABELS,
+  QUESTION_KIND_LABELS,
+  QUESTION_KINDS_BY_AREA,
+  countQuestionKinds,
+  filterQuestionsByKinds,
+  type LearningArea,
+  type QuestionKind
+} from '../utils/questionCategories';
 
 const PRESET_LABELS: Record<PracticePreset, string> = {
   all: 'すべて',
@@ -37,17 +46,43 @@ export function PracticeSetBuilder({
   onStart: (options: PracticeSetOptions) => void;
   onCancel: () => void;
 }) {
+  const kindCounts = useMemo(() => countQuestionKinds(questions), [questions]);
+  const initialArea: LearningArea =
+    QUESTION_KINDS_BY_AREA.common.some((kind) => kindCounts[kind] > 0) ? 'common' : 'specialty';
+  const [learningArea, setLearningArea] = useState<LearningArea>(initialArea);
+  const [questionKinds, setQuestionKinds] = useState<QuestionKind[]>([
+    ...QUESTION_KINDS_BY_AREA[initialArea]
+  ]);
   const [preset, setPreset] = useState<PracticePreset>(initialPreset);
   const [order, setOrder] = useState<PracticeOrder>('sequential');
   const [limit, setLimit] = useState<PracticeLimit>('all');
   const [mode, setMode] = useState<PracticeSessionMode>('practice');
   const [timerMinutes, setTimerMinutes] = useState<ExamTimerMinutes>(0);
+
+  const categoryQuestions = useMemo(
+    () => filterQuestionsByKinds(questions, questionKinds),
+    [questions, questionKinds]
+  );
   const summary = useMemo(
-    () => summarizePracticePool(questions, historyByQuestionId),
-    [questions, historyByQuestionId]
+    () => summarizePracticePool(categoryQuestions, historyByQuestionId),
+    [categoryQuestions, historyByQuestionId]
   );
   const presetCount = presetCountFromSummary(summary, preset);
   const selectedCount = limit === 'all' ? presetCount : Math.min(presetCount, limit);
+
+  const selectArea = (area: LearningArea) => {
+    setLearningArea(area);
+    setQuestionKinds([...QUESTION_KINDS_BY_AREA[area]]);
+  };
+
+  const toggleKind = (kind: QuestionKind) => {
+    setQuestionKinds((current) =>
+      current.includes(kind) ? current.filter((value) => value !== kind) : [...current, kind]
+    );
+  };
+
+  const areaCount = (area: LearningArea) =>
+    QUESTION_KINDS_BY_AREA[area].reduce((total, kind) => total + kindCounts[kind], 0);
 
   return (
     <section className="stack practice-set-builder" aria-label="演習セット作成">
@@ -61,6 +96,52 @@ export function PracticeSetBuilder({
           <strong>{selectedCount}</strong>
           <span>問を出題</span>
         </div>
+      </div>
+
+      <div className="panel">
+        <fieldset className="practice-set-fieldset">
+          <legend>学習分野</legend>
+          <div className="practice-preset-grid practice-mode-options">
+            {(['common', 'specialty'] as LearningArea[]).map((area) => (
+              <label key={area} className="practice-preset-option">
+                <input
+                  type="radio"
+                  name="learning-area"
+                  value={area}
+                  checked={learningArea === area}
+                  onChange={() => selectArea(area)}
+                />
+                <span>
+                  <strong>{LEARNING_AREA_LABELS[area]}</strong>
+                  <small>{areaCount(area)}問</small>
+                </span>
+              </label>
+            ))}
+          </div>
+        </fieldset>
+      </div>
+
+      <div className="panel">
+        <fieldset className="practice-set-fieldset">
+          <legend>問題の種類</legend>
+          <div className="practice-preset-grid">
+            {QUESTION_KINDS_BY_AREA[learningArea].map((kind) => (
+              <label key={kind} className="practice-preset-option">
+                <input
+                  type="checkbox"
+                  name="question-kind"
+                  value={kind}
+                  checked={questionKinds.includes(kind)}
+                  onChange={() => toggleKind(kind)}
+                />
+                <span>
+                  <strong>{QUESTION_KIND_LABELS[kind]}</strong>
+                  <small>{kindCounts[kind]}問</small>
+                </span>
+              </label>
+            ))}
+          </div>
+        </fieldset>
       </div>
 
       <div className="panel">
@@ -170,7 +251,7 @@ export function PracticeSetBuilder({
       {selectedCount === 0 && (
         <div className="panel warning-panel" role="status">
           <strong>この条件に一致する問題はありません。</strong>
-          <p>別の演習対象を選択してください。</p>
+          <p>学習分野・問題の種類・学習状態を変更してください。</p>
         </div>
       )}
 
@@ -178,7 +259,17 @@ export function PracticeSetBuilder({
         <button
           type="button"
           disabled={selectedCount === 0}
-          onClick={() => onStart({ preset, order, limit, mode, timerMinutes })}
+          onClick={() =>
+            onStart({
+              preset,
+              order,
+              limit,
+              mode,
+              timerMinutes,
+              learningArea,
+              questionKinds
+            })
+          }
         >
           {selectedCount}問の{mode === 'exam' ? '試験' : '演習'}を開始
         </button>
