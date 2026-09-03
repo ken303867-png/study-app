@@ -2,6 +2,35 @@
 
 ## [Unreleased]
 
+## [0.14.0] - 2026-09-03
+
+### Added
+- production `vite-plugin-pwa` / Workbox Service Workerを正式オフライン層として固定
+- manifest `id` / `start_url` / `scope` / `display=standalone` / 日本語・education metadata
+- 192×192 / 512×512 PNG PWAアイコン
+- 512×512 maskableアイコン指定
+- iOS `apple-touch-icon` / mobile web app metadata
+- `beforeinstallprompt`を利用した「アプリをインストール」操作
+- オンライン / オフライン接続状態表示
+- manifest・PWA icon HTTP配信E2E
+- Service Worker制御後にネットワークを切断し、アプリをoffline reloadする実ブラウザE2E
+- オフラインreload後のIndexedDB教材表示と、オフライン回答保存・再読込E2E
+
+### Changed
+- アプリ表示Versionを0.14.0へ更新
+- PWA接続/インストール操作を既存app headerと重ならない独立ステータス列へ配置
+- 接続状態UIは既存の採点・Import `role=status`と競合しないARIA構造へ変更
+- 既存generateSW / autoUpdate / outdated-cache cleanup / navigation fallbackを再利用し、独自Service Workerは追加しない
+
+### Compatibility
+- Delivery Schema 0.5を維持
+- Formal Data Spec 1.2を維持
+- Explanation Template 1.0を維持
+- 正式問題・正答・解説・資料本文をPWA bundleへ複製しない
+- 正式709問・114資料本文はGitHubへ保存しない
+- オフライン利用でも教材Delivery・`learningHistory`・`materialHistory`・`examSessions`はIndexedDBの既存構造を維持
+- Cloud / In-app AIは引き続き無効
+
 ## [0.13.0] - 2026-09-03
 
 ### Added
@@ -86,7 +115,7 @@
 - Delivery Schema 0.5を維持
 - Formal Data Spec 1.2を維持
 - Explanation Template 1.0を維持
-- 演習セット構成はローカルUI状態として扱い、Formal Master / Deliveryへ保存しない
+- 演習セット構成はローカルUI状態であり、Formal Master / Deliveryへ保存しない
 - 正式問題・正答・解説・資料本文は演習セット機能によって変更しない
 - 正式709問・114資料本文はGitHubへ保存しない
 
