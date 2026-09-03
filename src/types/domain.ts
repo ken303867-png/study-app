@@ -191,6 +191,35 @@ export interface MaterialHistory {
   scrollPosition: number;
 }
 
+export interface ExamSubjectResult {
+  subject: string;
+  totalQuestions: number;
+  answeredCount: number;
+  correctCount: number;
+  incorrectCount: number;
+  unansweredCount: number;
+  accuracy: number;
+}
+
+export interface ExamSession {
+  id: string;
+  startedAt: string;
+  completedAt: string;
+  timerMinutes: number | null;
+  elapsedSeconds: number;
+  questionIds: string[];
+  totalQuestions: number;
+  answeredCount: number;
+  correctCount: number;
+  incorrectCount: number;
+  unansweredCount: number;
+  accuracy: number;
+  subjectResults: ExamSubjectResult[];
+  incorrectQuestionIds: string[];
+  unansweredQuestionIds: string[];
+  completionReason: 'submitted' | 'timeout';
+}
+
 export interface AppMeta {
   key: string;
   value: string;
