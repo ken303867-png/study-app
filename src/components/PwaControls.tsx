@@ -51,7 +51,11 @@ export function PwaControls() {
 
   return (
     <div className="pwa-controls" aria-label="PWA状態">
-      <span className={`connection-badge ${statusClass}`} role="status" aria-live="polite">
+      <span
+        className={`connection-badge ${statusClass}`}
+        aria-label={`接続状態: ${statusLabel}`}
+        aria-live="polite"
+      >
         {statusLabel}
       </span>
       {installable && (
