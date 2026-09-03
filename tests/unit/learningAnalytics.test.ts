@@ -118,6 +118,18 @@ describe('learningAnalytics', () => {
     expect(analytics.reviewPriorityUnits[0]).toMatchObject({ subject: '科目A', unit: '単元2' });
   });
 
+  it('does not let manually flagged unanswered questions inflate learned-range review rate', () => {
+    const withManualUnansweredReview = new Map(histories);
+    withManualUnansweredReview.set('Q5', history('Q5', { needsReview: true }));
+
+    const analytics = buildLearningAnalytics(questions, withManualUnansweredReview);
+    const subjectB = analytics.bySubject.find((group) => group.subject === '科目B');
+
+    expect(analytics.overall.needsReviewQuestions).toBe(3);
+    expect(analytics.overall.reviewRate).toBe(0.5);
+    expect(subjectB).toMatchObject({ needsReviewQuestions: 1, answeredQuestions: 1, reviewRate: 0 });
+  });
+
   it('orders recent incorrect and uncertain questions by last answered time', () => {
     const analytics = buildLearningAnalytics(questions, histories);
     expect(analytics.recentAttention.map((item) => item.question.id)).toEqual(['Q3', 'Q1']);
