@@ -4,7 +4,7 @@
 
 アプリ本体・データ・schemaを独立してVersion管理します。
 
-- App Version: `0.8.0`
+- App Version: `0.9.0`
 - Schema Version: `0.5`
 - Explanation Template Version: `1.0`
 - Formal Data Specification Version: `1.2`
@@ -15,6 +15,8 @@ Schema 0.5は、Schema 0.4の構造化解答解説・Source traceability・MEDIA
 App Versionとは独立して管理します。
 
 Formal Data Specification 1.2は1.1のSource lineage構造を維持したまま、`MATERIALS` / `MATERIAL_BLOCKS` と問題↔資料の双方向参照を追加します。Delivery Schema 0.5は既にMaterial配信構造を持つため、Formal 1.2導入だけを理由にDelivery Schemaを変更しません。
+
+App 0.9.0はDelivery / Formal Schemaを変更せず、ローカル検索・絞り込みと`learningHistory`による学習状態管理を追加します。学習履歴は教材データとは独立し、教材再Import時に削除しません。
 
 ## Semantic versioning
 
@@ -48,6 +50,15 @@ Formal Data Specification 1.2は1.1のSource lineage構造を維持したまま�
 - source-supported inferenceを使用したchoice mappingはprovenanceとmigration reportへ必ず残す
 - Legacy独自の学習欄を意味変更してFormal blockへ押し込まず、必要な監査情報をCanonical notesへ保持する
 
+## Learning state policy
+
+- `learningHistory` / `materialHistory` は教材Deliveryと独立したローカル状態とする
+- 正式教材の再Import・差し替えでは学習履歴を削除しない
+- 不正解・不確実は`needsReview=true`を自動設定する
+- 正解時に`needsReview`を自動解除せず、ユーザーが復習完了を明示するまで保持する
+- お気に入り・要復習・回答回数・直近結果はクラウドへ送信せずIndexedDBにのみ保存する
+- 学習状態はFormal Master / Deliveryの正答・解説内容を書き換えない
+
 ## Reproducibility policy
 
 - Node.js Versionは `.nvmrc` で固定する
@@ -77,7 +88,9 @@ Formal Data Specification 1.2は1.1のSource lineage構造を維持したまま�
 13. IndexedDB保存後read-back監査（問題・正答・解説・Source occurrence・Material・version metadata）
 14. 正式規模と同件数のsynthetic Import負荷QA（正式データをGitHubへ置かない）
 15. 問題↔資料の双方向リンクQAとChromium往復ナビゲーションE2E
-16. CHANGELOG更新
+16. 学習履歴が教材再Import後も保持されること
+17. 検索・絞り込みと学習状態のdesktop / mobile Chromium E2E
+18. CHANGELOG更新
 
 Prettierは開発時の整形ツールとして使用し、CI release gateへの追加は別Versionで検証後に行います。
 
