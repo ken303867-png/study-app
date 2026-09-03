@@ -1,3 +1,4 @@
+.top-nav { grid-template-columns: repeat(6, 1fr); }
 .learning-dashboard { max-width: 1080px; margin: 0 auto; }
 .dashboard-heading { display: flex; justify-content: space-between; align-items: center; gap: 20px; }
 .dashboard-heading h2, .dashboard-section-heading h3 { margin-bottom: 6px; }
@@ -34,6 +35,7 @@
 .dashboard-result.uncertain { background: #fff4d8; color: #775b13; }
 .dashboard-empty-note, .dashboard-empty p { color: #667b8f; margin-bottom: 0; }
 @media (max-width: 760px) {
+  .top-nav { grid-template-columns: repeat(2, 1fr); }
   .dashboard-heading { align-items: stretch; flex-direction: column; }
   .dashboard-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .dashboard-priority-grid { grid-template-columns: 1fr; }
