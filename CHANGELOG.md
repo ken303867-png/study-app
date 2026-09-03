@@ -29,6 +29,9 @@
 - 原解説明示正答・再照合override・予想問題監査済正答を区別するsource-answer provenance
 - source prompt / source choices / source answerをfinal canonical revisionで上書きしないlineage QA report
 - Legacy 709 Source Lineage Reconstruction v1仕様書と非正式Vitest fixture
+- Legacy v1.47解答解説＋確定lineageからFormal Data Spec v1.1 Canonical Masterを組み立てるAssembly Core
+- direct / group / subitem / complement-repair / all-items形式を扱うchoice explanation migration QA
+- Legacy 709 Canonical Assembly v1仕様書とCanonical→Delivery 0.5まで検証する非正式Vitest fixture
 
 ### Changed
 - 旧 `explanation: string` からExplanation Template v1.0構造へ移行
@@ -45,6 +48,8 @@
 - 旧v1.47系709問正本をFormal Data Spec v1.1へ暗黙変換しない
 - source lineageが不足した旧正本はPreflightで停止し、推測で `source_id` / `source_answer` / `SOURCE_OCCURRENCES` を生成しない
 - Lineage Reconstruction CoreはQA reportを返すだけでIndexedDBを更新せず、Formal Canonical Master全体のQA完了前にDeliveryへ昇格しない
+- Canonical Assemblyはsource-supported inferenceと共通修正条件fallbackをmigration reportへ残し、旧解説原文を上書きしない
+- Canonical Assemblyはfinal publication QA・lineage QA・choice mapping QAがすべてPASSするまで正式Masterとして確定しない
 
 ## [0.7.1] - 2026-09-02
 
