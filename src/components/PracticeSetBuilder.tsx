@@ -84,13 +84,30 @@ export function PracticeSetBuilder({
   const areaCount = (area: LearningArea) =>
     QUESTION_KINDS_BY_AREA[area].reduce((total, kind) => total + kindCounts[kind], 0);
 
+  const visibleSelectedKinds = QUESTION_KINDS_BY_AREA[learningArea].filter((kind) =>
+    questionKinds.includes(kind)
+  );
+  const populationLabel =
+    visibleSelectedKinds.length === QUESTION_KINDS_BY_AREA[learningArea].length
+      ? LEARNING_AREA_LABELS[learningArea]
+      : visibleSelectedKinds.length === 0
+        ? `${LEARNING_AREA_LABELS[learningArea]}：未選択`
+        : `${LEARNING_AREA_LABELS[learningArea]}：${visibleSelectedKinds
+            .map((kind) => QUESTION_KIND_LABELS[kind])
+            .join('＋')}`;
+
   return (
     <section className="stack practice-set-builder" aria-label="演習セット作成">
       <div className="panel practice-set-heading">
         <div>
           <p className="eyebrow">Practice Set</p>
           <h2>演習セットを作成</h2>
-          <p className="muted">母集団：{sourceLabel} / {questions.length}問</p>
+          <p
+            className="muted"
+            title={`元の母集団：${sourceLabel} / ${questions.length}問`}
+          >
+            母集団：{populationLabel} / {categoryQuestions.length}問
+          </p>
         </div>
         <div className="practice-set-preview" aria-label="演習予定問題数">
           <strong>{selectedCount}</strong>
