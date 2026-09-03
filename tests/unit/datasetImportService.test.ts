@@ -49,7 +49,10 @@ describe('datasetImportService', () => {
   });
 
   it('merges and replaces a supplemental cloze dataset without removing the base dataset', async () => {
-    await contentRepository.replaceDataset(sampleDataset);
+    await contentRepository.replaceDataset(sampleDataset, {
+      explanationTemplateVersion: '1.0',
+      formalDataSpecVersion: '1.2'
+    });
     const supplemental = buildSupplementalCloze('初回の正答');
 
     const first = await importDatasetJsonText(JSON.stringify(supplemental));
@@ -57,11 +60,13 @@ describe('datasetImportService', () => {
     expect(first.supplementalQuestionCount).toBe(1);
     expect(first.replacedSupplementalQuestionCount).toBe(0);
     expect(first.questionCount).toBe(2);
+    expect(first.formalDataSpecVersion).toBe('1.2');
     expect((await contentRepository.getQuestions()).map((question) => question.id).sort()).toEqual([
       'CLOZE-COM-01-001-01',
       'SAMPLE-Q-001'
     ]);
     expect((await db.meta.get('datasetVersion'))?.value).toBe(sampleDataset.datasetVersion);
+    expect((await db.meta.get('formalDataSpecVersion'))?.value).toBe('1.2');
 
     const second = await importDatasetJsonText(
       JSON.stringify(buildSupplementalCloze('更新後の正答'))
@@ -71,10 +76,12 @@ describe('datasetImportService', () => {
 
     expect(second.replacedSupplementalQuestionCount).toBe(1);
     expect(second.questionCount).toBe(2);
+    expect(second.formalDataSpecVersion).toBe('1.2');
     expect(cloze && 'acceptedAnswers' in cloze ? cloze.acceptedAnswers : []).toEqual([
       '更新後の正答'
     ]);
     expect(questions.some((question) => question.id === 'SAMPLE-Q-001')).toBe(true);
+    expect((await db.meta.get('formalDataSpecVersion'))?.value).toBe('1.2');
   });
 
   it('imports a canonical master .xlsx through the same atomic pipeline', async () => {
