@@ -28,3 +28,5 @@ jobs:
           git add src/components/PracticeMode.tsx src/components/PracticeSetBuilder.tsx src/styles.css tests/unit/PracticeMode.clozeSelfAssessment.test.tsx
           git commit -m "feat: add cloze answer reveal self-assessment"
           git push
+
+# Existing-workflow trigger marker: 2026-09-04
