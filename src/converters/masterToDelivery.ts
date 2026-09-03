@@ -5,6 +5,7 @@ import {
 } from '../schemas/masterDataSchemas';
 import type {
   ChoiceExplanation,
+  Material,
   MediaRecord,
   Question,
   SourceOccurrence,
@@ -46,8 +47,22 @@ export function convertMasterToDelivery(input: CanonicalMasterExportInput): Data
     'MEDIA.media_id',
     issues
   );
+  assertUnique(
+    master.sheets.MATERIALS.map((row) => row.material_id),
+    'MATERIALS.material_id',
+    issues
+  );
+  assertUnique(
+    master.sheets.MATERIAL_BLOCKS.map((row) => row.block_id),
+    'MATERIAL_BLOCKS.block_id',
+    issues
+  );
 
   const sourceMap = new Map(master.sheets.SOURCES.map((source) => [source.source_id, source]));
+  const materialMap = new Map(
+    master.sheets.MATERIALS.map((material) => [material.material_id, material])
+  );
+  const blocksByMaterial = groupBy(master.sheets.MATERIAL_BLOCKS, (row) => row.material_id);
   const qaRowsByQuestion = groupBy(master.sheets.QA_LEDGER, (row) => row.canonical_question_id);
   const explanationRowsByQuestion = groupBy(
     master.sheets.EXPLANATIONS,
@@ -67,8 +82,62 @@ export function convertMasterToDelivery(input: CanonicalMasterExportInput): Data
   );
 
   const adoptedQuestions = master.sheets.QUESTIONS.filter((row) => row.record_status === 'adopted');
+  const adoptedIds = new Set(adoptedQuestions.map((row) => row.canonical_question_id));
   if (adoptedQuestions.length === 0) {
     issues.push('QUESTIONSにrecord_status=adoptedの問題が1件もありません。');
+  }
+
+  for (const block of master.sheets.MATERIAL_BLOCKS) {
+    if (!materialMap.has(block.material_id)) {
+      issues.push(
+        `${block.block_id}: material_id=${block.material_id} がMATERIALSに存在しません。`
+      );
+    }
+  }
+
+  const materialIdsByQuestion = new Map<string, string[]>();
+  const deliveryMaterials: Material[] = [];
+  for (const material of master.sheets.MATERIALS) {
+    assertUnique(
+      material.related_question_ids,
+      `${material.material_id}.related_question_ids`,
+      issues
+    );
+    for (const questionId of material.related_question_ids) {
+      if (!adoptedIds.has(questionId)) {
+        issues.push(
+          `${material.material_id}: related_question_ids=${questionId} はadopted問題に存在しません。`
+        );
+        continue;
+      }
+      const values = materialIdsByQuestion.get(questionId) ?? [];
+      values.push(material.material_id);
+      materialIdsByQuestion.set(questionId, values);
+    }
+
+    const blocks = [...(blocksByMaterial.get(material.material_id) ?? [])].sort(
+      (a, b) => a.section_order - b.section_order || a.block_order - b.block_order
+    );
+    if (master.formalDataSpecVersion === '1.2' && blocks.length === 0) {
+      issues.push(`${material.material_id}: Formal 1.2 MATERIALにはMATERIAL_BLOCKSが1件以上必要です。`);
+    }
+    validateMaterialBlocks(material.material_id, blocks, issues);
+    const body = renderMaterialBody(blocks);
+    if (!body) {
+      issues.push(`${material.material_id}: Deliveryへ出力できる本文blockがありません。`);
+    }
+
+    deliveryMaterials.push({
+      id: material.material_id,
+      subject: material.subject,
+      unit: material.unit,
+      title: material.title,
+      importance: material.importance,
+      body: body || 'MATERIAL本文未登録',
+      relatedQuestionIds: material.related_question_ids,
+      tags: material.tags,
+      revision: material.revision
+    });
   }
 
   const deliveryQuestions: Question[] = [];
@@ -110,9 +179,16 @@ export function convertMasterToDelivery(input: CanonicalMasterExportInput): Data
     const explanationRow = explanationRows[0];
     if (!explanationRow) continue;
 
-    if (row.related_material_ids.length > 0) {
+    assertUnique(row.related_material_ids, `${questionId}.related_material_ids`, issues);
+    for (const materialId of row.related_material_ids) {
+      if (!materialMap.has(materialId)) {
+        issues.push(`${questionId}: related_material_ids=${materialId} がMATERIALSに存在しません。`);
+      }
+    }
+    const reverseMaterialIds = materialIdsByQuestion.get(questionId) ?? [];
+    if (!sameStringSet(row.related_material_ids, reverseMaterialIds)) {
       issues.push(
-        `${questionId}: related_material_idsは資料Master変換工程が未接続のため、現工程では空配列にしてください。`
+        `${questionId}: QUESTIONS.related_material_idsとMATERIALS.related_question_idsの双方向リンクが一致しません。question=[${row.related_material_ids.join(',')}] material=[${reverseMaterialIds.join(',')}]`
       );
     }
 
@@ -173,7 +249,7 @@ export function convertMasterToDelivery(input: CanonicalMasterExportInput): Data
       importance: row.importance,
       prompt: row.canonical_prompt,
       explanation: formalExplanation,
-      relatedMaterialIds: [],
+      relatedMaterialIds: row.related_material_ids,
       tags: row.tags,
       revision: row.revision
     };
@@ -209,7 +285,6 @@ export function convertMasterToDelivery(input: CanonicalMasterExportInput): Data
     }
   }
 
-  const adoptedIds = new Set(adoptedQuestions.map((row) => row.canonical_question_id));
   const deliveryOccurrences: SourceOccurrence[] = master.sheets.SOURCE_OCCURRENCES.filter((row) =>
     adoptedIds.has(row.canonical_question_id)
   ).map((row) => ({
@@ -280,11 +355,92 @@ export function convertMasterToDelivery(input: CanonicalMasterExportInput): Data
     datasetVersion: master.deliveryDatasetVersion,
     schemaVersion: '0.5',
     questions: deliveryQuestions,
-    materials: [],
+    materials: deliveryMaterials,
     sources: deliverySources,
     sourceOccurrences: deliveryOccurrences,
     media: deliveryMedia
   });
+}
+
+function validateMaterialBlocks(
+  materialId: string,
+  blocks: Array<{
+    block_id: string;
+    section_key: string;
+    section_order: number;
+    section_heading: string;
+    block_order: number;
+    block_type: 'paragraph' | 'table';
+    text?: string;
+    table_rows?: string[][];
+  }>,
+  issues: string[]
+) {
+  const sectionOrderByKey = new Map<string, number>();
+  const sectionKeyByOrder = new Map<number, string>();
+  const bySection = groupBy(blocks, (row) => row.section_key);
+
+  for (const block of blocks) {
+    const knownOrder = sectionOrderByKey.get(block.section_key);
+    if (knownOrder !== undefined && knownOrder !== block.section_order) {
+      issues.push(`${materialId}: section_key=${block.section_key} のsection_orderが一致しません。`);
+    }
+    sectionOrderByKey.set(block.section_key, block.section_order);
+
+    const knownKey = sectionKeyByOrder.get(block.section_order);
+    if (knownKey !== undefined && knownKey !== block.section_key) {
+      issues.push(`${materialId}: section_order=${block.section_order} が複数sectionで重複しています。`);
+    }
+    sectionKeyByOrder.set(block.section_order, block.section_key);
+  }
+
+  for (const [sectionKey, sectionBlocks] of bySection) {
+    const sorted = [...sectionBlocks].sort((a, b) => a.block_order - b.block_order);
+    assertUnique(
+      sorted.map((block) => String(block.block_order)),
+      `${materialId}.${sectionKey}.block_order`,
+      issues
+    );
+    sorted.forEach((block, index) => {
+      if (block.block_order !== index + 1) {
+        issues.push(`${materialId}.${sectionKey}: block_orderは1から連続させてください。`);
+      }
+    });
+  }
+}
+
+export function renderMaterialBody(
+  blocks: Array<{
+    section_key: string;
+    section_order: number;
+    section_heading: string;
+    block_order: number;
+    block_type: 'paragraph' | 'table';
+    text?: string;
+    table_rows?: string[][];
+  }>
+): string {
+  const sorted = [...blocks].sort(
+    (a, b) => a.section_order - b.section_order || a.block_order - b.block_order
+  );
+  const lines: string[] = [];
+  let previousSectionKey = '';
+
+  for (const block of sorted) {
+    if (block.section_key !== previousSectionKey) {
+      if (lines.length > 0) lines.push('');
+      lines.push(block.section_heading);
+      previousSectionKey = block.section_key;
+    }
+    if (block.block_type === 'paragraph') {
+      if (block.text) lines.push(block.text);
+      continue;
+    }
+    for (const row of block.table_rows ?? []) {
+      lines.push(row.map((cell) => cell.trim()).join(' | '));
+    }
+  }
+  return lines.join('\n').trim();
 }
 
 function validateChoiceRows(
@@ -344,6 +500,12 @@ function assertUnique(values: string[], label: string, issues: string[]) {
     if (seen.has(value)) issues.push(`${label} が重複しています: ${value}`);
     seen.add(value);
   }
+}
+
+function sameStringSet(left: string[], right: string[]) {
+  if (left.length !== right.length) return false;
+  const rightSet = new Set(right);
+  return left.every((value) => rightSet.has(value));
 }
 
 function groupBy<T>(rows: T[], keyOf: (row: T) => string): Map<string, T[]> {
