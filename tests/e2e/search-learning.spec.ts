@@ -6,7 +6,7 @@ test('filters questions and persists favorite/review learning state across reloa
   await page.goto('/');
   await page.getByRole('button', { name: 'データ管理' }).click();
   await page.getByRole('button', { name: 'サンプルを読み込む' }).click();
-  await page.getByRole('button', { name: '問題' }).click();
+  await page.getByRole('button', { name: '問題', exact: true }).click();
 
   await expect(page.getByText(questionPrompt)).toBeVisible();
   await page.getByRole('button', { name: 'お気に入り ☆' }).click();
@@ -19,7 +19,7 @@ test('filters questions and persists favorite/review learning state across reloa
   await expect(page.getByText('表示 1 / 1問')).toBeVisible();
 
   await page.reload();
-  await page.getByRole('button', { name: '問題' }).click();
+  await page.getByRole('button', { name: '問題', exact: true }).click();
   await page.getByLabel('学習状態').selectOption('review');
   await expect(page.getByText(questionPrompt)).toBeVisible();
   await expect(page.getByRole('button', { name: 'お気に入り ★' })).toHaveAttribute('aria-pressed', 'true');
@@ -34,7 +34,7 @@ test('filters materials and cross-navigation clears filters so targets stay visi
   await page.getByRole('button', { name: 'データ管理' }).click();
   await page.getByRole('button', { name: 'サンプルを読み込む' }).click();
 
-  await page.getByRole('button', { name: '資料' }).click();
+  await page.getByRole('button', { name: '資料', exact: true }).click();
   await page.getByLabel('キーワード・資料ID').fill('正式データ処理フロー');
   await expect(page.getByRole('heading', { name: '正式データ処理フロー' })).toBeVisible();
   await page.getByRole('button', { name: '関連問題を開く: SAMPLE-Q-001' }).click();
