@@ -1,0 +1,52 @@
+.cloze-self-assessment {
+  display: grid;
+  gap: 14px;
+}
+
+.cloze-answer-reveal {
+  margin-top: 16px;
+  padding: 18px;
+  border: 1px solid #b9c9d8;
+  border-radius: 14px;
+  background: #f6f9fc;
+  display: grid;
+  gap: 6px;
+}
+
+.cloze-answer-reveal span {
+  color: #667b8f;
+  font-size: .8rem;
+  font-weight: 800;
+}
+
+.cloze-answer-reveal strong {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
+.cloze-self-grade {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.cloze-self-grade button {
+  min-height: 52px;
+}
+
+.practice-feedback.uncertain {
+  border-color: #e4ca83;
+  background: #fff9e8;
+  color: #775b13;
+}
+
+.practice-summary .practice-result-grid {
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+}
+
+@media (max-width: 560px) {
+  .cloze-self-grade {
+    grid-template-columns: 1fr;
+  }
+}
