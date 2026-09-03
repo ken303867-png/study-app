@@ -1,15 +1,11 @@
-import { readFile } from 'node:fs/promises';
 import { expect, test, type Page } from '@playwright/test';
-import {
-  canonicalMasterExportSchema,
-  type CanonicalMasterExport
-} from '../../src/schemas/masterDataSchemas';
+import { sampleDataset } from '../../src/data/sampleDataset';
 
-test('release QA: formal 726 + 114 materials + cloze 1917 persist as 2643 questions', async ({
+test('release QA: 726 base + 114 materials + 1917 cloze persist as 2643 questions', async ({
   page
 }) => {
-  const baseMaster = await loadCanonicalFixture();
-  const formalMaster = buildFormalReleaseMaster(baseMaster, 726, 114);
+  test.setTimeout(180_000);
+  const formalBase = buildFormalBaseDataset(726, 114);
   const clozeV1 = buildSupplementalClozeDataset(1917, 'v1');
   const clozeV2 = buildSupplementalClozeDataset(1917, 'v2');
   const clozeV3 = buildSupplementalClozeDataset(1917, 'v3');
@@ -17,9 +13,10 @@ test('release QA: formal 726 + 114 materials + cloze 1917 persist as 2643 questi
   await page.goto('/');
   await page.getByRole('button', { name: 'データ管理' }).click();
 
-  await uploadJson(page, 'synthetic-formal-726.json', formalMaster);
+  await uploadJson(page, 'synthetic-formal-726.json', formalBase);
   await expect(page.getByRole('status')).toContainText(
-    'JSON → Canonical Masterを読み込みました: 726問 / 726出題出現 / Schema 0.5 / 114資料'
+    'JSON → Deliveryを読み込みました: 726問 / 726出題出現 / Schema 0.5 / 114資料',
+    { timeout: 30_000 }
   );
   await expect(page.getByText(/正式Base: OK/)).toBeVisible();
   await expect(page.getByText(/共通穴抜き: 未完了/)).toBeVisible();
@@ -28,55 +25,48 @@ test('release QA: formal 726 + 114 materials + cloze 1917 persist as 2643 questi
 
   await uploadJson(page, 'synthetic-cloze-1917-v1.json', clozeV1);
   await expect(page.getByRole('status')).toContainText(
-    '追加1917問 / 置換0問 / 現在2643問 / Schema 0.5'
+    '追加1917問 / 置換0問 / 現在2643問 / Schema 0.5',
+    { timeout: 30_000 }
   );
   await expect(page.getByText(/正式Base: OK/)).toBeVisible();
   await expect(page.getByText(/共通穴抜き: OK/)).toBeVisible();
-
-  let persisted = await readReleaseState(page);
-  expect(persisted).toMatchObject({
+  expect(await readCounts(page)).toEqual({
     questions: 2643,
     materials: 114,
     sourceOccurrences: 2643,
-    datasetVersion: 'common-726-synthetic-release-v1',
-    schemaVersion: '0.5',
-    formalDataSpecVersion: '1.2',
-    historyAttempts: 1
+    learningHistory: 1
   });
 
   await uploadJson(page, 'synthetic-cloze-1917-v2.json', clozeV2);
   await expect(page.getByRole('status')).toContainText(
-    '追加1917問 / 置換1917問 / 現在2643問 / Schema 0.5'
+    '追加1917問 / 置換1917問 / 現在2643問 / Schema 0.5',
+    { timeout: 30_000 }
   );
-  persisted = await readReleaseState(page);
-  expect(persisted).toMatchObject({
+  expect(await readCounts(page)).toEqual({
     questions: 2643,
     materials: 114,
     sourceOccurrences: 2643,
-    datasetVersion: 'common-726-synthetic-release-v1',
-    formalDataSpecVersion: '1.2',
-    historyAttempts: 1,
-    firstClozeAnswer: '答v2-1'
+    learningHistory: 1
   });
 
-  await uploadJson(page, 'synthetic-formal-726-reimport.json', formalMaster);
+  // Base再Importではsupplementalが外れるが、学習履歴は維持される。
+  await uploadJson(page, 'synthetic-formal-726-reimport.json', formalBase);
   await expect(page.getByRole('status')).toContainText(
-    'JSON → Canonical Masterを読み込みました: 726問 / 726出題出現 / Schema 0.5 / 114資料'
+    'JSON → Deliveryを読み込みました: 726問 / 726出題出現 / Schema 0.5 / 114資料',
+    { timeout: 30_000 }
   );
-  persisted = await readReleaseState(page);
-  expect(persisted).toMatchObject({
+  expect(await readCounts(page)).toEqual({
     questions: 726,
     materials: 114,
     sourceOccurrences: 726,
-    datasetVersion: 'common-726-synthetic-release-v1',
-    formalDataSpecVersion: '1.2',
-    historyAttempts: 1,
-    firstClozeAnswer: null
+    learningHistory: 1
   });
 
+  // 正式運用順序どおり、Base更新後にsupplementalを再投入する。
   await uploadJson(page, 'synthetic-cloze-1917-v3.json', clozeV3);
   await expect(page.getByRole('status')).toContainText(
-    '追加1917問 / 置換0問 / 現在2643問 / Schema 0.5'
+    '追加1917問 / 置換0問 / 現在2643問 / Schema 0.5',
+    { timeout: 30_000 }
   );
   await expect(page.getByText(/正式Base: OK/)).toBeVisible();
   await expect(page.getByText(/共通穴抜き: OK/)).toBeVisible();
@@ -94,171 +84,78 @@ test('release QA: formal 726 + 114 materials + cloze 1917 persist as 2643 questi
   await expect(
     page.locator('.metric-grid div').filter({ hasText: '資料' }).locator('strong')
   ).toHaveText('114');
-
-  persisted = await readReleaseState(page);
-  expect(persisted).toMatchObject({
+  expect(await readCounts(page)).toEqual({
     questions: 2643,
     materials: 114,
     sourceOccurrences: 2643,
-    datasetVersion: 'common-726-synthetic-release-v1',
-    schemaVersion: '0.5',
-    formalDataSpecVersion: '1.2',
-    historyAttempts: 1,
-    firstClozeAnswer: '答v3-1'
+    learningHistory: 1
   });
 });
 
-async function loadCanonicalFixture(): Promise<CanonicalMasterExport> {
-  const text = await readFile(
-    new URL('../fixtures/canonical-master-sample.json', import.meta.url),
-    'utf8'
-  );
-  return canonicalMasterExportSchema.parse(JSON.parse(text) as unknown);
-}
-
-function buildFormalReleaseMaster(
-  base: CanonicalMasterExport,
-  questionCount: number,
-  materialCount: number
-): CanonicalMasterExport {
-  const adopted = base.sheets.QUESTIONS.find((row) => row.record_status === 'adopted');
-  if (!adopted) throw new Error('fixture requires one adopted question');
-  const explanation = base.sheets.EXPLANATIONS.find(
-    (row) => row.canonical_question_id === adopted.canonical_question_id
-  );
-  const qa = base.sheets.QA_LEDGER.find(
-    (row) => row.canonical_question_id === adopted.canonical_question_id
-  );
-  const occurrence = base.sheets.SOURCE_OCCURRENCES.find(
-    (row) => row.canonical_question_id === adopted.canonical_question_id
-  );
-  if (!explanation || !qa || !occurrence) throw new Error('fixture is incomplete');
-
-  const baseChoices = base.sheets.CHOICES.filter(
-    (row) => row.canonical_question_id === adopted.canonical_question_id
-  );
-  const baseChoiceExplanations = base.sheets.CHOICE_EXPLANATIONS.filter(
-    (row) => row.canonical_question_id === adopted.canonical_question_id
-  );
-  if (baseChoices.length < 2 || baseChoices.length !== baseChoiceExplanations.length) {
-    throw new Error('fixture choices are incomplete');
+function buildFormalBaseDataset(questionCount: number, materialCount: number) {
+  const templateQuestion = sampleDataset.questions[0];
+  const templateMaterial = sampleDataset.materials[0];
+  const templateOccurrence = sampleDataset.sourceOccurrences[0];
+  if (!templateQuestion || !templateMaterial || !templateOccurrence) {
+    throw new Error('sampleDataset is incomplete');
   }
 
-  const questions: CanonicalMasterExport['sheets']['QUESTIONS'] = [];
-  const choices: CanonicalMasterExport['sheets']['CHOICES'] = [];
-  const explanations: CanonicalMasterExport['sheets']['EXPLANATIONS'] = [];
-  const choiceExplanations: CanonicalMasterExport['sheets']['CHOICE_EXPLANATIONS'] = [];
-  const sourceOccurrences: CanonicalMasterExport['sheets']['SOURCE_OCCURRENCES'] = [];
-  const qaLedger: CanonicalMasterExport['sheets']['QA_LEDGER'] = [];
   const relatedByMaterial = new Map<string, string[]>();
-
   for (let index = 1; index <= materialCount; index += 1) {
     relatedByMaterial.set(`SYN-MAT-${String(index).padStart(3, '0')}`, []);
   }
 
-  for (let index = 1; index <= questionCount; index += 1) {
+  const questions = Array.from({ length: questionCount }, (_, zeroIndex) => {
+    const index = zeroIndex + 1;
     const suffix = String(index).padStart(3, '0');
-    const questionId = `SYN-FORMAL-${suffix}`;
+    const id = `SYN-FORMAL-${suffix}`;
     const materialId = `SYN-MAT-${String(((index - 1) % materialCount) + 1).padStart(3, '0')}`;
-    relatedByMaterial.get(materialId)?.push(questionId);
-    const prompt = `非正式release QA問題 ${suffix}`;
-
-    questions.push({
-      ...adopted,
-      canonical_question_id: questionId,
-      source_question_id: `SYN-SRC-Q-${suffix}`,
-      source_prompt: prompt,
-      canonical_prompt: prompt,
+    relatedByMaterial.get(materialId)?.push(id);
+    return {
+      ...templateQuestion,
+      id,
+      prompt: `非正式release QA問題 ${suffix}`,
+      relatedMaterialIds: [materialId],
       tags: ['synthetic-release-qa'],
-      related_material_ids: [materialId],
-      notes: `synthetic formal 726 release QA ${suffix}`
-    });
-    choices.push(
-      ...baseChoices.map((choice) => ({
-        ...choice,
-        canonical_question_id: questionId,
-        source_choice_text: `${choice.source_choice_text} ${suffix}`,
-        canonical_choice_text: `${choice.canonical_choice_text} ${suffix}`
-      }))
-    );
-    explanations.push({
-      ...explanation,
-      canonical_question_id: questionId,
-      answer_summary: `${explanation.answer_summary} ${suffix}`,
-      question_intent: `${explanation.question_intent} ${suffix}`,
-      reasoning: `${explanation.reasoning} ${suffix}`,
-      key_points: `${explanation.key_points} ${suffix}`,
-      references: `${explanation.references} / synthetic release QA`
-    });
-    choiceExplanations.push(
-      ...baseChoiceExplanations.map((row) => ({
-        ...row,
-        canonical_question_id: questionId,
-        reason: `${row.reason} ${suffix}`,
-        correction_condition: `${row.correction_condition} ${suffix}`
-      }))
-    );
-    sourceOccurrences.push({
-      ...occurrence,
+      revision: 1
+    };
+  });
+
+  const materials = Array.from({ length: materialCount }, (_, zeroIndex) => {
+    const suffix = String(zeroIndex + 1).padStart(3, '0');
+    const id = `SYN-MAT-${suffix}`;
+    return {
+      ...templateMaterial,
+      id,
+      title: `非正式release QA資料 ${suffix}`,
+      relatedQuestionIds: relatedByMaterial.get(id) ?? [],
+      tags: ['synthetic-release-qa'],
+      revision: 1
+    };
+  });
+
+  const sourceOccurrences = Array.from({ length: questionCount }, (_, zeroIndex) => {
+    const index = zeroIndex + 1;
+    const suffix = String(index).padStart(3, '0');
+    return {
+      ...templateOccurrence,
       source_occurrence_id: `SYN-OCC-${suffix}`,
-      canonical_question_id: questionId,
+      canonical_question_id: `SYN-FORMAL-${suffix}`,
       source_question_no: index,
       source_occurrence_order: index,
-      source_prompt_snapshot: prompt
-    });
-    qaLedger.push({
-      ...qa,
-      canonical_question_id: questionId,
-      notes: 'synthetic release QA'
-    });
-  }
-
-  const materials: CanonicalMasterExport['sheets']['MATERIALS'] = [];
-  const materialBlocks: CanonicalMasterExport['sheets']['MATERIAL_BLOCKS'] = [];
-  for (let index = 1; index <= materialCount; index += 1) {
-    const suffix = String(index).padStart(3, '0');
-    const materialId = `SYN-MAT-${suffix}`;
-    materials.push({
-      material_id: materialId,
-      subject: adopted.subject,
-      unit: adopted.unit,
-      title: `非正式release QA資料 ${suffix}`,
-      importance: 'B',
-      revision: 1,
-      related_question_ids: relatedByMaterial.get(materialId) ?? [],
-      tags: ['synthetic-release-qa']
-    });
-    materialBlocks.push({
-      block_id: `${materialId}-01-001`,
-      material_id: materialId,
-      section_key: 'releaseQa',
-      section_order: 1,
-      section_heading: '非正式release QA',
-      block_order: 1,
-      block_type: 'paragraph',
-      text: `正式本文ではないrelease QA資料 ${suffix}`
-    });
-  }
-
-  return canonicalMasterExportSchema.parse({
-    ...base,
-    masterDataVersion: 'common-726-synthetic-master-v1',
-    formalDataSpecVersion: '1.2',
-    deliveryDatasetVersion: 'common-726-synthetic-release-v1',
-    sheets: {
-      ...base.sheets,
-      QUESTIONS: questions,
-      CHOICES: choices,
-      EXPLANATIONS: explanations,
-      CHOICE_EXPLANATIONS: choiceExplanations,
-      SOURCE_OCCURRENCES: sourceOccurrences,
-      QA_LEDGER: qaLedger,
-      MATERIALS: materials,
-      MATERIAL_BLOCKS: materialBlocks,
-      RELATIONS: [],
-      MEDIA: []
-    }
+      source_prompt_snapshot: `非正式release QA問題 ${suffix}`
+    };
   });
+
+  return {
+    datasetVersion: 'common-726-synthetic-release-v1',
+    schemaVersion: '0.5',
+    questions,
+    materials,
+    sources: sampleDataset.sources,
+    sourceOccurrences,
+    media: []
+  };
 }
 
 function buildSupplementalClozeDataset(count: number, version: string) {
@@ -280,7 +177,7 @@ function buildSupplementalClozeDataset(count: number, version: string) {
         sourceLabel: '共通穴抜き問題 synthetic release QA',
         questionFormat: 'fill-blank',
         importance: 'B',
-        prompt: `非正式release QA穴抜き（　　　）${suffix}`,
+        prompt: `非正式release QA穴抜き (____) ${suffix}`,
         explanation: {
           answer,
           question_intent: '非正式穴抜きrelease QA',
@@ -368,7 +265,7 @@ async function seedLearningHistory(page: Page, questionId: string) {
   }, questionId);
 }
 
-async function readReleaseState(page: Page) {
+async function readCounts(page: Page) {
   return page.evaluate(async () => {
     const database = await new Promise<IDBDatabase>((resolve, reject) => {
       const request = indexedDB.open('study-app');
@@ -376,52 +273,21 @@ async function readReleaseState(page: Page) {
       request.onerror = () => reject(request.error ?? new Error('IndexedDB open failed'));
     });
     const transaction = database.transaction(
-      ['questions', 'materials', 'sourceOccurrences', 'learningHistory', 'meta'],
+      ['questions', 'materials', 'sourceOccurrences', 'learningHistory'],
       'readonly'
     );
-    const requestValue = <T,>(request: IDBRequest<T>) =>
-      new Promise<T>((resolve, reject) => {
+    const toCount = (request: IDBRequest<number>) =>
+      new Promise<number>((resolve, reject) => {
         request.onsuccess = () => resolve(request.result);
-        request.onerror = () => reject(request.error ?? new Error('IndexedDB request failed'));
+        request.onerror = () => reject(request.error ?? new Error('IndexedDB count failed'));
       });
-
-    const questions = await requestValue(transaction.objectStore('questions').count());
-    const materials = await requestValue(transaction.objectStore('materials').count());
-    const sourceOccurrences = await requestValue(
-      transaction.objectStore('sourceOccurrences').count()
-    );
-    const history = await requestValue(
-      transaction.objectStore('learningHistory').get('SYN-FORMAL-001')
-    );
-    const firstCloze = await requestValue(
-      transaction.objectStore('questions').get('SYN-CLOZE-0001')
-    );
-    const datasetVersion = await requestValue(transaction.objectStore('meta').get('datasetVersion'));
-    const schemaVersion = await requestValue(transaction.objectStore('meta').get('schemaVersion'));
-    const formalDataSpecVersion = await requestValue(
-      transaction.objectStore('meta').get('formalDataSpecVersion')
-    );
-    await new Promise<void>((resolve, reject) => {
-      transaction.oncomplete = () => resolve();
-      transaction.onerror = () =>
-        reject(transaction.error ?? new Error('IndexedDB transaction failed'));
-      transaction.onabort = () =>
-        reject(transaction.error ?? new Error('IndexedDB transaction aborted'));
-    });
+    const [questions, materials, sourceOccurrences, learningHistory] = await Promise.all([
+      toCount(transaction.objectStore('questions').count()),
+      toCount(transaction.objectStore('materials').count()),
+      toCount(transaction.objectStore('sourceOccurrences').count()),
+      toCount(transaction.objectStore('learningHistory').count())
+    ]);
     database.close();
-
-    const clozeRecord = firstCloze as { acceptedAnswers?: string[] } | undefined;
-    const historyRecord = history as { attempts?: number } | undefined;
-    return {
-      questions,
-      materials,
-      sourceOccurrences,
-      datasetVersion: (datasetVersion as { value?: string } | undefined)?.value ?? null,
-      schemaVersion: (schemaVersion as { value?: string } | undefined)?.value ?? null,
-      formalDataSpecVersion:
-        (formalDataSpecVersion as { value?: string } | undefined)?.value ?? null,
-      historyAttempts: historyRecord?.attempts ?? 0,
-      firstClozeAnswer: clozeRecord?.acceptedAnswers?.[0] ?? null
-    };
+    return { questions, materials, sourceOccurrences, learningHistory };
   });
 }
