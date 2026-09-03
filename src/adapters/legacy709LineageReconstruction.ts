@@ -482,7 +482,7 @@ function compareSourceIds(left: string, right: string) {
 }
 
 function normalizeComparable(value: string) {
-  return value.replace(/[\s　]+/g, '').replace(/[‐‑‒–—―−]/g, '-');
+  return value.replace(/[\s\u3000]+/g, '').replace(/[‐‑‒–—―−]/g, '-');
 }
 
 function textValue(value: XlsxCellValue | undefined) {
