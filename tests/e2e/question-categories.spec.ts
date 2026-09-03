@@ -12,11 +12,13 @@ test('selects learning area and switches the visible question kinds', async ({ p
 
   const common = page.getByRole('radio', { name: /共通科目/ });
   await expect(common).toBeChecked();
+  await expect(page.getByText('母集団：共通科目 / 1問')).toBeVisible();
   await expect(page.getByRole('checkbox', { name: /看護協会Eラーニング/ })).toBeVisible();
   await expect(page.getByRole('checkbox', { name: /穴抜き問題/ })).toBeVisible();
   await expect(page.getByRole('checkbox', { name: /予想問題/ })).toBeVisible();
 
   await page.getByRole('radio', { name: /専門科目/ }).check();
+  await expect(page.getByText('母集団：専門科目 / 0問')).toBeVisible();
   await expect(page.getByRole('checkbox', { name: /過去問/ })).toBeVisible();
   await expect(page.getByRole('checkbox', { name: /^予想問題/ })).toBeVisible();
   await expect(page.getByRole('checkbox', { name: /予想事例問題/ })).toBeVisible();
