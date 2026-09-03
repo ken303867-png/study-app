@@ -47,7 +47,7 @@ import {
 } from './utils/progressiveRendering';
 import './dashboard.css';
 
-const APP_VERSION = '0.15.0';
+const APP_VERSION = '0.16.0';
 const QUESTION_RENDER_BATCH = 30;
 const MATERIAL_RENDER_BATCH = 20;
 const FORMAL_QUESTION_TARGET = 726;
