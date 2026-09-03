@@ -48,6 +48,35 @@ describe('datasetImportService', () => {
     expect((await db.meta.get('schemaVersion'))?.value).toBe('0.5');
   });
 
+  it('merges and replaces a supplemental cloze dataset without removing the base dataset', async () => {
+    await contentRepository.replaceDataset(sampleDataset);
+    const supplemental = buildSupplementalCloze('初回の正答');
+
+    const first = await importDatasetJsonText(JSON.stringify(supplemental));
+    expect(first.kind).toBe('supplemental-delivery');
+    expect(first.supplementalQuestionCount).toBe(1);
+    expect(first.replacedSupplementalQuestionCount).toBe(0);
+    expect(first.questionCount).toBe(2);
+    expect((await contentRepository.getQuestions()).map((question) => question.id).sort()).toEqual([
+      'CLOZE-COM-01-001-01',
+      'SAMPLE-Q-001'
+    ]);
+    expect((await db.meta.get('datasetVersion'))?.value).toBe(sampleDataset.datasetVersion);
+
+    const second = await importDatasetJsonText(
+      JSON.stringify(buildSupplementalCloze('更新後の正答'))
+    );
+    const questions = await contentRepository.getQuestions();
+    const cloze = questions.find((question) => question.id === 'CLOZE-COM-01-001-01');
+
+    expect(second.replacedSupplementalQuestionCount).toBe(1);
+    expect(second.questionCount).toBe(2);
+    expect(cloze && 'acceptedAnswers' in cloze ? cloze.acceptedAnswers : []).toEqual([
+      '更新後の正答'
+    ]);
+    expect(questions.some((question) => question.id === 'SAMPLE-Q-001')).toBe(true);
+  });
+
   it('imports a canonical master .xlsx through the same atomic pipeline', async () => {
     const master = canonicalMasterExportSchema.parse(fixture);
     const bytes = await buildCanonicalMasterXlsx(master);
@@ -124,6 +153,69 @@ describe('datasetImportService', () => {
     expect((await contentRepository.getQuestions())[0]?.id).toBe('SAMPLE-Q-001');
   });
 });
+
+function buildSupplementalCloze(answer: string) {
+  return {
+    importMode: 'supplemental-replace',
+    supplementalKey: 'common-cloze',
+    datasetVersion: 'common-cloze-test-v1',
+    schemaVersion: '0.5',
+    questions: [
+      {
+        id: 'CLOZE-COM-01-001-01',
+        subject: '臨床病態生理学',
+        unit: '共通穴抜き問題',
+        topic: '穴抜き問題 001-01',
+        sourceType: 'other',
+        sourceLabel: '共通穴抜き問題',
+        questionFormat: 'fill-blank',
+        importance: 'B',
+        prompt: 'テスト用の（　　　）です。',
+        explanation: {
+          answer,
+          question_intent: '穴抜き問題',
+          reasoning: '解説なし',
+          choice_explanations: [],
+          key_points: answer,
+          references: 'unit test'
+        },
+        relatedMaterialIds: [],
+        tags: [
+          '穴抜き問題',
+          'answer-only',
+          'supplemental:common-cloze',
+          'importance:source-unassigned'
+        ],
+        revision: 1,
+        acceptedAnswers: [answer]
+      }
+    ],
+    materials: [],
+    sources: [
+      {
+        source_id: 'SRC-CLOZE-COM-TEST',
+        source_group: 'supplemental:common-cloze',
+        title: '共通穴抜き問題 test',
+        answer_authority: 'provided'
+      }
+    ],
+    sourceOccurrences: [
+      {
+        source_occurrence_id: 'OCC-CLOZE-COM-01-001-01',
+        canonical_question_id: 'CLOZE-COM-01-001-01',
+        source_id: 'SRC-CLOZE-COM-TEST',
+        source_set_id: 'CLOZE-COM-01',
+        source_set_label: '臨床病態生理学',
+        source_set_order: 1,
+        source_question_no: '1-1',
+        source_occurrence_order: 1,
+        source_location: 'unit test',
+        source_answer: answer
+      }
+    ],
+    media: []
+  };
+}
 
 function fileLike(name: string, bytes: Uint8Array): File {
   const copy = new Uint8Array(bytes);
