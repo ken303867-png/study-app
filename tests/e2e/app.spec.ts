@@ -12,7 +12,7 @@ import {
 
 test('loads schema 0.5 sample and renders formal explanation order', async ({ page }) => {
   await page.goto('/');
-  await expect(page.getByRole('heading', { name: '学習アプリ v0.14.0' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: '学習アプリ v0.15.0' })).toBeVisible();
   await page.getByRole('button', { name: 'データ管理' }).click();
   await page.getByRole('button', { name: 'サンプルを読み込む' }).click();
   await expect(page.getByRole('status')).toContainText('Schema 0.5対応');
