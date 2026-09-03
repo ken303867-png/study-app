@@ -2,6 +2,37 @@
 
 ## [Unreleased]
 
+## [0.13.0] - 2026-09-03
+
+### Added
+- 通常演習と切り替えて使用できる「試験モード」
+- 試験終了まで正誤・正答・正式解説・過去学習成績を表示しない受験UI
+- 未回答のまま前後の問題へ移動できる試験ナビゲーション
+- `なし / 30 / 60 / 90 / 120分`から選択できる任意タイマー
+- 時間切れ時の自動一括採点
+- 出題数・正解・不正解・未回答・全体正答率・所要時間の試験結果
+- 科目別正答率・正解数・不正解数・未回答数の試験結果表
+- 誤答・未回答問題一覧
+- 教材Deliveryと独立したIndexedDB `examSessions`試験セッション保存
+- 試験集計・未回答分離・タイマー表示・試験履歴保持のVitest
+- 試験中の正答非表示→一括採点→学習履歴反映を確認するdesktop / mobile Chromium E2E
+- 未回答問題が`learningHistory` attemptへ加算されないことを確認するdesktop / mobile Chromium E2E
+
+### Changed
+- 演習セット作成画面に通常演習 / 試験モード切替と試験タイマー設定を追加
+- Dexie schemaをversion 3へ拡張し`examSessions`を追加
+- 試験終了時は回答済み問題だけを`learningHistory`へ正解/不正解として記録
+- App Versionを0.13.0へ更新
+
+### Compatibility
+- Delivery Schema 0.5を維持
+- Formal Data Spec 1.2を維持
+- Explanation Template 1.0を維持
+- 試験セッションはローカル学習状態として扱い、Formal Master / Deliveryへ保存しない
+- 教材再Import時も`learningHistory` / `materialHistory` / `examSessions`を保持する
+- 正式問題・正答・解説・資料本文は試験機能によって変更しない
+- 正式709問・114資料本文はGitHubへ保存しない
+
 ## [0.12.0] - 2026-09-03
 
 ### Added
