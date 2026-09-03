@@ -1,12 +1,11 @@
 import type { Dataset } from '../schemas/contentSchemas';
-import type { Material, MediaRecord, Question, SourceOccurrence, SourceRecord } from '../types/domain';
 
 export interface DatasetPersistenceSnapshot {
-  questions: Question[];
-  materials: Material[];
-  sources: SourceRecord[];
-  sourceOccurrences: SourceOccurrence[];
-  media: MediaRecord[];
+  questions: Dataset['questions'];
+  materials: Dataset['materials'];
+  sources: Dataset['sources'];
+  sourceOccurrences: Dataset['sourceOccurrences'];
+  media: Dataset['media'];
   meta: {
     datasetVersion?: string;
     schemaVersion?: string;
