@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 import { PracticeMode } from '../../src/components/PracticeMode';
 import { PracticeSetBuilder } from '../../src/components/PracticeSetBuilder';
@@ -57,11 +57,12 @@ describe('common cloze self assessment', () => {
     const revealed = screen.getByRole('status');
     expect(revealed).toHaveTextContent('正答');
     expect(revealed).toHaveTextContent('膵β細胞');
-    expect(screen.getByRole('button', { name: '正解', exact: true })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: '不正解', exact: true })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: '要復習', exact: true })).toBeInTheDocument();
+    const selfGrade = screen.getByLabelText('自己採点');
+    expect(within(selfGrade).getByRole('button', { name: '正解' })).toBeInTheDocument();
+    expect(within(selfGrade).getByRole('button', { name: '不正解' })).toBeInTheDocument();
+    expect(within(selfGrade).getByRole('button', { name: '要復習' })).toBeInTheDocument();
 
-    fireEvent.click(screen.getByRole('button', { name: '要復習', exact: true }));
+    fireEvent.click(within(selfGrade).getByRole('button', { name: '要復習' }));
 
     await waitFor(() =>
       expect(onRecordResult).toHaveBeenCalledWith('CLOZE-TEST-001', 'uncertain')
