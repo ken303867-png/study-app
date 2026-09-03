@@ -41,9 +41,16 @@ import {
   type PracticeSessionMode,
   type PracticeSetOptions
 } from './utils/practiceSets';
+import {
+  nextVisibleCount,
+  visibleCountForTarget
+} from './utils/progressiveRendering';
 import './dashboard.css';
 
 const APP_VERSION = '0.14.0';
+const QUESTION_RENDER_BATCH = 30;
+const MATERIAL_RENDER_BATCH = 20;
+
 type View =
   | 'home'
   | 'dashboard'
@@ -65,6 +72,8 @@ export default function App() {
   const [materialFilters, setMaterialFilters] = useState<MaterialFilterState>(
     DEFAULT_MATERIAL_FILTERS
   );
+  const [questionVisibleCount, setQuestionVisibleCount] = useState(QUESTION_RENDER_BATCH);
+  const [materialVisibleCount, setMaterialVisibleCount] = useState(MATERIAL_RENDER_BATCH);
   const [practicePoolQuestions, setPracticePoolQuestions] = useState<Question[]>([]);
   const [practicePoolLabel, setPracticePoolLabel] = useState('全問題');
   const [practiceInitialPreset, setPracticeInitialPreset] = useState<PracticePreset>('all');
@@ -85,6 +94,15 @@ export default function App() {
     () => new Map(learningHistory.map((history) => [history.questionId, history])),
     [learningHistory]
   );
+  const mediaByQuestionId = useMemo(() => {
+    const grouped = new Map<string, MediaRecord[]>();
+    for (const record of media) {
+      const current = grouped.get(record.canonical_question_id) ?? [];
+      current.push(record);
+      grouped.set(record.canonical_question_id, current);
+    }
+    return grouped;
+  }, [media]);
   const practiceSummary = useMemo(
     () => summarizePracticePool(questions, historyByQuestionId),
     [questions, historyByQuestionId]
@@ -115,6 +133,14 @@ export default function App() {
   const filteredMaterials = useMemo(
     () => filterMaterials(materials, materialFilters),
     [materials, materialFilters]
+  );
+  const visibleQuestions = useMemo(
+    () => filteredQuestions.slice(0, questionVisibleCount),
+    [filteredQuestions, questionVisibleCount]
+  );
+  const visibleMaterials = useMemo(
+    () => filteredMaterials.slice(0, materialVisibleCount),
+    [filteredMaterials, materialVisibleCount]
   );
   const learnedCount = useMemo(
     () => questions.filter((question) => (historyByQuestionId.get(question.id)?.attempts ?? 0) > 0).length,
@@ -181,17 +207,25 @@ export default function App() {
       target?.focus();
     }, 0);
     return () => window.clearTimeout(timer);
-  }, [view, focusedQuestionId, focusedMaterialId]);
+  }, [view, focusedQuestionId, focusedMaterialId, questionVisibleCount, materialVisibleCount]);
 
   const openQuestion = (questionId: string) => {
+    const targetIndex = questions.findIndex((question) => question.id === questionId);
     setQuestionFilters(DEFAULT_QUESTION_FILTERS);
+    setQuestionVisibleCount(
+      visibleCountForTarget(targetIndex, questions.length, QUESTION_RENDER_BATCH)
+    );
     setFocusedMaterialId(null);
     setFocusedQuestionId(questionId);
     setView('questions');
   };
 
   const openMaterial = (materialId: string) => {
+    const targetIndex = materials.findIndex((material) => material.id === materialId);
     setMaterialFilters(DEFAULT_MATERIAL_FILTERS);
+    setMaterialVisibleCount(
+      visibleCountForTarget(targetIndex, materials.length, MATERIAL_RENDER_BATCH)
+    );
     setFocusedQuestionId(null);
     setFocusedMaterialId(materialId);
     setView('materials');
@@ -201,6 +235,18 @@ export default function App() {
     setFocusedQuestionId(null);
     setFocusedMaterialId(null);
     setView(nextView);
+  };
+
+  const updateQuestionFilters = (nextFilters: QuestionFilterState) => {
+    setQuestionFilters(nextFilters);
+    setQuestionVisibleCount(QUESTION_RENDER_BATCH);
+    setFocusedQuestionId(null);
+  };
+
+  const updateMaterialFilters = (nextFilters: MaterialFilterState) => {
+    setMaterialFilters(nextFilters);
+    setMaterialVisibleCount(MATERIAL_RENDER_BATCH);
+    setFocusedMaterialId(null);
   };
 
   const openPracticeSetup = (
@@ -427,8 +473,8 @@ export default function App() {
               units={questionUnits}
               resultCount={filteredQuestions.length}
               totalCount={questions.length}
-              onChange={setQuestionFilters}
-              onReset={() => setQuestionFilters(DEFAULT_QUESTION_FILTERS)}
+              onChange={updateQuestionFilters}
+              onReset={() => updateQuestionFilters(DEFAULT_QUESTION_FILTERS)}
             />
             {filteredQuestions.length > 0 && (
               <div className="panel practice-launch">
@@ -449,21 +495,43 @@ export default function App() {
             ) : filteredQuestions.length === 0 ? (
               <EmptyState text="条件に一致する問題はありません。" />
             ) : (
-              filteredQuestions.map((question) => (
-                <QuestionCard
-                  key={question.id}
-                  question={question}
-                  materials={materials}
-                  media={media.filter((record) => record.canonical_question_id === question.id)}
-                  history={historyByQuestionId.get(question.id) ?? emptyHistory(question.id)}
-                  targeted={focusedQuestionId === question.id}
-                  onOpenMaterial={openMaterial}
-                  onRecord={(result) => void recordLearningResult(question.id, result)}
-                  onToggleFavorite={() => void toggleFavorite(question.id)}
-                  onToggleReview={() => void toggleReview(question.id)}
-                  onReset={() => void resetProgress(question.id)}
-                />
-              ))
+              <>
+                {visibleQuestions.map((question) => (
+                  <QuestionCard
+                    key={question.id}
+                    question={question}
+                    materials={materials}
+                    media={mediaByQuestionId.get(question.id) ?? []}
+                    history={historyByQuestionId.get(question.id) ?? emptyHistory(question.id)}
+                    targeted={focusedQuestionId === question.id}
+                    onOpenMaterial={openMaterial}
+                    onRecord={(result) => void recordLearningResult(question.id, result)}
+                    onToggleFavorite={() => void toggleFavorite(question.id)}
+                    onToggleReview={() => void toggleReview(question.id)}
+                    onReset={() => void resetProgress(question.id)}
+                  />
+                ))}
+                {visibleQuestions.length < filteredQuestions.length && (
+                  <div className="panel progressive-list-controls" aria-label="問題の追加表示">
+                    <span>
+                      {visibleQuestions.length} / {filteredQuestions.length}問を表示中
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setQuestionVisibleCount((current) =>
+                          nextVisibleCount(current, filteredQuestions.length, QUESTION_RENDER_BATCH)
+                        )
+                      }
+                    >
+                      さらに{Math.min(
+                        QUESTION_RENDER_BATCH,
+                        filteredQuestions.length - visibleQuestions.length
+                      )}問表示
+                    </button>
+                  </div>
+                )}
+              </>
             )}
           </section>
         )}
@@ -495,7 +563,7 @@ export default function App() {
             renderExplanation={(question) => (
               <FormalExplanationView
                 question={question}
-                media={media.filter((record) => record.canonical_question_id === question.id)}
+                media={mediaByQuestionId.get(question.id) ?? []}
               />
             )}
           />
@@ -515,23 +583,45 @@ export default function App() {
               subjects={materialSubjects}
               resultCount={filteredMaterials.length}
               totalCount={materials.length}
-              onChange={setMaterialFilters}
-              onReset={() => setMaterialFilters(DEFAULT_MATERIAL_FILTERS)}
+              onChange={updateMaterialFilters}
+              onReset={() => updateMaterialFilters(DEFAULT_MATERIAL_FILTERS)}
             />
             {materials.length === 0 ? (
               <EmptyState text="学習資料はまだ登録されていません。" />
             ) : filteredMaterials.length === 0 ? (
               <EmptyState text="条件に一致する資料はありません。" />
             ) : (
-              filteredMaterials.map((material) => (
-                <MaterialCard
-                  key={material.id}
-                  material={material}
-                  questions={questions}
-                  targeted={focusedMaterialId === material.id}
-                  onOpenQuestion={openQuestion}
-                />
-              ))
+              <>
+                {visibleMaterials.map((material) => (
+                  <MaterialCard
+                    key={material.id}
+                    material={material}
+                    questions={questions}
+                    targeted={focusedMaterialId === material.id}
+                    onOpenQuestion={openQuestion}
+                  />
+                ))}
+                {visibleMaterials.length < filteredMaterials.length && (
+                  <div className="panel progressive-list-controls" aria-label="資料の追加表示">
+                    <span>
+                      {visibleMaterials.length} / {filteredMaterials.length}件を表示中
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setMaterialVisibleCount((current) =>
+                          nextVisibleCount(current, filteredMaterials.length, MATERIAL_RENDER_BATCH)
+                        )
+                      }
+                    >
+                      さらに{Math.min(
+                        MATERIAL_RENDER_BATCH,
+                        filteredMaterials.length - visibleMaterials.length
+                      )}件表示
+                    </button>
+                  </div>
+                )}
+              </>
             )}
           </section>
         )}
