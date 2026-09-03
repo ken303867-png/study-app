@@ -1,6 +1,6 @@
 import { Buffer } from 'node:buffer';
 import { readFile } from 'node:fs/promises';
-import { expect, test } from '@playwright/test';
+import { expect, test, type Page } from '@playwright/test';
 import { integratePhase3Materials } from '../../src/migrations/phase3MaterialMasterIntegration';
 import { canonicalMasterExportSchema } from '../../src/schemas/masterDataSchemas';
 import { buildCanonicalMasterXlsx } from '../helpers/buildCanonicalMasterXlsx';
@@ -64,7 +64,7 @@ test('imports Formal 1.2 material master xlsx and navigates question to material
   ).toBeVisible();
 });
 
-async function readPersistedMaterialState(page: import('@playwright/test').Page) {
+async function readPersistedMaterialState(page: Page) {
   return page.evaluate(async () => {
     const request = indexedDB.open('study-app');
     const database = await new Promise<IDBDatabase>((resolve, reject) => {
