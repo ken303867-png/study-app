@@ -1,5 +1,17 @@
-import { useMemo, useState, type ReactNode } from 'react';
-import type { LearningHistory, LearningResult, Question } from '../types/domain';
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type ReactNode
+} from 'react';
+import type {
+  ExamSession,
+  LearningHistory,
+  LearningResult,
+  Question
+} from '../types/domain';
 import {
   canSubmitPracticeAnswer,
   choiceLabel,
@@ -7,6 +19,12 @@ import {
   type PracticeAnswer,
   type PracticeEvaluation
 } from '../utils/practiceEngine';
+import {
+  formatExamTime,
+  summarizeExamResult,
+  type ExamResultSummary
+} from '../utils/examSession';
+import type { ExamTimerMinutes, PracticeSessionMode } from '../utils/practiceSets';
 
 interface PracticeResponse {
   answer: PracticeAnswer;
@@ -16,7 +34,10 @@ interface PracticeResponse {
 export function PracticeMode({
   questions,
   historyByQuestionId,
+  sessionMode = 'practice',
+  timerMinutes = 0,
   onRecordResult,
+  onSaveExamSession,
   onToggleFavorite,
   onToggleReview,
   onExit,
@@ -24,7 +45,10 @@ export function PracticeMode({
 }: {
   questions: Question[];
   historyByQuestionId: ReadonlyMap<string, LearningHistory>;
+  sessionMode?: PracticeSessionMode;
+  timerMinutes?: ExamTimerMinutes;
   onRecordResult: (questionId: string, result: LearningResult) => Promise<void>;
+  onSaveExamSession?: (session: ExamSession) => Promise<void>;
   onToggleFavorite: (questionId: string) => Promise<void>;
   onToggleReview: (questionId: string) => Promise<void>;
   onExit: () => void;
@@ -36,8 +60,13 @@ export function PracticeMode({
   const [responses, setResponses] = useState<Map<string, PracticeResponse>>(() => new Map());
   const [submitting, setSubmitting] = useState(false);
   const [completed, setCompleted] = useState(false);
+  const [examSummary, setExamSummary] = useState<ExamResultSummary | null>(null);
+  const [remainingSeconds, setRemainingSeconds] = useState(timerMinutes * 60);
+  const startedAtRef = useRef(new Date().toISOString());
+  const finishingExamRef = useRef(false);
 
   const currentQuestion = queue[index];
+  const isExam = sessionMode === 'exam';
   const wrongQuestions = useMemo(
     () => queue.filter((question) => responses.get(question.id)?.evaluation.correct === false),
     [queue, responses]
@@ -46,14 +75,98 @@ export function PracticeMode({
     () => [...responses.values()].filter((response) => response.evaluation.correct).length,
     [responses]
   );
+  const examAnsweredCount = useMemo(
+    () =>
+      queue.filter((question) => {
+        const answer = answers.get(question.id);
+        return answer ? canSubmitPracticeAnswer(question, answer) : false;
+      }).length,
+    [queue, answers]
+  );
+
+  const finishExam = useCallback(
+    async (completionReason: ExamSession['completionReason']) => {
+      if (!isExam || finishingExamRef.current) return;
+      finishingExamRef.current = true;
+      const summary = summarizeExamResult(queue, answers);
+      setSubmitting(true);
+      try {
+        for (const outcome of summary.outcomes) {
+          if (outcome.status === 'unanswered') continue;
+          await onRecordResult(
+            outcome.question.id,
+            outcome.status === 'correct' ? 'correct' : 'incorrect'
+          );
+        }
+
+        const completedAt = new Date().toISOString();
+        const elapsedSeconds = Math.max(
+          0,
+          Math.round((Date.parse(completedAt) - Date.parse(startedAtRef.current)) / 1000)
+        );
+        const session: ExamSession = {
+          id: crypto.randomUUID(),
+          startedAt: startedAtRef.current,
+          completedAt,
+          timerMinutes: timerMinutes === 0 ? null : timerMinutes,
+          elapsedSeconds,
+          questionIds: queue.map((question) => question.id),
+          totalQuestions: summary.totalQuestions,
+          answeredCount: summary.answeredCount,
+          correctCount: summary.correctCount,
+          incorrectCount: summary.incorrectCount,
+          unansweredCount: summary.unansweredCount,
+          accuracy: summary.accuracy,
+          subjectResults: summary.subjectResults,
+          incorrectQuestionIds: summary.incorrectQuestionIds,
+          unansweredQuestionIds: summary.unansweredQuestionIds,
+          completionReason
+        };
+        await onSaveExamSession?.(session);
+        setExamSummary(summary);
+        setCompleted(true);
+      } finally {
+        setSubmitting(false);
+      }
+    },
+    [answers, isExam, onRecordResult, onSaveExamSession, queue, timerMinutes]
+  );
+
+  useEffect(() => {
+    if (!isExam || timerMinutes === 0 || completed) return;
+    const timer = window.setInterval(() => {
+      setRemainingSeconds((current) => Math.max(0, current - 1));
+    }, 1000);
+    return () => window.clearInterval(timer);
+  }, [completed, isExam, timerMinutes]);
+
+  useEffect(() => {
+    if (!isExam || timerMinutes === 0 || completed || remainingSeconds > 0) return;
+    void finishExam('timeout');
+  }, [completed, finishExam, isExam, remainingSeconds, timerMinutes]);
 
   if (questions.length === 0 || queue.length === 0) {
     return (
       <section className="panel practice-empty">
-        <h2>1問ずつ演習</h2>
+        <h2>{isExam ? '試験モード' : '1問ずつ演習'}</h2>
         <p>演習できる問題がありません。問題一覧で条件を変更してください。</p>
         <button type="button" onClick={onExit}>問題一覧へ戻る</button>
       </section>
+    );
+  }
+
+  if (completed && isExam && examSummary) {
+    return (
+      <ExamSummaryView
+        summary={examSummary}
+        completionReason={remainingSeconds === 0 && timerMinutes > 0 ? 'timeout' : 'submitted'}
+        elapsedSeconds={Math.max(
+          0,
+          Math.round((Date.now() - Date.parse(startedAtRef.current)) / 1000)
+        )}
+        onRestart={() => restart(questions)}
+        onExit={onExit}
+      />
     );
   }
 
@@ -101,7 +214,7 @@ export function PracticeMode({
   };
 
   const submit = async () => {
-    if (response || !canSubmitPracticeAnswer(currentQuestion, answer)) return;
+    if (isExam || response || !canSubmitPracticeAnswer(currentQuestion, answer)) return;
     const evaluation = evaluatePracticeAnswer(currentQuestion, answer);
     setSubmitting(true);
     try {
@@ -117,20 +230,39 @@ export function PracticeMode({
   };
 
   return (
-    <section className="stack practice-mode" aria-label="1問ずつ演習">
+    <section
+      className={`stack practice-mode${isExam ? ' exam-mode' : ''}`}
+      aria-label={isExam ? '試験モード' : '1問ずつ演習'}
+    >
       <div className="practice-toolbar panel">
         <div>
-          <p className="eyebrow">One Question Practice</p>
-          <h2>1問ずつ演習</h2>
+          <p className="eyebrow">{isExam ? 'Exam Mode' : 'One Question Practice'}</p>
+          <h2>{isExam ? '試験モード' : '1問ずつ演習'}</h2>
         </div>
         <div className="practice-progress-label">
           <strong>{index + 1} / {queue.length}</strong>
-          <span>回答済み {responses.size}</span>
+          <span>回答済み {isExam ? examAnsweredCount : responses.size}</span>
         </div>
+        {isExam && timerMinutes > 0 && (
+          <div
+            className={`exam-timer${remainingSeconds <= 300 ? ' urgent' : ''}`}
+            role="timer"
+            aria-label={`残り時間 ${formatExamTime(remainingSeconds)}`}
+          >
+            <span>残り時間</span>
+            <strong>{formatExamTime(remainingSeconds)}</strong>
+          </div>
+        )}
         <div className="practice-progress-track" aria-label={`進捗 ${index + 1} / ${queue.length}`}>
           <span style={{ width: `${progress}%` }} />
         </div>
       </div>
+
+      {isExam && (
+        <div className="panel exam-security-note" role="note">
+          試験終了まで正誤・正答・正式解説は表示されません。未回答のまま次の問題へ移動できます。
+        </div>
+      )}
 
       <article className="panel practice-question-card">
         <div className="meta-row">
@@ -143,11 +275,11 @@ export function PracticeMode({
         <PracticeAnswerInput
           question={currentQuestion}
           answer={answer}
-          disabled={response !== undefined || submitting}
+          disabled={!isExam && (response !== undefined || submitting)}
           onChange={setAnswer}
         />
 
-        {!response && (
+        {!isExam && !response && (
           <button
             type="button"
             className="practice-submit"
@@ -158,7 +290,7 @@ export function PracticeMode({
           </button>
         )}
 
-        {response && (
+        {!isExam && response && (
           <div
             className={`practice-feedback ${response.evaluation.correct ? 'correct' : 'incorrect'}`}
             role="status"
@@ -168,25 +300,27 @@ export function PracticeMode({
           </div>
         )}
 
-        <div className="practice-local-state" aria-label="問題のローカル学習状態">
-          <span>累計 {history?.attempts ?? 0}回</span>
-          <button
-            type="button"
-            aria-pressed={history?.needsReview === true}
-            onClick={() => void onToggleReview(currentQuestion.id)}
-          >
-            {history?.needsReview ? '要復習 ✓' : '要復習'}
-          </button>
-          <button
-            type="button"
-            aria-pressed={history?.favorite === true}
-            onClick={() => void onToggleFavorite(currentQuestion.id)}
-          >
-            {history?.favorite ? 'お気に入り ★' : 'お気に入り ☆'}
-          </button>
-        </div>
+        {!isExam && (
+          <div className="practice-local-state" aria-label="問題のローカル学習状態">
+            <span>累計 {history?.attempts ?? 0}回</span>
+            <button
+              type="button"
+              aria-pressed={history?.needsReview === true}
+              onClick={() => void onToggleReview(currentQuestion.id)}
+            >
+              {history?.needsReview ? '要復習 ✓' : '要復習'}
+            </button>
+            <button
+              type="button"
+              aria-pressed={history?.favorite === true}
+              onClick={() => void onToggleFavorite(currentQuestion.id)}
+            >
+              {history?.favorite ? 'お気に入り ★' : 'お気に入り ☆'}
+            </button>
+          </div>
+        )}
 
-        {response && (
+        {!isExam && response && (
           <details className="explanation-details" open>
             <summary>正式解答解説</summary>
             {renderExplanation(currentQuestion)}
@@ -195,20 +329,30 @@ export function PracticeMode({
       </article>
 
       <div className="panel practice-navigation">
-        <button type="button" disabled={index === 0} onClick={() => setIndex((current) => current - 1)}>
+        <button type="button" disabled={index === 0 || submitting} onClick={() => setIndex((current) => current - 1)}>
           前の問題
         </button>
         <button
           type="button"
-          disabled={!response}
+          disabled={submitting || (!isExam && !response)}
           onClick={() => {
-            if (index === queue.length - 1) setCompleted(true);
-            else setIndex((current) => current + 1);
+            if (index === queue.length - 1) {
+              if (isExam) void finishExam('submitted');
+              else setCompleted(true);
+            } else {
+              setIndex((current) => current + 1);
+            }
           }}
         >
-          {index === queue.length - 1 ? '結果を見る' : '次の問題'}
+          {index === queue.length - 1
+            ? isExam
+              ? '試験を終了して採点'
+              : '結果を見る'
+            : '次の問題'}
         </button>
-        <button type="button" onClick={onExit}>演習を終了</button>
+        <button type="button" disabled={submitting} onClick={onExit}>
+          {isExam ? '試験を中断' : '演習を終了'}
+        </button>
       </div>
     </section>
   );
@@ -218,8 +362,93 @@ export function PracticeMode({
     setIndex(0);
     setAnswers(new Map());
     setResponses(new Map());
+    setExamSummary(null);
     setCompleted(false);
+    setRemainingSeconds(timerMinutes * 60);
+    startedAtRef.current = new Date().toISOString();
+    finishingExamRef.current = false;
   }
+}
+
+function ExamSummaryView({
+  summary,
+  completionReason,
+  elapsedSeconds,
+  onRestart,
+  onExit
+}: {
+  summary: ExamResultSummary;
+  completionReason: ExamSession['completionReason'];
+  elapsedSeconds: number;
+  onRestart: () => void;
+  onExit: () => void;
+}) {
+  const attentionOutcomes = summary.outcomes.filter((outcome) => outcome.status !== 'correct');
+  return (
+    <section className="stack practice-summary exam-summary" aria-label="試験結果">
+      <div className="panel">
+        <p className="eyebrow">Exam Complete</p>
+        <h2>試験結果</h2>
+        {completionReason === 'timeout' && <p className="exam-timeout-note">制限時間終了により自動採点しました。</p>}
+        <div className="practice-result-grid exam-result-grid">
+          <div><strong>{summary.totalQuestions}</strong><span>出題</span></div>
+          <div><strong>{summary.correctCount}</strong><span>正解</span></div>
+          <div><strong>{summary.incorrectCount}</strong><span>不正解</span></div>
+          <div><strong>{summary.unansweredCount}</strong><span>未回答</span></div>
+          <div><strong>{summary.accuracy}%</strong><span>正答率</span></div>
+          <div><strong>{formatExamTime(elapsedSeconds)}</strong><span>所要時間</span></div>
+        </div>
+      </div>
+
+      <div className="panel">
+        <h3>科目別正答率</h3>
+        <div className="dashboard-table-scroll">
+          <table className="dashboard-table exam-subject-table">
+            <thead>
+              <tr><th>科目</th><th>正答率</th><th>正解</th><th>不正解</th><th>未回答</th></tr>
+            </thead>
+            <tbody>
+              {summary.subjectResults.map((result) => (
+                <tr key={result.subject}>
+                  <th scope="row">{result.subject}</th>
+                  <td>{result.accuracy}%</td>
+                  <td>{result.correctCount} / {result.totalQuestions}</td>
+                  <td>{result.incorrectCount}</td>
+                  <td>{result.unansweredCount}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div className="panel">
+        <h3>誤答・未回答</h3>
+        {attentionOutcomes.length === 0 ? (
+          <p className="muted">全問正解です。</p>
+        ) : (
+          <ul className="exam-attention-list">
+            {attentionOutcomes.map((outcome) => (
+              <li key={outcome.question.id}>
+                <span className={`dashboard-result ${outcome.status === 'incorrect' ? 'incorrect' : 'uncertain'}`}>
+                  {outcome.status === 'incorrect' ? '不正解' : '未回答'}
+                </span>
+                <div>
+                  <strong>{outcome.question.id}</strong>
+                  <p>{outcome.question.prompt}</p>
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+
+      <div className="panel practice-summary-actions">
+        <button type="button" onClick={onRestart}>同じ条件でもう一度試験</button>
+        <button type="button" onClick={onExit}>問題一覧へ戻る</button>
+      </div>
+    </section>
+  );
 }
 
 function PracticeAnswerInput({
@@ -250,7 +479,7 @@ function PracticeAnswerInput({
                 onChange={() => {
                   const indexes = multiple
                     ? checked
-                      ? selected.filter((index) => index !== choiceIndex)
+                      ? selected.filter((selectedIndex) => selectedIndex !== choiceIndex)
                       : [...selected, choiceIndex]
                     : [choiceIndex];
                   onChange({ kind: 'choices', indexes });
