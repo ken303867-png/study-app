@@ -26,7 +26,12 @@ jobs:
           cache-dependency-path: 'package-lock.json'
       - run: npm install --global npm@11.19.1 --no-audit --no-fund
       - run: npm ci --no-audit --no-fund
-      - run: npm run qa
+      - run: npm run typecheck
+      - run: npm run lint
+      - run: npm run test
+      - run: npm run build
+        env:
+          VITE_BASE_PATH: /study-app/
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
