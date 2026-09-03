@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState, type ChangeEvent } from 'react';
+import { MaterialBodyView } from './components/MaterialBodyView';
 import { sampleDataset } from './data/sampleDataset';
 import { db } from './db/database';
 import { contentRepository } from './repositories/contentRepository';
@@ -11,6 +12,7 @@ import type {
   Question
 } from './types/domain';
 
+const APP_VERSION = '0.8.0';
 type View = 'home' | 'questions' | 'materials' | 'data';
 
 export default function App() {
@@ -24,6 +26,8 @@ export default function App() {
   const [message, setMessage] = useState('');
   const [importError, setImportError] = useState<string[]>([]);
   const [importing, setImporting] = useState(false);
+  const [focusedQuestionId, setFocusedQuestionId] = useState<string | null>(null);
+  const [focusedMaterialId, setFocusedMaterialId] = useState<string | null>(null);
 
   const refresh = async () => {
     const [q, m, mediaRecords, occurrences, datasetMeta, schemaMeta] = await Promise.all([
@@ -66,6 +70,41 @@ export default function App() {
     };
   }, []);
 
+  useEffect(() => {
+    const targetId =
+      view === 'questions' && focusedQuestionId
+        ? domTargetId('question', focusedQuestionId)
+        : view === 'materials' && focusedMaterialId
+          ? domTargetId('material', focusedMaterialId)
+          : null;
+    if (!targetId) return;
+
+    const timer = window.setTimeout(() => {
+      const target = document.getElementById(targetId);
+      target?.scrollIntoView?.({ behavior: 'smooth', block: 'start' });
+      target?.focus();
+    }, 0);
+    return () => window.clearTimeout(timer);
+  }, [view, focusedQuestionId, focusedMaterialId]);
+
+  const openQuestion = (questionId: string) => {
+    setFocusedMaterialId(null);
+    setFocusedQuestionId(questionId);
+    setView('questions');
+  };
+
+  const openMaterial = (materialId: string) => {
+    setFocusedQuestionId(null);
+    setFocusedMaterialId(materialId);
+    setView('materials');
+  };
+
+  const openView = (nextView: View) => {
+    setFocusedQuestionId(null);
+    setFocusedMaterialId(null);
+    setView(nextView);
+  };
+
   const loadSample = async () => {
     setImportError([]);
     await contentRepository.replaceDataset(sampleDataset);
@@ -106,8 +145,8 @@ export default function App() {
       <header className="app-header">
         <div>
           <p className="eyebrow">Study App</p>
-          <h1>学習アプリ v0.7.1</h1>
-          <p className="muted">Delivery Schema 0.5 / Excel Master Adapter Pilot v1</p>
+          <h1>学習アプリ v{APP_VERSION}</h1>
+          <p className="muted">Delivery Schema 0.5 / Material Navigation UI</p>
         </div>
         <span className="status-badge">LOCAL ONLY</span>
       </header>
@@ -125,7 +164,7 @@ export default function App() {
             key={key}
             type="button"
             className={view === key ? 'active' : ''}
-            onClick={() => setView(key)}
+            onClick={() => openView(key)}
           >
             {label}
           </button>
@@ -163,15 +202,15 @@ export default function App() {
             <div className="grid-two">
               <article className="panel">
                 <h3>問題演習</h3>
-                <p>正式な解答解説テンプレート順で、必須・任意ブロックを分離して表示します。</p>
-                <button type="button" onClick={() => setView('questions')}>
+                <p>正式な解答解説に加え、関連する得点特化要点資料へ直接移動できます。</p>
+                <button type="button" onClick={() => openView('questions')}>
                   問題を見る
                 </button>
               </article>
               <article className="panel">
                 <h3>学習資料</h3>
-                <p>資料と問題の双方向リンクは、正式データとは独立した学習履歴とともに保持します。</p>
-                <button type="button" onClick={() => setView('materials')}>
+                <p>114単元の資料を折りたたみ表示し、関連問題へ双方向に移動できます。</p>
+                <button type="button" onClick={() => openView('materials')}>
                   資料を見る
                 </button>
               </article>
@@ -195,7 +234,10 @@ export default function App() {
                 <QuestionCard
                   key={question.id}
                   question={question}
+                  materials={materials}
                   media={media.filter((record) => record.canonical_question_id === question.id)}
+                  targeted={focusedQuestionId === question.id}
+                  onOpenMaterial={openMaterial}
                 />
               ))
             )}
@@ -215,14 +257,13 @@ export default function App() {
               <EmptyState text="学習資料はまだ登録されていません。" />
             ) : (
               materials.map((material) => (
-                <article className="panel" key={material.id}>
-                  <div className="meta-row">
-                    <span>{material.subject}</span>
-                    <span>{material.importance}</span>
-                  </div>
-                  <h3>{material.title}</h3>
-                  <p>{material.body}</p>
-                </article>
+                <MaterialCard
+                  key={material.id}
+                  material={material}
+                  questions={questions}
+                  targeted={focusedMaterialId === material.id}
+                  onOpenQuestion={openQuestion}
+                />
               ))
             )}
           </section>
@@ -291,21 +332,47 @@ export default function App() {
         )}
       </main>
 
-      <footer>App v0.7.1 / Schema 0.5 / Explanation Template 1.0 / Cloud disabled</footer>
+      <footer>
+        App v{APP_VERSION} / Schema 0.5 / Formal Data Spec 1.2 compatible / Cloud disabled
+      </footer>
     </div>
   );
 }
 
-function QuestionCard({ question, media }: { question: Question; media: MediaRecord[] }) {
+function QuestionCard({
+  question,
+  materials,
+  media,
+  targeted,
+  onOpenMaterial
+}: {
+  question: Question;
+  materials: Material[];
+  media: MediaRecord[];
+  targeted: boolean;
+  onOpenMaterial: (materialId: string) => void;
+}) {
+  const materialMap = useMemo(
+    () => new Map(materials.map((material) => [material.id, material])),
+    [materials]
+  );
+  const relatedMaterials = question.relatedMaterialIds
+    .map((materialId) => materialMap.get(materialId))
+    .filter((material): material is Material => material !== undefined);
+
   return (
-    <article className="panel question-card">
+    <article
+      className={`panel question-card content-target${targeted ? ' targeted' : ''}`}
+      id={domTargetId('question', question.id)}
+      tabIndex={-1}
+    >
       <div className="meta-row">
         <span>{question.sourceLabel}</span>
         <span>{question.importance}</span>
       </div>
       <h3>{question.prompt}</h3>
       <p className="muted">
-        {question.subject} / {question.unit} / {question.questionFormat}
+        {question.id} / {question.subject} / {question.unit} / {question.questionFormat}
       </p>
       {'choices' in question && (
         <ol className="choice-list" type="A">
@@ -314,11 +381,113 @@ function QuestionCard({ question, media }: { question: Question; media: MediaRec
           ))}
         </ol>
       )}
+      {relatedMaterials.length > 0 && (
+        <RelatedLinks title={`関連学習資料 ${relatedMaterials.length}件`}>
+          {relatedMaterials.map((material) => (
+            <button
+              key={material.id}
+              type="button"
+              aria-label={`関連資料を開く: ${material.title}`}
+              onClick={() => onOpenMaterial(material.id)}
+            >
+              <strong>{material.title}</strong>
+              <span>{material.id}</span>
+            </button>
+          ))}
+        </RelatedLinks>
+      )}
       <details className="explanation-details">
         <summary>解答解説を表示</summary>
         <FormalExplanationView question={question} media={media} />
       </details>
     </article>
+  );
+}
+
+function MaterialCard({
+  material,
+  questions,
+  targeted,
+  onOpenQuestion
+}: {
+  material: Material;
+  questions: Question[];
+  targeted: boolean;
+  onOpenQuestion: (questionId: string) => void;
+}) {
+  const [bodyOpen, setBodyOpen] = useState(targeted);
+  const questionMap = useMemo(
+    () => new Map(questions.map((question) => [question.id, question])),
+    [questions]
+  );
+  const relatedQuestions = material.relatedQuestionIds
+    .map((questionId) => questionMap.get(questionId))
+    .filter((question): question is Question => question !== undefined);
+
+  useEffect(() => {
+    if (targeted) setBodyOpen(true);
+  }, [targeted]);
+
+  return (
+    <article
+      className={`panel material-card content-target${targeted ? ' targeted' : ''}`}
+      id={domTargetId('material', material.id)}
+      tabIndex={-1}
+    >
+      <div className="meta-row">
+        <span>{material.subject}</span>
+        <span>{material.importance}</span>
+      </div>
+      <div className="material-title-row">
+        <div>
+          <p className="material-id">{material.id}</p>
+          <h3>{material.title}</h3>
+        </div>
+        <span className="link-count">関連問題 {relatedQuestions.length}件</span>
+      </div>
+
+      <details
+        className="material-details"
+        open={bodyOpen}
+        onToggle={(event) => setBodyOpen(event.currentTarget.open)}
+      >
+        <summary>{bodyOpen ? '資料本文を閉じる' : '資料本文を開く'}</summary>
+        <MaterialBodyView body={material.body} />
+      </details>
+
+      {relatedQuestions.length > 0 && (
+        <RelatedLinks title={`関連問題 ${relatedQuestions.length}件`} compact>
+          {relatedQuestions.map((question) => (
+            <button
+              key={question.id}
+              type="button"
+              aria-label={`関連問題を開く: ${question.id}`}
+              onClick={() => onOpenQuestion(question.id)}
+            >
+              <strong>{question.id}</strong>
+              <span>{question.topic}</span>
+            </button>
+          ))}
+        </RelatedLinks>
+      )}
+    </article>
+  );
+}
+
+function RelatedLinks({
+  title,
+  compact = false,
+  children
+}: {
+  title: string;
+  compact?: boolean;
+  children: React.ReactNode;
+}) {
+  return (
+    <section className={`related-links${compact ? ' compact' : ''}`}>
+      <h4>{title}</h4>
+      <div className="related-link-list">{children}</div>
+    </section>
   );
 }
 
@@ -341,12 +510,7 @@ function FormalExplanationView({ question, media }: { question: Question; media:
 
   return (
     <div className="explanation-stack">
-      <ExplanationTextBlock
-        title="解答"
-        value={explanation.answer}
-        placement="answer"
-        media={media}
-      />
+      <ExplanationTextBlock title="解答" value={explanation.answer} placement="answer" media={media} />
       <ExplanationTextBlock
         title="この問題で問われていること"
         value={explanation.question_intent}
@@ -530,4 +694,8 @@ function EmptyState({ text }: { text: string }) {
       <p>{text}</p>
     </div>
   );
+}
+
+function domTargetId(type: 'question' | 'material', id: string) {
+  return `${type}-${encodeURIComponent(id)}`;
 }
