@@ -4,6 +4,11 @@ import type {
   Material,
   Question
 } from '../types/domain';
+import {
+  matchesQuestionCategory,
+  type LearningArea,
+  type QuestionKind
+} from './questionCategories';
 
 export type QuestionOriginFilter = 'all' | 'source' | 'predicted';
 export type LearningStateFilter =
@@ -21,6 +26,8 @@ export interface QuestionFilterState {
   subject: string;
   unit: string;
   importance: 'all' | ImportanceLevel;
+  learningArea: 'all' | LearningArea;
+  questionKind: 'all' | QuestionKind;
   origin: QuestionOriginFilter;
   learningState: LearningStateFilter;
 }
@@ -39,6 +46,8 @@ export const DEFAULT_QUESTION_FILTERS: QuestionFilterState = {
   subject: '',
   unit: '',
   importance: 'all',
+  learningArea: 'all',
+  questionKind: 'all',
   origin: 'all',
   learningState: 'all'
 };
@@ -60,6 +69,7 @@ export function filterQuestions(
     if (filters.subject && question.subject !== filters.subject) return false;
     if (filters.unit && question.unit !== filters.unit) return false;
     if (filters.importance !== 'all' && question.importance !== filters.importance) return false;
+    if (!matchesQuestionCategory(question, filters.learningArea, filters.questionKind)) return false;
     if (filters.origin === 'predicted' && question.sourceType !== 'predicted') return false;
     if (filters.origin === 'source' && question.sourceType === 'predicted') return false;
 
