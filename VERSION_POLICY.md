@@ -4,7 +4,7 @@
 
 アプリ本体・データ・schemaを独立してVersion管理します。
 
-- App Version: `0.12.0`
+- App Version: `0.13.0`
 - Schema Version: `0.5`
 - Explanation Template Version: `1.0`
 - Formal Data Specification Version: `1.2`
@@ -17,6 +17,8 @@ App Versionとは独立して管理します。
 Formal Data Specification 1.2は1.1のSource lineage構造を維持したまま、`MATERIALS` / `MATERIAL_BLOCKS` と問題↔資料の双方向参照を追加します。Delivery Schema 0.5は既にMaterial配信構造を持つため、Formal 1.2導入だけを理由にDelivery Schemaを変更しません。
 
 App 0.12.0はDelivery / Formal Schemaを変更せず、既存`learningHistory`から全体成績・科目別/単元別成績・復習優先順位・直近不正解/不確実を再計算する学習ダッシュボードを追加します。分析結果は派生表示であり、Formal Master / Deliveryへ書き戻さず、クラウドへ送信しません。
+
+App 0.13.0はDelivery / Formal Schemaを変更せず、通常演習と独立した試験モードを追加します。試験中は正誤・正答・正式解説を表示せず、任意タイマー、終了時一括採点、科目別集計、誤答・未回答一覧を提供します。試験セッション要約は教材データと分離したIndexedDB `examSessions`へローカル保存します。
 
 ## Semantic versioning
 
@@ -33,7 +35,7 @@ App 0.12.0はDelivery / Formal Schemaを変更せず、既存`learningHistory`�
 - Formal 1.2 Canonical MasterはMaterial blockを保持し、Delivery 0.5へ互換Material本文を生成する
 - Schema 0.3 / 0.4データを0.5として暗黙変換しない
 - 旧SchemaがIndexedDBに残っている場合、UIで再Delivery変換・再投入を要求する
-- 教材データを再投入しても、学習履歴テーブルは独立保持する
+- 教材データを再投入しても、学習履歴・試験履歴テーブルは独立保持する
 
 ## Canonical Master policy
 
@@ -52,14 +54,15 @@ App 0.12.0はDelivery / Formal Schemaを変更せず、既存`learningHistory`�
 
 ## Learning state policy
 
-- `learningHistory` / `materialHistory` は教材Deliveryと独立したローカル状態とする
-- 正式教材の再Import・差し替えでは学習履歴を削除しない
+- `learningHistory` / `materialHistory` / `examSessions` は教材Deliveryと独立したローカル状態とする
+- 正式教材の再Import・差し替えでは学習履歴・試験履歴を削除しない
 - 不正解・不確実は`needsReview=true`を自動設定する
 - 正解時に`needsReview`を自動解除せず、ユーザーが復習完了を明示するまで保持する
-- お気に入り・要復習・回答回数・直近結果はクラウドへ送信せずIndexedDBにのみ保存する
+- お気に入り・要復習・回答回数・直近結果・試験セッション要約はクラウドへ送信せずIndexedDBにのみ保存する
 - 学習状態はFormal Master / Deliveryの正答・解説内容を書き換えない
 - 1問演習の自動判定結果は1回答につき1回だけ`learningHistory`へ記録する
 - 誤答再挑戦は新しい回答attemptとして記録し、過去のattemptを上書きしない
+- 試験モードは試験終了時に回答済み問題だけを1問1attemptとして`learningHistory`へ記録し、未回答問題はattemptへ加算しない
 
 ## Learning analytics policy
 
@@ -94,6 +97,20 @@ App 0.12.0はDelivery / Formal Schemaを変更せず、既存`learningHistory`�
 - 出題数は `全件 / 10 / 20 / 50問` とし、対象件数より大きい指定では対象全件を使用する
 - 0件の演習セットは開始不可とし、別条件の選択を促す
 - 演習セット構成はローカルUI状態であり、Formal Master / Deliveryへ保存しない
+
+## Exam mode policy
+
+- 試験モードはPractice setで確定した固定queueを使用し、試験途中の履歴更新で出題集合を変更しない
+- 試験中は正誤・正答・正式解説・過去の学習成績・要復習状態を表示しない
+- 試験中は未回答のまま前後の問題へ移動できる
+- タイマーは任意とし、設定値は `なし / 30 / 60 / 90 / 120分` とする
+- タイマーが0になった場合は同じ一括採点経路を`timeout`理由で実行する
+- 手動終了と時間切れは同一集計ロジックを使用し、二重採点・二重保存を禁止する
+- 一括採点結果は出題数・正解・不正解・未回答・全体正答率・科目別正答率・誤答/未回答一覧を含む
+- 全体・科目別正答率は出題数を分母とし、未回答を0点として含める
+- 回答済み問題のみ`learningHistory`へ正解/不正解を1attemptとして記録し、未回答は学習attemptへ記録しない
+- 試験セッション要約は`examSessions`へ保存し、問題本文・正答・正式解説を複製保存しない
+- 試験中断は採点・学習履歴記録・試験セッション保存を行わず終了する
 
 ## Reproducibility policy
 
@@ -135,7 +152,12 @@ App 0.12.0はDelivery / Formal Schemaを変更せず、既存`learningHistory`�
 24. 全体・科目別・単元別の学習集計、未回答除外、復習優先順位、直近要注意順のVitest
 25. 不正解回答→ダッシュボード反映→弱点科目の要復習セット作成のdesktop / mobile Chromium E2E
 26. ダッシュボードの直近要注意問題から問題カードへ直接移動できること
-27. CHANGELOG更新
+27. 試験中に正誤・正答・正式解説・過去学習成績が表示されないこと
+28. 試験終了時の一括採点、全体/科目別正答率、誤答/未回答一覧のVitest / desktop / mobile Chromium E2E
+29. 試験回答済み問題だけが`learningHistory`へ1attemptとして記録され、未回答がattemptへ加算されないこと
+30. `examSessions`が教材再Import後も保持されること
+31. 任意タイマー表示と時間切れ共通採点経路が二重保存を起こさないこと
+32. CHANGELOG更新
 
 Prettierは開発時の整形ツールとして使用し、CI release gateへの追加は別Versionで検証後に行います。
 

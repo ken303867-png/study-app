@@ -13,9 +13,11 @@ import {
 import { sampleDataset } from './data/sampleDataset';
 import { db } from './db/database';
 import { contentRepository } from './repositories/contentRepository';
+import { examSessionRepository } from './repositories/examSessionRepository';
 import { emptyHistory, learningRepository } from './repositories/learningRepository';
 import { DatasetImportError, importDatasetFile } from './services/datasetImportService';
 import type {
+  ExamSession,
   LearningHistory,
   LearningResult,
   Material,
@@ -34,12 +36,14 @@ import { domTargetId } from './utils/domTargetId';
 import {
   buildPracticeSet,
   summarizePracticePool,
+  type ExamTimerMinutes,
   type PracticePreset,
+  type PracticeSessionMode,
   type PracticeSetOptions
 } from './utils/practiceSets';
 import './dashboard.css';
 
-const APP_VERSION = '0.12.0';
+const APP_VERSION = '0.13.0';
 type View =
   | 'home'
   | 'dashboard'
@@ -65,6 +69,8 @@ export default function App() {
   const [practicePoolLabel, setPracticePoolLabel] = useState('全問題');
   const [practiceInitialPreset, setPracticeInitialPreset] = useState<PracticePreset>('all');
   const [practiceQuestions, setPracticeQuestions] = useState<Question[]>([]);
+  const [practiceSessionMode, setPracticeSessionMode] = useState<PracticeSessionMode>('practice');
+  const [practiceTimerMinutes, setPracticeTimerMinutes] = useState<ExamTimerMinutes>(0);
   const [practiceSessionKey, setPracticeSessionKey] = useState(0);
   const [sourceOccurrenceCount, setSourceOccurrenceCount] = useState(0);
   const [datasetVersion, setDatasetVersion] = useState('未登録');
@@ -213,7 +219,10 @@ export default function App() {
 
   const startConfiguredPractice = (options: PracticeSetOptions) => {
     const nextQuestions = buildPracticeSet(practicePoolQuestions, historyByQuestionId, options);
+    const nextMode = options.mode ?? 'practice';
     setPracticeQuestions(nextQuestions);
+    setPracticeSessionMode(nextMode);
+    setPracticeTimerMinutes(nextMode === 'exam' ? (options.timerMinutes ?? 0) : 0);
     setPracticeSessionKey((current) => current + 1);
     setView('practice');
   };
@@ -227,6 +236,10 @@ export default function App() {
 
   const recordLearningResult = async (questionId: string, result: LearningResult) => {
     replaceHistory(await learningRepository.recordResult(questionId, result));
+  };
+
+  const saveExamSession = async (session: ExamSession) => {
+    await examSessionRepository.save(session);
   };
 
   const toggleFavorite = async (questionId: string) => {
@@ -284,7 +297,7 @@ export default function App() {
         <div>
           <p className="eyebrow">Study App</p>
           <h1>学習アプリ v{APP_VERSION}</h1>
-          <p className="muted">Delivery Schema 0.5 / Learning Dashboard & Weakness Analysis</p>
+          <p className="muted">Delivery Schema 0.5 / Practice & Exam Mode</p>
         </div>
         <span className="status-badge">LOCAL ONLY</span>
       </header>
@@ -352,8 +365,8 @@ export default function App() {
             </div>
             <div className="grid-two">
               <article className="panel">
-                <h3>問題演習</h3>
-                <p>対象・出題順・問題数を組み合わせて演習セットを作成できます。</p>
+                <h3>問題演習・試験</h3>
+                <p>対象・出題順・問題数を組み合わせ、通常演習または一括採点の試験モードを開始できます。</p>
                 <div className="home-actions">
                   <button type="button" onClick={() => openView('questions')}>問題一覧を見る</button>
                   <button
@@ -361,7 +374,7 @@ export default function App() {
                     disabled={questions.length === 0}
                     onClick={() => openPracticeSetup(questions, '全問題')}
                   >
-                    演習セットを作成
+                    演習・試験セットを作成
                   </button>
                   <button
                     type="button"
@@ -420,8 +433,8 @@ export default function App() {
             {filteredQuestions.length > 0 && (
               <div className="panel practice-launch">
                 <div>
-                  <strong>現在の絞り込み結果から演習セットを作成</strong>
-                  <span>{filteredQuestions.length}問を母集団にして、対象・順序・出題数を選べます。</span>
+                  <strong>現在の絞り込み結果から演習・試験セットを作成</strong>
+                  <span>{filteredQuestions.length}問を母集団にして、対象・順序・出題数・実施モードを選べます。</span>
                 </div>
                 <button
                   type="button"
@@ -472,7 +485,10 @@ export default function App() {
             key={practiceSessionKey}
             questions={practiceQuestions}
             historyByQuestionId={historyByQuestionId}
+            sessionMode={practiceSessionMode}
+            timerMinutes={practiceTimerMinutes}
             onRecordResult={recordLearningResult}
+            onSaveExamSession={saveExamSession}
             onToggleFavorite={toggleFavorite}
             onToggleReview={toggleReview}
             onExit={() => openView('questions')}
@@ -537,14 +553,14 @@ export default function App() {
                 <h3>旧Schemaデータを検出しました</h3>
                 <p>
                   現在の保存データはSchema {schemaVersion}です。正式Schema 0.5へ変換したDeliveryデータを再投入してください。
-                  学習履歴は教材データとは別テーブルで保持されます。
+                  学習履歴・試験履歴は教材データとは別テーブルで保持されます。
                 </p>
               </article>
             )}
             <article className="panel">
               <h3>正式データImport</h3>
               <p>
-                Excel正本（.xlsx）、Canonical Master JSON Export、またはDelivery Schema 0.5 JSONを選択します。Excel正本はCanonical QAとDelivery QAを連続実行し、全検証PASS後のみIndexedDBへ保存します。学習履歴は教材データとは独立して保持されます。
+                Excel正本（.xlsx）、Canonical Master JSON Export、またはDelivery Schema 0.5 JSONを選択します。Excel正本はCanonical QAとDelivery QAを連続実行し、全検証PASS後のみIndexedDBへ保存します。学習履歴・試験履歴は教材データとは独立して保持されます。
               </p>
               <label className="file-import">
                 <span>{importing ? '検証・変換中' : 'Excel / JSONファイルを選択'}</span>
