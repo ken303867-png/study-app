@@ -9,9 +9,24 @@
 - Runtime validation: Zod
 - Unit test: Vitest
 - E2E test: Playwright
-- Version control: Private GitHub repository
+- Version control: Public GitHub repository（正式問題・教材本文は保存しない）
+- Distribution: GitHub Pages
 - Cloud: initial releaseでは使用しない
 - In-app AI: initial releaseでは使用しない
+
+## v0.15.0
+
+v0.15.0は、実端末のGitHub Pages環境で正式Base 726問・共通穴抜き1,917問・全2,643問・資料114件をImportし、再読み込み後もIndexedDBへ永続保持されることを確認した正式Versionです。
+
+- Formal Base: 726 questions
+- Common cloze supplemental: 1,917 questions
+- Total: 2,643 questions
+- Materials: 114
+- Delivery Schema: 0.5
+- Formal Data Spec: 1.2
+- Production Dataset: `common-726-delivery-0.5-materials114-v1.4.1`
+
+正式問題・教材データはGitHub repositoryには保存せず、GitHub Pages上のアプリへローカルImportして使用します。
 
 ## v0.7系の位置づけ
 
