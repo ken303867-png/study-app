@@ -2,6 +2,33 @@
 
 ## [Unreleased]
 
+## [0.9.0] - 2026-09-03
+
+### Added
+- 問題のキーワード・問題ID検索
+- 科目・単元・重要度・正式/既存問題/予想問題による問題絞り込み
+- 未回答・直近正解・直近不正解・直近不確実・要復習・お気に入り・学習済みの状態絞り込み
+- 資料のキーワード・資料ID・科目・重要度・関連問題数による絞り込み
+- IndexedDB `learningHistory` を利用した自己採点履歴
+- 正解 / 不正解 / 不確実の回数と直近結果
+- 要復習・お気に入りのローカルトグル
+- 不正解・不確実時の要復習自動設定
+- 学習履歴リセット時にお気に入り・要復習を保持する動作
+- 教材再Import後も学習履歴が残るVitest QA
+- 検索・学習状態永続化のdesktop / mobile Chromium E2E
+
+### Changed
+- 問題↔資料の直接移動時に対象を隠す検索条件を自動解除
+- ホームに学習済み問題数を表示
+- 学習状態はFormal Master / Deliveryとは独立したローカル状態として管理
+
+### Compatibility
+- Delivery Schema 0.5を維持
+- Formal Data Spec 1.2を維持
+- Explanation Template 1.0を維持
+- 正式問題・資料本文はGitHubへ保存しない
+- 教材差し替え時に`learningHistory` / `materialHistory`を削除しない
+
 ## [0.8.0] - 2026-09-03
 
 ### Added
@@ -97,7 +124,6 @@
 - React + TypeScript + Vite正式アーキテクチャ
 - PWA設定
 - Dexie / IndexedDB保存層
-- Repository分離
 - Zod Schema 0.3
 - 問題・資料IDの重複および双方向参照切れ検証
 - TypeScript strict + noUncheckedIndexedAccess + exactOptionalPropertyTypes

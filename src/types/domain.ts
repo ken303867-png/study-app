@@ -180,6 +180,7 @@ export interface LearningHistory {
   lastResult: LearningResult | null;
   lastAnsweredAt: string | null;
   favorite: boolean;
+  needsReview?: boolean;
 }
 
 export interface MaterialHistory {
