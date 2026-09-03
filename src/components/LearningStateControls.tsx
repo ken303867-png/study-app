@@ -14,7 +14,7 @@ export function LearningStateControls({
   onReset: () => void;
 }) {
   return (
-    <section className="learning-controls" aria-label="学習状態">
+    <section className="learning-controls" aria-label="問題の学習記録">
       <div className="learning-summary">
         <div>
           <span className={`learning-status ${history.lastResult ?? 'unanswered'}`}>
