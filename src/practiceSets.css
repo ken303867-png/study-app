@@ -8,18 +8,33 @@
 .practice-set-fieldset { margin: 0; padding: 0; border: 0; }
 .practice-set-fieldset legend { margin-bottom: 12px; font-size: .9rem; font-weight: 800; }
 .practice-preset-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.practice-mode-options { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .practice-preset-option { display: flex; align-items: center; gap: 10px; min-width: 0; padding: 13px; border: 1px solid #d8e2ec; border-radius: 14px; background: #fbfcfe; cursor: pointer; }
 .practice-preset-option:has(input:checked) { border-color: #7898b5; background: #eef4f9; box-shadow: 0 0 0 2px rgba(83, 113, 141, .08); }
 .practice-preset-option input { flex: 0 0 auto; }
 .practice-preset-option span { display: grid; gap: 2px; min-width: 0; }
 .practice-preset-option strong { overflow-wrap: anywhere; }
 .practice-preset-option small { color: #667b8f; }
-.practice-set-options { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.practice-set-options { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
 .practice-set-options label { display: grid; gap: 6px; }
 .practice-set-options label > span { font-size: .8rem; font-weight: 800; color: #53718d; }
 .practice-set-options select { width: 100%; border: 1px solid #cad5df; border-radius: 12px; padding: 11px 12px; background: #fbfcfe; color: #17324d; }
 .practice-set-actions { display: flex; flex-wrap: wrap; gap: 10px; }
 .practice-set-builder .warning-panel p { margin: 6px 0 0; }
+.exam-mode-note, .exam-security-note { border-color: #b7cadc; background: #f4f8fc; }
+.exam-mode-note strong { display: block; margin-bottom: 6px; }
+.exam-mode-note p, .exam-security-note { margin-bottom: 0; }
+.exam-mode .practice-toolbar { grid-template-columns: minmax(0, 1fr) auto auto; }
+.exam-timer { display: grid; min-width: 116px; padding: 9px 12px; border: 1px solid #c8d6e3; border-radius: 12px; background: #f8fafc; text-align: right; }
+.exam-timer span { color: #667b8f; font-size: .72rem; font-weight: 800; }
+.exam-timer strong { font-size: 1.25rem; font-variant-numeric: tabular-nums; }
+.exam-timer.urgent { border-color: #d5a4a4; background: #fff5f5; color: #8b3434; }
+.exam-result-grid { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+.exam-timeout-note { padding: 10px 12px; border-radius: 12px; background: #fff4d8; color: #775b13; font-weight: 700; }
+.exam-attention-list { display: grid; gap: 10px; margin: 14px 0 0; padding: 0; list-style: none; }
+.exam-attention-list li { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 12px; align-items: start; padding: 12px; border: 1px solid #dce5ed; border-radius: 14px; background: #fbfcfe; }
+.exam-attention-list p { margin: 4px 0 0; line-height: 1.5; }
+.exam-subject-table { min-width: 620px; }
 
 @media (max-width: 680px) {
   .practice-set-heading { align-items: stretch; flex-direction: column; }
@@ -27,8 +42,11 @@
   .practice-preset-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .practice-set-options { grid-template-columns: 1fr; }
   .practice-set-actions { display: grid; grid-template-columns: 1fr; }
+  .exam-mode .practice-toolbar { grid-template-columns: 1fr auto; }
+  .exam-timer { grid-column: 1 / -1; text-align: left; }
+  .exam-result-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 @media (max-width: 420px) {
-  .practice-preset-grid { grid-template-columns: 1fr; }
+  .practice-preset-grid, .practice-mode-options { grid-template-columns: 1fr; }
 }
