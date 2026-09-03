@@ -11,7 +11,7 @@ test('filters questions and persists favorite/review learning state across reloa
   await expect(page.getByText(questionPrompt)).toBeVisible();
   await page.getByRole('button', { name: 'お気に入り ☆' }).click();
   await page.getByRole('button', { name: '不正解', exact: true }).click();
-  await expect(page.getByText('直近：不正解')).toBeVisible();
+  await expect(page.locator('.learning-status')).toHaveText('直近：不正解');
   await expect(page.getByRole('button', { name: '要復習 ✓' })).toHaveAttribute('aria-pressed', 'true');
 
   await page.getByLabel('学習状態').selectOption('favorite');
