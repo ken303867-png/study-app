@@ -1,18 +1,32 @@
 import { useEffect, useMemo, useState, type ChangeEvent } from 'react';
+import { LearningStateControls } from './components/LearningStateControls';
 import { MaterialBodyView } from './components/MaterialBodyView';
+import { MaterialFilterPanel } from './components/MaterialFilterPanel';
+import { QuestionFilterPanel } from './components/QuestionFilterPanel';
 import { sampleDataset } from './data/sampleDataset';
 import { db } from './db/database';
 import { contentRepository } from './repositories/contentRepository';
+import { emptyHistory, learningRepository } from './repositories/learningRepository';
 import { DatasetImportError, importDatasetFile } from './services/datasetImportService';
 import type {
   ExplanationPlacement,
   FormalExplanation,
+  LearningHistory,
+  LearningResult,
   Material,
   MediaRecord,
   Question
 } from './types/domain';
+import {
+  DEFAULT_MATERIAL_FILTERS,
+  DEFAULT_QUESTION_FILTERS,
+  filterMaterials,
+  filterQuestions,
+  type MaterialFilterState,
+  type QuestionFilterState
+} from './utils/contentFilters';
 
-const APP_VERSION = '0.8.0';
+const APP_VERSION = '0.9.0';
 type View = 'home' | 'questions' | 'materials' | 'data';
 
 export default function App() {
@@ -20,6 +34,13 @@ export default function App() {
   const [questions, setQuestions] = useState<Question[]>([]);
   const [materials, setMaterials] = useState<Material[]>([]);
   const [media, setMedia] = useState<MediaRecord[]>([]);
+  const [learningHistory, setLearningHistory] = useState<LearningHistory[]>([]);
+  const [questionFilters, setQuestionFilters] = useState<QuestionFilterState>(
+    DEFAULT_QUESTION_FILTERS
+  );
+  const [materialFilters, setMaterialFilters] = useState<MaterialFilterState>(
+    DEFAULT_MATERIAL_FILTERS
+  );
   const [sourceOccurrenceCount, setSourceOccurrenceCount] = useState(0);
   const [datasetVersion, setDatasetVersion] = useState('未登録');
   const [schemaVersion, setSchemaVersion] = useState('未登録');
@@ -29,18 +50,56 @@ export default function App() {
   const [focusedQuestionId, setFocusedQuestionId] = useState<string | null>(null);
   const [focusedMaterialId, setFocusedMaterialId] = useState<string | null>(null);
 
+  const historyByQuestionId = useMemo(
+    () => new Map(learningHistory.map((history) => [history.questionId, history])),
+    [learningHistory]
+  );
+  const questionSubjects = useMemo(
+    () => uniqueSorted(questions.map((question) => question.subject)),
+    [questions]
+  );
+  const questionUnits = useMemo(
+    () =>
+      uniqueSorted(
+        questions
+          .filter(
+            (question) => !questionFilters.subject || question.subject === questionFilters.subject
+          )
+          .map((question) => question.unit)
+      ),
+    [questions, questionFilters.subject]
+  );
+  const materialSubjects = useMemo(
+    () => uniqueSorted(materials.map((material) => material.subject)),
+    [materials]
+  );
+  const filteredQuestions = useMemo(
+    () => filterQuestions(questions, historyByQuestionId, questionFilters),
+    [questions, historyByQuestionId, questionFilters]
+  );
+  const filteredMaterials = useMemo(
+    () => filterMaterials(materials, materialFilters),
+    [materials, materialFilters]
+  );
+  const learnedCount = useMemo(
+    () => questions.filter((question) => (historyByQuestionId.get(question.id)?.attempts ?? 0) > 0).length,
+    [questions, historyByQuestionId]
+  );
+
   const refresh = async () => {
-    const [q, m, mediaRecords, occurrences, datasetMeta, schemaMeta] = await Promise.all([
+    const [q, m, mediaRecords, occurrences, histories, datasetMeta, schemaMeta] = await Promise.all([
       contentRepository.getQuestions(),
       contentRepository.getMaterials(),
       contentRepository.getMedia(),
       contentRepository.getSourceOccurrences(),
+      learningRepository.getAll(),
       db.meta.get('datasetVersion'),
       db.meta.get('schemaVersion')
     ]);
     setQuestions(q);
     setMaterials(m);
     setMedia(mediaRecords);
+    setLearningHistory(histories);
     setSourceOccurrenceCount(occurrences.length);
     setDatasetVersion(datasetMeta?.value ?? '未登録');
     setSchemaVersion(schemaMeta?.value ?? '未登録');
@@ -53,13 +112,15 @@ export default function App() {
       contentRepository.getMaterials(),
       contentRepository.getMedia(),
       contentRepository.getSourceOccurrences(),
+      learningRepository.getAll(),
       db.meta.get('datasetVersion'),
       db.meta.get('schemaVersion')
-    ]).then(([q, m, mediaRecords, occurrences, datasetMeta, schemaMeta]) => {
+    ]).then(([q, m, mediaRecords, occurrences, histories, datasetMeta, schemaMeta]) => {
       if (!active) return;
       setQuestions(q);
       setMaterials(m);
       setMedia(mediaRecords);
+      setLearningHistory(histories);
       setSourceOccurrenceCount(occurrences.length);
       setDatasetVersion(datasetMeta?.value ?? '未登録');
       setSchemaVersion(schemaMeta?.value ?? '未登録');
@@ -88,12 +149,14 @@ export default function App() {
   }, [view, focusedQuestionId, focusedMaterialId]);
 
   const openQuestion = (questionId: string) => {
+    setQuestionFilters(DEFAULT_QUESTION_FILTERS);
     setFocusedMaterialId(null);
     setFocusedQuestionId(questionId);
     setView('questions');
   };
 
   const openMaterial = (materialId: string) => {
+    setMaterialFilters(DEFAULT_MATERIAL_FILTERS);
     setFocusedQuestionId(null);
     setFocusedMaterialId(materialId);
     setView('materials');
@@ -103,6 +166,29 @@ export default function App() {
     setFocusedQuestionId(null);
     setFocusedMaterialId(null);
     setView(nextView);
+  };
+
+  const replaceHistory = (next: LearningHistory) => {
+    setLearningHistory((current) => [
+      ...current.filter((history) => history.questionId !== next.questionId),
+      next
+    ]);
+  };
+
+  const recordLearningResult = async (questionId: string, result: LearningResult) => {
+    replaceHistory(await learningRepository.recordResult(questionId, result));
+  };
+
+  const toggleFavorite = async (questionId: string) => {
+    replaceHistory(await learningRepository.toggleFavorite(questionId));
+  };
+
+  const toggleReview = async (questionId: string) => {
+    replaceHistory(await learningRepository.toggleNeedsReview(questionId));
+  };
+
+  const resetProgress = async (questionId: string) => {
+    replaceHistory(await learningRepository.resetProgress(questionId));
   };
 
   const loadSample = async () => {
@@ -146,7 +232,7 @@ export default function App() {
         <div>
           <p className="eyebrow">Study App</p>
           <h1>学習アプリ v{APP_VERSION}</h1>
-          <p className="muted">Delivery Schema 0.5 / Material Navigation UI</p>
+          <p className="muted">Delivery Schema 0.5 / Search, Filter & Local Learning State</p>
         </div>
         <span className="status-badge">LOCAL ONLY</span>
       </header>
@@ -190,26 +276,26 @@ export default function App() {
                   <span>資料</span>
                 </div>
                 <div>
-                  <strong>{sourceOccurrenceCount}</strong>
-                  <span>出題出現</span>
+                  <strong>{learnedCount}</strong>
+                  <span>学習済み</span>
                 </div>
                 <div>
-                  <strong>{media.length}</strong>
-                  <span>MEDIA</span>
+                  <strong>{sourceOccurrenceCount}</strong>
+                  <span>出題出現</span>
                 </div>
               </div>
             </div>
             <div className="grid-two">
               <article className="panel">
                 <h3>問題演習</h3>
-                <p>正式な解答解説に加え、関連する得点特化要点資料へ直接移動できます。</p>
+                <p>科目・重要度・出典・学習状態で絞り込み、自己採点と要復習・お気に入りをローカル保存できます。</p>
                 <button type="button" onClick={() => openView('questions')}>
                   問題を見る
                 </button>
               </article>
               <article className="panel">
                 <h3>学習資料</h3>
-                <p>114単元の資料を折りたたみ表示し、関連問題へ双方向に移動できます。</p>
+                <p>114単元を科目・重要度・関連問題数で検索し、関連問題へ双方向に移動できます。</p>
                 <button type="button" onClick={() => openView('materials')}>
                   資料を見る
                 </button>
@@ -225,19 +311,35 @@ export default function App() {
                 <p className="eyebrow">Questions</p>
                 <h2>問題</h2>
               </div>
-              <span>{questions.length}件</span>
+              <span>{filteredQuestions.length} / {questions.length}件</span>
             </div>
+            <QuestionFilterPanel
+              filters={questionFilters}
+              subjects={questionSubjects}
+              units={questionUnits}
+              resultCount={filteredQuestions.length}
+              totalCount={questions.length}
+              onChange={setQuestionFilters}
+              onReset={() => setQuestionFilters(DEFAULT_QUESTION_FILTERS)}
+            />
             {questions.length === 0 ? (
               <EmptyState text="問題データはまだ登録されていません。" />
+            ) : filteredQuestions.length === 0 ? (
+              <EmptyState text="条件に一致する問題はありません。" />
             ) : (
-              questions.map((question) => (
+              filteredQuestions.map((question) => (
                 <QuestionCard
                   key={question.id}
                   question={question}
                   materials={materials}
                   media={media.filter((record) => record.canonical_question_id === question.id)}
+                  history={historyByQuestionId.get(question.id) ?? emptyHistory(question.id)}
                   targeted={focusedQuestionId === question.id}
                   onOpenMaterial={openMaterial}
+                  onRecord={(result) => void recordLearningResult(question.id, result)}
+                  onToggleFavorite={() => void toggleFavorite(question.id)}
+                  onToggleReview={() => void toggleReview(question.id)}
+                  onReset={() => void resetProgress(question.id)}
                 />
               ))
             )}
@@ -251,12 +353,22 @@ export default function App() {
                 <p className="eyebrow">Materials</p>
                 <h2>学習資料</h2>
               </div>
-              <span>{materials.length}件</span>
+              <span>{filteredMaterials.length} / {materials.length}件</span>
             </div>
+            <MaterialFilterPanel
+              filters={materialFilters}
+              subjects={materialSubjects}
+              resultCount={filteredMaterials.length}
+              totalCount={materials.length}
+              onChange={setMaterialFilters}
+              onReset={() => setMaterialFilters(DEFAULT_MATERIAL_FILTERS)}
+            />
             {materials.length === 0 ? (
               <EmptyState text="学習資料はまだ登録されていません。" />
+            ) : filteredMaterials.length === 0 ? (
+              <EmptyState text="条件に一致する資料はありません。" />
             ) : (
-              materials.map((material) => (
+              filteredMaterials.map((material) => (
                 <MaterialCard
                   key={material.id}
                   material={material}
@@ -293,7 +405,7 @@ export default function App() {
             <article className="panel">
               <h3>正式データImport</h3>
               <p>
-                Excel正本（.xlsx）、Canonical Master JSON Export、またはDelivery Schema 0.5 JSONを選択します。Excel正本はCanonical QAとDelivery QAを連続実行し、全検証PASS後のみIndexedDBへ保存します。
+                Excel正本（.xlsx）、Canonical Master JSON Export、またはDelivery Schema 0.5 JSONを選択します。Excel正本はCanonical QAとDelivery QAを連続実行し、全検証PASS後のみIndexedDBへ保存します。学習履歴は教材データとは独立して保持されます。
               </p>
               <label className="file-import">
                 <span>{importing ? '検証・変換中' : 'Excel / JSONファイルを選択'}</span>
@@ -343,14 +455,24 @@ function QuestionCard({
   question,
   materials,
   media,
+  history,
   targeted,
-  onOpenMaterial
+  onOpenMaterial,
+  onRecord,
+  onToggleFavorite,
+  onToggleReview,
+  onReset
 }: {
   question: Question;
   materials: Material[];
   media: MediaRecord[];
+  history: LearningHistory;
   targeted: boolean;
   onOpenMaterial: (materialId: string) => void;
+  onRecord: (result: LearningResult) => void;
+  onToggleFavorite: () => void;
+  onToggleReview: () => void;
+  onReset: () => void;
 }) {
   const materialMap = useMemo(
     () => new Map(materials.map((material) => [material.id, material])),
@@ -381,6 +503,13 @@ function QuestionCard({
           ))}
         </ol>
       )}
+      <LearningStateControls
+        history={history}
+        onRecord={onRecord}
+        onToggleFavorite={onToggleFavorite}
+        onToggleReview={onToggleReview}
+        onReset={onReset}
+      />
       {relatedMaterials.length > 0 && (
         <RelatedLinks title={`関連学習資料 ${relatedMaterials.length}件`}>
           {relatedMaterials.map((material) => (
@@ -701,4 +830,8 @@ function EmptyState({ text }: { text: string }) {
 
 function domTargetId(type: 'question' | 'material', id: string) {
   return `${type}-${encodeURIComponent(id)}`;
+}
+
+function uniqueSorted(values: string[]) {
+  return [...new Set(values)].sort((left, right) => left.localeCompare(right, 'ja-JP'));
 }
