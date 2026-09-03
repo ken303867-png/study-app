@@ -371,8 +371,8 @@ function validateMaterialBlocks(
     section_heading: string;
     block_order: number;
     block_type: 'paragraph' | 'table';
-    text?: string;
-    table_rows?: string[][];
+    text?: string | undefined;
+    table_rows?: string[][] | undefined;
   }>,
   issues: string[]
 ) {
@@ -416,8 +416,8 @@ export function renderMaterialBody(
     section_heading: string;
     block_order: number;
     block_type: 'paragraph' | 'table';
-    text?: string;
-    table_rows?: string[][];
+    text?: string | undefined;
+    table_rows?: string[][] | undefined;
   }>
 ): string {
   const sorted = [...blocks].sort(
