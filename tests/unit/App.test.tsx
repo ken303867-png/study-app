@@ -3,12 +3,12 @@ import { describe, expect, it } from 'vitest';
 import App from '../../src/App';
 
 describe('App', () => {
-  it('renders the schema 0.5 practice-and-exam application shell', () => {
+  it('renders the schema 0.5 offline PWA application shell', () => {
     render(<App />);
-    expect(screen.getByRole('heading', { name: '学習アプリ v0.13.0' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: '学習アプリ v0.14.0' })).toBeInTheDocument();
     expect(screen.getByText('LOCAL ONLY')).toBeInTheDocument();
     expect(screen.getByText(/Delivery Schema 0\.5/)).toBeInTheDocument();
-    expect(screen.getByText(/Practice & Exam Mode/)).toBeInTheDocument();
+    expect(screen.getByText(/Offline PWA/)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: '分析' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: '演習' })).toBeInTheDocument();
   });
