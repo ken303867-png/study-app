@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { parseMaterialBody } from '../../src/components/MaterialBodyView';
+import { parseMaterialBody } from '../../src/utils/materialBodyParser';
 
 describe('MaterialBodyView parser', () => {
   it('preserves section order and separates paragraph/table chunks', () => {
