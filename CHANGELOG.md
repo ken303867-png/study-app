@@ -32,6 +32,9 @@
 - Legacy v1.47解答解説＋確定lineageからFormal Data Spec v1.1 Canonical Masterを組み立てるAssembly Core
 - direct / group / subitem / complement-repair / all-items形式を扱うchoice explanation migration QA
 - Legacy 709 Canonical Assembly v1仕様書とCanonical→Delivery 0.5まで検証する非正式Vitest fixture
+- IndexedDB書込後に問題・正答・解説・Source occurrence・metadataを同一transaction内で再照合するread-back監査
+- read-back不一致時にtransactionをabortして直前datasetを維持するImport rollback gate
+- 709問synthetic Canonical Master `.xlsx` をproduction Import経路へ通すChromium負荷・全件保存E2E
 
 ### Changed
 - 旧 `explanation: string` からExplanation Template v1.0構造へ移行
@@ -39,6 +42,7 @@
 - サンプルDeliveryデータをSchema 0.5へ更新
 - 旧Schema検出基準をSchema 0.5へ更新
 - 正式データImport UIを `.xlsx` / Canonical JSON / Delivery JSON対応へ拡張
+- `replaceDataset` は保存完了だけでなくread-back監査PASSを返して初めてImport成功とする
 
 ### Compatibility
 - Schema 0.3 / 0.4を0.5へ暗黙変換しない
@@ -50,6 +54,7 @@
 - Lineage Reconstruction CoreはQA reportを返すだけでIndexedDBを更新せず、Formal Canonical Master全体のQA完了前にDeliveryへ昇格しない
 - Canonical Assemblyはsource-supported inferenceと共通修正条件fallbackをmigration reportへ残し、旧解説原文を上書きしない
 - Canonical Assemblyはfinal publication QA・lineage QA・choice mapping QAがすべてPASSするまで正式Masterとして確定しない
+- IndexedDB read-back監査がFAILした場合は同一transactionをabortし、部分更新状態を残さない
 
 ## [0.7.1] - 2026-09-02
 
