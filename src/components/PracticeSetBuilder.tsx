@@ -69,16 +69,29 @@ export function PracticeSetBuilder({
   );
   const presetCount = presetCountFromSummary(summary, preset);
   const selectedCount = limit === 'all' ? presetCount : Math.min(presetCount, limit);
+  const hasSelfAssessmentCloze =
+    questionKinds.includes('common-cloze') && kindCounts['common-cloze'] > 0;
 
   const selectArea = (area: LearningArea) => {
     setLearningArea(area);
     setQuestionKinds([...QUESTION_KINDS_BY_AREA[area]]);
+    if (area === 'common' && kindCounts['common-cloze'] > 0) {
+      setMode('practice');
+      setTimerMinutes(0);
+    }
   };
 
   const toggleKind = (kind: QuestionKind) => {
-    setQuestionKinds((current) =>
-      current.includes(kind) ? current.filter((value) => value !== kind) : [...current, kind]
-    );
+    setQuestionKinds((current) => {
+      const adding = !current.includes(kind);
+      if (kind === 'common-cloze' && adding) {
+        setMode('practice');
+        setTimerMinutes(0);
+      }
+      return current.includes(kind)
+        ? current.filter((value) => value !== kind)
+        : [...current, kind];
+    });
   };
 
   const areaCount = (area: LearningArea) =>
@@ -184,16 +197,28 @@ export function PracticeSetBuilder({
                 name="practice-mode"
                 value="exam"
                 checked={mode === 'exam'}
+                disabled={hasSelfAssessmentCloze}
                 onChange={() => setMode('exam')}
               />
               <span>
                 <strong>試験モード</strong>
-                <small>終了まで正誤・正答・解説を非表示</small>
+                <small>
+                  {hasSelfAssessmentCloze
+                    ? '穴抜き問題を含むセットでは利用できません'
+                    : '終了まで正誤・正答・解説を非表示'}
+                </small>
               </span>
             </label>
           </div>
         </fieldset>
       </div>
+
+      {hasSelfAssessmentCloze && (
+        <div className="panel warning-panel" role="note">
+          <strong>穴抜き問題は自己採点方式です</strong>
+          <p>「答えを見る」で正答を確認した後、「正解」「不正解」「要復習」から自己採点します。そのため試験モードは利用できません。</p>
+        </div>
+      )}
 
       <div className="panel">
         <fieldset className="practice-set-fieldset">
