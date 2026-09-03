@@ -43,7 +43,7 @@ import {
 } from './utils/practiceSets';
 import './dashboard.css';
 
-const APP_VERSION = '0.13.0';
+const APP_VERSION = '0.14.0';
 type View =
   | 'home'
   | 'dashboard'
@@ -297,7 +297,7 @@ export default function App() {
         <div>
           <p className="eyebrow">Study App</p>
           <h1>学習アプリ v{APP_VERSION}</h1>
-          <p className="muted">Delivery Schema 0.5 / Practice & Exam Mode</p>
+          <p className="muted">Delivery Schema 0.5 / Offline PWA</p>
         </div>
         <span className="status-badge">LOCAL ONLY</span>
       </header>
