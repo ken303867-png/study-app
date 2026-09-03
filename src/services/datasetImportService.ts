@@ -3,6 +3,10 @@ import { preflightLegacy709MasterXlsx } from '../adapters/legacy709MasterPreflig
 import { parseCanonicalMasterXlsx, XlsxMasterError } from '../adapters/xlsxMasterAdapter';
 import { convertMasterToDelivery, MasterConversionError } from '../converters/masterToDelivery';
 import { contentRepository } from '../repositories/contentRepository';
+import {
+  DatasetPersistenceAuditError,
+  type DatasetPersistenceAudit
+} from '../repositories/datasetPersistenceAudit';
 import { datasetSchema, type Dataset } from '../schemas/contentSchemas';
 import type { CanonicalMasterExportInput } from '../schemas/masterDataSchemas';
 
@@ -19,6 +23,7 @@ export interface DatasetImportResult {
   sourceCount: number;
   sourceOccurrenceCount: number;
   mediaCount: number;
+  persistenceAudit: DatasetPersistenceAudit;
 }
 
 export class DatasetImportError extends Error {
@@ -94,7 +99,7 @@ async function persistDataset(
   kind: ImportKind,
   sourceFormat: ImportSourceFormat
 ): Promise<DatasetImportResult> {
-  await contentRepository.replaceDataset(dataset);
+  const persistenceAudit = await contentRepository.replaceDataset(dataset);
   return {
     kind,
     sourceFormat,
@@ -104,7 +109,8 @@ async function persistDataset(
     materialCount: dataset.materials.length,
     sourceCount: dataset.sources.length,
     sourceOccurrenceCount: dataset.sourceOccurrences.length,
-    mediaCount: dataset.media.length
+    mediaCount: dataset.media.length,
+    persistenceAudit
   };
 }
 
@@ -140,6 +146,12 @@ function normalizeImportError(error: unknown): DatasetImportError {
   if (error instanceof MasterConversionError) {
     return new DatasetImportError(
       'Canonical MasterのDelivery変換QAでエラーを検出しました。',
+      error.issues
+    );
+  }
+  if (error instanceof DatasetPersistenceAuditError) {
+    return new DatasetImportError(
+      'IndexedDB保存後read-back監査で不一致を検出したためImportをロールバックしました。',
       error.issues
     );
   }
