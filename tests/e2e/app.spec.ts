@@ -94,7 +94,7 @@ test('imports and read-back verifies a 709-question canonical master xlsx in Chr
     const request = indexedDB.open('study-app-db');
     const database = await new Promise<IDBDatabase>((resolve, reject) => {
       request.onsuccess = () => resolve(request.result);
-      request.onerror = () => reject(request.error);
+      request.onerror = () => reject(request.error ?? new Error('IndexedDB open failed'));
     });
 
     const transaction = database.transaction(['questions', 'sourceOccurrences'], 'readonly');
@@ -103,7 +103,8 @@ test('imports and read-back verifies a 709-question canonical master xlsx in Chr
     const count = (requestToCount: IDBRequest<number>) =>
       new Promise<number>((resolve, reject) => {
         requestToCount.onsuccess = () => resolve(requestToCount.result);
-        requestToCount.onerror = () => reject(requestToCount.error);
+        requestToCount.onerror = () =>
+          reject(requestToCount.error ?? new Error('IndexedDB count failed'));
       });
     const [questions, sourceOccurrences] = await Promise.all([
       count(questionRequest),
