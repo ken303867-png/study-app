@@ -87,17 +87,22 @@ function aggregateQuestions(
   let incorrectAttempts = 0;
   let uncertainAttempts = 0;
   let needsReviewQuestions = 0;
+  let answeredNeedsReviewQuestions = 0;
   let favoriteQuestions = 0;
 
   for (const question of questions) {
     const history = historyByQuestionId.get(question.id);
     if (!history) continue;
-    if (history.attempts > 0) answeredQuestions += 1;
+    const answered = history.attempts > 0;
+    if (answered) answeredQuestions += 1;
     totalAttempts += history.attempts;
     correctAttempts += history.correctCount;
     incorrectAttempts += history.incorrectCount;
     uncertainAttempts += history.uncertainCount;
-    if (history.needsReview) needsReviewQuestions += 1;
+    if (history.needsReview) {
+      needsReviewQuestions += 1;
+      if (answered) answeredNeedsReviewQuestions += 1;
+    }
     if (history.favorite) favoriteQuestions += 1;
   }
 
@@ -117,7 +122,8 @@ function aggregateQuestions(
     coverage: totalQuestions === 0 ? 0 : answeredQuestions / totalQuestions,
     nonCorrectRate:
       totalAttempts === 0 ? 0 : (incorrectAttempts + uncertainAttempts) / totalAttempts,
-    reviewRate: answeredQuestions === 0 ? 0 : needsReviewQuestions / answeredQuestions
+    reviewRate:
+      answeredQuestions === 0 ? 0 : answeredNeedsReviewQuestions / answeredQuestions
   };
 }
 
