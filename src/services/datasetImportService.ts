@@ -172,7 +172,9 @@ async function persistSupplementalDataset(
     currentOccurrences,
     currentMedia,
     datasetMeta,
-    schemaMeta
+    schemaMeta,
+    explanationTemplateMeta,
+    formalDataSpecMeta
   ] = await Promise.all([
     contentRepository.getQuestions(),
     contentRepository.getMaterials(),
@@ -180,7 +182,9 @@ async function persistSupplementalDataset(
     contentRepository.getSourceOccurrences(),
     contentRepository.getMedia(),
     db.meta.get('datasetVersion'),
-    db.meta.get('schemaVersion')
+    db.meta.get('schemaVersion'),
+    db.meta.get('explanationTemplateVersion'),
+    db.meta.get('formalDataSpecVersion')
   ]);
 
   if (currentQuestions.length > 0 && schemaMeta?.value !== '0.5') {
@@ -226,13 +230,18 @@ async function persistSupplementalDataset(
     ]
   });
 
-  const persistenceAudit = await contentRepository.replaceDataset(merged, metadata);
+  const mergedMetadata: DatasetPersistenceMetadata = {
+    explanationTemplateVersion:
+      explanationTemplateMeta?.value ?? metadata.explanationTemplateVersion,
+    formalDataSpecVersion: formalDataSpecMeta?.value ?? metadata.formalDataSpecVersion
+  };
+  const persistenceAudit = await contentRepository.replaceDataset(merged, mergedMetadata);
   return {
     kind: 'supplemental-delivery',
     sourceFormat,
     datasetVersion: dataset.datasetVersion,
     schemaVersion: dataset.schemaVersion,
-    formalDataSpecVersion: metadata.formalDataSpecVersion,
+    formalDataSpecVersion: mergedMetadata.formalDataSpecVersion,
     questionCount: merged.questions.length,
     materialCount: merged.materials.length,
     sourceCount: merged.sources.length,
