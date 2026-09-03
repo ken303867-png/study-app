@@ -1,0 +1,27 @@
+.progressive-list-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.progressive-list-controls span {
+  color: #667b8f;
+  font-size: .82rem;
+  font-weight: 700;
+}
+
+.progressive-list-controls button {
+  flex: 0 0 auto;
+}
+
+@media (max-width: 680px) {
+  .progressive-list-controls {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .progressive-list-controls button {
+    width: 100%;
+  }
+}
