@@ -6,8 +6,7 @@ import {
   EmptyState,
   FormalExplanationView,
   MaterialCard,
-  QuestionCard,
-  domTargetId
+  QuestionCard
 } from './components/StudyContentCards';
 import { sampleDataset } from './data/sampleDataset';
 import { db } from './db/database';
@@ -29,6 +28,7 @@ import {
   type MaterialFilterState,
   type QuestionFilterState
 } from './utils/contentFilters';
+import { domTargetId } from './utils/domTargetId';
 
 const APP_VERSION = '0.10.0';
 type View = 'home' | 'questions' | 'practice' | 'materials' | 'data';
