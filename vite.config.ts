@@ -2,7 +2,7 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
 
-const APP_BASE = '/study-app/';
+const APP_BASE = process.env.VITE_BASE_PATH ?? '/';
 
 export default defineConfig({
   base: APP_BASE,
