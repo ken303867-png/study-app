@@ -37,6 +37,9 @@ App Versionとは独立して管理します。
 - 正式問題本文を含むMaster JSON / Delivery JSONをGitHubへ保存しない
 - `record_status=adopted` かつ `final_qa=pass` の問題だけをDeliveryへ出力する
 - Master変換QAまたはZod validationが失敗した場合、IndexedDB contentを置換しない
+- Legacy migrationではfinal workbook単独からsource lineageを推測せず、確定lineageと突合する
+- source-supported inferenceを使用したchoice mappingはprovenanceとmigration reportへ必ず残す
+- Legacy独自の学習欄を意味変更してFormal blockへ押し込まず、必要な監査情報をCanonical notesへ保持する
 
 ## Reproducibility policy
 
@@ -61,7 +64,10 @@ App Versionとは独立して管理します。
 7. Delivery Data schema validation
 8. Canonical Master conversion QA
 9. Import失敗時の非破壊性QA
-10. CHANGELOG更新
+10. Legacy source lineage reconstruction QA（Legacy移行時）
+11. Legacy explanation / choice mapping → Canonical Assembly QA（Legacy移行時）
+12. final publication QA evidence確認（既存正式正本からの移行時）
+13. CHANGELOG更新
 
 Prettierは開発時の整形ツールとして使用し、CI release gateへの追加は別Versionで検証後に行います。
 
