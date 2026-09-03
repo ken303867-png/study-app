@@ -2,12 +2,16 @@ import { describe, expect, it } from 'vitest';
 import { sampleDataset } from '../../src/data/sampleDataset';
 import {
   auditDatasetPersistence,
-  DatasetPersistenceAuditError
+  DatasetPersistenceAuditError,
+  type DatasetPersistenceSnapshot
 } from '../../src/repositories/datasetPersistenceAudit';
+import { datasetSchema } from '../../src/schemas/contentSchemas';
+
+const normalizedSample = datasetSchema.parse(sampleDataset);
 
 describe('datasetPersistenceAudit', () => {
   it('passes when the persisted snapshot exactly matches the normalized delivery dataset', () => {
-    const audit = auditDatasetPersistence(sampleDataset, snapshotFromSample());
+    const audit = auditDatasetPersistence(normalizedSample, snapshotFromSample());
 
     expect(audit).toMatchObject({
       status: 'pass',
@@ -25,7 +29,7 @@ describe('datasetPersistenceAudit', () => {
     if (!first || !('correctChoiceIndexes' in first)) throw new Error('choice question fixture expected');
     first.correctChoiceIndexes = [0];
 
-    expect(() => auditDatasetPersistence(sampleDataset, snapshot)).toThrow(
+    expect(() => auditDatasetPersistence(normalizedSample, snapshot)).toThrow(
       DatasetPersistenceAuditError
     );
   });
@@ -33,11 +37,15 @@ describe('datasetPersistenceAudit', () => {
   it('detects missing source occurrence and version metadata', () => {
     const snapshot = snapshotFromSample();
     snapshot.sourceOccurrences = [];
-    delete snapshot.meta.schemaVersion;
+    snapshot.meta = {
+      datasetVersion: normalizedSample.datasetVersion,
+      explanationTemplateVersion: '1.0',
+      formalDataSpecVersion: '1.1'
+    };
 
     let caught: unknown;
     try {
-      auditDatasetPersistence(sampleDataset, snapshot);
+      auditDatasetPersistence(normalizedSample, snapshot);
     } catch (error) {
       caught = error;
     }
@@ -51,16 +59,16 @@ describe('datasetPersistenceAudit', () => {
   });
 });
 
-function snapshotFromSample() {
+function snapshotFromSample(): DatasetPersistenceSnapshot {
   return {
-    questions: structuredClone(sampleDataset.questions),
-    materials: structuredClone(sampleDataset.materials),
-    sources: structuredClone(sampleDataset.sources),
-    sourceOccurrences: structuredClone(sampleDataset.sourceOccurrences),
-    media: structuredClone(sampleDataset.media),
+    questions: structuredClone(normalizedSample.questions),
+    materials: structuredClone(normalizedSample.materials),
+    sources: structuredClone(normalizedSample.sources),
+    sourceOccurrences: structuredClone(normalizedSample.sourceOccurrences),
+    media: structuredClone(normalizedSample.media),
     meta: {
-      datasetVersion: sampleDataset.datasetVersion,
-      schemaVersion: sampleDataset.schemaVersion,
+      datasetVersion: normalizedSample.datasetVersion,
+      schemaVersion: normalizedSample.schemaVersion,
       explanationTemplateVersion: '1.0',
       formalDataSpecVersion: '1.1'
     }
