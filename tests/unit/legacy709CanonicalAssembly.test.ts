@@ -1,5 +1,8 @@
 import { describe, expect, it } from 'vitest';
-import { assembleLegacy709CanonicalMaster } from '../../src/adapters/legacy709CanonicalAssembly';
+import {
+  assembleLegacy709CanonicalMaster,
+  LegacyCanonicalAssemblyError
+} from '../../src/adapters/legacy709CanonicalAssembly';
 import {
   reconstructLegacy709SourceLineage,
   type LegacyLineageSourceDefinition,
@@ -169,17 +172,23 @@ describe('legacy709CanonicalAssembly', () => {
       locatorIndex
     });
 
-    await expect(
-      assembleLegacy709CanonicalMaster({
+    let caught: unknown;
+    try {
+      await assembleLegacy709CanonicalMaster({
         finalWorkbook: toArrayBuffer(finalWorkbook),
         lineage,
         masterDataVersion: 'fixture-master-1',
         deliveryDatasetVersion: 'fixture-delivery-1'
-      })
-    ).rejects.toMatchObject({
-      name: 'LegacyCanonicalAssemblyError',
-      issues: expect.arrayContaining([expect.stringMatching(/final publication QA|最終出版QA/i)])
-    });
+      });
+    } catch (error: unknown) {
+      caught = error;
+    }
+
+    expect(caught).toBeInstanceOf(LegacyCanonicalAssemblyError);
+    if (!(caught instanceof LegacyCanonicalAssemblyError)) {
+      throw new Error('LegacyCanonicalAssemblyErrorが送出されませんでした。');
+    }
+    expect(caught.issues.some((issue) => /final publication QA|最終出版QA/i.test(issue))).toBe(true);
   });
 });
 
