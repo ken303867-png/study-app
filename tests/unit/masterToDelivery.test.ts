@@ -54,7 +54,7 @@ describe('Canonical Master → Delivery conversion', () => {
     const invalid = materialMaster();
     invalid.sheets.MATERIALS[0]!.related_question_ids = ['FIX-Q-UNKNOWN'];
 
-    expect(() => convertMasterToDelivery(invalid)).toThrow(/adopted問題に存在しない正式問題ID/);
+    expect(() => convertMasterToDelivery(invalid)).toThrow(/adopted問題に存在しません/);
   });
 
   it('blocks an adopted question whose final QA is not pass', () => {
