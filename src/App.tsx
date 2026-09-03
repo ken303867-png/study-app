@@ -50,6 +50,11 @@ import './dashboard.css';
 const APP_VERSION = '0.14.0';
 const QUESTION_RENDER_BATCH = 30;
 const MATERIAL_RENDER_BATCH = 20;
+const FORMAL_QUESTION_TARGET = 726;
+const MATERIAL_TARGET = 114;
+const COMMON_CLOZE_TARGET = 1917;
+const SUPPLEMENTAL_TAG_PREFIX = 'supplemental:';
+const COMMON_CLOZE_TAG = 'supplemental:common-cloze';
 
 type View =
   | 'home'
@@ -146,6 +151,23 @@ export default function App() {
     () => questions.filter((question) => (historyByQuestionId.get(question.id)?.attempts ?? 0) > 0).length,
     [questions, historyByQuestionId]
   );
+  const supplementalQuestionCount = useMemo(
+    () =>
+      questions.filter((question) =>
+        question.tags.some((tag) => tag.startsWith(SUPPLEMENTAL_TAG_PREFIX))
+      ).length,
+    [questions]
+  );
+  const commonClozeQuestionCount = useMemo(
+    () => questions.filter((question) => question.tags.includes(COMMON_CLOZE_TAG)).length,
+    [questions]
+  );
+  const formalQuestionCount = questions.length - supplementalQuestionCount;
+  const formalBaseReady =
+    datasetVersion.startsWith('common-726-') &&
+    formalQuestionCount === FORMAL_QUESTION_TARGET &&
+    materials.length === MATERIAL_TARGET;
+  const commonClozeReady = commonClozeQuestionCount === COMMON_CLOZE_TARGET;
 
   const refresh = async () => {
     const [q, m, mediaRecords, occurrences, histories, datasetMeta, schemaMeta] = await Promise.all([
@@ -318,11 +340,17 @@ export default function App() {
     try {
       const result = await importDatasetFile(file);
       await refresh();
-      const kindLabel = result.kind === 'canonical-master' ? 'Canonical Master' : 'Delivery';
       const formatLabel = result.sourceFormat === 'xlsx' ? 'Excel正本' : 'JSON';
-      setMessage(
-        `${formatLabel} → ${kindLabel}を読み込みました: ${result.questionCount}問 / ${result.sourceOccurrenceCount}出題出現 / Schema ${result.schemaVersion}`
-      );
+      if (result.kind === 'supplemental-delivery') {
+        setMessage(
+          `${formatLabel} → 追加データ「${result.supplementalKey}」を読み込みました: 追加${result.supplementalQuestionCount ?? 0}問 / 置換${result.replacedSupplementalQuestionCount ?? 0}問 / 現在${result.questionCount}問 / Schema ${result.schemaVersion}`
+        );
+      } else {
+        const kindLabel = result.kind === 'canonical-master' ? 'Canonical Master' : 'Delivery';
+        setMessage(
+          `${formatLabel} → ${kindLabel}を読み込みました: ${result.questionCount}問 / ${result.materialCount}資料 / ${result.sourceOccurrenceCount}出題出現 / Schema ${result.schemaVersion}`
+        );
+      }
     } catch (error) {
       if (error instanceof DatasetImportError) {
         setImportError([error.message, ...error.issues]);
@@ -385,11 +413,22 @@ export default function App() {
                 <p className="eyebrow">現在のデータ</p>
                 <h2>{datasetVersion}</h2>
                 <p className="muted">Schema {schemaVersion}</p>
+                <p className="muted">
+                  正式Base {formalQuestionCount}問 / 追加 {supplementalQuestionCount}問
+                </p>
               </div>
               <div className="metric-grid">
                 <div>
                   <strong>{questions.length}</strong>
-                  <span>問題</span>
+                  <span>全問題</span>
+                </div>
+                <div>
+                  <strong>{formalQuestionCount}</strong>
+                  <span>正式Base</span>
+                </div>
+                <div>
+                  <strong>{supplementalQuestionCount}</strong>
+                  <span>追加問題</span>
                 </div>
                 <div>
                   <strong>{materials.length}</strong>
@@ -647,6 +686,38 @@ export default function App() {
                 </p>
               </article>
             )}
+            <article className="panel">
+              <h3>現在の保存状態</h3>
+              <div className="metric-grid">
+                <div>
+                  <strong>{formalQuestionCount}</strong>
+                  <span>正式Base</span>
+                </div>
+                <div>
+                  <strong>{commonClozeQuestionCount}</strong>
+                  <span>共通穴抜き</span>
+                </div>
+                <div>
+                  <strong>{questions.length}</strong>
+                  <span>全問題</span>
+                </div>
+                <div>
+                  <strong>{materials.length}</strong>
+                  <span>資料</span>
+                </div>
+              </div>
+              <p className="muted">
+                正式Base: {formalBaseReady ? 'OK' : `要確認（目標 ${FORMAL_QUESTION_TARGET}問・${MATERIAL_TARGET}資料）`} / 共通穴抜き: {commonClozeReady ? 'OK' : `未完了（目標 ${COMMON_CLOZE_TARGET}問）`}
+              </p>
+              <p className="muted">Dataset: {datasetVersion} / Schema {schemaVersion}</p>
+            </article>
+            <article className="panel">
+              <h3>Import順序</h3>
+              <p>
+                1. 正式BaseのCanonical Masterを先に読み込み、2. その後に共通穴抜きのsupplemental JSONを読み込みます。
+                Canonical Masterを再投入するとBase Datasetが置換されるため、穴抜きデータを先に入れていた場合は最後にsupplemental JSONを再Importしてください。
+              </p>
+            </article>
             <article className="panel">
               <h3>正式データImport</h3>
               <p>
