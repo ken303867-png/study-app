@@ -1,8 +1,8 @@
-import { expect, test } from '@playwright/test';
+import { expect, test, type Page } from '@playwright/test';
 
 const questionPrompt = '正式Deliveryデータを実行時検証するライブラリはどれですか。';
 
-async function loadSampleAndStartPractice(page: import('@playwright/test').Page) {
+async function loadSampleAndStartPractice(page: Page) {
   await page.goto('/');
   await page.getByRole('button', { name: 'データ管理' }).click();
   await page.getByRole('button', { name: 'サンプルを読み込む' }).click();
