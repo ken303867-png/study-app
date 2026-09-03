@@ -8,6 +8,10 @@ import type {
   SourceOccurrence,
   SourceRecord
 } from '../types/domain';
+import {
+  auditDatasetPersistence,
+  type DatasetPersistenceAudit
+} from './datasetPersistenceAudit';
 
 export interface ContentRepository {
   getQuestions(): Promise<Question[]>;
@@ -17,7 +21,7 @@ export interface ContentRepository {
   getMedia(): Promise<MediaRecord[]>;
   getMediaBlob(mediaId: string): Promise<Blob | undefined>;
   putMediaBlob(record: MediaBlobRecord): Promise<void>;
-  replaceDataset(input: DatasetInput): Promise<void>;
+  replaceDataset(input: DatasetInput): Promise<DatasetPersistenceAudit>;
 }
 
 export class DexieContentRepository implements ContentRepository {
@@ -51,9 +55,9 @@ export class DexieContentRepository implements ContentRepository {
     await db.mediaBlobs.put(record);
   }
 
-  async replaceDataset(input: DatasetInput): Promise<void> {
+  async replaceDataset(input: DatasetInput): Promise<DatasetPersistenceAudit> {
     const dataset = datasetSchema.parse(input);
-    await db.transaction(
+    return db.transaction(
       'rw',
       [
         db.questions,
@@ -82,6 +86,46 @@ export class DexieContentRepository implements ContentRepository {
         await db.meta.put({ key: 'schemaVersion', value: dataset.schemaVersion });
         await db.meta.put({ key: 'explanationTemplateVersion', value: '1.0' });
         await db.meta.put({ key: 'formalDataSpecVersion', value: '1.1' });
+
+        const [
+          questions,
+          materials,
+          sources,
+          sourceOccurrences,
+          media,
+          datasetVersion,
+          schemaVersion,
+          explanationTemplateVersion,
+          formalDataSpecVersion
+        ] = await Promise.all([
+          db.questions.toArray(),
+          db.materials.toArray(),
+          db.sources.toArray(),
+          db.sourceOccurrences.toArray(),
+          db.media.toArray(),
+          db.meta.get('datasetVersion'),
+          db.meta.get('schemaVersion'),
+          db.meta.get('explanationTemplateVersion'),
+          db.meta.get('formalDataSpecVersion')
+        ]);
+
+        return auditDatasetPersistence(dataset, {
+          questions,
+          materials,
+          sources,
+          sourceOccurrences,
+          media,
+          meta: {
+            ...(datasetVersion?.value === undefined ? {} : { datasetVersion: datasetVersion.value }),
+            ...(schemaVersion?.value === undefined ? {} : { schemaVersion: schemaVersion.value }),
+            ...(explanationTemplateVersion?.value === undefined
+              ? {}
+              : { explanationTemplateVersion: explanationTemplateVersion.value }),
+            ...(formalDataSpecVersion?.value === undefined
+              ? {}
+              : { formalDataSpecVersion: formalDataSpecVersion.value })
+          }
+        });
       }
     );
   }
