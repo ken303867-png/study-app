@@ -424,12 +424,6 @@ function MaterialCard({
     .map((questionId) => questionMap.get(questionId))
     .filter((question): question is Question => question !== undefined);
 
-  useEffect(() => {
-    if (!targeted) return;
-    const timer = window.setTimeout(() => setBodyOpen(true), 0);
-    return () => window.clearTimeout(timer);
-  }, [targeted]);
-
   return (
     <article
       className={`panel material-card content-target${targeted ? ' targeted' : ''}`}
