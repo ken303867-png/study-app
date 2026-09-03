@@ -40,6 +40,34 @@ describe('practiceSets', () => {
     expect(ids(buildPracticeSet(questions, histories, options('uncertain')))).toEqual(['Q3']);
   });
 
+  it('filters the practice pool by selected question kinds before learning state', () => {
+    const categoryQuestions: Question[] = [
+      { ...makeQuestion('COMMON'), sourceType: 'predicted' },
+      {
+        ...makeQuestion('SPECIALTY'),
+        sourceType: 'predicted',
+        tags: ['question-kind:specialty-predicted']
+      },
+      {
+        ...makeQuestion('CASE'),
+        sourceType: 'predicted',
+        tags: ['question-kind:specialty-predicted-case']
+      }
+    ];
+
+    expect(
+      ids(
+        buildPracticeSet(categoryQuestions, new Map(), {
+          preset: 'all',
+          order: 'sequential',
+          limit: 'all',
+          learningArea: 'specialty',
+          questionKinds: ['specialty-predicted', 'specialty-predicted-case']
+        })
+      )
+    ).toEqual(['SPECIALTY', 'CASE']);
+  });
+
   it('applies the question limit after preset filtering', () => {
     const reviewSet = buildPracticeSet(questions, histories, {
       preset: 'review',
