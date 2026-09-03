@@ -45,7 +45,7 @@ test('summarizes learning history and launches a review set from the weakest sub
 
   await subjectPriority.getByRole('button', { name: '復習セット' }).click();
   await expect(page.getByRole('heading', { name: '演習セットを作成' })).toBeVisible();
-  await expect(page.getByText('母集団：サンプル科目 / 1問')).toBeVisible();
+  await expect(page.getByText('母集団：共通科目 / 1問')).toBeVisible();
   await expect(page.getByRole('radio', { name: /要復習/ })).toBeChecked();
   await expect(page.getByRole('button', { name: '1問の演習を開始' })).toBeEnabled();
 });
