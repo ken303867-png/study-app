@@ -10,7 +10,8 @@ import type {
 } from '../types/domain';
 import {
   auditDatasetPersistence,
-  type DatasetPersistenceAudit
+  type DatasetPersistenceAudit,
+  type DatasetPersistenceMetadata
 } from './datasetPersistenceAudit';
 
 export interface ContentRepository {
@@ -21,7 +22,10 @@ export interface ContentRepository {
   getMedia(): Promise<MediaRecord[]>;
   getMediaBlob(mediaId: string): Promise<Blob | undefined>;
   putMediaBlob(record: MediaBlobRecord): Promise<void>;
-  replaceDataset(input: DatasetInput): Promise<DatasetPersistenceAudit>;
+  replaceDataset(
+    input: DatasetInput,
+    metadata?: Partial<DatasetPersistenceMetadata>
+  ): Promise<DatasetPersistenceAudit>;
 }
 
 export class DexieContentRepository implements ContentRepository {
@@ -55,8 +59,15 @@ export class DexieContentRepository implements ContentRepository {
     await db.mediaBlobs.put(record);
   }
 
-  async replaceDataset(input: DatasetInput): Promise<DatasetPersistenceAudit> {
+  async replaceDataset(
+    input: DatasetInput,
+    metadata: Partial<DatasetPersistenceMetadata> = {}
+  ): Promise<DatasetPersistenceAudit> {
     const dataset = datasetSchema.parse(input);
+    const expectedMetadata: DatasetPersistenceMetadata = {
+      explanationTemplateVersion: metadata.explanationTemplateVersion ?? '1.0',
+      formalDataSpecVersion: metadata.formalDataSpecVersion ?? '1.1'
+    };
     return db.transaction(
       'rw',
       [
@@ -84,8 +95,14 @@ export class DexieContentRepository implements ContentRepository {
         await db.media.bulkPut(dataset.media as MediaRecord[]);
         await db.meta.put({ key: 'datasetVersion', value: dataset.datasetVersion });
         await db.meta.put({ key: 'schemaVersion', value: dataset.schemaVersion });
-        await db.meta.put({ key: 'explanationTemplateVersion', value: '1.0' });
-        await db.meta.put({ key: 'formalDataSpecVersion', value: '1.1' });
+        await db.meta.put({
+          key: 'explanationTemplateVersion',
+          value: expectedMetadata.explanationTemplateVersion
+        });
+        await db.meta.put({
+          key: 'formalDataSpecVersion',
+          value: expectedMetadata.formalDataSpecVersion
+        });
 
         const [
           questions,
@@ -109,23 +126,27 @@ export class DexieContentRepository implements ContentRepository {
           db.meta.get('formalDataSpecVersion')
         ]);
 
-        return auditDatasetPersistence(dataset, {
-          questions,
-          materials,
-          sources,
-          sourceOccurrences,
-          media,
-          meta: {
-            ...(datasetVersion?.value === undefined ? {} : { datasetVersion: datasetVersion.value }),
-            ...(schemaVersion?.value === undefined ? {} : { schemaVersion: schemaVersion.value }),
-            ...(explanationTemplateVersion?.value === undefined
-              ? {}
-              : { explanationTemplateVersion: explanationTemplateVersion.value }),
-            ...(formalDataSpecVersion?.value === undefined
-              ? {}
-              : { formalDataSpecVersion: formalDataSpecVersion.value })
-          }
-        });
+        return auditDatasetPersistence(
+          dataset,
+          {
+            questions,
+            materials,
+            sources,
+            sourceOccurrences,
+            media,
+            meta: {
+              ...(datasetVersion?.value === undefined ? {} : { datasetVersion: datasetVersion.value }),
+              ...(schemaVersion?.value === undefined ? {} : { schemaVersion: schemaVersion.value }),
+              ...(explanationTemplateVersion?.value === undefined
+                ? {}
+                : { explanationTemplateVersion: explanationTemplateVersion.value }),
+              ...(formalDataSpecVersion?.value === undefined
+                ? {}
+                : { formalDataSpecVersion: formalDataSpecVersion.value })
+            }
+          },
+          expectedMetadata
+        );
       }
     );
   }

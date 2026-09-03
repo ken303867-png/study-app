@@ -35,6 +35,12 @@
 - IndexedDB書込後に問題・正答・解説・Source occurrence・metadataを同一transaction内で再照合するread-back監査
 - read-back不一致時にtransactionをabortして直前datasetを維持するImport rollback gate
 - 709問synthetic Canonical Master `.xlsx` をproduction Import経路へ通すChromium負荷・全件保存E2E
+- Formal Data Specification v1.2の `MATERIALS` / `MATERIAL_BLOCKS` Canonical構造
+- paragraph / tableを順序付きblockとして保持するMaterial Master Schema
+- QUESTIONS.related_material_ids ↔ MATERIALS.related_question_idsの双方向完全一致QA
+- Phase3 114単元Canonical JSONからFormal 1.2 Material Masterを生成するMigration Adapter
+- Canonical Material blocksからDelivery 0.5 `materials[].body`を決定的再生成する変換ロジック
+- Canonical 1.2のformalDataSpecVersionをIndexedDB保存後read-back監査まで伝播するmetadata経路
 
 ### Changed
 - 旧 `explanation: string` からExplanation Template v1.0構造へ移行
@@ -43,6 +49,8 @@
 - 旧Schema検出基準をSchema 0.5へ更新
 - 正式データImport UIを `.xlsx` / Canonical JSON / Delivery JSON対応へ拡張
 - `replaceDataset` は保存完了だけでなくread-back監査PASSを返して初めてImport成功とする
+- Canonical Master Excel Adapterを `MATERIALS` / `MATERIAL_BLOCKS` / nested `table_rows` 対応へ拡張
+- Formal Data Spec 1.1 Import互換性を維持したまま1.2を追加
 
 ### Compatibility
 - Schema 0.3 / 0.4を0.5へ暗黙変換しない
@@ -55,6 +63,8 @@
 - Canonical Assemblyはsource-supported inferenceと共通修正条件fallbackをmigration reportへ残し、旧解説原文を上書きしない
 - Canonical Assemblyはfinal publication QA・lineage QA・choice mapping QAがすべてPASSするまで正式Masterとして確定しない
 - IndexedDB read-back監査がFAILした場合は同一transactionをabortし、部分更新状態を残さない
+- Phase3の模試・予想問題用別ID体系は現行709問Canonical IDへ推測変換せず、正式crosswalkがあるリンクだけを採用する
+- Formal Data Spec 1.1はMATERIALSなしの既存正本として引き続き読み込み可能
 
 ## [0.7.1] - 2026-09-02
 
