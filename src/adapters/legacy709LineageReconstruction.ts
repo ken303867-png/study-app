@@ -173,6 +173,8 @@ export async function reconstructLegacy709SourceLineage(input: {
   const finalIntegratedIds = new Set<string>();
   const issues: string[] = [];
   const questions: LegacyLineageQuestion[] = [];
+  let pageLocatorRequiredCount = 0;
+  let pageLocatorCompleteCount = 0;
 
   for (const finalRow of finalTable.rows) {
     const canonicalQuestionId = requiredText(finalRow, '学習ID');
@@ -206,12 +208,17 @@ export async function reconstructLegacy709SourceLineage(input: {
     const sourceQuestionNo = positiveInteger(baselineRow, '元問題No./予想No.', sourceQuestionId, issues);
     if (!sourceQuestionNo) continue;
     const locator = locators.get(sourceQuestionId);
+    if (sourceDefinition.requirePageLocator) {
+      pageLocatorRequiredCount += 1;
+      if (locator?.question_page && locator.answer_page) {
+        pageLocatorCompleteCount += 1;
+      } else {
+        issues.push(`${sourceQuestionId}: 問題PDF/解答PDFのpage locatorが不足しています。`);
+      }
+    }
     if (locator && locator.source_question_no !== sourceQuestionNo) {
       issues.push(`${sourceQuestionId}: locatorのsource_question_noがbaselineと一致しません。`);
       continue;
-    }
-    if (sourceDefinition.requirePageLocator && (!locator?.question_page || !locator.answer_page)) {
-      issues.push(`${sourceQuestionId}: 問題PDF/解答PDFのpage locatorが不足しています。`);
     }
 
     const sourceExplanationRaw = optionalText(baselineRow, '全体解説/元資料解説');
@@ -284,15 +291,6 @@ export async function reconstructLegacy709SourceLineage(input: {
   const excludedBaselineQuestionIds = [...baselineBySourceId.keys()]
     .filter((sourceQuestionId) => !finalBySourceId.has(sourceQuestionId))
     .sort(compareSourceIds);
-  const pageLocatorRequiredCount = questions.filter(
-    (question) => sourceDefinitions.get(question.legacyGroup)?.requirePageLocator
-  ).length;
-  const pageLocatorCompleteCount = questions.filter(
-    (question) =>
-      sourceDefinitions.get(question.legacyGroup)?.requirePageLocator &&
-      question.sourceQuestionPage &&
-      question.sourceAnswerPage
-  ).length;
   const sourceOccurrenceIds = new Set<string>();
   for (const question of questions) {
     if (sourceOccurrenceIds.has(question.sourceOccurrenceId)) {
