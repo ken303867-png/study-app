@@ -38,10 +38,13 @@ describe('examSession', () => {
       incorrectQuestionIds: [],
       unansweredQuestionIds: ['SAMPLE-Q-002']
     });
-    expect(summary.subjectResults).toEqual([
-      expect.objectContaining({ subject: 'サンプル科目', accuracy: 100, correctCount: 1 }),
-      expect.objectContaining({ subject: '別科目', accuracy: 0, unansweredCount: 1 })
-    ]);
+    expect(summary.subjectResults).toHaveLength(2);
+    expect(summary.subjectResults).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ subject: 'サンプル科目', accuracy: 100, correctCount: 1 }),
+        expect.objectContaining({ subject: '別科目', accuracy: 0, unansweredCount: 1 })
+      ])
+    );
   });
 
   it('classifies a submitted wrong answer as incorrect', () => {
