@@ -1,0 +1,71 @@
+.pwa-controls {
+  position: fixed;
+  top: 14px;
+  right: 18px;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  max-width: calc(100vw - 36px);
+}
+
+.connection-badge,
+.installed-badge {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  padding: 5px 10px;
+  border: 1px solid #cad5df;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #17324d;
+  font-size: .76rem;
+  font-weight: 800;
+  box-shadow: 0 3px 12px rgba(23, 50, 77, .08);
+}
+
+.connection-badge::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  margin-right: 6px;
+  border-radius: 50%;
+  background: #2f855a;
+}
+
+.connection-badge.offline {
+  border-color: #d1a6a6;
+  background: #fff7f7;
+  color: #8b3434;
+}
+
+.connection-badge.offline::before {
+  background: #c53030;
+}
+
+.install-button {
+  min-height: 34px;
+  padding: 7px 12px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.installed-badge {
+  color: #3f5f78;
+}
+
+@media (max-width: 680px) {
+  .pwa-controls {
+    position: static;
+    justify-content: flex-end;
+    width: min(100%, 1180px);
+    margin: 8px auto -4px;
+    padding: 0 14px;
+  }
+
+  .connection-badge,
+  .installed-badge,
+  .install-button {
+    font-size: .72rem;
+  }
+}
