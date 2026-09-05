@@ -33,6 +33,7 @@ const question: Question = {
         reason: 'この選択肢は本問の判断条件と一致しない。',
         correction_condition: 'この選択肢は下記の内容に修正すると成立する。',
         corrected_statement: '三叉神経は舌前2/3の一般体性感覚を担う。',
+        differential_notes: '共通鑑別ポイント。',
         mapping_provenance: 'source_structured'
       },
       {
@@ -41,6 +42,7 @@ const question: Question = {
         judgement: 'incorrect',
         reason: 'この選択肢は別の神経支配を示す。',
         correction_condition: '舌咽神経は舌後1/3の味覚に関与する。',
+        differential_notes: '共通鑑別ポイント。',
         mapping_provenance: 'source_structured'
       },
       {
@@ -49,9 +51,11 @@ const question: Question = {
         judgement: 'incorrect',
         reason: 'この選択肢は本問の所見を説明しない。',
         correction_condition: '迷走神経は咽喉頭の感覚・運動に重要である。',
+        differential_notes: '共通鑑別ポイント。',
         mapping_provenance: 'source_structured'
       }
     ],
+    surrounding_knowledge: '【鑑別・間違えやすいポイント】\n共通鑑別ポイント。',
     key_points: '表示QA',
     references: '表示QA用根拠'
   },
@@ -87,5 +91,13 @@ describe('FormalExplanationView choice explanation roles', () => {
     expect(
       within(wrongCards[1]!).getByText('舌咽神経は舌後1/3の味覚に関与する。')
     ).toBeInTheDocument();
+  });
+
+  it('does not repeat per-choice differential notes and keeps the shared differential point once below', () => {
+    render(<FormalExplanationView question={question} media={[]} />);
+
+    expect(screen.queryByText('鑑別・混同しやすい点')).not.toBeInTheDocument();
+    expect(screen.getAllByText(/共通鑑別ポイント。/)).toHaveLength(1);
+    expect(screen.getByText('関連する周辺知識')).toBeInTheDocument();
   });
 });
