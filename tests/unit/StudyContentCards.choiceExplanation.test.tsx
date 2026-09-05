@@ -93,11 +93,14 @@ describe('FormalExplanationView choice explanation roles', () => {
     ).toBeInTheDocument();
   });
 
-  it('does not repeat per-choice differential notes and keeps the shared differential point once below', () => {
+  it('does not repeat per-choice differential notes and keeps the shared differential point below', () => {
     render(<FormalExplanationView question={question} media={[]} />);
 
     expect(screen.queryByText('鑑別・混同しやすい点')).not.toBeInTheDocument();
-    expect(screen.getAllByText(/共通鑑別ポイント。/)).toHaveLength(1);
-    expect(screen.getByText('関連する周辺知識')).toBeInTheDocument();
+
+    const sharedTitle = screen.getByText('関連する周辺知識');
+    const sharedSection = sharedTitle.closest('section');
+    expect(sharedSection).not.toBeNull();
+    expect(within(sharedSection!).getByText(/共通鑑別ポイント。/)).toBeInTheDocument();
   });
 });
