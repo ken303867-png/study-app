@@ -255,12 +255,6 @@ export function FormalExplanationView({ question, media }: { question: Question;
                       <dd>{correctionText}</dd>
                     </div>
                   )}
-                  {choice.differential_notes && (
-                    <div>
-                      <dt>鑑別・混同しやすい点</dt>
-                      <dd>{choice.differential_notes}</dd>
-                    </div>
-                  )}
                   {choice.clinical_caution && (
                     <div>
                       <dt>臨床上の注意点</dt>
