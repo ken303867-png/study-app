@@ -232,44 +232,45 @@ export function FormalExplanationView({ question, media }: { question: Question;
       <section className="explanation-block">
         <h4>各選択肢解説</h4>
         <div className="choice-explanation-list">
-          {sortedChoiceExplanations.map((choice) => (
-            <article className="choice-explanation" key={choice.target_key}>
-              <div className="choice-explanation-heading">
-                <strong>{choice.target_key}</strong>
-                <span className={`judgement ${choice.judgement}`}>
-                  {choice.judgement === 'correct' ? '正答' : '誤答'}
-                </span>
-              </div>
-              <dl>
-                <div>
-                  <dt>正誤理由</dt>
-                  <dd>{choice.reason}</dd>
+          {sortedChoiceExplanations.map((choice) => {
+            const isCorrect = choice.judgement === 'correct';
+            const correctionText = choice.corrected_statement ?? choice.correction_condition;
+
+            return (
+              <article className="choice-explanation" key={choice.target_key}>
+                <div className="choice-explanation-heading">
+                  <strong>{choice.target_key}</strong>
+                  <span className={`judgement ${choice.judgement}`}>
+                    {isCorrect ? '正答' : '誤答'}
+                  </span>
                 </div>
-                <div>
-                  <dt>誤答選択肢が正しくなる条件</dt>
-                  <dd>{choice.correction_condition}</dd>
-                </div>
-                {choice.corrected_statement && (
+                <dl>
                   <div>
-                    <dt>正しい文への修正</dt>
-                    <dd>{choice.corrected_statement}</dd>
+                    <dt>{isCorrect ? '正答理由' : '誤答理由'}</dt>
+                    <dd>{choice.reason}</dd>
                   </div>
-                )}
-                {choice.differential_notes && (
-                  <div>
-                    <dt>鑑別・混同しやすい点</dt>
-                    <dd>{choice.differential_notes}</dd>
-                  </div>
-                )}
-                {choice.clinical_caution && (
-                  <div>
-                    <dt>臨床上の注意点</dt>
-                    <dd>{choice.clinical_caution}</dd>
-                  </div>
-                )}
-              </dl>
-            </article>
-          ))}
+                  {!isCorrect && correctionText && (
+                    <div>
+                      <dt>正しく覚えるなら</dt>
+                      <dd>{correctionText}</dd>
+                    </div>
+                  )}
+                  {choice.differential_notes && (
+                    <div>
+                      <dt>鑑別・混同しやすい点</dt>
+                      <dd>{choice.differential_notes}</dd>
+                    </div>
+                  )}
+                  {choice.clinical_caution && (
+                    <div>
+                      <dt>臨床上の注意点</dt>
+                      <dd>{choice.clinical_caution}</dd>
+                    </div>
+                  )}
+                </dl>
+              </article>
+            );
+          })}
         </div>
       </section>
       <MediaAfter placement="choice_explanations" media={media} />
