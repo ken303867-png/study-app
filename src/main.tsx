@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client';
 import App from './App';
 import { PwaControls } from './components/PwaControls';
 import './styles.css';
+import './questionPromptFormatting.css';
 import './practiceSets.css';
 import './clozeSelfAssessment.css';
 import './pwa.css';
