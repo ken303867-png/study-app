@@ -1,0 +1,4 @@
+.question-card > h3,
+.practice-question-card > h3 {
+  white-space: pre-wrap;
+}
