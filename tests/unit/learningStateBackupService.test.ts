@@ -160,7 +160,9 @@ describe('learningStateBackupService', () => {
     const invalid = JSON.parse((await createLearningStateBackup()).json) as {
       learningHistory: LearningHistory[];
     };
-    invalid.learningHistory[0].attempts = 99;
+    const firstHistory = invalid.learningHistory[0];
+    if (!firstHistory) throw new Error('Expected one learning-history fixture row');
+    firstHistory.attempts = 99;
 
     await expect(restoreLearningStateBackup(JSON.stringify(invalid))).rejects.toBeInstanceOf(
       LearningStateBackupError
