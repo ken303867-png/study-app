@@ -1,0 +1,54 @@
+.public-sync-screen {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: #f6f8fb;
+}
+
+.public-sync-card {
+  width: min(560px, 100%);
+  padding: 28px;
+  border: 1px solid #d7dee8;
+  border-radius: 18px;
+  background: #ffffff;
+  box-shadow: 0 12px 36px rgba(23, 50, 77, 0.08);
+}
+
+.public-sync-card h1 {
+  margin: 4px 0 12px;
+  font-size: clamp(1.45rem, 4vw, 2rem);
+}
+
+.public-sync-card button {
+  margin-top: 12px;
+}
+
+.public-sync-progress {
+  width: 100%;
+  height: 10px;
+  margin: 18px 0 8px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #e5eaf0;
+}
+
+.public-sync-progress span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: #17324d;
+  transition: width 160ms ease;
+}
+
+.public-sync-warning {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  padding: 10px 16px;
+  border-bottom: 1px solid #e3c46e;
+  background: #fff8dc;
+  color: #5b4700;
+  text-align: center;
+  font-size: 0.9rem;
+}
