@@ -26,9 +26,9 @@ describe('learningRepository', () => {
       questionId: 'Q-EMPTY',
       attempts: 0,
       lastResult: null,
-      favorite: false,
       needsReview: false
     });
+    expect(history).not.toHaveProperty('favorite');
     expect(await db.learningHistory.count()).toBe(0);
   });
 
@@ -49,17 +49,15 @@ describe('learningRepository', () => {
     expect(history.lastAnsweredAt).toMatch(/^\d{4}-\d{2}-\d{2}T/);
   });
 
-  it('toggles favorite and review independently', async () => {
-    expect((await learningRepository.toggleFavorite('Q-002')).favorite).toBe(true);
+  it('toggles review state independently', async () => {
     expect((await learningRepository.toggleNeedsReview('Q-002')).needsReview).toBe(true);
     const history = await learningRepository.get('Q-002');
-    expect(history.favorite).toBe(true);
     expect(history.needsReview).toBe(true);
+    expect(history).not.toHaveProperty('favorite');
   });
 
-  it('resets progress while preserving favorite and review flags', async () => {
+  it('resets progress while preserving review state', async () => {
     await learningRepository.recordResult('Q-003', 'incorrect');
-    await learningRepository.toggleFavorite('Q-003');
     const history = await learningRepository.resetProgress('Q-003');
 
     expect(history).toMatchObject({
@@ -68,15 +66,14 @@ describe('learningRepository', () => {
       incorrectCount: 0,
       uncertainCount: 0,
       lastResult: null,
-      favorite: true,
       needsReview: true
     });
+    expect(history).not.toHaveProperty('favorite');
   });
 
   it('preserves learning history when the content dataset is replaced', async () => {
     await contentRepository.replaceDataset(sampleDataset);
     await learningRepository.recordResult('SAMPLE-Q-001', 'incorrect');
-    await learningRepository.toggleFavorite('SAMPLE-Q-001');
 
     await contentRepository.replaceDataset({
       ...sampleDataset,
@@ -88,8 +85,26 @@ describe('learningRepository', () => {
       attempts: 1,
       incorrectCount: 1,
       lastResult: 'incorrect',
-      favorite: true,
       needsReview: true
     });
+    expect(history).not.toHaveProperty('favorite');
+  });
+
+  it('drops a legacy favorite property when old rows are read', async () => {
+    await db.learningHistory.put({
+      questionId: 'LEGACY-Q',
+      attempts: 0,
+      correctCount: 0,
+      incorrectCount: 0,
+      uncertainCount: 0,
+      consecutiveCorrect: 0,
+      lastResult: null,
+      lastAnsweredAt: null,
+      favorite: true,
+      needsReview: false
+    });
+
+    const history = await learningRepository.get('LEGACY-Q');
+    expect(history).not.toHaveProperty('favorite');
   });
 });
