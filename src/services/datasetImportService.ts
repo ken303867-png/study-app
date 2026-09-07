@@ -112,9 +112,9 @@ export async function importDatasetJsonText(text: string): Promise<DatasetImport
 /**
  * Public release bootstrap path.
  *
- * Validates every source payload, merges already-validated rows without reparsing the growing
- * aggregate after each supplemental, and performs exactly one IndexedDB replacement transaction.
- * The final aggregate is schema-validated by contentRepository.replaceDataset before persistence.
+ * Validates every source payload once, merges already-validated rows without reparsing the
+ * growing aggregate, performs lightweight cross-dataset integrity checks, and writes the
+ * resulting release to IndexedDB in exactly one replacement transaction.
  */
 export async function importDatasetJsonTextsAsBatch(
   texts: readonly string[]
@@ -151,7 +151,8 @@ export async function importDatasetJsonTextsAsBatch(
       merged = mergeSupplementalDatasetUnchecked(merged, item.dataset, item.supplementalKey);
     }
 
-    const persistenceAudit = await contentRepository.replaceDataset(merged, base.metadata);
+    validateMergedDatasetIntegrity(merged);
+    const persistenceAudit = await contentRepository.replaceValidatedDataset(merged, base.metadata);
     return {
       kind: base.kind,
       sourceFormat: 'json',
@@ -362,6 +363,69 @@ function mergeSupplementalDatasetUnchecked(
       ...supplemental.media
     ]
   };
+}
+
+function validateMergedDatasetIntegrity(dataset: Dataset): void {
+  const issues: string[] = [];
+  const questionIds = collectUniqueIds(dataset.questions, (row) => row.id, 'question', issues);
+  const materialIds = collectUniqueIds(dataset.materials, (row) => row.id, 'material', issues);
+  const sourceIds = collectUniqueIds(dataset.sources, (row) => row.source_id, 'source', issues);
+  collectUniqueIds(
+    dataset.sourceOccurrences,
+    (row) => row.source_occurrence_id,
+    'sourceOccurrence',
+    issues
+  );
+  collectUniqueIds(dataset.media, (row) => row.media_id, 'media', issues);
+
+  for (const occurrence of dataset.sourceOccurrences) {
+    if (!questionIds.has(occurrence.canonical_question_id)) {
+      issues.push(
+        `sourceOccurrence ${occurrence.source_occurrence_id}: canonical_question_id=${occurrence.canonical_question_id} が存在しません。`
+      );
+    }
+    if (!sourceIds.has(occurrence.source_id)) {
+      issues.push(
+        `sourceOccurrence ${occurrence.source_occurrence_id}: source_id=${occurrence.source_id} が存在しません。`
+      );
+    }
+  }
+
+  for (const question of dataset.questions) {
+    for (const materialId of question.relatedMaterialIds) {
+      if (!materialIds.has(materialId)) {
+        issues.push(`question ${question.id}: relatedMaterialId=${materialId} が存在しません。`);
+      }
+    }
+  }
+
+  for (const media of dataset.media) {
+    if (!questionIds.has(media.canonical_question_id)) {
+      issues.push(`media ${media.media_id}: canonical_question_id=${media.canonical_question_id} が存在しません。`);
+    }
+  }
+
+  if (issues.length > 0) {
+    throw new DatasetImportError(
+      '一括Importの統合整合性QAでエラーを検出したためImportを中止しました。',
+      issues.slice(0, 100)
+    );
+  }
+}
+
+function collectUniqueIds<T>(
+  rows: readonly T[],
+  keyOf: (row: T) => string,
+  label: string,
+  issues: string[]
+): Set<string> {
+  const ids = new Set<string>();
+  for (const row of rows) {
+    const id = keyOf(row);
+    if (ids.has(id)) issues.push(`${label}: ID重複 ${id}`);
+    ids.add(id);
+  }
+  return ids;
 }
 
 function parseJsonImport(text: string): NormalizedImport {
