@@ -26,14 +26,16 @@ const publicDatasetManifestSchema = z.object({
     sourceOccurrences: z.number().int().nonnegative(),
     kinds: expectedKindsSchema
   }),
-  files: z
+  bundle: z.object({
+    path: z.string().min(1),
+    compression: z.literal('gzip'),
+    sha256: z.string().regex(/^[0-9a-f]{64}$/)
+  }),
+  datasets: z
     .array(
       z.object({
         order: z.number().int().positive(),
         role: z.string().min(1),
-        chunks: z.array(z.string().min(1)).min(1),
-        compression: z.enum(['gzip', 'none']),
-        sha256: z.string().regex(/^[0-9a-f]{64}$/),
         originalSha256: z.string().regex(/^[0-9a-f]{64}$/),
         questionCount: z.number().int().nonnegative()
       })
@@ -126,51 +128,42 @@ export async function syncPublicDataset(
     return { status: 'up-to-date', releaseVersion: manifest.releaseVersion };
   }
 
-  const orderedFiles = [...manifest.files].sort((a, b) => a.order - b.order);
-  const downloaded: Array<{ file: (typeof orderedFiles)[number]; text: string }> = [];
-
-  for (const [index, file] of orderedFiles.entries()) {
-    report({
-      stage: 'downloading',
-      message: `問題データを取得しています（${index + 1}/${orderedFiles.length}）。`,
-      current: index + 1,
-      total: orderedFiles.length
-    });
-
-    const base64Parts: string[] = [];
-    for (const chunk of file.chunks) {
-      const response = await fetchImpl(`${baseUrl}public-data/${chunk}`, { cache: 'no-store' });
-      if (!response.ok) {
-        throw new Error(
-          `問題データ「${file.role}」の一部を取得できませんでした（${chunk} / HTTP ${response.status}）。`
-        );
-      }
-      base64Parts.push((await response.text()).trim());
-    }
-
-    const payload = base64ToArrayBuffer(base64Parts.join(''));
-    const compressedHash = await sha256Hex(payload);
-    if (compressedHash !== file.sha256) {
-      throw new Error(`問題データ「${file.role}」のSHA-256が一致しません。`);
-    }
-
-    const text = await decodePayload(payload, file.compression);
-    const encodedText = new TextEncoder().encode(text);
-    const originalHash = await sha256Hex(encodedText.buffer as ArrayBuffer);
-    if (originalHash !== file.originalSha256) {
-      throw new Error(`問題データ「${file.role}」の展開後SHA-256が一致しません。`);
-    }
-    downloaded.push({ file, text });
+  report({ stage: 'downloading', message: '公開問題データを取得しています。', current: 1, total: 1 });
+  const bundleResponse = await fetchImpl(`${baseUrl}public-data/${manifest.bundle.path}`, {
+    cache: 'no-store'
+  });
+  if (!bundleResponse.ok) {
+    throw new Error(`公開問題データを取得できませんでした（HTTP ${bundleResponse.status}）。`);
+  }
+  const compressed = await bundleResponse.arrayBuffer();
+  if ((await sha256Hex(compressed)) !== manifest.bundle.sha256) {
+    throw new Error('公開問題データパックのSHA-256が一致しません。');
   }
 
-  for (const [index, item] of downloaded.entries()) {
+  const packText = await decodeGzip(compressed);
+  const datasets = parseDatasetPack(packText);
+  const orderedDatasets = [...manifest.datasets].sort((a, b) => a.order - b.order);
+
+  for (const descriptor of orderedDatasets) {
+    const text = datasets.get(descriptor.role);
+    if (!text) throw new Error(`公開問題データ「${descriptor.role}」がパック内にありません。`);
+    const encoded = new TextEncoder().encode(text);
+    if ((await sha256Hex(encoded.buffer as ArrayBuffer)) !== descriptor.originalSha256) {
+      throw new Error(`公開問題データ「${descriptor.role}」のSHA-256が一致しません。`);
+    }
+  }
+  if (datasets.size !== orderedDatasets.length) {
+    throw new Error('公開問題データパックにmanifest未登録のデータが含まれています。');
+  }
+
+  for (const [index, descriptor] of orderedDatasets.entries()) {
     report({
       stage: 'importing',
-      message: `問題データを端末へ保存しています（${index + 1}/${downloaded.length}）。`,
+      message: `問題データを端末へ保存しています（${index + 1}/${orderedDatasets.length}）。`,
       current: index + 1,
-      total: downloaded.length
+      total: orderedDatasets.length
     });
-    await importDatasetJsonText(item.text);
+    await importDatasetJsonText(datasets.get(descriptor.role)!);
   }
 
   report({ stage: 'verifying', message: '保存された問題データを最終確認しています。' });
@@ -181,6 +174,20 @@ export async function syncPublicDataset(
   await db.meta.put({ key: PUBLIC_DATASET_META_KEY, value: manifest.releaseVersion });
   report({ stage: 'ready', message: '問題データの準備が完了しました。' });
   return { status: 'updated', releaseVersion: manifest.releaseVersion };
+}
+
+function parseDatasetPack(text: string): Map<string, string> {
+  const datasets = new Map<string, string>();
+  const lines = text.split('\n').filter((line) => line.length > 0);
+  for (const line of lines) {
+    const separator = line.indexOf('\t');
+    if (separator <= 0) throw new Error('公開問題データパックの形式が不正です。');
+    const role = line.slice(0, separator);
+    const jsonText = line.slice(separator + 1);
+    if (datasets.has(role)) throw new Error(`公開問題データ「${role}」が重複しています。`);
+    datasets.set(role, jsonText);
+  }
+  return datasets;
 }
 
 async function storedStateMatchesManifest(manifest: PublicDatasetManifest): Promise<boolean> {
@@ -210,22 +217,7 @@ async function hasUsableStoredContent(): Promise<boolean> {
   return questionCount > 0 && schemaMeta?.value === '0.5';
 }
 
-function base64ToArrayBuffer(base64: string): ArrayBuffer {
-  let binary: string;
-  try {
-    binary = atob(base64);
-  } catch {
-    throw new Error('公開問題データのBase64チャンクを復元できません。');
-  }
-  const bytes = new Uint8Array(binary.length);
-  for (let index = 0; index < binary.length; index += 1) {
-    bytes[index] = binary.charCodeAt(index);
-  }
-  return bytes.buffer;
-}
-
-async function decodePayload(payload: ArrayBuffer, compression: 'gzip' | 'none'): Promise<string> {
-  if (compression === 'none') return new TextDecoder().decode(payload);
+async function decodeGzip(payload: ArrayBuffer): Promise<string> {
   if (typeof DecompressionStream === 'undefined') {
     throw new Error('このブラウザはgzip展開に対応していません。最新版のブラウザを使用してください。');
   }
