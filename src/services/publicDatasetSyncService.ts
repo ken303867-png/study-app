@@ -2,7 +2,7 @@ import { z } from 'zod';
 import { db } from '../db/database';
 import { contentRepository } from '../repositories/contentRepository';
 import { importDatasetJsonText } from './datasetImportService';
-import { countQuestionKinds, QUESTION_KINDS, type QuestionKind } from '../utils/questionCategories';
+import { countQuestionKinds, QUESTION_KINDS } from '../utils/questionCategories';
 
 const PUBLIC_DATASET_META_KEY = 'publicDatasetReleaseVersion';
 const PUBLIC_DATASET_MANIFEST_PATH = 'public-data/manifest.json';
@@ -148,7 +148,7 @@ export async function syncPublicDataset(
     const text = datasets.get(descriptor.role);
     if (!text) throw new Error(`公開問題データ「${descriptor.role}」がパック内にありません。`);
     const encoded = new TextEncoder().encode(text);
-    if ((await sha256Hex(encoded.buffer as ArrayBuffer)) !== descriptor.originalSha256) {
+    if ((await sha256Hex(encoded)) !== descriptor.originalSha256) {
       throw new Error(`公開問題データ「${descriptor.role}」のSHA-256が一致しません。`);
     }
   }
@@ -163,7 +163,9 @@ export async function syncPublicDataset(
       current: index + 1,
       total: orderedDatasets.length
     });
-    await importDatasetJsonText(datasets.get(descriptor.role)!);
+    const text = datasets.get(descriptor.role);
+    if (!text) throw new Error(`公開問題データ「${descriptor.role}」がパック内にありません。`);
+    await importDatasetJsonText(text);
   }
 
   report({ stage: 'verifying', message: '保存された問題データを最終確認しています。' });
@@ -204,9 +206,7 @@ async function storedStateMatchesManifest(manifest: PublicDatasetManifest): Prom
   if (occurrences.length !== manifest.expected.sourceOccurrences) return false;
 
   const counts = countQuestionKinds(questions);
-  return QUESTION_KINDS.every(
-    (kind) => counts[kind] === manifest.expected.kinds[kind as QuestionKind]
-  );
+  return QUESTION_KINDS.every((kind) => counts[kind] === manifest.expected.kinds[kind]);
 }
 
 async function hasUsableStoredContent(): Promise<boolean> {
@@ -225,7 +225,7 @@ async function decodeGzip(payload: ArrayBuffer): Promise<string> {
   return new Response(stream).text();
 }
 
-async function sha256Hex(data: ArrayBuffer): Promise<string> {
+async function sha256Hex(data: BufferSource): Promise<string> {
   const digest = await crypto.subtle.digest('SHA-256', data);
   return [...new Uint8Array(digest)].map((value) => value.toString(16).padStart(2, '0')).join('');
 }
