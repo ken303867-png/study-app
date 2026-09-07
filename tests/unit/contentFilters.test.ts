@@ -47,7 +47,6 @@ function history(
     consecutiveCorrect: 0,
     lastResult: null,
     lastAnsweredAt: null,
-    favorite: false,
     needsReview: false,
     ...values
   };
@@ -91,7 +90,7 @@ describe('filterQuestions', () => {
     ).toEqual(['LEARN-COM-002']);
   });
 
-  it('filters every learning-state category without inventing history', () => {
+  it('filters every supported learning-state category without inventing history', () => {
     const histories = new Map<string, LearningHistory>([
       [
         'LEARN-COM-002',
@@ -100,7 +99,6 @@ describe('filterQuestions', () => {
           correctCount: 1,
           incorrectCount: 1,
           lastResult: 'incorrect',
-          favorite: true,
           needsReview: true
         })
       ]
@@ -115,7 +113,6 @@ describe('filterQuestions', () => {
     expect(ids('unanswered')).toEqual(['PRED-COM-001']);
     expect(ids('incorrect')).toEqual(['LEARN-COM-002']);
     expect(ids('review')).toEqual(['LEARN-COM-002']);
-    expect(ids('favorite')).toEqual(['LEARN-COM-002']);
     expect(ids('completed')).toEqual(['LEARN-COM-002']);
     expect(ids('correct')).toEqual([]);
     expect(ids('uncertain')).toEqual([]);
