@@ -112,9 +112,9 @@ export async function importDatasetJsonText(text: string): Promise<DatasetImport
 /**
  * Public release bootstrap path.
  *
- * Validates a Base plus its supplemental JSON payloads completely in memory and performs
- * exactly one IndexedDB replacement transaction. This prevents partial public-release state
- * and avoids rewriting the full database once per supplemental dataset.
+ * Validates every source payload, merges already-validated rows without reparsing the growing
+ * aggregate after each supplemental, and performs exactly one IndexedDB replacement transaction.
+ * The final aggregate is schema-validated by contentRepository.replaceDataset before persistence.
  */
 export async function importDatasetJsonTextsAsBatch(
   texts: readonly string[]
@@ -148,7 +148,7 @@ export async function importDatasetJsonTextsAsBatch(
       }
       seenSupplementalKeys.add(item.supplementalKey);
       validateSupplementalDataset(item.dataset, item.supplementalKey);
-      merged = mergeSupplementalDataset(merged, item.dataset, item.supplementalKey);
+      merged = mergeSupplementalDatasetUnchecked(merged, item.dataset, item.supplementalKey);
     }
 
     const persistenceAudit = await contentRepository.replaceDataset(merged, base.metadata);
@@ -315,6 +315,16 @@ function mergeSupplementalDataset(
   supplemental: Dataset,
   supplementalKey: string
 ): Dataset {
+  return datasetSchema.parse(
+    mergeSupplementalDatasetUnchecked(current, supplemental, supplementalKey)
+  );
+}
+
+function mergeSupplementalDatasetUnchecked(
+  current: Dataset,
+  supplemental: Dataset,
+  supplementalKey: string
+): Dataset {
   const supplementalTag = `supplemental:${supplementalKey}`;
   const replacedQuestionIds = new Set(
     current.questions
@@ -327,7 +337,7 @@ function mergeSupplementalDataset(
       .map((source) => source.source_id)
   );
 
-  return datasetSchema.parse({
+  return {
     datasetVersion: current.datasetVersion,
     schemaVersion: '0.5',
     questions: [
@@ -351,7 +361,7 @@ function mergeSupplementalDataset(
       ...current.media.filter((media) => !replacedQuestionIds.has(media.canonical_question_id)),
       ...supplemental.media
     ]
-  });
+  };
 }
 
 function parseJsonImport(text: string): NormalizedImport {
