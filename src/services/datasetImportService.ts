@@ -112,9 +112,10 @@ export async function importDatasetJsonText(text: string): Promise<DatasetImport
 /**
  * Public release bootstrap path.
  *
- * Validates every source payload once, merges already-validated rows without reparsing the
- * growing aggregate, performs lightweight cross-dataset integrity checks, and writes the
- * resulting release to IndexedDB in exactly one replacement transaction.
+ * The caller verifies the gzip and per-dataset SHA-256 values before invoking this function.
+ * The Base is fully parsed through the normal schema/conversion path. Supplemental rows are then
+ * decoded through a lightweight verified-payload path, checked for release tags and cross-dataset
+ * integrity, and persisted in one transaction. Manual file imports continue to use full Zod QA.
  */
 export async function importDatasetJsonTextsAsBatch(
   texts: readonly string[]
@@ -124,9 +125,8 @@ export async function importDatasetJsonTextsAsBatch(
   }
 
   try {
-    const normalizedItems = texts.map((text) => parseJsonImport(text));
-    const base = normalizedItems[0];
-    if (!base || base.kind === 'supplemental-delivery') {
+    const base = parseJsonImport(texts[0]);
+    if (base.kind === 'supplemental-delivery') {
       throw new DatasetImportError(
         '一括Importの先頭にはCanonical Masterまたは通常DeliveryのBaseが必要です。'
       );
@@ -135,11 +135,10 @@ export async function importDatasetJsonTextsAsBatch(
     let merged = base.dataset;
     const seenSupplementalKeys = new Set<string>();
 
-    for (const item of normalizedItems.slice(1)) {
-      if (item.kind !== 'supplemental-delivery' || !item.supplementalKey) {
-        throw new DatasetImportError(
-          '一括ImportではBaseの後にsupplemental-replace JSONだけを指定してください。'
-        );
+    for (const text of texts.slice(1)) {
+      const item = parseVerifiedSupplementalJsonImport(text);
+      if (!item.supplementalKey) {
+        throw new DatasetImportError('追加DeliveryにはsupplementalKeyが必要です。');
       }
       if (seenSupplementalKeys.has(item.supplementalKey)) {
         throw new DatasetImportError(
@@ -426,6 +425,56 @@ function collectUniqueIds<T>(
     ids.add(id);
   }
   return ids;
+}
+
+function parseVerifiedSupplementalJsonImport(text: string): NormalizedImport {
+  let raw: unknown;
+  try {
+    raw = JSON.parse(text) as unknown;
+  } catch {
+    throw new DatasetImportError('JSONとして読み込めません。ファイル形式を確認してください。');
+  }
+  if (!isRecord(raw)) {
+    throw new DatasetImportError('追加Delivery JSONのルートはobjectである必要があります。');
+  }
+  if (raw.importMode !== 'supplemental-replace' || raw.schemaVersion !== '0.5') {
+    throw new DatasetImportError('SHA検証済み追加データをsupplemental-replace / Schema 0.5として識別できません。');
+  }
+
+  const supplementalKey = typeof raw.supplementalKey === 'string' ? raw.supplementalKey.trim() : '';
+  const datasetVersion = typeof raw.datasetVersion === 'string' ? raw.datasetVersion : '';
+  if (!supplementalKey || !datasetVersion) {
+    throw new DatasetImportError('SHA検証済み追加データのsupplementalKeyまたはdatasetVersionが不正です。');
+  }
+  if (
+    !Array.isArray(raw.questions) ||
+    !Array.isArray(raw.materials) ||
+    !Array.isArray(raw.sources) ||
+    !Array.isArray(raw.sourceOccurrences) ||
+    ('media' in raw && !Array.isArray(raw.media))
+  ) {
+    throw new DatasetImportError('SHA検証済み追加データの配列構造が不正です。');
+  }
+
+  const dataset: Dataset = {
+    datasetVersion,
+    schemaVersion: '0.5',
+    questions: raw.questions as Dataset['questions'],
+    materials: raw.materials as Dataset['materials'],
+    sources: raw.sources as Dataset['sources'],
+    sourceOccurrences: raw.sourceOccurrences as Dataset['sourceOccurrences'],
+    media: (raw.media ?? []) as Dataset['media']
+  };
+
+  return {
+    dataset,
+    kind: 'supplemental-delivery',
+    supplementalKey,
+    metadata: {
+      explanationTemplateVersion: '1.0',
+      formalDataSpecVersion: '1.1'
+    }
+  };
 }
 
 function parseJsonImport(text: string): NormalizedImport {
