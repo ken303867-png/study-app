@@ -1,0 +1,41 @@
+name: Bump v0.20 release candidate
+
+on:
+  push:
+    branches:
+      - feature/v0.20-weakness-priority-review
+
+permissions:
+  contents: write
+
+jobs:
+  bump:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feature/v0.20-weakness-priority-review
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+      - name: Bump version once
+        shell: bash
+        run: |
+          if grep -q "const APP_VERSION = '0.20.0';" src/App.tsx; then
+            echo "v0.20.0 already applied; no commit needed."
+            exit 0
+          fi
+          sed -i "s/const APP_VERSION = '0.19.0';/const APP_VERSION = '0.20.0';/" src/App.tsx
+          npm version 0.20.0 --no-git-tag-version
+          grep -rl --include='*.ts' --include='*.tsx' '0\.19\.0' tests | xargs -r sed -i 's/0\.19\.0/0.20.0/g'
+          git diff --check
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/App.tsx package.json package-lock.json tests
+          if git diff --cached --quiet; then
+            echo "No version changes to commit."
+            exit 0
+          fi
+          git commit -m "chore: bump app version to v0.20.0"
+          git push origin HEAD:feature/v0.20-weakness-priority-review
