@@ -2,7 +2,8 @@ import { useEffect, useState, type ReactNode } from 'react';
 import {
   shouldAutoSyncPublicDataset,
   syncPublicDatasetOnce,
-  type PublicDatasetSyncProgress
+  type PublicDatasetSyncProgress,
+  type PublicDatasetSyncStage
 } from '../services/publicDatasetSyncService';
 
 interface GateState {
@@ -16,6 +17,16 @@ const INITIAL_PROGRESS: PublicDatasetSyncProgress = {
   stage: 'checking',
   message: '公開問題データの最新版を確認しています。'
 };
+
+const PREPARATION_STAGES: Array<{
+  stage: Exclude<PublicDatasetSyncStage, 'ready'>;
+  label: string;
+}> = [
+  { stage: 'checking', label: '最新版を確認' },
+  { stage: 'downloading', label: '問題データを取得' },
+  { stage: 'importing', label: '端末へ保存' },
+  { stage: 'verifying', label: '最終確認' }
+];
 
 export function PublicDatasetGate({ children }: { children: ReactNode }) {
   const autoSync = shouldAutoSyncPublicDataset(window.location);
@@ -91,9 +102,11 @@ export function PublicDatasetGate({ children }: { children: ReactNode }) {
     );
   }
 
-  const percent = state.progress.total && state.progress.current
-    ? Math.round((state.progress.current / state.progress.total) * 100)
-    : null;
+  const currentStageIndex = Math.max(
+    0,
+    PREPARATION_STAGES.findIndex((item) => item.stage === state.progress.stage)
+  );
+  const percent = Math.round(((currentStageIndex + 1) / PREPARATION_STAGES.length) * 100);
 
   return (
     <main className="public-sync-screen" aria-label="問題データ準備中">
@@ -101,14 +114,20 @@ export function PublicDatasetGate({ children }: { children: ReactNode }) {
         <p className="eyebrow">Study App</p>
         <h1>問題データを準備しています</h1>
         <p>{state.progress.message}</p>
-        {percent !== null && (
-          <>
-            <div className="public-sync-progress" aria-label={`進捗 ${percent}%`}>
-              <span style={{ width: `${percent}%` }} />
-            </div>
-            <strong>{percent}%</strong>
-          </>
-        )}
+        <div className="public-sync-progress" aria-label={`準備ステップ ${currentStageIndex + 1} / ${PREPARATION_STAGES.length}`}>
+          <span style={{ width: `${percent}%` }} />
+        </div>
+        <strong>ステップ {currentStageIndex + 1} / {PREPARATION_STAGES.length}</strong>
+        <ol className="public-sync-steps" aria-label="問題データ準備手順">
+          {PREPARATION_STAGES.map((item, index) => (
+            <li
+              key={item.stage}
+              className={index < currentStageIndex ? 'done' : index === currentStageIndex ? 'current' : ''}
+            >
+              {item.label}
+            </li>
+          ))}
+        </ol>
         <p className="muted">初回のみ自動取得します。2回目以降は端末に保存したデータを使用します。</p>
       </section>
     </main>
