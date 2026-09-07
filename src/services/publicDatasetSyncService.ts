@@ -31,7 +31,7 @@ const publicDatasetManifestSchema = z.object({
       z.object({
         order: z.number().int().positive(),
         role: z.string().min(1),
-        path: z.string().min(1),
+        chunks: z.array(z.string().min(1)).min(1),
         compression: z.enum(['gzip', 'none']),
         sha256: z.string().regex(/^[0-9a-f]{64}$/),
         originalSha256: z.string().regex(/^[0-9a-f]{64}$/),
@@ -103,9 +103,7 @@ export async function syncPublicDataset(
     const response = await fetchImpl(`${baseUrl}${PUBLIC_DATASET_MANIFEST_PATH}`, {
       cache: 'no-store'
     });
-    if (!response.ok) {
-      throw new Error(`manifest HTTP ${response.status}`);
-    }
+    if (!response.ok) throw new Error(`manifest HTTP ${response.status}`);
     manifest = publicDatasetManifestSchema.parse(await response.json());
   } catch (error) {
     if (await hasUsableStoredContent()) {
@@ -138,17 +136,27 @@ export async function syncPublicDataset(
       current: index + 1,
       total: orderedFiles.length
     });
-    const response = await fetchImpl(`${baseUrl}public-data/${file.path}`, { cache: 'no-store' });
-    if (!response.ok) {
-      throw new Error(`問題データ「${file.role}」を取得できませんでした（HTTP ${response.status}）。`);
+
+    const base64Parts: string[] = [];
+    for (const chunk of file.chunks) {
+      const response = await fetchImpl(`${baseUrl}public-data/${chunk}`, { cache: 'no-store' });
+      if (!response.ok) {
+        throw new Error(
+          `問題データ「${file.role}」の一部を取得できませんでした（${chunk} / HTTP ${response.status}）。`
+        );
+      }
+      base64Parts.push((await response.text()).trim());
     }
-    const payload = await response.arrayBuffer();
+
+    const payload = base64ToArrayBuffer(base64Parts.join(''));
     const compressedHash = await sha256Hex(payload);
     if (compressedHash !== file.sha256) {
       throw new Error(`問題データ「${file.role}」のSHA-256が一致しません。`);
     }
+
     const text = await decodePayload(payload, file.compression);
-    const originalHash = await sha256Hex(new TextEncoder().encode(text));
+    const encodedText = new TextEncoder().encode(text);
+    const originalHash = await sha256Hex(encodedText.buffer as ArrayBuffer);
     if (originalHash !== file.originalSha256) {
       throw new Error(`問題データ「${file.role}」の展開後SHA-256が一致しません。`);
     }
@@ -202,6 +210,20 @@ async function hasUsableStoredContent(): Promise<boolean> {
   return questionCount > 0 && schemaMeta?.value === '0.5';
 }
 
+function base64ToArrayBuffer(base64: string): ArrayBuffer {
+  let binary: string;
+  try {
+    binary = atob(base64);
+  } catch {
+    throw new Error('公開問題データのBase64チャンクを復元できません。');
+  }
+  const bytes = new Uint8Array(binary.length);
+  for (let index = 0; index < binary.length; index += 1) {
+    bytes[index] = binary.charCodeAt(index);
+  }
+  return bytes.buffer;
+}
+
 async function decodePayload(payload: ArrayBuffer, compression: 'gzip' | 'none'): Promise<string> {
   if (compression === 'none') return new TextDecoder().decode(payload);
   if (typeof DecompressionStream === 'undefined') {
@@ -211,11 +233,8 @@ async function decodePayload(payload: ArrayBuffer, compression: 'gzip' | 'none')
   return new Response(stream).text();
 }
 
-async function sha256Hex(data: ArrayBuffer | ArrayBufferView): Promise<string> {
-  const bytes = data instanceof ArrayBuffer
-    ? data
-    : data.buffer.slice(data.byteOffset, data.byteOffset + data.byteLength);
-  const digest = await crypto.subtle.digest('SHA-256', bytes);
+async function sha256Hex(data: ArrayBuffer): Promise<string> {
+  const digest = await crypto.subtle.digest('SHA-256', data);
   return [...new Uint8Array(digest)].map((value) => value.toString(16).padStart(2, '0')).join('');
 }
 
