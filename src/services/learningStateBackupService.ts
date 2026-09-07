@@ -1,6 +1,5 @@
 import { z } from 'zod';
 import { db } from '../db/database';
-import type { ExamSession, LearningHistory, MaterialHistory } from '../types/domain';
 
 export const LEARNING_STATE_BACKUP_FORMAT = 'study-app-learning-state-backup';
 export const LEARNING_STATE_BACKUP_VERSION = 1;
@@ -285,9 +284,9 @@ export async function restoreLearningStateBackup(jsonText: string): Promise<Lear
       db.materialHistory.clear(),
       db.examSessions.clear()
     ]);
-    if (learningHistory.length > 0) await db.learningHistory.bulkPut(learningHistory as LearningHistory[]);
-    if (materialHistory.length > 0) await db.materialHistory.bulkPut(materialHistory as MaterialHistory[]);
-    if (examSessions.length > 0) await db.examSessions.bulkPut(examSessions as ExamSession[]);
+    if (learningHistory.length > 0) await db.learningHistory.bulkPut(learningHistory);
+    if (materialHistory.length > 0) await db.materialHistory.bulkPut(materialHistory);
+    if (examSessions.length > 0) await db.examSessions.bulkPut(examSessions);
   });
 
   return {
