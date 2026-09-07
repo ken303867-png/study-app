@@ -47,7 +47,7 @@ import {
 } from './utils/progressiveRendering';
 import './dashboard.css';
 
-const APP_VERSION = '0.16.0';
+const APP_VERSION = '0.17.0';
 const QUESTION_RENDER_BATCH = 30;
 const MATERIAL_RENDER_BATCH = 20;
 const FORMAL_QUESTION_TARGET = 726;
@@ -394,7 +394,7 @@ export default function App() {
           <h1>学習アプリ v{APP_VERSION}</h1>
           <p className="muted">Delivery Schema 0.5 / Offline PWA</p>
         </div>
-        <span className="status-badge">LOCAL ONLY</span>
+        <span className="status-badge">PUBLIC DATA / LOCAL HISTORY</span>
       </header>
 
       <nav className="top-nav" aria-label="メインナビゲーション">
@@ -695,8 +695,8 @@ export default function App() {
               </div>
             </div>
             <article className="panel warning-panel">
-              <h3>正式問題データはGitHubに保存しません</h3>
-              <p>正本Excel・Canonical Master JSON・正式Delivery JSONはローカルデータ領域で管理します。</p>
+              <h3>公開問題データはURLから自動取得します</h3>
+              <p>公開用DatasetはGitHub Pagesから取得してIndexedDBへ保存します。学習履歴・試験履歴・お気に入り・要復習状態はこの端末だけに保存されます。</p>
             </article>
             {schemaVersion !== '未登録' && schemaVersion !== '0.5' && (
               <article className="panel warning-panel" role="alert">
@@ -755,9 +755,9 @@ export default function App() {
               </p>
             </article>
             <article className="panel">
-              <h3>正式データImport</h3>
+              <h3>管理者用データImport</h3>
               <p>
-                Excel正本（.xlsx）、Canonical Master JSON Export、またはDelivery Schema 0.5 JSONを選択します。Excel正本はCanonical QAとDelivery QAを連続実行し、全検証PASS後のみIndexedDBへ保存します。学習履歴・試験履歴は教材データとは独立して保持されます。
+                通常利用者はImport不要です。管理・復旧時のみExcel正本（.xlsx）、Canonical Master JSON Export、またはDelivery Schema 0.5 JSONを選択します。Excel正本はCanonical QAとDelivery QAを連続実行し、全検証PASS後のみIndexedDBへ保存します。学習履歴・試験履歴は教材データとは独立して保持されます。
               </p>
               <label className="file-import">
                 <span>{importing ? '検証・変換中' : 'Excel / JSONファイルを選択'}</span>
@@ -797,7 +797,7 @@ export default function App() {
       </main>
 
       <footer>
-        App v{APP_VERSION} / Schema 0.5 / Formal Data Spec 1.2 compatible / Cloud disabled
+        App v{APP_VERSION} / Schema 0.5 / Formal Data Spec 1.2 compatible / Public Dataset / Local Learning State
       </footer>
     </div>
   );
