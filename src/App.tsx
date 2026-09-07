@@ -690,7 +690,7 @@ export default function App() {
             </div>
             <article className="panel warning-panel">
               <h3>公開問題データはURLから自動取得します</h3>
-              <p>公開用DatasetはGitHub Pagesから取得してIndexedDBへ保存します。学習履歴・試験履歴・お気に入り・要復習状態はこの端末だけに保存されます。</p>
+              <p>公開用DatasetはGitHub Pagesから取得してIndexedDBへ保存します。学習履歴・試験履歴・要復習状態はこの端末だけに保存されます。</p>
             </article>
             {schemaVersion !== '未登録' && schemaVersion !== '0.5' && (
               <article className="panel warning-panel" role="alert">
