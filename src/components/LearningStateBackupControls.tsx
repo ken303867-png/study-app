@@ -9,7 +9,7 @@ const MAX_BACKUP_FILE_BYTES = 5 * 1024 * 1024;
 const RESTORE_NOTICE_KEY = 'studyAppLearningStateRestoreNotice';
 
 export function LearningStateBackupControls() {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(() => Boolean(sessionStorage.getItem(RESTORE_NOTICE_KEY)));
   const [busy, setBusy] = useState(false);
   const [status, setStatus] = useState(() => {
     const notice = sessionStorage.getItem(RESTORE_NOTICE_KEY) ?? '';
