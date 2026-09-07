@@ -33,7 +33,10 @@ test('runs the Phase 8 cross-feature learning flow without losing local history'
   const dashboard = page.getByRole('region', { name: '学習ダッシュボード' });
   await expect(dashboard.locator('.dashboard-metric').filter({ hasText: '総回答' })).toContainText('1回');
   await expect(dashboard.locator('.dashboard-metric').filter({ hasText: '要復習' })).toContainText('1問');
-  await expect(dashboard.locator('.dashboard-attention-list')).toContainText('不正解');
+  const recentPanel = dashboard
+    .locator('.panel')
+    .filter({ has: page.getByRole('heading', { name: '直近の要注意問題' }) });
+  await expect(recentPanel.locator('.dashboard-attention-list')).toContainText('不正解');
 
   const subjectPriority = dashboard
     .locator('.dashboard-priority-panel')
