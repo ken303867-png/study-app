@@ -14,6 +14,7 @@ import {
   canonicalMasterExportSchema,
   type CanonicalMasterExportInput
 } from '../schemas/masterDataSchemas';
+import { validateSpecialtySupplementalImport } from './specialtySupplementalImportPolicy';
 
 export type ImportKind = 'canonical-master' | 'delivery' | 'supplemental-delivery';
 export type ImportSourceFormat = 'json' | 'xlsx';
@@ -165,6 +166,14 @@ async function persistSupplementalDataset(
     );
   }
 
+  const specialtyImportIssues = validateSpecialtySupplementalImport(dataset, supplementalKey);
+  if (specialtyImportIssues.length > 0) {
+    throw new DatasetImportError(
+      '専門科目追加データの分類QAでエラーを検出したためImportを中止しました。',
+      specialtyImportIssues
+    );
+  }
+
   const [
     currentQuestions,
     currentMaterials,
@@ -282,9 +291,7 @@ function normalizeImport(raw: unknown): {
       const supplementalKey =
         typeof raw.supplementalKey === 'string' ? raw.supplementalKey.trim() : '';
       if (!supplementalKey) {
-        throw new DatasetImportError(
-          '追加DeliveryにはsupplementalKeyが必要です。'
-        );
+        throw new DatasetImportError('追加DeliveryにはsupplementalKeyが必要です。');
       }
       return {
         dataset,
