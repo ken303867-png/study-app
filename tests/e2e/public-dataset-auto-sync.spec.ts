@@ -140,10 +140,15 @@ test('downloads the public dataset once and reuses IndexedDB after reload', asyn
   });
   await page.route('**/public-data/qa-public.pack.gz', async (route) => {
     bundleRequests += 1;
+    await new Promise((resolve) => setTimeout(resolve, 600));
     await route.fulfill({ status: 200, contentType: 'application/gzip', body: compressed });
   });
 
   await page.goto('/?publicSync=1');
+  await expect(page.getByRole('heading', { name: '問題データを準備しています' })).toBeVisible();
+  await expect(page.getByText('ステップ 2 / 4')).toBeVisible({ timeout: 5_000 });
+  await expect(page.getByText('問題データを取得')).toBeVisible();
+
   await expect(page.getByRole('heading', { name: '学習アプリ v0.17.0' })).toBeVisible();
   await expect(page.getByText('QA-PUBLIC-JNA-001')).toHaveCount(0);
   await page.getByRole('button', { name: '問題', exact: true }).click();
