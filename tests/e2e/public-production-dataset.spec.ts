@@ -1,14 +1,32 @@
 import { expect, test } from '@playwright/test';
 
+test.describe.configure({ retries: 0 });
+
 test('fresh public URL bootstraps the real 3,154-question production dataset', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== 'chromium', 'Full production bootstrap is covered once on desktop Chromium.');
   test.setTimeout(120_000);
 
+  page.on('console', (message) => {
+    if (message.type() === 'error' || message.type() === 'warning') {
+      console.log(`[browser:${message.type()}] ${message.text()}`);
+    }
+  });
+  page.on('pageerror', (error) => {
+    console.log(`[browser:pageerror] ${error.message}`);
+  });
+
   await page.goto('/?publicSync=1');
 
-  await expect(page.getByRole('heading', { name: '学習アプリ v0.17.0' })).toBeVisible({
-    timeout: 120_000
-  });
+  const appHeading = page.getByRole('heading', { name: '学習アプリ v0.17.0' });
+  const errorHeading = page.getByRole('heading', { name: '問題データを準備できませんでした' });
+
+  await expect(appHeading.or(errorHeading)).toBeVisible({ timeout: 120_000 });
+  if (await errorHeading.isVisible()) {
+    const errorText = (await page.locator('main[aria-label="問題データ準備エラー"]').innerText()).trim();
+    throw new Error(`Public dataset bootstrap entered the error screen:\n${errorText}`);
+  }
+
+  await expect(appHeading).toBeVisible();
   await expect(page.getByText('PUBLIC DATA / LOCAL HISTORY')).toBeVisible();
 
   const homeMetrics = page.locator('.hero-card .metric-grid');
