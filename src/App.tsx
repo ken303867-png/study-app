@@ -53,8 +53,14 @@ const MATERIAL_RENDER_BATCH = 20;
 const FORMAL_QUESTION_TARGET = 726;
 const MATERIAL_TARGET = 114;
 const COMMON_CLOZE_TARGET = 1917;
+const SPECIALTY_PAST_TARGET = 126;
+const SPECIALTY_PREDICTED_TARGET = 116;
+const SPECIALTY_PREDICTED_CASE_TARGET = 269;
 const SUPPLEMENTAL_TAG_PREFIX = 'supplemental:';
 const COMMON_CLOZE_TAG = 'supplemental:common-cloze';
+const SPECIALTY_PAST_TAG = 'supplemental:specialty-past';
+const SPECIALTY_PREDICTED_TAG = 'supplemental:specialty-predicted';
+const SPECIALTY_PREDICTED_CASE_TAG = 'supplemental:specialty-predicted-case';
 
 type View =
   | 'home'
@@ -162,12 +168,28 @@ export default function App() {
     () => questions.filter((question) => question.tags.includes(COMMON_CLOZE_TAG)).length,
     [questions]
   );
+  const specialtyPastQuestionCount = useMemo(
+    () => questions.filter((question) => question.tags.includes(SPECIALTY_PAST_TAG)).length,
+    [questions]
+  );
+  const specialtyPredictedQuestionCount = useMemo(
+    () => questions.filter((question) => question.tags.includes(SPECIALTY_PREDICTED_TAG)).length,
+    [questions]
+  );
+  const specialtyPredictedCaseQuestionCount = useMemo(
+    () => questions.filter((question) => question.tags.includes(SPECIALTY_PREDICTED_CASE_TAG)).length,
+    [questions]
+  );
   const formalQuestionCount = questions.length - supplementalQuestionCount;
   const formalBaseReady =
     datasetVersion.startsWith('common-726-') &&
     formalQuestionCount === FORMAL_QUESTION_TARGET &&
     materials.length === MATERIAL_TARGET;
   const commonClozeReady = commonClozeQuestionCount === COMMON_CLOZE_TARGET;
+  const specialtyPastReady = specialtyPastQuestionCount === SPECIALTY_PAST_TARGET;
+  const specialtyPredictedReady = specialtyPredictedQuestionCount === SPECIALTY_PREDICTED_TARGET;
+  const specialtyPredictedCaseReady =
+    specialtyPredictedCaseQuestionCount === SPECIALTY_PREDICTED_CASE_TARGET;
 
   const refresh = async () => {
     const [q, m, mediaRecords, occurrences, histories, datasetMeta, schemaMeta] = await Promise.all([
@@ -697,6 +719,18 @@ export default function App() {
                   <span>共通穴抜き</span>
                 </div>
                 <div>
+                  <strong>{specialtyPastQuestionCount}</strong>
+                  <span>専門過去問</span>
+                </div>
+                <div>
+                  <strong>{specialtyPredictedQuestionCount}</strong>
+                  <span>専門予想問題</span>
+                </div>
+                <div>
+                  <strong>{specialtyPredictedCaseQuestionCount}</strong>
+                  <span>専門予想事例</span>
+                </div>
+                <div>
                   <strong>{questions.length}</strong>
                   <span>全問題</span>
                 </div>
@@ -708,13 +742,16 @@ export default function App() {
               <p className="muted">
                 正式Base: {formalBaseReady ? 'OK' : `要確認（目標 ${FORMAL_QUESTION_TARGET}問・${MATERIAL_TARGET}資料）`} / 共通穴抜き: {commonClozeReady ? 'OK' : `未完了（目標 ${COMMON_CLOZE_TARGET}問）`}
               </p>
+              <p className="muted">
+                専門過去問: {specialtyPastReady ? 'OK' : `未完了（目標 ${SPECIALTY_PAST_TARGET}問）`} / 専門予想問題: {specialtyPredictedReady ? 'OK' : `未完了（目標 ${SPECIALTY_PREDICTED_TARGET}問）`} / 専門予想事例: {specialtyPredictedCaseReady ? 'OK' : `未完了（目標 ${SPECIALTY_PREDICTED_CASE_TARGET}問）`}
+              </p>
               <p className="muted">Dataset: {datasetVersion} / Schema {schemaVersion}</p>
             </article>
             <article className="panel">
               <h3>Import順序</h3>
               <p>
-                1. 正式BaseのCanonical Masterを先に読み込み、2. その後に共通穴抜きのsupplemental JSONを読み込みます。
-                Canonical Masterを再投入するとBase Datasetが置換されるため、穴抜きデータを先に入れていた場合は最後にsupplemental JSONを再Importしてください。
+                1. 正式BaseのCanonical Master、2. 共通穴抜き、3. 専門過去問、4. 専門予想問題、5. 専門予想事例問題の順でsupplemental JSONを読み込みます。
+                Canonical Masterを再投入するとBase Datasetが置換されるため、その場合は共通穴抜きと専門3分類のsupplemental JSONをすべて再Importしてください。
               </p>
             </article>
             <article className="panel">
