@@ -1,5 +1,5 @@
 import { db } from '../db/database';
-import { datasetSchema, type DatasetInput } from '../schemas/contentSchemas';
+import { datasetSchema, type Dataset, type DatasetInput } from '../schemas/contentSchemas';
 import type {
   Material,
   MediaBlobRecord,
@@ -24,6 +24,10 @@ export interface ContentRepository {
   putMediaBlob(record: MediaBlobRecord): Promise<void>;
   replaceDataset(
     input: DatasetInput,
+    metadata?: Partial<DatasetPersistenceMetadata>
+  ): Promise<DatasetPersistenceAudit>;
+  replaceValidatedDataset(
+    dataset: Dataset,
     metadata?: Partial<DatasetPersistenceMetadata>
   ): Promise<DatasetPersistenceAudit>;
 }
@@ -63,7 +67,13 @@ export class DexieContentRepository implements ContentRepository {
     input: DatasetInput,
     metadata: Partial<DatasetPersistenceMetadata> = {}
   ): Promise<DatasetPersistenceAudit> {
-    const dataset = datasetSchema.parse(input);
+    return this.replaceValidatedDataset(datasetSchema.parse(input), metadata);
+  }
+
+  async replaceValidatedDataset(
+    dataset: Dataset,
+    metadata: Partial<DatasetPersistenceMetadata> = {}
+  ): Promise<DatasetPersistenceAudit> {
     const expectedMetadata: DatasetPersistenceMetadata = {
       explanationTemplateVersion: metadata.explanationTemplateVersion ?? '1.0',
       formalDataSpecVersion: metadata.formalDataSpecVersion ?? '1.1'
