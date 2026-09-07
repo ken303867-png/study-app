@@ -1,0 +1,99 @@
+{
+  "schemaVersion": 1,
+  "releaseVersion": "2026-09-07.1",
+  "appMinVersion": "0.17.0",
+  "expected": {
+    "questionsTotal": 3154,
+    "materials": 114,
+    "sourceOccurrences": 3154,
+    "kinds": {
+      "common-jna": 536,
+      "common-cloze": 1917,
+      "common-predicted": 190,
+      "specialty-past": 126,
+      "specialty-predicted": 116,
+      "specialty-predicted-case": 269
+    }
+  },
+  "files": [
+    {
+      "order": 1,
+      "role": "common-base",
+      "chunks": [
+        "common-base.part-01-of-17.b64",
+        "common-base.part-02-of-17.b64",
+        "common-base.part-03-of-17.b64",
+        "common-base.part-04-of-17.b64",
+        "common-base.part-05-of-17.b64",
+        "common-base.part-06-of-17.b64",
+        "common-base.part-07-of-17.b64",
+        "common-base.part-08-of-17.b64",
+        "common-base.part-09-of-17.b64",
+        "common-base.part-10-of-17.b64",
+        "common-base.part-11-of-17.b64",
+        "common-base.part-12-of-17.b64",
+        "common-base.part-13-of-17.b64",
+        "common-base.part-14-of-17.b64",
+        "common-base.part-15-of-17.b64",
+        "common-base.part-16-of-17.b64",
+        "common-base.part-17-of-17.b64"
+      ],
+      "compression": "gzip",
+      "sha256": "4544a110969581b45d06610e5adf8830a85df01e11242ded94dafed6747fe60c",
+      "originalSha256": "423bae216826b302816953031d46db03f6df3711f9a07f67b825502fa0ad1a71",
+      "questionCount": 726
+    },
+    {
+      "order": 2,
+      "role": "common-cloze",
+      "chunks": [
+        "common-cloze.part-01-of-04.b64",
+        "common-cloze.part-02-of-04.b64",
+        "common-cloze.part-03-of-04.b64",
+        "common-cloze.part-04-of-04.b64"
+      ],
+      "compression": "gzip",
+      "sha256": "0e58018f99f7d12eb2cce54face8d889c132b7ac0f3986c63f4b1f18cb75f145",
+      "originalSha256": "8d543b6ac846a9cae1abae3ed46b8697c1c967f4b618f97814b5bf2adaf255c5",
+      "questionCount": 1917
+    },
+    {
+      "order": 3,
+      "role": "specialty-past",
+      "chunks": [
+        "specialty-past.part-01-of-02.b64",
+        "specialty-past.part-02-of-02.b64"
+      ],
+      "compression": "gzip",
+      "sha256": "e8ac957ef569f05236bd03d0dbb60e1cf37fb38714ac7376e38e046f41ad22bd",
+      "originalSha256": "66c89e41222c53dec7b6effa2a0ae7a5852d8e6fe38b8dc0e224860b937b61a1",
+      "questionCount": 126
+    },
+    {
+      "order": 4,
+      "role": "specialty-predicted",
+      "chunks": [
+        "specialty-predicted.part-01-of-02.b64",
+        "specialty-predicted.part-02-of-02.b64"
+      ],
+      "compression": "gzip",
+      "sha256": "9dab337202fdc32f3e02fcab96555738b5cae3b0a0402f8554fafb38beb64bcc",
+      "originalSha256": "4c8e3a961cc003a236e45b9e5a11a845b3e2db8a7cc233bfbd86f699acf57f08",
+      "questionCount": 116
+    },
+    {
+      "order": 5,
+      "role": "specialty-predicted-case",
+      "chunks": [
+        "specialty-predicted-case.part-01-of-04.b64",
+        "specialty-predicted-case.part-02-of-04.b64",
+        "specialty-predicted-case.part-03-of-04.b64",
+        "specialty-predicted-case.part-04-of-04.b64"
+      ],
+      "compression": "gzip",
+      "sha256": "d6aaf4e4d727fe4fd0443f30a7deb3e9a59b61b99a713a23ad57867c6bdfd945",
+      "originalSha256": "634463f2b14c24782cbc870dad620a0b825ac6fce8da6adc47412fc7d4c794b1",
+      "questionCount": 269
+    }
+  ]
+}
