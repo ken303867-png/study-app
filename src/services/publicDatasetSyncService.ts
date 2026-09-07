@@ -136,12 +136,9 @@ export async function syncPublicDataset(
   if (!bundleResponse.ok) {
     throw new Error(`公開問題データを取得できませんでした（HTTP ${bundleResponse.status}）。`);
   }
-  const compressed = await bundleResponse.arrayBuffer();
-  if ((await sha256Hex(compressed)) !== manifest.bundle.sha256) {
-    throw new Error('公開問題データパックのSHA-256が一致しません。');
-  }
 
-  const packText = await decodeGzip(compressed);
+  const payload = await bundleResponse.arrayBuffer();
+  const packText = await decodeFetchedPack(payload, manifest.bundle.sha256);
   const datasets = parseDatasetPack(packText);
   const orderedDatasets = [...manifest.datasets].sort((a, b) => a.order - b.order);
   const orderedTexts: string[] = [];
@@ -221,6 +218,27 @@ async function hasUsableStoredContent(): Promise<boolean> {
     materialCount === PRODUCTION_MATERIAL_TOTAL &&
     occurrenceCount === PRODUCTION_OCCURRENCE_TOTAL
   );
+}
+
+async function decodeFetchedPack(payload: ArrayBuffer, expectedCompressedSha256: string): Promise<string> {
+  const actualSha256 = await sha256Hex(payload);
+  if (actualSha256 === expectedCompressedSha256) {
+    return decodeGzip(payload);
+  }
+
+  if (isGzipPayload(payload)) {
+    throw new Error('公開問題データパックのSHA-256が一致しません。');
+  }
+
+  // Some static servers attach Content-Encoding: gzip to a .gz asset. Fetch then exposes the
+  // transparently decompressed response body, so its bytes cannot match the compressed-file SHA.
+  // In this path every packed dataset is still verified below against its own manifest SHA-256.
+  return new TextDecoder('utf-8', { fatal: true }).decode(payload);
+}
+
+function isGzipPayload(payload: ArrayBuffer): boolean {
+  const bytes = new Uint8Array(payload);
+  return bytes.length >= 2 && bytes[0] === 0x1f && bytes[1] === 0x8b;
 }
 
 async function decodeGzip(payload: ArrayBuffer): Promise<string> {
