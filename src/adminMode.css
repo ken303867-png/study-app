@@ -1,3 +1,22 @@
 html[data-admin-tools='hidden'] .top-nav > button:last-child {
   display: none;
 }
+
+html[data-admin-tools='hidden'] .app-header .muted,
+html[data-admin-tools='hidden'] .app-header .status-badge,
+html[data-admin-tools='hidden'] .hero-card > div:first-child,
+html[data-admin-tools='hidden'] .hero-card .metric-grid > div:nth-child(2),
+html[data-admin-tools='hidden'] .hero-card .metric-grid > div:nth-child(3),
+html[data-admin-tools='hidden'] .hero-card .metric-grid > div:nth-child(7),
+html[data-admin-tools='hidden'] .app-shell > footer {
+  display: none;
+}
+
+.learner-mode-banner {
+  padding: 10px 16px;
+  border-bottom: 1px solid #d7dee8;
+  background: #ffffff;
+  color: #31445a;
+  text-align: center;
+  font-size: 0.9rem;
+}

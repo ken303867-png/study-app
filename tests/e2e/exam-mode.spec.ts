@@ -56,3 +56,24 @@ test('keeps an unanswered exam question out of learning attempts', async ({ page
   await expect(dashboard.locator('.dashboard-metric').filter({ hasText: '総回答' })).toContainText('0回');
   await expect(dashboard.locator('.dashboard-metric').filter({ hasText: '未回答' })).toContainText('1問');
 });
+
+test('asks for confirmation before abandoning an active exam', async ({ page }) => {
+  await loadSample(page);
+  await openExam(page);
+
+  let dialogCount = 0;
+  page.on('dialog', async (dialog) => {
+    dialogCount += 1;
+    expect(dialog.message()).toContain('試験を中断しますか');
+    expect(dialog.message()).toContain('採点・保存されません');
+    if (dialogCount === 1) await dialog.dismiss();
+    else await dialog.accept();
+  });
+
+  await page.getByRole('button', { name: '試験を中断' }).click();
+  await expect(page.getByRole('heading', { name: '試験モード' })).toBeVisible();
+
+  await page.getByRole('button', { name: '試験を中断' }).click();
+  await expect(page.getByRole('heading', { name: '問題' })).toBeVisible();
+  expect(dialogCount).toBe(2);
+});

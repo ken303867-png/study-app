@@ -55,7 +55,7 @@ export function PracticeSetBuilder({
   ]);
   const [preset, setPreset] = useState<PracticePreset>(initialPreset);
   const [order, setOrder] = useState<PracticeOrder>('sequential');
-  const [limit, setLimit] = useState<PracticeLimit>('all');
+  const [limit, setLimit] = useState<PracticeLimit>(20);
   const [mode, setMode] = useState<PracticeSessionMode>('practice');
   const [timerMinutes, setTimerMinutes] = useState<ExamTimerMinutes>(0);
 
