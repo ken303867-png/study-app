@@ -97,7 +97,7 @@ function makeDataset() {
 test('downloads the public dataset once and reuses IndexedDB after reload', async ({ page }) => {
   const datasetText = JSON.stringify(makeDataset());
   const packText = `common-base\t${datasetText}\n`;
-  const compressed = gzipSync(Buffer.from(packText, 'utf8'), { level: 9, mtime: 0 });
+  const compressed = gzipSync(Buffer.from(packText, 'utf8'), { level: 9 });
   const manifest = {
     schemaVersion: 1,
     releaseVersion: 'qa-public-release-1',
