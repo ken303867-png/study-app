@@ -18,23 +18,18 @@ const INITIAL_PROGRESS: PublicDatasetSyncProgress = {
 };
 
 export function PublicDatasetGate({ children }: { children: ReactNode }) {
-  const [state, setState] = useState<GateState>({
-    status: 'checking',
-    progress: INITIAL_PROGRESS
-  });
+  const autoSync = shouldAutoSyncPublicDataset(window.location);
+  const [state, setState] = useState<GateState>(() =>
+    autoSync
+      ? { status: 'checking', progress: INITIAL_PROGRESS }
+      : { status: 'ready', progress: { stage: 'ready', message: '自動同期は無効です。' } }
+  );
   const [retryKey, setRetryKey] = useState(0);
 
   useEffect(() => {
+    if (!autoSync) return undefined;
     let active = true;
 
-    if (!shouldAutoSyncPublicDataset(window.location)) {
-      setState({ status: 'ready', progress: { stage: 'ready', message: '自動同期は無効です。' } });
-      return () => {
-        active = false;
-      };
-    }
-
-    setState({ status: 'checking', progress: INITIAL_PROGRESS });
     void syncPublicDatasetOnce({
       onProgress: (progress) => {
         if (active) setState((current) => ({ ...current, progress }));
@@ -61,7 +56,12 @@ export function PublicDatasetGate({ children }: { children: ReactNode }) {
     return () => {
       active = false;
     };
-  }, [retryKey]);
+  }, [autoSync, retryKey]);
+
+  const retry = () => {
+    setState({ status: 'checking', progress: INITIAL_PROGRESS });
+    setRetryKey((current) => current + 1);
+  };
 
   if (state.status === 'ready') {
     return (
@@ -83,7 +83,7 @@ export function PublicDatasetGate({ children }: { children: ReactNode }) {
           <p className="eyebrow">Study App</p>
           <h1>問題データを準備できませんでした</h1>
           <p>{state.error}</p>
-          <button type="button" onClick={() => setRetryKey((current) => current + 1)}>
+          <button type="button" onClick={retry}>
             再試行
           </button>
         </section>
