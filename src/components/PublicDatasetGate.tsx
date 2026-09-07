@@ -42,11 +42,12 @@ export function PublicDatasetGate({ children }: { children: ReactNode }) {
     })
       .then((result) => {
         if (!active) return;
-        setState({
+        const nextState: GateState = {
           status: 'ready',
-          progress: { stage: 'ready', message: '問題データの準備が完了しました。' },
-          warning: result.warning
-        });
+          progress: { stage: 'ready', message: '問題データの準備が完了しました。' }
+        };
+        if (result.warning) nextState.warning = result.warning;
+        setState(nextState);
       })
       .catch((error: unknown) => {
         if (!active) return;
