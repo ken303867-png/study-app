@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { db } from '../db/database';
 import { contentRepository } from '../repositories/contentRepository';
-import { importDatasetJsonText } from './datasetImportService';
+import { importDatasetJsonTextsAsBatch } from './datasetImportService';
 import { countQuestionKinds, QUESTION_KINDS } from '../utils/questionCategories';
 
 const PUBLIC_DATASET_META_KEY = 'publicDatasetReleaseVersion';
@@ -154,6 +154,7 @@ export async function syncPublicDataset(
   const packText = await decodeGzip(compressed);
   const datasets = parseDatasetPack(packText);
   const orderedDatasets = [...manifest.datasets].sort((a, b) => a.order - b.order);
+  const orderedTexts: string[] = [];
 
   for (const descriptor of orderedDatasets) {
     const text = datasets.get(descriptor.role);
@@ -162,22 +163,19 @@ export async function syncPublicDataset(
     if ((await sha256Hex(encoded)) !== descriptor.originalSha256) {
       throw new Error(`公開問題データ「${descriptor.role}」のSHA-256が一致しません。`);
     }
+    orderedTexts.push(text);
   }
   if (datasets.size !== orderedDatasets.length) {
     throw new Error('公開問題データパックにmanifest未登録のデータが含まれています。');
   }
 
-  for (const [index, descriptor] of orderedDatasets.entries()) {
-    report({
-      stage: 'importing',
-      message: `問題データを端末へ保存しています（${index + 1}/${orderedDatasets.length}）。`,
-      current: index + 1,
-      total: orderedDatasets.length
-    });
-    const text = datasets.get(descriptor.role);
-    if (!text) throw new Error(`公開問題データ「${descriptor.role}」がパック内にありません。`);
-    await importDatasetJsonText(text);
-  }
+  report({
+    stage: 'importing',
+    message: '問題データを検証して端末へ保存しています。',
+    current: 1,
+    total: 1
+  });
+  await importDatasetJsonTextsAsBatch(orderedTexts);
 
   report({ stage: 'verifying', message: '保存された問題データを最終確認しています。' });
   if (!(await storedStateMatchesManifest(manifest))) {
