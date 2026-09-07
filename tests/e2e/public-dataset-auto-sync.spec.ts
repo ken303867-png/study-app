@@ -149,13 +149,13 @@ test('downloads the public dataset once and reuses IndexedDB after reload', asyn
   await expect(page.getByText('ステップ 2 / 4')).toBeVisible({ timeout: 5_000 });
   await expect(page.getByText('問題データを取得', { exact: true })).toBeVisible();
 
-  await expect(page.getByRole('heading', { name: '学習アプリ v0.17.0' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: '学習アプリ v0.18.0' })).toBeVisible();
   await expect(page.getByText('QA-PUBLIC-JNA-001')).toHaveCount(0);
   await page.getByRole('button', { name: '問題', exact: true }).click();
   await expect(page.getByText('URLを開いたときに問題データを自動取得できるか確認するsynthetic問題です。')).toBeVisible();
   expect(bundleRequests).toBe(1);
 
   await page.reload();
-  await expect(page.getByRole('heading', { name: '学習アプリ v0.17.0' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: '学習アプリ v0.18.0' })).toBeVisible();
   expect(bundleRequests).toBe(1);
 });
