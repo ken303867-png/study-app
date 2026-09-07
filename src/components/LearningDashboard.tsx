@@ -6,6 +6,7 @@ import {
   type LearningGroupStats
 } from '../utils/learningAnalytics';
 import type { PracticePreset } from '../utils/practiceSets';
+import { buildWeaknessPriorityItems } from '../utils/weaknessPriority';
 
 export function LearningDashboard({
   questions,
@@ -20,6 +21,10 @@ export function LearningDashboard({
 }) {
   const analytics = useMemo(
     () => buildLearningAnalytics(questions, historyByQuestionId),
+    [questions, historyByQuestionId]
+  );
+  const weaknessItems = useMemo(
+    () => buildWeaknessPriorityItems(questions, historyByQuestionId),
     [questions, historyByQuestionId]
   );
   const { overall } = analytics;
@@ -42,30 +47,76 @@ export function LearningDashboard({
           <h2>学習ダッシュボード</h2>
           <p className="muted">IndexedDBの学習履歴から再計算。正式問題・正答・解説は変更しません。</p>
         </div>
-        <button
-          type="button"
-          disabled={overall.needsReviewQuestions === 0}
-          onClick={() => onPractice(questions, '全問題', 'review')}
-        >
-          要復習 {overall.needsReviewQuestions}問を演習
-        </button>
+        <div className="home-actions">
+          <button
+            type="button"
+            disabled={weaknessItems.length === 0}
+            onClick={() => onPractice(questions, '全問題', 'weakness')}
+          >
+            弱点優先 {weaknessItems.length}問を演習
+          </button>
+          <button
+            type="button"
+            disabled={overall.needsReviewQuestions === 0}
+            onClick={() => onPractice(questions, '全問題', 'review')}
+          >
+            要復習 {overall.needsReviewQuestions}問を演習
+          </button>
+        </div>
       </div>
 
       <div className="dashboard-metrics" aria-label="全体学習指標">
         <Metric label="学習済み" value={`${overall.answeredQuestions} / ${overall.totalQuestions}`} detail={formatPercent(overall.coverage)} />
         <Metric label="総回答" value={`${overall.totalAttempts}回`} detail={`正解 ${overall.correctAttempts}回`} />
         <Metric label="正答率" value={formatPercent(overall.accuracy)} detail="累計attempt基準" />
+        <Metric label="弱点候補" value={`${weaknessItems.length}問`} detail="弱点スコア15以上" />
         <Metric label="要復習" value={`${overall.needsReviewQuestions}問`} detail={`率 ${formatPercent(overall.reviewRate)}`} />
         <Metric label="誤答" value={`${overall.incorrectAttempts}回`} detail={`不確実 ${overall.uncertainAttempts}回`} />
         <Metric label="未回答" value={`${overall.unansweredQuestions}問`} detail={`お気に入り ${overall.favoriteQuestions}問`} />
       </div>
 
       <div className="panel dashboard-definition">
-        <strong>復習優先順位の定義</strong>
+        <strong>弱点優先の定義</strong>
         <p>
-          回答履歴がある範囲だけを対象に、要復習率が高い順 → 誤答・不確実率が高い順 → 正答率が低い順で並べます。
-          未回答問題は弱点とは判定せず、未回答として別集計します。
+          未回答は弱点に含めません。回答履歴がある問題について、要復習、直近の不正解・不確実、累積の非正解率、連続正解による回復度を0〜100点で再計算し、15点以上を弱点候補とします。通常の「要復習」は手動管理用として別に維持します。
         </p>
+      </div>
+
+      <div className="panel">
+        <div className="dashboard-section-heading">
+          <div>
+            <h3>弱点優先問題</h3>
+            <p className="muted">現在の学習履歴から弱点スコアが高い順に表示します。</p>
+          </div>
+          <button
+            type="button"
+            disabled={weaknessItems.length === 0}
+            onClick={() => onPractice(questions, '全問題', 'weakness')}
+          >
+            弱点優先セットを作成
+          </button>
+        </div>
+        {weaknessItems.length === 0 ? (
+          <p className="dashboard-empty-note">現在、弱点候補はありません。</p>
+        ) : (
+          <div className="dashboard-attention-list">
+            {weaknessItems.slice(0, 8).map(({ question, score }) => (
+              <button
+                key={question.id}
+                type="button"
+                className="dashboard-attention-item"
+                onClick={() => onOpenQuestion(question.id)}
+              >
+                <span>
+                  <strong>{question.subject} / {question.unit}</strong>
+                  <small>{question.id}</small>
+                </span>
+                <span className="dashboard-result incorrect">弱点 {score}</span>
+                <span className="dashboard-attention-prompt">{question.prompt}</span>
+              </button>
+            ))}
+          </div>
+        )}
       </div>
 
       <div className="grid-two dashboard-priority-grid">

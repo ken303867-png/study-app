@@ -22,6 +22,7 @@ import {
 
 const PRESET_LABELS: Record<PracticePreset, string> = {
   all: 'すべて',
+  weakness: '弱点優先',
   review: '要復習',
   unanswered: '未回答',
   favorite: 'お気に入り',
@@ -243,11 +244,20 @@ export function PracticeSetBuilder({
         </fieldset>
       </div>
 
+      {preset === 'weakness' && (
+        <div className="panel dashboard-definition" role="note">
+          <strong>弱点優先の並び方</strong>
+          <p>
+            未回答は含めません。要復習、直近の不正解・不確実、累積の非正解率、連続正解による回復度から弱点スコアを再計算し、スコアが高い問題から出題します。
+          </p>
+        </div>
+      )}
+
       <div className="panel practice-set-options">
         <label>
           <span>出題順</span>
           <select value={order} onChange={(event) => setOrder(event.currentTarget.value as PracticeOrder)}>
-            <option value="sequential">元の順番</option>
+            <option value="sequential">{preset === 'weakness' ? '弱点スコア順' : '元の順番'}</option>
             <option value="random">ランダム</option>
           </select>
         </label>
@@ -328,6 +338,8 @@ function presetCountFromSummary(
   switch (preset) {
     case 'all':
       return summary.total;
+    case 'weakness':
+      return summary.weakness;
     case 'review':
       return summary.review;
     case 'unanswered':

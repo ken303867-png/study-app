@@ -17,7 +17,7 @@ test('fresh public URL bootstraps the real 3,154-question production dataset', a
 
   await page.goto('/?publicSync=1&admin=0');
 
-  const appHeading = page.getByRole('heading', { name: '学習アプリ v0.19.0' });
+  const appHeading = page.getByRole('heading', { name: '学習アプリ v0.20.0' });
   const errorHeading = page.getByRole('heading', { name: '問題データを準備できませんでした' });
 
   await expect(appHeading.or(errorHeading)).toBeVisible({ timeout: 120_000 });
