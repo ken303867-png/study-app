@@ -42,7 +42,9 @@ test('summarizes learning history and launches weakness/review sets from the das
   await weaknessPanel.getByRole('button', { name: '弱点優先セットを作成' }).click();
   await expect(page.getByRole('heading', { name: '演習セットを作成' })).toBeVisible();
   await expect(page.getByRole('radio', { name: /弱点優先/ })).toBeChecked();
-  await expect(page.getByText('弱点スコア順')).toBeVisible();
+  const orderSelect = page.getByLabel('出題順');
+  await expect(orderSelect).toHaveValue('sequential');
+  await expect(orderSelect.locator('option:checked')).toHaveText('弱点スコア順');
   await expect(page.getByRole('button', { name: '1問の演習を開始' })).toBeEnabled();
 
   await page.getByRole('button', { name: '問題一覧へ戻る' }).click();
