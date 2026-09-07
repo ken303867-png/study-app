@@ -141,5 +141,7 @@ test('shows the production specialty counts and OK status after all three supple
 
   const totalMetric = page.getByText('全問題', { exact: true }).locator('..');
   await expect(totalMetric.getByText('511', { exact: true })).toBeVisible();
-  await expect(page.getByText(/正式Base.*共通穴抜き/)).toBeVisible();
+  await expect(
+    page.locator('p.muted').filter({ hasText: '正式Base:' }).filter({ hasText: '共通穴抜き:' })
+  ).toBeVisible();
 });
