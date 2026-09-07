@@ -100,7 +100,7 @@ export function LearningStateBackupControls() {
           <div>
             <h2>学習履歴のバックアップ／復元</h2>
             <p>
-              学習履歴・お気に入り・要復習・資料履歴・試験履歴だけを保存します。問題文・選択肢・正答・解説・教材本文はバックアップに含みません。
+              学習履歴・要復習・資料履歴・試験履歴だけを保存します。問題文・選択肢・正答・解説・教材本文はバックアップに含みません。
             </p>
           </div>
           <div className="learning-state-backup-actions">

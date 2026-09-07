@@ -14,7 +14,6 @@ export const PRACTICE_PRESETS = [
   'weakness',
   'review',
   'unanswered',
-  'favorite',
   'incorrect',
   'uncertain'
 ] as const;
@@ -44,7 +43,6 @@ export interface PracticeSetSummary {
   weakness: number;
   review: number;
   unanswered: number;
-  favorite: number;
   incorrect: number;
   uncertain: number;
 }
@@ -60,7 +58,6 @@ export function summarizePracticePool(
     ).length,
     review: questions.filter((question) => historyByQuestionId.get(question.id)?.needsReview === true).length,
     unanswered: questions.filter((question) => (historyByQuestionId.get(question.id)?.attempts ?? 0) === 0).length,
-    favorite: questions.filter((question) => historyByQuestionId.get(question.id)?.favorite === true).length,
     incorrect: questions.filter((question) => historyByQuestionId.get(question.id)?.lastResult === 'incorrect').length,
     uncertain: questions.filter((question) => historyByQuestionId.get(question.id)?.lastResult === 'uncertain').length
   };
@@ -113,8 +110,6 @@ function matchesPreset(
       return history?.needsReview === true;
     case 'unanswered':
       return (history?.attempts ?? 0) === 0;
-    case 'favorite':
-      return history?.favorite === true;
     case 'incorrect':
       return history?.lastResult === 'incorrect';
     case 'uncertain':

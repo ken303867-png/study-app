@@ -179,13 +179,15 @@ export interface LearningHistory {
   consecutiveCorrect: number;
   lastResult: LearningResult | null;
   lastAnsweredAt: string | null;
-  favorite: boolean;
+  /** @deprecated v0.20.1以降は使用しません。旧保存データ互換のためのみ許容します。 */
+  favorite?: boolean;
   needsReview?: boolean;
 }
 
 export interface MaterialHistory {
   materialId: string;
-  favorite: boolean;
+  /** @deprecated v0.20.1以降は使用しません。旧保存データ互換のためのみ許容します。 */
+  favorite?: boolean;
   viewed: boolean;
   lastViewedAt: string | null;
   scrollPosition: number;

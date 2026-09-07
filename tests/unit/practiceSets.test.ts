@@ -15,9 +15,9 @@ const questions: Question[] = Array.from({ length: 5 }, (_, index) => makeQuesti
 
 const histories = new Map<string, LearningHistory>([
   ['Q1', history('Q1', { attempts: 2, lastResult: 'incorrect', needsReview: true })],
-  ['Q2', history('Q2', { attempts: 1, lastResult: 'correct', favorite: true })],
+  ['Q2', history('Q2', { attempts: 1, lastResult: 'correct' })],
   ['Q3', history('Q3', { attempts: 1, lastResult: 'uncertain', needsReview: true })],
-  ['Q5', history('Q5', { attempts: 3, lastResult: 'correct', favorite: true, needsReview: true })]
+  ['Q5', history('Q5', { attempts: 3, lastResult: 'correct', needsReview: true })]
 ]);
 
 describe('practiceSets', () => {
@@ -27,17 +27,15 @@ describe('practiceSets', () => {
       weakness: 3,
       review: 3,
       unanswered: 1,
-      favorite: 2,
       incorrect: 1,
       uncertain: 1
     });
   });
 
-  it('builds weakness, review, unanswered, favorite, incorrect and uncertain sets', () => {
+  it('builds weakness, review, unanswered, incorrect and uncertain sets', () => {
     expect(ids(buildPracticeSet(questions, histories, options('weakness')))).toEqual(['Q1', 'Q3', 'Q5']);
     expect(ids(buildPracticeSet(questions, histories, options('review')))).toEqual(['Q1', 'Q3', 'Q5']);
     expect(ids(buildPracticeSet(questions, histories, options('unanswered')))).toEqual(['Q4']);
-    expect(ids(buildPracticeSet(questions, histories, options('favorite')))).toEqual(['Q2', 'Q5']);
     expect(ids(buildPracticeSet(questions, histories, options('incorrect')))).toEqual(['Q1']);
     expect(ids(buildPracticeSet(questions, histories, options('uncertain')))).toEqual(['Q3']);
   });
@@ -166,7 +164,7 @@ function makeQuestion(id: string): Question {
 }
 
 function options(
-  preset: 'weakness' | 'review' | 'unanswered' | 'favorite' | 'incorrect' | 'uncertain'
+  preset: 'weakness' | 'review' | 'unanswered' | 'incorrect' | 'uncertain'
 ) {
   return { preset, order: 'sequential' as const, limit: 'all' as const };
 }
@@ -188,7 +186,6 @@ function history(
     consecutiveCorrect: 0,
     lastResult: null,
     lastAnsweredAt: null,
-    favorite: false,
     needsReview: false,
     ...overrides
   };

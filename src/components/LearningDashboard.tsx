@@ -72,7 +72,7 @@ export function LearningDashboard({
         <Metric label="弱点候補" value={`${weaknessItems.length}問`} detail="弱点スコア15以上" />
         <Metric label="要復習" value={`${overall.needsReviewQuestions}問`} detail={`率 ${formatPercent(overall.reviewRate)}`} />
         <Metric label="誤答" value={`${overall.incorrectAttempts}回`} detail={`不確実 ${overall.uncertainAttempts}回`} />
-        <Metric label="未回答" value={`${overall.unansweredQuestions}問`} detail={`お気に入り ${overall.favoriteQuestions}問`} />
+        <Metric label="未回答" value={`${overall.unansweredQuestions}問`} detail={`回答済み ${overall.answeredQuestions}問`} />
       </div>
 
       <div className="panel dashboard-definition">

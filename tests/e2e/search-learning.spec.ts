@@ -2,27 +2,28 @@ import { expect, test } from '@playwright/test';
 
 const questionPrompt = '正式Deliveryデータを実行時検証するライブラリはどれですか。';
 
-test('filters questions and persists favorite/review learning state across reload', async ({ page }) => {
+test('filters questions and persists review learning state across reload', async ({ page }) => {
   await page.goto('/');
   await page.getByRole('button', { name: 'データ管理' }).click();
   await page.getByRole('button', { name: 'サンプルを読み込む' }).click();
   await page.getByRole('button', { name: '問題', exact: true }).click();
 
   await expect(page.getByText(questionPrompt)).toBeVisible();
-  await page.getByRole('button', { name: 'お気に入り ☆' }).click();
+  await expect(page.getByRole('button', { name: /お気に入り/ })).toHaveCount(0);
   await page.getByRole('button', { name: '不正解', exact: true }).click();
   await expect(page.locator('.learning-status')).toHaveText('直近：不正解');
   await expect(page.getByRole('button', { name: '要復習 ✓' })).toHaveAttribute('aria-pressed', 'true');
 
-  await page.getByLabel('学習状態').selectOption('favorite');
+  await page.getByLabel('学習状態').selectOption('review');
   await expect(page.getByText(questionPrompt)).toBeVisible();
   await expect(page.getByText('表示 1 / 1問')).toBeVisible();
+  await expect(page.getByLabel('学習状態').locator('option[value="favorite"]')).toHaveCount(0);
 
   await page.reload();
   await page.getByRole('button', { name: '問題', exact: true }).click();
   await page.getByLabel('学習状態').selectOption('review');
   await expect(page.getByText(questionPrompt)).toBeVisible();
-  await expect(page.getByRole('button', { name: 'お気に入り ★' })).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.getByRole('button', { name: '要復習 ✓' })).toHaveAttribute('aria-pressed', 'true');
 
   await page.getByRole('button', { name: '条件をクリア' }).click();
   await page.getByLabel('キーワード・問題ID').fill('sample-q-001');

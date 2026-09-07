@@ -21,7 +21,6 @@ export function QuestionCard({
   targeted,
   onOpenMaterial,
   onRecord,
-  onToggleFavorite,
   onToggleReview,
   onReset
 }: {
@@ -32,7 +31,6 @@ export function QuestionCard({
   targeted: boolean;
   onOpenMaterial: (materialId: string) => void;
   onRecord: (result: LearningResult) => void;
-  onToggleFavorite: () => void;
   onToggleReview: () => void;
   onReset: () => void;
 }) {
@@ -68,7 +66,6 @@ export function QuestionCard({
       <LearningStateControls
         history={history}
         onRecord={onRecord}
-        onToggleFavorite={onToggleFavorite}
         onToggleReview={onToggleReview}
         onReset={onReset}
       />

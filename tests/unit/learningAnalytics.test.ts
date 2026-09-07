@@ -48,8 +48,7 @@ const histories = new Map<string, LearningHistory>([
       uncertainCount: 1,
       lastResult: 'uncertain',
       lastAnsweredAt: '2026-09-03T04:00:00.000Z',
-      needsReview: true,
-      favorite: true
+      needsReview: true
     })
   ],
   [
@@ -77,7 +76,6 @@ describe('learningAnalytics', () => {
       incorrectAttempts: 3,
       uncertainAttempts: 1,
       needsReviewQuestions: 2,
-      favoriteQuestions: 1,
       accuracy: 0.6,
       coverage: 4 / 6,
       nonCorrectRate: 0.4,
@@ -174,7 +172,6 @@ function history(
     consecutiveCorrect: 0,
     lastResult: null,
     lastAnsweredAt: null,
-    favorite: false,
     needsReview: false,
     ...overrides
   };

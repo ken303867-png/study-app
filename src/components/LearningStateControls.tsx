@@ -3,13 +3,11 @@ import type { LearningHistory, LearningResult } from '../types/domain';
 export function LearningStateControls({
   history,
   onRecord,
-  onToggleFavorite,
   onToggleReview,
   onReset
 }: {
   history: LearningHistory;
   onRecord: (result: LearningResult) => void;
-  onToggleFavorite: () => void;
   onToggleReview: () => void;
   onReset: () => void;
 }) {
@@ -38,9 +36,6 @@ export function LearningStateControls({
           onClick={onToggleReview}
         >
           {history.needsReview ? '要復習 ✓' : '要復習'}
-        </button>
-        <button type="button" aria-pressed={history.favorite} onClick={onToggleFavorite}>
-          {history.favorite ? 'お気に入り ★' : 'お気に入り ☆'}
         </button>
         {history.attempts > 0 && (
           <button type="button" className="learning-reset" onClick={onReset}>履歴をリセット</button>

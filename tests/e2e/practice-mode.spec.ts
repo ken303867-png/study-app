@@ -33,6 +33,7 @@ test('builds a practice set and records a correct answer with formal explanation
   await expect(feedback).toContainText('正解');
   await expect(feedback).toContainText('正答：B. Zod');
   await expect(page.locator('.practice-local-state')).toContainText('累計 1回');
+  await expect(page.locator('.practice-local-state').getByRole('button', { name: /お気に入り/ })).toHaveCount(0);
 
   const practice = page.getByRole('region', { name: '1問ずつ演習' });
   await expect(practice.getByRole('heading', { name: '正解に至る考え方' })).toBeVisible();
@@ -65,6 +66,7 @@ test('marks a wrong answer for review and creates a review-only practice set', a
 
   const builder = page.getByRole('region', { name: '演習セット作成' });
   await expect(builder.getByRole('radio', { name: /要復習\s*1問/ })).toBeChecked();
+  await expect(builder.getByRole('radio', { name: /お気に入り/ })).toHaveCount(0);
   await builder.getByLabel('出題順').selectOption('random');
   await expect(builder.getByLabel('出題順')).toHaveValue('random');
   await builder.getByRole('button', { name: '1問の演習を開始' }).click();
@@ -77,12 +79,12 @@ test('marks a wrong answer for review and creates a review-only practice set', a
   await expect(page.getByRole('button', { name: '要復習 ✓' })).toHaveAttribute('aria-pressed', 'true');
 });
 
-test('shows empty learning-state presets without allowing an empty practice session', async ({ page }) => {
+test('shows an empty review preset without allowing an empty practice session', async ({ page }) => {
   await loadSample(page);
   await page.getByRole('button', { name: '演習', exact: true }).click();
 
   const builder = page.getByRole('region', { name: '演習セット作成' });
-  await builder.getByRole('radio', { name: /お気に入り\s*0問/ }).check();
+  await builder.getByRole('radio', { name: /要復習\s*0問/ }).check();
   await expect(builder.getByRole('status')).toContainText('この条件に一致する問題はありません');
   await expect(builder.getByRole('button', { name: '0問の演習を開始' })).toBeDisabled();
 });

@@ -2,7 +2,7 @@ import { readFile } from 'node:fs/promises';
 import { expect, test } from '@playwright/test';
 import type { Page } from '@playwright/test';
 
-test('backs up and restores browser-local learning state without formal problem content', async ({ page }) => {
+test('backs up and restores browser-local learning state without favorite or formal problem content', async ({ page }) => {
   await page.goto('/?publicSync=0');
   await page.getByRole('button', { name: 'データ管理', exact: true }).click();
   await page.getByRole('button', { name: 'サンプルを読み込む' }).click();
@@ -31,6 +31,7 @@ test('backs up and restores browser-local learning state without formal problem 
 
   const backupText = await readFile(backupPath, 'utf8');
   expect(backupText).toContain('SAMPLE-Q-001');
+  expect(backupText).not.toContain('"favorite"');
   expect(backupText).not.toContain('正式Deliveryデータを実行時検証するライブラリ');
   expect(backupText).not.toContain('correctChoiceIndexes');
   expect(backupText).not.toContain('choice_explanations');
@@ -52,9 +53,9 @@ test('backs up and restores browser-local learning state without formal problem 
   expect(restored).toMatchObject({
     attempts: 1,
     incorrectCount: 1,
-    favorite: true,
     needsReview: true
   });
+  expect(restored).not.toHaveProperty('favorite');
 });
 
 test('rejects an invalid restore file and keeps current history unchanged', async ({ page }) => {
@@ -70,7 +71,6 @@ test('rejects an invalid restore file and keeps current history unchanged', asyn
     consecutiveCorrect: 1,
     lastResult: 'correct',
     lastAnsweredAt: '2026-09-07T07:21:00.000Z',
-    favorite: false,
     needsReview: false
   });
 
@@ -90,13 +90,14 @@ test('rejects an invalid restore file and keeps current history unchanged', asyn
   expect(preserved).toMatchObject({ attempts: 1, correctCount: 1, lastResult: 'correct' });
 });
 
-test('shows learning-data backup controls to an ordinary public learner', async ({ page }) => {
+test('shows learning-data backup controls to an ordinary public learner without favorite wording', async ({ page }) => {
   await page.goto('/?publicSync=0&admin=0');
   await expect(page.getByRole('button', { name: '学習データ', exact: true })).toBeVisible();
   await expect(page.getByRole('button', { name: 'データ管理', exact: true })).toBeHidden();
   await page.getByRole('button', { name: '学習データ', exact: true }).click();
   await expect(page.getByRole('heading', { name: '学習履歴のバックアップ／復元' })).toBeVisible();
   await expect(page.getByText(/問題文・選択肢・正答・解説・教材本文はバックアップに含みません/)).toBeVisible();
+  await expect(page.getByText(/お気に入り/)).toHaveCount(0);
 });
 
 async function openStudyDb(page: Page) {

@@ -25,7 +25,6 @@ const PRESET_LABELS: Record<PracticePreset, string> = {
   weakness: '弱点優先',
   review: '要復習',
   unanswered: '未回答',
-  favorite: 'お気に入り',
   incorrect: '直近不正解',
   uncertain: '直近不確実'
 };
@@ -344,8 +343,6 @@ function presetCountFromSummary(
       return summary.review;
     case 'unanswered':
       return summary.unanswered;
-    case 'favorite':
-      return summary.favorite;
     case 'incorrect':
       return summary.incorrect;
     case 'uncertain':

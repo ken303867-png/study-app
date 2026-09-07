@@ -47,7 +47,7 @@ import {
 } from './utils/progressiveRendering';
 import './dashboard.css';
 
-const APP_VERSION = '0.20.0';
+const APP_VERSION = '0.20.1';
 const QUESTION_RENDER_BATCH = 30;
 const MATERIAL_RENDER_BATCH = 20;
 const FORMAL_QUESTION_TARGET = 726;
@@ -332,10 +332,6 @@ export default function App() {
     await examSessionRepository.save(session);
   };
 
-  const toggleFavorite = async (questionId: string) => {
-    replaceHistory(await learningRepository.toggleFavorite(questionId));
-  };
-
   const toggleReview = async (questionId: string) => {
     replaceHistory(await learningRepository.toggleNeedsReview(questionId));
   };
@@ -566,7 +562,6 @@ export default function App() {
                     targeted={focusedQuestionId === question.id}
                     onOpenMaterial={openMaterial}
                     onRecord={(result) => void recordLearningResult(question.id, result)}
-                    onToggleFavorite={() => void toggleFavorite(question.id)}
                     onToggleReview={() => void toggleReview(question.id)}
                     onReset={() => void resetProgress(question.id)}
                   />
@@ -617,7 +612,6 @@ export default function App() {
             timerMinutes={practiceTimerMinutes}
             onRecordResult={recordLearningResult}
             onSaveExamSession={saveExamSession}
-            onToggleFavorite={toggleFavorite}
             onToggleReview={toggleReview}
             onExit={() => openView('questions')}
             renderExplanation={(question) => (
@@ -696,7 +690,7 @@ export default function App() {
             </div>
             <article className="panel warning-panel">
               <h3>公開問題データはURLから自動取得します</h3>
-              <p>公開用DatasetはGitHub Pagesから取得してIndexedDBへ保存します。学習履歴・試験履歴・お気に入り・要復習状態はこの端末だけに保存されます。</p>
+              <p>公開用DatasetはGitHub Pagesから取得してIndexedDBへ保存します。学習履歴・試験履歴・要復習状態はこの端末だけに保存されます。</p>
             </article>
             {schemaVersion !== '未登録' && schemaVersion !== '0.5' && (
               <article className="panel warning-panel" role="alert">

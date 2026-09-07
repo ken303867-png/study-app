@@ -36,7 +36,6 @@ function renderPractice(onRecordResult = vi.fn().mockResolvedValue(undefined)) {
       questions={[clozeQuestion]}
       historyByQuestionId={history}
       onRecordResult={onRecordResult}
-      onToggleFavorite={vi.fn().mockResolvedValue(undefined)}
       onToggleReview={vi.fn().mockResolvedValue(undefined)}
       onExit={vi.fn()}
       renderExplanation={() => null}

@@ -9,7 +9,6 @@ export interface LearningAggregate {
   incorrectAttempts: number;
   uncertainAttempts: number;
   needsReviewQuestions: number;
-  favoriteQuestions: number;
   accuracy: number | null;
   coverage: number;
   nonCorrectRate: number;
@@ -88,7 +87,6 @@ function aggregateQuestions(
   let uncertainAttempts = 0;
   let needsReviewQuestions = 0;
   let answeredNeedsReviewQuestions = 0;
-  let favoriteQuestions = 0;
 
   for (const question of questions) {
     const history = historyByQuestionId.get(question.id);
@@ -103,7 +101,6 @@ function aggregateQuestions(
       needsReviewQuestions += 1;
       if (answered) answeredNeedsReviewQuestions += 1;
     }
-    if (history.favorite) favoriteQuestions += 1;
   }
 
   const totalQuestions = questions.length;
@@ -117,7 +114,6 @@ function aggregateQuestions(
     incorrectAttempts,
     uncertainAttempts,
     needsReviewQuestions,
-    favoriteQuestions,
     accuracy: totalAttempts === 0 ? null : correctAttempts / totalAttempts,
     coverage: totalQuestions === 0 ? 0 : answeredQuestions / totalQuestions,
     nonCorrectRate:

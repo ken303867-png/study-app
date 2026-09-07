@@ -31,6 +31,11 @@ const materialHistory: MaterialHistory = {
   scrollPosition: 240
 };
 
+const expectedLearnedHistory = { ...learnedHistory };
+delete expectedLearnedHistory.favorite;
+const expectedMaterialHistory = { ...materialHistory };
+delete expectedMaterialHistory.favorite;
+
 const examSession: ExamSession = {
   id: 'EXAM-001',
   startedAt: '2026-09-07T06:50:00.000Z',
@@ -79,7 +84,7 @@ describe('learningStateBackupService', () => {
     await db.meta.put({ key: 'publicDatasetReleaseVersion', value: 'test-release-1' });
   });
 
-  it('exports only local learning state and excludes formal content', async () => {
+  it('exports only current learning state and excludes favorite and formal content', async () => {
     await db.learningHistory.put(learnedHistory);
     await db.materialHistory.put(materialHistory);
     await db.examSessions.put(examSession);
@@ -87,6 +92,7 @@ describe('learningStateBackupService', () => {
     const result = await createLearningStateBackup();
     const parsed = parseLearningStateBackup(result.json);
 
+    expect(parsed.formatVersion).toBe(2);
     expect(parsed.counts).toEqual({ learningHistory: 1, materialHistory: 1, examSessions: 1 });
     expect(parsed.source).toMatchObject({
       deliverySchemaVersion: '0.5',
@@ -94,11 +100,29 @@ describe('learningStateBackupService', () => {
       questionCount: 1,
       materialCount: 1
     });
-    expect(parsed.learningHistory[0]).toEqual(learnedHistory);
-    expect(parsed.materialHistory[0]).toEqual(materialHistory);
+    expect(parsed.learningHistory[0]).toEqual(expectedLearnedHistory);
+    expect(parsed.materialHistory[0]).toEqual(expectedMaterialHistory);
     expect(parsed.examSessions[0]).toEqual(examSession);
+    expect(result.json).not.toContain('"favorite"');
     expect(result.json).not.toContain('正式Deliveryデータを実行時検証するライブラリ');
     expect(result.json).not.toContain('Zodは外部データを実行時に検証');
+  });
+
+  it('accepts a legacy v1 backup but discards favorite values', async () => {
+    const current = JSON.parse((await createLearningStateBackup()).json) as Record<string, unknown> & {
+      formatVersion: number;
+      counts: { learningHistory: number; materialHistory: number; examSessions: number };
+      learningHistory: Array<Record<string, unknown>>;
+      materialHistory: Array<Record<string, unknown>>;
+    };
+    current.formatVersion = 1;
+    current.learningHistory = [{ ...learnedHistory, favorite: true }];
+    current.materialHistory = [{ ...materialHistory, favorite: true }];
+    current.counts = { learningHistory: 1, materialHistory: 1, examSessions: 0 };
+
+    const parsed = parseLearningStateBackup(JSON.stringify(current));
+    expect(parsed.learningHistory[0]).not.toHaveProperty('favorite');
+    expect(parsed.materialHistory[0]).not.toHaveProperty('favorite');
   });
 
   it('restores matching IDs, skips stale IDs, and replaces current learning state atomically', async () => {
@@ -121,12 +145,10 @@ describe('learningStateBackupService', () => {
       consecutiveCorrect: 0,
       lastResult: null,
       lastAnsweredAt: null,
-      favorite: true,
       needsReview: true
     });
     exported.materialHistory.push({
       materialId: 'OLD-M-001',
-      favorite: true,
       viewed: true,
       lastViewedAt: '2026-09-01T00:00:00.000Z',
       scrollPosition: 10
@@ -149,8 +171,8 @@ describe('learningStateBackupService', () => {
 
     expect(result.restored).toEqual({ learningHistory: 1, materialHistory: 1, examSessions: 1 });
     expect(result.skipped).toEqual({ learningHistory: 1, materialHistory: 1, examSessions: 1 });
-    expect(await db.learningHistory.toArray()).toEqual([learnedHistory]);
-    expect(await db.materialHistory.toArray()).toEqual([materialHistory]);
+    expect(await db.learningHistory.toArray()).toEqual([expectedLearnedHistory]);
+    expect(await db.materialHistory.toArray()).toEqual([expectedMaterialHistory]);
     expect(await db.examSessions.toArray()).toEqual([examSession]);
   });
 
