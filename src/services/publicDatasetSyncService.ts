@@ -6,6 +6,17 @@ import { countQuestionKinds, QUESTION_KINDS } from '../utils/questionCategories'
 
 const PUBLIC_DATASET_META_KEY = 'publicDatasetReleaseVersion';
 const PUBLIC_DATASET_MANIFEST_PATH = 'public-data/manifest.json';
+const PRODUCTION_QUESTION_TOTAL = 3154;
+const PRODUCTION_MATERIAL_TOTAL = 114;
+const PRODUCTION_OCCURRENCE_TOTAL = 3154;
+const PRODUCTION_KIND_COUNTS = {
+  'common-jna': 536,
+  'common-cloze': 1917,
+  'common-predicted': 190,
+  'specialty-past': 126,
+  'specialty-predicted': 116,
+  'specialty-predicted-case': 269
+} as const;
 
 const expectedKindsSchema = z.object({
   'common-jna': z.number().int().nonnegative(),
@@ -111,7 +122,7 @@ export async function syncPublicDataset(
     if (await hasUsableStoredContent()) {
       return {
         status: 'offline-existing',
-        warning: '最新版の確認ができないため、この端末に保存済みの問題データで起動しました。'
+        warning: '最新版の確認ができないため、この端末に保存済みの完全な問題データで起動しました。'
       };
     }
     throw new Error('公開問題データのmanifestを取得できません。通信状態を確認してください。', {
@@ -210,11 +221,20 @@ async function storedStateMatchesManifest(manifest: PublicDatasetManifest): Prom
 }
 
 async function hasUsableStoredContent(): Promise<boolean> {
-  const [questionCount, schemaMeta] = await Promise.all([
-    db.questions.count(),
+  const [questions, materials, occurrences, schemaMeta] = await Promise.all([
+    contentRepository.getQuestions(),
+    contentRepository.getMaterials(),
+    contentRepository.getSourceOccurrences(),
     db.meta.get('schemaVersion')
   ]);
-  return questionCount > 0 && schemaMeta?.value === '0.5';
+
+  if (schemaMeta?.value !== '0.5') return false;
+  if (questions.length !== PRODUCTION_QUESTION_TOTAL) return false;
+  if (materials.length !== PRODUCTION_MATERIAL_TOTAL) return false;
+  if (occurrences.length !== PRODUCTION_OCCURRENCE_TOTAL) return false;
+
+  const counts = countQuestionKinds(questions);
+  return QUESTION_KINDS.every((kind) => counts[kind] === PRODUCTION_KIND_COUNTS[kind]);
 }
 
 async function decodeGzip(payload: ArrayBuffer): Promise<string> {
