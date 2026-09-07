@@ -1,4 +1,6 @@
+import { readFile } from 'node:fs/promises';
 import { expect, test } from '@playwright/test';
+import type { Page } from '@playwright/test';
 
 test('backs up and restores browser-local learning state without formal problem content', async ({ page }) => {
   await page.goto('/?publicSync=0');
@@ -24,10 +26,10 @@ test('backs up and restores browser-local learning state without formal problem 
   await page.getByRole('button', { name: 'バックアップを保存', exact: true }).click();
   const download = await downloadPromise;
   const backupPath = await download.path();
-  expect(backupPath).not.toBeNull();
+  if (!backupPath) throw new Error('Learning-state backup download path is unavailable');
   expect(download.suggestedFilename()).toMatch(/^study-app-learning-state-\d{8}\.json$/);
 
-  const backupText = await readDownloadedText(download);
+  const backupText = await readFile(backupPath, 'utf8');
   expect(backupText).toContain('SAMPLE-Q-001');
   expect(backupText).not.toContain('正式Deliveryデータを実行時検証するライブラリ');
   expect(backupText).not.toContain('correctChoiceIndexes');
@@ -40,9 +42,7 @@ test('backs up and restores browser-local learning state without formal problem 
     expect(dialog.message()).toContain('現在の学習履歴・資料履歴・試験履歴');
     await dialog.accept();
   });
-  await page
-    .getByLabel('学習データバックアップJSONファイル')
-    .setInputFiles(backupPath!);
+  await page.getByLabel('学習データバックアップJSONファイル').setInputFiles(backupPath);
 
   await expect(page.getByRole('status')).toContainText('学習データを復元しました');
   await expect(page.getByRole('status')).toContainText('問題履歴 1件');
@@ -99,7 +99,7 @@ test('shows learning-data backup controls to an ordinary public learner', async 
   await expect(page.getByText(/問題文・選択肢・正答・解説・教材本文はバックアップに含みません/)).toBeVisible();
 });
 
-async function openStudyDb(page: import('@playwright/test').Page) {
+async function openStudyDb(page: Page) {
   return page.evaluate(async () => {
     const request = indexedDB.open('study-app');
     const database = await new Promise<IDBDatabase>((resolve, reject) => {
@@ -110,7 +110,7 @@ async function openStudyDb(page: import('@playwright/test').Page) {
   });
 }
 
-async function putLearningHistory(page: import('@playwright/test').Page, value: Record<string, unknown>) {
+async function putLearningHistory(page: Page, value: Record<string, unknown>) {
   await openStudyDb(page);
   await page.evaluate(async (history) => {
     const request = indexedDB.open('study-app');
@@ -128,7 +128,7 @@ async function putLearningHistory(page: import('@playwright/test').Page, value: 
   }, value);
 }
 
-async function clearLearningHistory(page: import('@playwright/test').Page) {
+async function clearLearningHistory(page: Page) {
   await page.evaluate(async () => {
     const request = indexedDB.open('study-app');
     const database = await new Promise<IDBDatabase>((resolve, reject) => {
@@ -145,7 +145,7 @@ async function clearLearningHistory(page: import('@playwright/test').Page) {
   });
 }
 
-async function getLearningHistoryCount(page: import('@playwright/test').Page) {
+async function getLearningHistoryCount(page: Page) {
   return page.evaluate(async () => {
     const request = indexedDB.open('study-app');
     const database = await new Promise<IDBDatabase>((resolve, reject) => {
@@ -163,7 +163,7 @@ async function getLearningHistoryCount(page: import('@playwright/test').Page) {
   });
 }
 
-async function getLearningHistory(page: import('@playwright/test').Page, questionId: string) {
+async function getLearningHistory(page: Page, questionId: string) {
   return page.evaluate(async (id) => {
     const request = indexedDB.open('study-app');
     const database = await new Promise<IDBDatabase>((resolve, reject) => {
@@ -179,12 +179,4 @@ async function getLearningHistory(page: import('@playwright/test').Page, questio
     database.close();
     return row;
   }, questionId);
-}
-
-async function readDownloadedText(download: import('@playwright/test').Download) {
-  const stream = await download.createReadStream();
-  if (!stream) throw new Error('Download stream is unavailable');
-  const chunks: Buffer[] = [];
-  for await (const chunk of stream) chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk));
-  return Buffer.concat(chunks).toString('utf8');
 }
