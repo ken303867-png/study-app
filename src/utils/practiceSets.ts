@@ -4,9 +4,14 @@ import {
   type LearningArea,
   type QuestionKind
 } from './questionCategories';
+import {
+  isWeaknessPriorityCandidate,
+  rankQuestionsByWeakness
+} from './weaknessPriority';
 
 export const PRACTICE_PRESETS = [
   'all',
+  'weakness',
   'review',
   'unanswered',
   'favorite',
@@ -36,6 +41,7 @@ export interface PracticeSetOptions {
 
 export interface PracticeSetSummary {
   total: number;
+  weakness: number;
   review: number;
   unanswered: number;
   favorite: number;
@@ -49,6 +55,9 @@ export function summarizePracticePool(
 ): PracticeSetSummary {
   return {
     total: questions.length,
+    weakness: questions.filter((question) =>
+      isWeaknessPriorityCandidate(historyByQuestionId.get(question.id))
+    ).length,
     review: questions.filter((question) => historyByQuestionId.get(question.id)?.needsReview === true).length,
     unanswered: questions.filter((question) => (historyByQuestionId.get(question.id)?.attempts ?? 0) === 0).length,
     favorite: questions.filter((question) => historyByQuestionId.get(question.id)?.favorite === true).length,
@@ -67,7 +76,12 @@ export function buildPracticeSet(
   const filtered = categoryFiltered.filter((question) =>
     matchesPreset(question, historyByQuestionId, options.preset)
   );
-  const ordered = options.order === 'random' ? shuffleQuestions(filtered, random) : [...filtered];
+  const ordered =
+    options.order === 'random'
+      ? shuffleQuestions(filtered, random)
+      : options.preset === 'weakness'
+        ? rankQuestionsByWeakness(filtered, historyByQuestionId)
+        : [...filtered];
   return options.limit === 'all' ? ordered : ordered.slice(0, options.limit);
 }
 
@@ -93,6 +107,8 @@ function matchesPreset(
   switch (preset) {
     case 'all':
       return true;
+    case 'weakness':
+      return isWeaknessPriorityCandidate(history);
     case 'review':
       return history?.needsReview === true;
     case 'unanswered':
