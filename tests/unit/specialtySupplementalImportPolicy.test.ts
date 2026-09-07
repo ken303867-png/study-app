@@ -136,7 +136,40 @@ function makeSpecialtyDelivery(key: SpecialtyKey, sourceType: SpecialtySourceTyp
           answer: 'A. 選択肢A',
           question_intent: '専門科目Import hard QAを確認する。',
           reasoning: 'QA fixtureの正答indexはAである。',
-          choice_explanations: [],
+          choice_explanations: [
+            {
+              target_key: 'A',
+              display_order: 1,
+              judgement: 'correct' as const,
+              reason: 'QA fixtureでは選択肢Aを正答として設定している。',
+              correction_condition: 'N/A',
+              mapping_provenance: 'source_structured' as const
+            },
+            {
+              target_key: 'B',
+              display_order: 2,
+              judgement: 'incorrect' as const,
+              reason: 'QA fixtureでは選択肢Bを誤答として設定している。',
+              correction_condition: '選択肢Aなら正答となる。',
+              mapping_provenance: 'source_structured' as const
+            },
+            {
+              target_key: 'C',
+              display_order: 3,
+              judgement: 'incorrect' as const,
+              reason: 'QA fixtureでは選択肢Cを誤答として設定している。',
+              correction_condition: '選択肢Aなら正答となる。',
+              mapping_provenance: 'source_structured' as const
+            },
+            {
+              target_key: 'D',
+              display_order: 4,
+              judgement: 'incorrect' as const,
+              reason: 'QA fixtureでは選択肢Dを誤答として設定している。',
+              correction_condition: '選択肢Aなら正答となる。',
+              mapping_provenance: 'source_structured' as const
+            }
+          ],
           key_points: '正式問題本文ではないQA fixture。',
           references: 'Study App specialty import QA fixture'
         },
