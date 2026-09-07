@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client';
 import App from './App';
 import { PublicDatasetGate } from './components/PublicDatasetGate';
 import { PwaControls } from './components/PwaControls';
+import { SessionExitGuard } from './components/SessionExitGuard';
 import { shouldShowAdminTools } from './utils/adminMode';
 import './styles.css';
 import './questionPromptFormatting.css';
@@ -13,15 +14,21 @@ import './progressiveRendering.css';
 import './publicDatasetSync.css';
 import './adminMode.css';
 
-document.documentElement.dataset.adminTools = shouldShowAdminTools(window.location)
-  ? 'visible'
-  : 'hidden';
+const adminToolsVisible = shouldShowAdminTools(window.location);
+document.documentElement.dataset.adminTools = adminToolsVisible ? 'visible' : 'hidden';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <PublicDatasetGate>
-      <PwaControls />
-      <App />
+      <SessionExitGuard>
+        <PwaControls />
+        {!adminToolsVisible && (
+          <div className="learner-mode-banner" role="note">
+            全3,154問を利用できます。学習履歴はこの端末に保存されます。
+          </div>
+        )}
+        <App />
+      </SessionExitGuard>
     </PublicDatasetGate>
   </StrictMode>
 );
