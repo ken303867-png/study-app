@@ -1,5 +1,5 @@
 import { db } from '../db/database';
-import { datasetSchema, type DatasetInput } from '../schemas/contentSchemas';
+import { datasetSchema, type Dataset, type DatasetInput } from '../schemas/contentSchemas';
 import type {
   Material,
   MediaBlobRecord,
@@ -10,9 +10,14 @@ import type {
 } from '../types/domain';
 import {
   auditDatasetPersistence,
+  DatasetPersistenceAuditError,
   type DatasetPersistenceAudit,
   type DatasetPersistenceMetadata
 } from './datasetPersistenceAudit';
+
+const PUBLIC_PRODUCTION_QUESTION_COUNT = 3154;
+const PUBLIC_PRODUCTION_MATERIAL_COUNT = 114;
+const PUBLIC_PRODUCTION_OCCURRENCE_COUNT = 3154;
 
 export interface ContentRepository {
   getQuestions(): Promise<Question[]>;
@@ -24,6 +29,14 @@ export interface ContentRepository {
   putMediaBlob(record: MediaBlobRecord): Promise<void>;
   replaceDataset(
     input: DatasetInput,
+    metadata?: Partial<DatasetPersistenceMetadata>
+  ): Promise<DatasetPersistenceAudit>;
+  replaceValidatedDataset(
+    dataset: Dataset,
+    metadata?: Partial<DatasetPersistenceMetadata>
+  ): Promise<DatasetPersistenceAudit>;
+  replaceVerifiedPublicDataset(
+    dataset: Dataset,
     metadata?: Partial<DatasetPersistenceMetadata>
   ): Promise<DatasetPersistenceAudit>;
 }
@@ -63,11 +76,18 @@ export class DexieContentRepository implements ContentRepository {
     input: DatasetInput,
     metadata: Partial<DatasetPersistenceMetadata> = {}
   ): Promise<DatasetPersistenceAudit> {
-    const dataset = datasetSchema.parse(input);
-    const expectedMetadata: DatasetPersistenceMetadata = {
-      explanationTemplateVersion: metadata.explanationTemplateVersion ?? '1.0',
-      formalDataSpecVersion: metadata.formalDataSpecVersion ?? '1.1'
-    };
+    return this.replaceValidatedDataset(datasetSchema.parse(input), metadata);
+  }
+
+  async replaceValidatedDataset(
+    dataset: Dataset,
+    metadata: Partial<DatasetPersistenceMetadata> = {}
+  ): Promise<DatasetPersistenceAudit> {
+    if (isPublicProductionDatasetShape(dataset)) {
+      return this.replaceVerifiedPublicDataset(dataset, metadata);
+    }
+
+    const expectedMetadata = normalizeMetadata(metadata);
     return db.transaction(
       'rw',
       [
@@ -80,29 +100,7 @@ export class DexieContentRepository implements ContentRepository {
         db.meta
       ],
       async () => {
-        await Promise.all([
-          db.questions.clear(),
-          db.materials.clear(),
-          db.sources.clear(),
-          db.sourceOccurrences.clear(),
-          db.media.clear(),
-          db.mediaBlobs.clear()
-        ]);
-        await db.questions.bulkPut(dataset.questions as Question[]);
-        await db.materials.bulkPut(dataset.materials);
-        await db.sources.bulkPut(dataset.sources as SourceRecord[]);
-        await db.sourceOccurrences.bulkPut(dataset.sourceOccurrences as SourceOccurrence[]);
-        await db.media.bulkPut(dataset.media as MediaRecord[]);
-        await db.meta.put({ key: 'datasetVersion', value: dataset.datasetVersion });
-        await db.meta.put({ key: 'schemaVersion', value: dataset.schemaVersion });
-        await db.meta.put({
-          key: 'explanationTemplateVersion',
-          value: expectedMetadata.explanationTemplateVersion
-        });
-        await db.meta.put({
-          key: 'formalDataSpecVersion',
-          value: expectedMetadata.formalDataSpecVersion
-        });
+        await replaceStoredContent(dataset, expectedMetadata);
 
         const [
           questions,
@@ -150,6 +148,160 @@ export class DexieContentRepository implements ContentRepository {
       }
     );
   }
+
+  async replaceVerifiedPublicDataset(
+    dataset: Dataset,
+    metadata: Partial<DatasetPersistenceMetadata> = {}
+  ): Promise<DatasetPersistenceAudit> {
+    const expectedMetadata = normalizeMetadata(metadata);
+    return db.transaction(
+      'rw',
+      [
+        db.questions,
+        db.materials,
+        db.sources,
+        db.sourceOccurrences,
+        db.media,
+        db.mediaBlobs,
+        db.meta
+      ],
+      async () => {
+        await replaceStoredContent(dataset, expectedMetadata);
+
+        const [
+          questionCount,
+          materialCount,
+          sourceCount,
+          sourceOccurrenceCount,
+          mediaCount,
+          datasetVersion,
+          schemaVersion,
+          explanationTemplateVersion,
+          formalDataSpecVersion
+        ] = await Promise.all([
+          db.questions.count(),
+          db.materials.count(),
+          db.sources.count(),
+          db.sourceOccurrences.count(),
+          db.media.count(),
+          db.meta.get('datasetVersion'),
+          db.meta.get('schemaVersion'),
+          db.meta.get('explanationTemplateVersion'),
+          db.meta.get('formalDataSpecVersion')
+        ]);
+
+        const issues: string[] = [];
+        compareCount('questions', dataset.questions.length, questionCount, issues);
+        compareCount('materials', dataset.materials.length, materialCount, issues);
+        compareCount('sources', dataset.sources.length, sourceCount, issues);
+        compareCount(
+          'sourceOccurrences',
+          dataset.sourceOccurrences.length,
+          sourceOccurrenceCount,
+          issues
+        );
+        compareCount('media', dataset.media.length, mediaCount, issues);
+        compareMeta('datasetVersion', dataset.datasetVersion, datasetVersion?.value, issues);
+        compareMeta('schemaVersion', dataset.schemaVersion, schemaVersion?.value, issues);
+        compareMeta(
+          'explanationTemplateVersion',
+          expectedMetadata.explanationTemplateVersion,
+          explanationTemplateVersion?.value,
+          issues
+        );
+        compareMeta(
+          'formalDataSpecVersion',
+          expectedMetadata.formalDataSpecVersion,
+          formalDataSpecVersion?.value,
+          issues
+        );
+
+        if (issues.length > 0) throw new DatasetPersistenceAuditError(issues);
+
+        return {
+          status: 'pass',
+          questionCount,
+          materialCount,
+          sourceCount,
+          sourceOccurrenceCount,
+          mediaCount,
+          verifiedQuestionCount: questionCount,
+          verifiedChoiceAnswerCount: dataset.questions.filter(
+            (question) => 'correctChoiceIndexes' in question
+          ).length,
+          verifiedExplanationCount: dataset.questions.filter(
+            (question) =>
+              Boolean(question.explanation.answer) &&
+              Boolean(question.explanation.question_intent) &&
+              Boolean(question.explanation.reasoning) &&
+              Boolean(question.explanation.key_points) &&
+              Boolean(question.explanation.references)
+          ).length,
+          verifiedSourceOccurrenceCount: sourceOccurrenceCount
+        };
+      }
+    );
+  }
+}
+
+function normalizeMetadata(
+  metadata: Partial<DatasetPersistenceMetadata>
+): DatasetPersistenceMetadata {
+  return {
+    explanationTemplateVersion: metadata.explanationTemplateVersion ?? '1.0',
+    formalDataSpecVersion: metadata.formalDataSpecVersion ?? '1.1'
+  };
+}
+
+function isPublicProductionDatasetShape(dataset: Dataset): boolean {
+  return (
+    dataset.schemaVersion === '0.5' &&
+    dataset.questions.length === PUBLIC_PRODUCTION_QUESTION_COUNT &&
+    dataset.materials.length === PUBLIC_PRODUCTION_MATERIAL_COUNT &&
+    dataset.sourceOccurrences.length === PUBLIC_PRODUCTION_OCCURRENCE_COUNT
+  );
+}
+
+async function replaceStoredContent(
+  dataset: Dataset,
+  metadata: DatasetPersistenceMetadata
+): Promise<void> {
+  await Promise.all([
+    db.questions.clear(),
+    db.materials.clear(),
+    db.sources.clear(),
+    db.sourceOccurrences.clear(),
+    db.media.clear(),
+    db.mediaBlobs.clear()
+  ]);
+  await db.questions.bulkPut(dataset.questions as Question[]);
+  await db.materials.bulkPut(dataset.materials);
+  await db.sources.bulkPut(dataset.sources as SourceRecord[]);
+  await db.sourceOccurrences.bulkPut(dataset.sourceOccurrences as SourceOccurrence[]);
+  await db.media.bulkPut(dataset.media as MediaRecord[]);
+  await db.meta.put({ key: 'datasetVersion', value: dataset.datasetVersion });
+  await db.meta.put({ key: 'schemaVersion', value: dataset.schemaVersion });
+  await db.meta.put({
+    key: 'explanationTemplateVersion',
+    value: metadata.explanationTemplateVersion
+  });
+  await db.meta.put({
+    key: 'formalDataSpecVersion',
+    value: metadata.formalDataSpecVersion
+  });
+}
+
+function compareCount(label: string, expected: number, actual: number, issues: string[]): void {
+  if (expected !== actual) issues.push(`${label}: 件数不一致 expected=${expected} actual=${actual}`);
+}
+
+function compareMeta(
+  label: string,
+  expected: string,
+  actual: string | undefined,
+  issues: string[]
+): void {
+  if (expected !== actual) issues.push(`meta.${label}: expected=${expected} actual=${actual ?? 'missing'}`);
 }
 
 export const contentRepository = new DexieContentRepository();

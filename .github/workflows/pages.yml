@@ -26,6 +26,7 @@ jobs:
           cache-dependency-path: 'package-lock.json'
       - run: npm install --global npm@11.19.1 --no-audit --no-fund
       - run: npm ci --no-audit --no-fund
+      - run: npm run verify:public-data
       - run: npm run typecheck
       - run: npm run lint
       - run: npm run test
