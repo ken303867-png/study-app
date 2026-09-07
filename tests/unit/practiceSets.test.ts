@@ -24,6 +24,7 @@ describe('practiceSets', () => {
   it('summarizes all supported learning-state pools', () => {
     expect(summarizePracticePool(questions, histories)).toEqual({
       total: 5,
+      weakness: 3,
       review: 3,
       unanswered: 1,
       favorite: 2,
@@ -32,12 +33,61 @@ describe('practiceSets', () => {
     });
   });
 
-  it('builds review, unanswered, favorite, incorrect and uncertain sets', () => {
+  it('builds weakness, review, unanswered, favorite, incorrect and uncertain sets', () => {
+    expect(ids(buildPracticeSet(questions, histories, options('weakness')))).toEqual(['Q1', 'Q3', 'Q5']);
     expect(ids(buildPracticeSet(questions, histories, options('review')))).toEqual(['Q1', 'Q3', 'Q5']);
     expect(ids(buildPracticeSet(questions, histories, options('unanswered')))).toEqual(['Q4']);
     expect(ids(buildPracticeSet(questions, histories, options('favorite')))).toEqual(['Q2', 'Q5']);
     expect(ids(buildPracticeSet(questions, histories, options('incorrect')))).toEqual(['Q1']);
     expect(ids(buildPracticeSet(questions, histories, options('uncertain')))).toEqual(['Q3']);
+  });
+
+  it('orders weakness preset by score before applying the limit', () => {
+    const scoredHistories = new Map<string, LearningHistory>([
+      [
+        'Q1',
+        history('Q1', {
+          attempts: 5,
+          correctCount: 4,
+          incorrectCount: 1,
+          lastResult: 'correct',
+          needsReview: true,
+          consecutiveCorrect: 2
+        })
+      ],
+      [
+        'Q2',
+        history('Q2', {
+          attempts: 2,
+          correctCount: 1,
+          incorrectCount: 1,
+          lastResult: 'incorrect',
+          needsReview: true,
+          consecutiveCorrect: 0
+        })
+      ],
+      [
+        'Q3',
+        history('Q3', {
+          attempts: 2,
+          correctCount: 1,
+          uncertainCount: 1,
+          lastResult: 'uncertain',
+          needsReview: true,
+          consecutiveCorrect: 0
+        })
+      ]
+    ]);
+
+    expect(
+      ids(
+        buildPracticeSet(questions, scoredHistories, {
+          preset: 'weakness',
+          order: 'sequential',
+          limit: 10
+        })
+      )
+    ).toEqual(['Q2', 'Q3', 'Q1']);
   });
 
   it('filters the practice pool by selected question kinds before learning state', () => {
@@ -115,7 +165,9 @@ function makeQuestion(id: string): Question {
   };
 }
 
-function options(preset: 'review' | 'unanswered' | 'favorite' | 'incorrect' | 'uncertain') {
+function options(
+  preset: 'weakness' | 'review' | 'unanswered' | 'favorite' | 'incorrect' | 'uncertain'
+) {
   return { preset, order: 'sequential' as const, limit: 'all' as const };
 }
 
