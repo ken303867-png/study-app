@@ -15,6 +15,10 @@ import {
   type DatasetPersistenceMetadata
 } from './datasetPersistenceAudit';
 
+const PUBLIC_PRODUCTION_QUESTION_COUNT = 3154;
+const PUBLIC_PRODUCTION_MATERIAL_COUNT = 114;
+const PUBLIC_PRODUCTION_OCCURRENCE_COUNT = 3154;
+
 export interface ContentRepository {
   getQuestions(): Promise<Question[]>;
   getMaterials(): Promise<Material[]>;
@@ -79,6 +83,10 @@ export class DexieContentRepository implements ContentRepository {
     dataset: Dataset,
     metadata: Partial<DatasetPersistenceMetadata> = {}
   ): Promise<DatasetPersistenceAudit> {
+    if (isPublicProductionDatasetShape(dataset)) {
+      return this.replaceVerifiedPublicDataset(dataset, metadata);
+    }
+
     const expectedMetadata = normalizeMetadata(metadata);
     return db.transaction(
       'rw',
@@ -243,6 +251,15 @@ function normalizeMetadata(
     explanationTemplateVersion: metadata.explanationTemplateVersion ?? '1.0',
     formalDataSpecVersion: metadata.formalDataSpecVersion ?? '1.1'
   };
+}
+
+function isPublicProductionDatasetShape(dataset: Dataset): boolean {
+  return (
+    dataset.schemaVersion === '0.5' &&
+    dataset.questions.length === PUBLIC_PRODUCTION_QUESTION_COUNT &&
+    dataset.materials.length === PUBLIC_PRODUCTION_MATERIAL_COUNT &&
+    dataset.sourceOccurrences.length === PUBLIC_PRODUCTION_OCCURRENCE_COUNT
+  );
 }
 
 async function replaceStoredContent(
