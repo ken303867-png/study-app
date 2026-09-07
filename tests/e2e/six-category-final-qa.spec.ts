@@ -1,5 +1,5 @@
 import { Buffer } from 'node:buffer';
-import { expect, test, type Page } from '@playwright/test';
+import { expect, test, type Locator, type Page } from '@playwright/test';
 
 const choiceNames = ['選択肢A', '選択肢B', '選択肢C', '選択肢D'];
 
@@ -243,7 +243,7 @@ async function openBuilder(page: Page) {
   return page.getByRole('region', { name: '演習セット作成' });
 }
 
-async function selectOnly(builder: ReturnType<Page['getByRole']>, target: RegExp, others: RegExp[]) {
+async function selectOnly(builder: Locator, target: RegExp, others: RegExp[]) {
   for (const other of others) {
     const checkbox = builder.getByRole('checkbox', { name: other });
     if (await checkbox.isChecked()) await checkbox.uncheck();
@@ -367,4 +367,4 @@ test('practices all three specialty categories and preserves predicted-case para
   await practice.getByRole('button', { name: '回答を確定する' }).click();
   await expect(practice.getByRole('status')).toContainText('正解');
   await expect(practice.getByText('正式解答解説')).toBeVisible();
-}
+});
