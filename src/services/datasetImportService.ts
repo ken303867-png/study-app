@@ -36,6 +36,13 @@ export interface DatasetImportResult {
   replacedSupplementalQuestionCount?: number;
 }
 
+type NormalizedImport = {
+  dataset: Dataset;
+  kind: ImportKind;
+  metadata: DatasetPersistenceMetadata;
+  supplementalKey?: string;
+};
+
 export class DatasetImportError extends Error {
   readonly issues: string[];
 
@@ -77,19 +84,16 @@ export async function importDatasetFile(file: File): Promise<DatasetImportResult
 }
 
 export async function importDatasetJsonText(text: string): Promise<DatasetImportResult> {
-  let raw: unknown;
   try {
-    raw = JSON.parse(text) as unknown;
-  } catch {
-    throw new DatasetImportError('JSONとして読み込めません。ファイル形式を確認してください。');
-  }
-
-  try {
-    const normalized = normalizeImport(raw);
+    const normalized = parseJsonImport(text);
     if (normalized.kind === 'supplemental-delivery') {
+      const supplementalKey = normalized.supplementalKey;
+      if (!supplementalKey) {
+        throw new DatasetImportError('追加DeliveryにはsupplementalKeyが必要です。');
+      }
       return await persistSupplementalDataset(
         normalized.dataset,
-        normalized.supplementalKey!,
+        supplementalKey,
         'json',
         normalized.metadata
       );
@@ -100,6 +104,67 @@ export async function importDatasetJsonText(text: string): Promise<DatasetImport
       'json',
       normalized.metadata
     );
+  } catch (error) {
+    throw normalizeImportError(error);
+  }
+}
+
+/**
+ * Public release bootstrap path.
+ *
+ * Validates a Base plus its supplemental JSON payloads completely in memory and performs
+ * exactly one IndexedDB replacement transaction. This prevents partial public-release state
+ * and avoids rewriting the full database once per supplemental dataset.
+ */
+export async function importDatasetJsonTextsAsBatch(
+  texts: readonly string[]
+): Promise<DatasetImportResult> {
+  if (texts.length === 0) {
+    throw new DatasetImportError('一括ImportするJSONデータがありません。');
+  }
+
+  try {
+    const normalizedItems = texts.map((text) => parseJsonImport(text));
+    const base = normalizedItems[0];
+    if (!base || base.kind === 'supplemental-delivery') {
+      throw new DatasetImportError(
+        '一括Importの先頭にはCanonical Masterまたは通常DeliveryのBaseが必要です。'
+      );
+    }
+
+    let merged = base.dataset;
+    const seenSupplementalKeys = new Set<string>();
+
+    for (const item of normalizedItems.slice(1)) {
+      if (item.kind !== 'supplemental-delivery' || !item.supplementalKey) {
+        throw new DatasetImportError(
+          '一括ImportではBaseの後にsupplemental-replace JSONだけを指定してください。'
+        );
+      }
+      if (seenSupplementalKeys.has(item.supplementalKey)) {
+        throw new DatasetImportError(
+          `一括Import内でsupplementalKey「${item.supplementalKey}」が重複しています。`
+        );
+      }
+      seenSupplementalKeys.add(item.supplementalKey);
+      validateSupplementalDataset(item.dataset, item.supplementalKey);
+      merged = mergeSupplementalDataset(merged, item.dataset, item.supplementalKey);
+    }
+
+    const persistenceAudit = await contentRepository.replaceDataset(merged, base.metadata);
+    return {
+      kind: base.kind,
+      sourceFormat: 'json',
+      datasetVersion: merged.datasetVersion,
+      schemaVersion: merged.schemaVersion,
+      formalDataSpecVersion: base.metadata.formalDataSpecVersion,
+      questionCount: merged.questions.length,
+      materialCount: merged.materials.length,
+      sourceCount: merged.sources.length,
+      sourceOccurrenceCount: merged.sourceOccurrences.length,
+      mediaCount: merged.media.length,
+      persistenceAudit
+    };
   } catch (error) {
     throw normalizeImportError(error);
   }
@@ -148,31 +213,7 @@ async function persistSupplementalDataset(
   sourceFormat: ImportSourceFormat,
   metadata: DatasetPersistenceMetadata
 ): Promise<DatasetImportResult> {
-  const supplementalTag = `supplemental:${supplementalKey}`;
-  if (dataset.questions.length === 0) {
-    throw new DatasetImportError('追加データセットに問題がありません。');
-  }
-  if (dataset.materials.length > 0) {
-    throw new DatasetImportError('追加データセットではmaterialsを登録できません。');
-  }
-  if (dataset.questions.some((question) => !question.tags.includes(supplementalTag))) {
-    throw new DatasetImportError(
-      `追加問題には識別tag「${supplementalTag}」を付与してください。`
-    );
-  }
-  if (dataset.sources.some((source) => source.source_group !== supplementalTag)) {
-    throw new DatasetImportError(
-      `追加データのsource_groupは「${supplementalTag}」に統一してください。`
-    );
-  }
-
-  const specialtyImportIssues = validateSpecialtySupplementalImport(dataset, supplementalKey);
-  if (specialtyImportIssues.length > 0) {
-    throw new DatasetImportError(
-      '専門科目追加データの分類QAでエラーを検出したためImportを中止しました。',
-      specialtyImportIssues
-    );
-  }
+  validateSupplementalDataset(dataset, supplementalKey);
 
   const [
     currentQuestions,
@@ -202,42 +243,20 @@ async function persistSupplementalDataset(
     );
   }
 
-  const replacedQuestionIds = new Set(
-    currentQuestions
-      .filter((question) => question.tags.includes(supplementalTag))
-      .map((question) => question.id)
-  );
-  const replacedSourceIds = new Set(
-    currentSources
-      .filter((source) => source.source_group === supplementalTag)
-      .map((source) => source.source_id)
-  );
-
-  const merged = datasetSchema.parse({
+  const current = datasetSchema.parse({
     datasetVersion: datasetMeta?.value ?? dataset.datasetVersion,
     schemaVersion: '0.5',
-    questions: [
-      ...currentQuestions.filter((question) => !replacedQuestionIds.has(question.id)),
-      ...dataset.questions
-    ],
+    questions: currentQuestions,
     materials: currentMaterials,
-    sources: [
-      ...currentSources.filter((source) => !replacedSourceIds.has(source.source_id)),
-      ...dataset.sources
-    ],
-    sourceOccurrences: [
-      ...currentOccurrences.filter(
-        (occurrence) =>
-          !replacedQuestionIds.has(occurrence.canonical_question_id) &&
-          !replacedSourceIds.has(occurrence.source_id)
-      ),
-      ...dataset.sourceOccurrences
-    ],
-    media: [
-      ...currentMedia.filter((media) => !replacedQuestionIds.has(media.canonical_question_id)),
-      ...dataset.media
-    ]
+    sources: currentSources,
+    sourceOccurrences: currentOccurrences,
+    media: currentMedia
   });
+  const supplementalTag = `supplemental:${supplementalKey}`;
+  const replacedSupplementalQuestionCount = current.questions.filter((question) =>
+    question.tags.includes(supplementalTag)
+  ).length;
+  const merged = mergeSupplementalDataset(current, dataset, supplementalKey);
 
   const mergedMetadata: DatasetPersistenceMetadata = {
     explanationTemplateVersion:
@@ -259,16 +278,93 @@ async function persistSupplementalDataset(
     persistenceAudit,
     supplementalKey,
     supplementalQuestionCount: dataset.questions.length,
-    replacedSupplementalQuestionCount: replacedQuestionIds.size
+    replacedSupplementalQuestionCount
   };
 }
 
-function normalizeImport(raw: unknown): {
-  dataset: Dataset;
-  kind: ImportKind;
-  metadata: DatasetPersistenceMetadata;
-  supplementalKey?: string;
-} {
+function validateSupplementalDataset(dataset: Dataset, supplementalKey: string): void {
+  const supplementalTag = `supplemental:${supplementalKey}`;
+  if (dataset.questions.length === 0) {
+    throw new DatasetImportError('追加データセットに問題がありません。');
+  }
+  if (dataset.materials.length > 0) {
+    throw new DatasetImportError('追加データセットではmaterialsを登録できません。');
+  }
+  if (dataset.questions.some((question) => !question.tags.includes(supplementalTag))) {
+    throw new DatasetImportError(
+      `追加問題には識別tag「${supplementalTag}」を付与してください。`
+    );
+  }
+  if (dataset.sources.some((source) => source.source_group !== supplementalTag)) {
+    throw new DatasetImportError(
+      `追加データのsource_groupは「${supplementalTag}」に統一してください。`
+    );
+  }
+
+  const specialtyImportIssues = validateSpecialtySupplementalImport(dataset, supplementalKey);
+  if (specialtyImportIssues.length > 0) {
+    throw new DatasetImportError(
+      '専門科目追加データの分類QAでエラーを検出したためImportを中止しました。',
+      specialtyImportIssues
+    );
+  }
+}
+
+function mergeSupplementalDataset(
+  current: Dataset,
+  supplemental: Dataset,
+  supplementalKey: string
+): Dataset {
+  const supplementalTag = `supplemental:${supplementalKey}`;
+  const replacedQuestionIds = new Set(
+    current.questions
+      .filter((question) => question.tags.includes(supplementalTag))
+      .map((question) => question.id)
+  );
+  const replacedSourceIds = new Set(
+    current.sources
+      .filter((source) => source.source_group === supplementalTag)
+      .map((source) => source.source_id)
+  );
+
+  return datasetSchema.parse({
+    datasetVersion: current.datasetVersion,
+    schemaVersion: '0.5',
+    questions: [
+      ...current.questions.filter((question) => !replacedQuestionIds.has(question.id)),
+      ...supplemental.questions
+    ],
+    materials: current.materials,
+    sources: [
+      ...current.sources.filter((source) => !replacedSourceIds.has(source.source_id)),
+      ...supplemental.sources
+    ],
+    sourceOccurrences: [
+      ...current.sourceOccurrences.filter(
+        (occurrence) =>
+          !replacedQuestionIds.has(occurrence.canonical_question_id) &&
+          !replacedSourceIds.has(occurrence.source_id)
+      ),
+      ...supplemental.sourceOccurrences
+    ],
+    media: [
+      ...current.media.filter((media) => !replacedQuestionIds.has(media.canonical_question_id)),
+      ...supplemental.media
+    ]
+  });
+}
+
+function parseJsonImport(text: string): NormalizedImport {
+  let raw: unknown;
+  try {
+    raw = JSON.parse(text) as unknown;
+  } catch {
+    throw new DatasetImportError('JSONとして読み込めません。ファイル形式を確認してください。');
+  }
+  return normalizeImport(raw);
+}
+
+function normalizeImport(raw: unknown): NormalizedImport {
   if (!isRecord(raw)) {
     throw new DatasetImportError('JSONのルートはobjectである必要があります。');
   }
