@@ -5,7 +5,6 @@ export interface LearningRepositoryContract {
   getAll(): Promise<LearningHistory[]>;
   get(questionId: string): Promise<LearningHistory>;
   recordResult(questionId: string, result: LearningResult): Promise<LearningHistory>;
-  toggleFavorite(questionId: string): Promise<LearningHistory>;
   toggleNeedsReview(questionId: string): Promise<LearningHistory>;
   resetProgress(questionId: string): Promise<LearningHistory>;
 }
@@ -38,15 +37,6 @@ export class LearningRepository implements LearningRepositoryContract {
     });
   }
 
-  async toggleFavorite(questionId: string): Promise<LearningHistory> {
-    return db.transaction('rw', db.learningHistory, async () => {
-      const current = await this.get(questionId);
-      const next: LearningHistory = { ...current, favorite: !current.favorite };
-      await db.learningHistory.put(next);
-      return next;
-    });
-  }
-
   async toggleNeedsReview(questionId: string): Promise<LearningHistory> {
     return db.transaction('rw', db.learningHistory, async () => {
       const current = await this.get(questionId);
@@ -64,7 +54,6 @@ export class LearningRepository implements LearningRepositoryContract {
       const current = await this.get(questionId);
       const next: LearningHistory = {
         ...emptyHistory(questionId),
-        favorite: current.favorite,
         needsReview: current.needsReview ?? false
       };
       await db.learningHistory.put(next);
@@ -87,15 +76,16 @@ export function emptyHistory(questionId: string): LearningHistory {
     consecutiveCorrect: 0,
     lastResult: null,
     lastAnsweredAt: null,
-    favorite: false,
     needsReview: false
   };
 }
 
 function normalizeHistory(history: LearningHistory): LearningHistory {
+  const normalized = { ...history };
+  delete normalized.favorite;
   return {
-    ...history,
-    needsReview: history.needsReview ?? false
+    ...normalized,
+    needsReview: normalized.needsReview ?? false
   };
 }
 

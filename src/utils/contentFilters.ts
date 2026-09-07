@@ -18,7 +18,6 @@ export type LearningStateFilter =
   | 'incorrect'
   | 'uncertain'
   | 'review'
-  | 'favorite'
   | 'completed';
 
 export interface QuestionFilterState {
@@ -107,7 +106,6 @@ function matchesLearningState(
   const attempts = history?.attempts ?? 0;
   if (filter === 'unanswered') return attempts === 0;
   if (filter === 'completed') return attempts > 0;
-  if (filter === 'favorite') return history?.favorite === true;
   if (filter === 'review') return history?.needsReview === true;
   return attempts > 0 && history?.lastResult === filter;
 }

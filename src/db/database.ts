@@ -60,6 +60,20 @@ export class StudyDatabase extends Dexie {
       examSessions: 'id, startedAt, completedAt, completionReason',
       meta: 'key'
     });
+
+    this.version(4).stores({
+      questions: 'id, subject, unit, sourceType, questionFormat, importance, revision, *tags',
+      materials: 'id, subject, unit, importance, revision, *tags',
+      sources: 'source_id, source_group, answer_authority',
+      sourceOccurrences:
+        'source_occurrence_id, canonical_question_id, source_id, source_set_id, source_occurrence_order',
+      media: 'media_id, canonical_question_id, media_type, placement_after, display_order, source_id',
+      mediaBlobs: 'media_id',
+      learningHistory: 'questionId, lastResult, lastAnsweredAt',
+      materialHistory: 'materialId, lastViewedAt, viewed',
+      examSessions: 'id, startedAt, completedAt, completionReason',
+      meta: 'key'
+    });
   }
 }
 

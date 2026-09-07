@@ -2,25 +2,34 @@ import { z } from 'zod';
 import { db } from '../db/database';
 
 export const LEARNING_STATE_BACKUP_FORMAT = 'study-app-learning-state-backup';
-export const LEARNING_STATE_BACKUP_VERSION = 1;
+export const LEARNING_STATE_BACKUP_VERSION = 2;
+const LEGACY_LEARNING_STATE_BACKUP_VERSION = 1;
 
 const learningResultSchema = z.enum(['correct', 'incorrect', 'uncertain']);
 
-const learningHistorySchema = z
-  .object({
-    questionId: z.string().min(1),
-    attempts: z.number().int().nonnegative(),
-    correctCount: z.number().int().nonnegative(),
-    incorrectCount: z.number().int().nonnegative(),
-    uncertainCount: z.number().int().nonnegative(),
-    consecutiveCorrect: z.number().int().nonnegative(),
-    lastResult: learningResultSchema.nullable(),
-    lastAnsweredAt: z.string().datetime().nullable(),
-    favorite: z.boolean(),
-    needsReview: z.boolean().default(false)
-  })
-  .strict()
-  .superRefine((value, ctx) => {
+function stripLegacyFavorite(value: unknown): unknown {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return value;
+  const normalized = { ...(value as Record<string, unknown>) };
+  delete normalized.favorite;
+  return normalized;
+}
+
+const learningHistorySchema = z.preprocess(
+  stripLegacyFavorite,
+  z
+    .object({
+      questionId: z.string().min(1),
+      attempts: z.number().int().nonnegative(),
+      correctCount: z.number().int().nonnegative(),
+      incorrectCount: z.number().int().nonnegative(),
+      uncertainCount: z.number().int().nonnegative(),
+      consecutiveCorrect: z.number().int().nonnegative(),
+      lastResult: learningResultSchema.nullable(),
+      lastAnsweredAt: z.string().datetime().nullable(),
+      needsReview: z.boolean().default(false)
+    })
+    .strict()
+    .superRefine((value, ctx) => {
     const counted = value.correctCount + value.incorrectCount + value.uncertainCount;
     if (counted !== value.attempts) {
       ctx.addIssue({
@@ -37,17 +46,20 @@ const learningHistorySchema = z
         message: '回答回数と直近回答結果の状態が一致しません。'
       });
     }
-  });
+    })
+);
 
-const materialHistorySchema = z
-  .object({
-    materialId: z.string().min(1),
-    favorite: z.boolean(),
-    viewed: z.boolean(),
-    lastViewedAt: z.string().datetime().nullable(),
-    scrollPosition: z.number().finite().nonnegative()
-  })
-  .strict();
+const materialHistorySchema = z.preprocess(
+  stripLegacyFavorite,
+  z
+    .object({
+      materialId: z.string().min(1),
+      viewed: z.boolean(),
+      lastViewedAt: z.string().datetime().nullable(),
+      scrollPosition: z.number().finite().nonnegative()
+    })
+    .strict()
+);
 
 const examSubjectResultSchema = z
   .object({
@@ -124,7 +136,10 @@ const examSessionSchema = z
 const backupSchema = z
   .object({
     format: z.literal(LEARNING_STATE_BACKUP_FORMAT),
-    formatVersion: z.literal(LEARNING_STATE_BACKUP_VERSION),
+    formatVersion: z.union([
+      z.literal(LEGACY_LEARNING_STATE_BACKUP_VERSION),
+      z.literal(LEARNING_STATE_BACKUP_VERSION)
+    ]),
     exportedAt: z.string().datetime(),
     source: z
       .object({

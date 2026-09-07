@@ -144,7 +144,6 @@ export function QuestionFilterPanel({
             <option value="incorrect">直近：不正解</option>
             <option value="uncertain">直近：不確実</option>
             <option value="review">要復習</option>
-            <option value="favorite">お気に入り</option>
             <option value="completed">学習済み</option>
           </select>
         </label>

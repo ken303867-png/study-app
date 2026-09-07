@@ -46,7 +46,6 @@ export function PracticeMode({
   timerMinutes = 0,
   onRecordResult,
   onSaveExamSession,
-  onToggleFavorite,
   onToggleReview,
   onExit,
   renderExplanation
@@ -57,7 +56,6 @@ export function PracticeMode({
   timerMinutes?: ExamTimerMinutes;
   onRecordResult: (questionId: string, result: LearningResult) => Promise<void>;
   onSaveExamSession?: (session: ExamSession) => Promise<void>;
-  onToggleFavorite: (questionId: string) => Promise<void>;
   onToggleReview: (questionId: string) => Promise<void>;
   onExit: () => void;
   renderExplanation: (question: Question) => ReactNode;
@@ -416,13 +414,6 @@ export function PracticeMode({
               onClick={() => void onToggleReview(currentQuestion.id)}
             >
               {history?.needsReview ? '要復習 ✓' : '要復習'}
-            </button>
-            <button
-              type="button"
-              aria-pressed={history?.favorite === true}
-              onClick={() => void onToggleFavorite(currentQuestion.id)}
-            >
-              {history?.favorite ? 'お気に入り ★' : 'お気に入り ☆'}
             </button>
           </div>
         )}

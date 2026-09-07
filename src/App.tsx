@@ -332,10 +332,6 @@ export default function App() {
     await examSessionRepository.save(session);
   };
 
-  const toggleFavorite = async (questionId: string) => {
-    replaceHistory(await learningRepository.toggleFavorite(questionId));
-  };
-
   const toggleReview = async (questionId: string) => {
     replaceHistory(await learningRepository.toggleNeedsReview(questionId));
   };
@@ -566,7 +562,6 @@ export default function App() {
                     targeted={focusedQuestionId === question.id}
                     onOpenMaterial={openMaterial}
                     onRecord={(result) => void recordLearningResult(question.id, result)}
-                    onToggleFavorite={() => void toggleFavorite(question.id)}
                     onToggleReview={() => void toggleReview(question.id)}
                     onReset={() => void resetProgress(question.id)}
                   />
@@ -617,7 +612,6 @@ export default function App() {
             timerMinutes={practiceTimerMinutes}
             onRecordResult={recordLearningResult}
             onSaveExamSession={saveExamSession}
-            onToggleFavorite={toggleFavorite}
             onToggleReview={toggleReview}
             onExit={() => openView('questions')}
             renderExplanation={(question) => (
