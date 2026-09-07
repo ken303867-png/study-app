@@ -1,0 +1,86 @@
+.learning-state-backup-shell {
+  max-width: 1180px;
+  margin: 10px auto 0;
+  padding: 0 16px;
+}
+
+.learning-state-backup-toggle {
+  min-height: 40px;
+}
+
+.learning-state-backup-panel {
+  display: grid;
+  gap: 14px;
+  margin-top: 10px;
+  padding: 18px;
+  border: 1px solid #d7dee8;
+  border-radius: 14px;
+  background: #ffffff;
+  box-shadow: 0 8px 24px rgb(29 50 74 / 8%);
+}
+
+.learning-state-backup-panel h2 {
+  margin: 0 0 6px;
+  font-size: 1.05rem;
+}
+
+.learning-state-backup-panel p {
+  margin: 0;
+}
+
+.learning-state-backup-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+.learning-state-restore-input {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 8px 14px;
+  border: 1px solid #9baaba;
+  border-radius: 8px;
+  background: #ffffff;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.learning-state-restore-input input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  clip-path: inset(50%);
+}
+
+.learning-state-restore-input:has(input:focus-visible) {
+  outline: 3px solid currentColor;
+  outline-offset: 2px;
+}
+
+.learning-state-restore-input:has(input:disabled) {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.learning-state-backup-caution {
+  color: #5a6674;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 640px) {
+  .learning-state-backup-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .learning-state-backup-actions > button,
+  .learning-state-restore-input {
+    width: 100%;
+  }
+}
