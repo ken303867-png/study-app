@@ -120,12 +120,13 @@ export async function importDatasetJsonText(text: string): Promise<DatasetImport
 export async function importDatasetJsonTextsAsBatch(
   texts: readonly string[]
 ): Promise<DatasetImportResult> {
-  if (texts.length === 0) {
+  const baseText = texts[0];
+  if (!baseText) {
     throw new DatasetImportError('一括ImportするJSONデータがありません。');
   }
 
   try {
-    const base = parseJsonImport(texts[0]);
+    const base = parseJsonImport(baseText);
     if (base.kind === 'supplemental-delivery') {
       throw new DatasetImportError(
         '一括Importの先頭にはCanonical Masterまたは通常DeliveryのBaseが必要です。'
