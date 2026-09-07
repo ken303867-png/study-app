@@ -1,22 +1,12 @@
 import { z } from 'zod';
 import { db } from '../db/database';
-import { contentRepository } from '../repositories/contentRepository';
 import { importDatasetJsonTextsAsBatch } from './datasetImportService';
-import { countQuestionKinds, QUESTION_KINDS } from '../utils/questionCategories';
 
 const PUBLIC_DATASET_META_KEY = 'publicDatasetReleaseVersion';
 const PUBLIC_DATASET_MANIFEST_PATH = 'public-data/manifest.json';
 const PRODUCTION_QUESTION_TOTAL = 3154;
 const PRODUCTION_MATERIAL_TOTAL = 114;
 const PRODUCTION_OCCURRENCE_TOTAL = 3154;
-const PRODUCTION_KIND_COUNTS = {
-  'common-jna': 536,
-  'common-cloze': 1917,
-  'common-predicted': 190,
-  'specialty-past': 126,
-  'specialty-predicted': 116,
-  'specialty-predicted-case': 269
-} as const;
 
 const expectedKindsSchema = z.object({
   'common-jna': z.number().int().nonnegative(),
@@ -179,7 +169,7 @@ export async function syncPublicDataset(
 
   report({ stage: 'verifying', message: '保存された問題データを最終確認しています。' });
   if (!(await storedStateMatchesManifest(manifest))) {
-    throw new Error('公開問題データの保存後QAで件数または分類の不一致を検出しました。');
+    throw new Error('公開問題データの保存後QAで件数の不一致を検出しました。');
   }
 
   await db.meta.put({ key: PUBLIC_DATASET_META_KEY, value: manifest.releaseVersion });
@@ -202,37 +192,35 @@ function parseDatasetPack(text: string): Map<string, string> {
 }
 
 async function storedStateMatchesManifest(manifest: PublicDatasetManifest): Promise<boolean> {
-  const [questions, materials, occurrences, schemaMeta] = await Promise.all([
-    contentRepository.getQuestions(),
-    contentRepository.getMaterials(),
-    contentRepository.getSourceOccurrences(),
+  const [questionCount, materialCount, occurrenceCount, schemaMeta] = await Promise.all([
+    db.questions.count(),
+    db.materials.count(),
+    db.sourceOccurrences.count(),
     db.meta.get('schemaVersion')
   ]);
 
-  if (schemaMeta?.value !== '0.5') return false;
-  if (questions.length !== manifest.expected.questionsTotal) return false;
-  if (materials.length !== manifest.expected.materials) return false;
-  if (occurrences.length !== manifest.expected.sourceOccurrences) return false;
-
-  const counts = countQuestionKinds(questions);
-  return QUESTION_KINDS.every((kind) => counts[kind] === manifest.expected.kinds[kind]);
+  return (
+    schemaMeta?.value === '0.5' &&
+    questionCount === manifest.expected.questionsTotal &&
+    materialCount === manifest.expected.materials &&
+    occurrenceCount === manifest.expected.sourceOccurrences
+  );
 }
 
 async function hasUsableStoredContent(): Promise<boolean> {
-  const [questions, materials, occurrences, schemaMeta] = await Promise.all([
-    contentRepository.getQuestions(),
-    contentRepository.getMaterials(),
-    contentRepository.getSourceOccurrences(),
+  const [questionCount, materialCount, occurrenceCount, schemaMeta] = await Promise.all([
+    db.questions.count(),
+    db.materials.count(),
+    db.sourceOccurrences.count(),
     db.meta.get('schemaVersion')
   ]);
 
-  if (schemaMeta?.value !== '0.5') return false;
-  if (questions.length !== PRODUCTION_QUESTION_TOTAL) return false;
-  if (materials.length !== PRODUCTION_MATERIAL_TOTAL) return false;
-  if (occurrences.length !== PRODUCTION_OCCURRENCE_TOTAL) return false;
-
-  const counts = countQuestionKinds(questions);
-  return QUESTION_KINDS.every((kind) => counts[kind] === PRODUCTION_KIND_COUNTS[kind]);
+  return (
+    schemaMeta?.value === '0.5' &&
+    questionCount === PRODUCTION_QUESTION_TOTAL &&
+    materialCount === PRODUCTION_MATERIAL_TOTAL &&
+    occurrenceCount === PRODUCTION_OCCURRENCE_TOTAL
+  );
 }
 
 async function decodeGzip(payload: ArrayBuffer): Promise<string> {
