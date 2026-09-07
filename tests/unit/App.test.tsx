@@ -5,7 +5,7 @@ import App from '../../src/App';
 describe('App', () => {
   it('renders the schema 0.5 public-data offline PWA application shell', () => {
     render(<App />);
-    expect(screen.getByRole('heading', { name: '学習アプリ v0.19.0' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: '学習アプリ v0.20.0' })).toBeInTheDocument();
     expect(screen.getByText('PUBLIC DATA / LOCAL HISTORY')).toBeInTheDocument();
     expect(screen.getByText(/Delivery Schema 0\.5/)).toBeInTheDocument();
     expect(screen.getByText(/Offline PWA/)).toBeInTheDocument();
