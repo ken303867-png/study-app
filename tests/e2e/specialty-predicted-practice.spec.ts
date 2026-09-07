@@ -1,5 +1,5 @@
 import { Buffer } from 'node:buffer';
-import { expect, test } from '@playwright/test';
+import { expect, test, type Page } from '@playwright/test';
 
 function makeSupplemental({
   key,
@@ -109,7 +109,7 @@ function makeSupplemental({
   };
 }
 
-async function importSupplemental(page: Parameters<typeof test>[0] extends never ? never : any, name: string, data: unknown) {
+async function importSupplemental(page: Page, name: string, data: unknown) {
   await page.goto('/');
   await page.getByRole('button', { name: 'データ管理' }).click();
   await page.getByLabel('正式データExcelまたはJSONファイル').setInputFiles({
@@ -119,7 +119,7 @@ async function importSupplemental(page: Parameters<typeof test>[0] extends never
   });
 }
 
-async function answerFirstQuestion(page: Parameters<typeof test>[0] extends never ? never : any) {
+async function answerFirstQuestion(page: Page) {
   const practice = page.getByRole('region', { name: '1問ずつ演習' });
   await practice.getByRole('radio', { name: /A\s*選択肢A/ }).check();
   await practice.getByRole('button', { name: '回答を確定する' }).click();
@@ -152,9 +152,13 @@ test('imports a specialty predicted supplemental and practices it in the predict
   await builder.getByRole('button', { name: '1問の演習を開始' }).click();
 
   const practice = page.getByRole('region', { name: '1問ずつ演習' });
-  await expect(practice.getByText('専門科目の予想問題表示確認用です。正しい選択肢はどれですか。')).toBeVisible();
+  await expect(
+    practice.getByText('専門科目の予想問題表示確認用です。正しい選択肢はどれですか。')
+  ).toBeVisible();
   await answerFirstQuestion(page);
-  await expect(practice.getByText('専門予想問題のQA fixtureでは選択肢Aを正式正答として設定している。')).toBeVisible();
+  await expect(
+    practice.getByText('専門予想問題のQA fixtureでは選択肢Aを正式正答として設定している。')
+  ).toBeVisible();
 });
 
 test('imports a specialty predicted case supplemental and practices it in the case category', async ({ page }) => {
@@ -184,5 +188,7 @@ test('imports a specialty predicted case supplemental and practices it in the ca
   await expect(practice.getByText('患者背景を踏まえて判断します。')).toBeVisible();
   await expect(practice.getByText('最も適切な選択肢はどれですか。')).toBeVisible();
   await answerFirstQuestion(page);
-  await expect(practice.getByText('専門予想事例問題のQA fixtureでは選択肢Aを正式正答として設定している。')).toBeVisible();
+  await expect(
+    practice.getByText('専門予想事例問題のQA fixtureでは選択肢Aを正式正答として設定している。')
+  ).toBeVisible();
 });
