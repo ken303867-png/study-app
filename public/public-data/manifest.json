@@ -16,10 +16,17 @@
     }
   },
   "bundle": {
-    "path": "study-app-public-dataset-3251-20260914-v1.0.pack.gz",
+    "path": "study-app-public-dataset-3154-20260907-v1.0.pack.gz",
     "compression": "gzip",
-    "sha256": "924dcdcfae4dba2e6ab7c4ded14a3c27c793683442163b948906372e5905847c"
+    "sha256": "7cc5b510470e0343c92b2974c4b8856495ac1e980dadf7e9d31347ed6b7b5cfe"
   },
+  "overlays": [
+    {
+      "path": "common-cloze-2014-20260914-v2.0.pack.gz",
+      "compression": "gzip",
+      "sha256": "9b2322c528caf098993f80db045c6f12495a8b6147f2b451ddecce849a75ce61"
+    }
+  ],
   "datasets": [
     {"order":1,"role":"common-base","originalSha256":"423bae216826b302816953031d46db03f6df3711f9a07f67b825502fa0ad1a71","questionCount":726},
     {"order":2,"role":"common-cloze","originalSha256":"0dfe8cc8f51ec0a008f8ac28b18b09055ec7ef0368be6c4629611d19b4076ec9","questionCount":2014},
