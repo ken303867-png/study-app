@@ -41,10 +41,10 @@ function scanStrings(value, path = '$', issues = []) {
 
 assert(manifest.schemaVersion === 1, 'manifest schemaVersion must be 1');
 assert(manifest.appMinVersion === '0.17.0', 'appMinVersion must be 0.17.0');
-assert(manifest.expected.questionsTotal === 3154, 'expected total must be 3154');
+assert(manifest.expected.questionsTotal === 3251, 'expected total must be 3251');
 assert(manifest.expected.materials === 114, 'expected materials must be 114');
-assert(manifest.expected.sourceOccurrences === 3154, 'expected sourceOccurrences must be 3154');
-assert(bundle.length === 1708205, `bundle size mismatch: ${bundle.length}`);
+assert(manifest.expected.sourceOccurrences === 3251, 'expected sourceOccurrences must be 3251');
+assert(bundle.length === 1719267, `bundle size mismatch: ${bundle.length}`);
 assert(sha256(bundle) === manifest.bundle.sha256, 'bundle SHA-256 mismatch');
 
 const packText = gunzipSync(bundle).toString('utf8');
@@ -94,7 +94,7 @@ assert(jnaCount === 536, `common-jna count mismatch: ${jnaCount}`);
 assert(commonPredictedCount === 190, `common-predicted count mismatch: ${commonPredictedCount}`);
 
 const supplementals = [
-  ['common-cloze', commonCloze, 1917, 'common-cloze'],
+  ['common-cloze', commonCloze, 2014, 'common-cloze'],
   ['specialty-past', specialtyPast, 126, 'specialty-past'],
   ['specialty-predicted', specialtyPredicted, 116, 'specialty-predicted'],
   ['specialty-predicted-case', specialtyPredictedCase, 269, 'specialty-predicted-case']
@@ -163,4 +163,4 @@ console.log(`release=${manifest.releaseVersion}`);
 console.log(`bundleBytes=${bundle.length}`);
 console.log(`bundleSha256=${sha256(bundle)}`);
 console.log(`questions=${totalQuestions} materials=${base.sheets.MATERIALS.length} occurrences=${totalOccurrences}`);
-console.log('categories=536/1917/190/126/116/269');
+console.log('categories=536/2014/190/126/116/269');
