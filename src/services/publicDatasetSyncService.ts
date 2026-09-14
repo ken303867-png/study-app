@@ -249,7 +249,7 @@ function decodeBase64(value: string): ArrayBuffer {
   for (let index = 0; index < binary.length; index += 1) {
     bytes[index] = binary.charCodeAt(index);
   }
-  return bytes.buffer as ArrayBuffer;
+  return bytes.buffer;
 }
 
 function parseDatasetPack(text: string): Map<string, string> {
