@@ -2,7 +2,7 @@ import { expect, test } from '@playwright/test';
 
 test.describe.configure({ retries: 0 });
 
-test('fresh public URL bootstraps the real 3,154-question production dataset', async ({ page }, testInfo) => {
+test('fresh public URL bootstraps the real 3,251-question production dataset', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== 'chromium', 'Full production bootstrap is covered once on desktop Chromium.');
   test.setTimeout(120_000);
 
@@ -27,24 +27,24 @@ test('fresh public URL bootstraps the real 3,154-question production dataset', a
   }
 
   await expect(appHeading).toBeVisible();
-  await expect(page.getByText('全3,154問を利用できます。学習履歴はこの端末に保存されます。')).toBeVisible();
+  await expect(page.getByText('全3,251問を利用できます。学習履歴はこの端末に保存されます。')).toBeVisible();
   await expect(page.getByText('PUBLIC DATA / LOCAL HISTORY')).toBeHidden();
   await expect(page.getByText('Delivery Schema 0.5 / Offline PWA')).toBeHidden();
   await expect(page.getByRole('button', { name: 'データ管理', exact: true })).toBeHidden();
 
   const homeMetrics = page.locator('.hero-card .metric-grid');
-  await expect(homeMetrics.getByText('3154', { exact: true }).first()).toBeVisible();
+  await expect(homeMetrics.getByText('3251', { exact: true }).first()).toBeVisible();
   await expect(homeMetrics.getByText('726', { exact: true })).toBeHidden();
-  await expect(homeMetrics.getByText('2428', { exact: true })).toBeHidden();
+  await expect(homeMetrics.getByText('2525', { exact: true })).toBeHidden();
   await expect(homeMetrics.getByText('114', { exact: true })).toBeVisible();
 
   await page.getByRole('button', { name: '演習', exact: true }).click();
   await expect(page.getByRole('heading', { name: '演習セットを作成' })).toBeVisible();
 
-  await expect(page.getByRole('radio', { name: /共通科目\s*2643問/ })).toBeChecked();
+  await expect(page.getByRole('radio', { name: /共通科目\s*2740問/ })).toBeChecked();
   await expect(page.getByRole('radio', { name: /専門科目\s*511問/ })).toBeVisible();
   await expect(page.getByRole('checkbox', { name: /看護協会Eラーニング\s*536問/ })).toBeChecked();
-  await expect(page.getByRole('checkbox', { name: /穴抜き問題\s*1917問/ })).toBeChecked();
+  await expect(page.getByRole('checkbox', { name: /穴抜き問題\s*2014問/ })).toBeChecked();
   await expect(page.getByRole('checkbox', { name: /予想問題\s*190問/ })).toBeChecked();
   await expect(page.getByLabel('出題数')).toHaveValue('20');
 
