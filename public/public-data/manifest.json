@@ -22,8 +22,36 @@
   },
   "overlays": [
     {
-      "path": "common-cloze-2014-20260914-v2.0.pack.gz",
+      "chunks": [
+        "common-cloze-2014-20260914-v2.0/000.b64",
+        "common-cloze-2014-20260914-v2.0/001.b64",
+        "common-cloze-2014-20260914-v2.0/002.b64",
+        "common-cloze-2014-20260914-v2.0/003.b64",
+        "common-cloze-2014-20260914-v2.0/004.b64",
+        "common-cloze-2014-20260914-v2.0/005.b64",
+        "common-cloze-2014-20260914-v2.0/006.b64",
+        "common-cloze-2014-20260914-v2.0/007a1.b64",
+        "common-cloze-2014-20260914-v2.0/007a2.b64",
+        "common-cloze-2014-20260914-v2.0/007b.b64",
+        "common-cloze-2014-20260914-v2.0/008.b64",
+        "common-cloze-2014-20260914-v2.0/009.b64",
+        "common-cloze-2014-20260914-v2.0/010.b64",
+        "common-cloze-2014-20260914-v2.0/011a.b64",
+        "common-cloze-2014-20260914-v2.0/011b.b64",
+        "common-cloze-2014-20260914-v2.0/012a.b64",
+        "common-cloze-2014-20260914-v2.0/012b.b64",
+        "common-cloze-2014-20260914-v2.0/013a1.b64",
+        "common-cloze-2014-20260914-v2.0/013a2.b64",
+        "common-cloze-2014-20260914-v2.0/013b.b64",
+        "common-cloze-2014-20260914-v2.0/014.b64",
+        "common-cloze-2014-20260914-v2.0/015a.b64",
+        "common-cloze-2014-20260914-v2.0/015b.b64",
+        "common-cloze-2014-20260914-v2.0/016a.b64"
+      ],
+      "encoding": "base64",
       "compression": "gzip",
+      "compressedBytes": 245794,
+      "base64Length": 327728,
       "sha256": "9b2322c528caf098993f80db045c6f12495a8b6147f2b451ddecce849a75ce61"
     }
   ],
