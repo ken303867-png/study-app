@@ -4,9 +4,9 @@ import { importDatasetJsonTextsAsBatch } from './datasetImportService';
 
 const PUBLIC_DATASET_META_KEY = 'publicDatasetReleaseVersion';
 const PUBLIC_DATASET_MANIFEST_PATH = 'public-data/manifest.json';
-const PRODUCTION_QUESTION_TOTAL = 3154;
+const PRODUCTION_QUESTION_TOTAL = 3251;
 const PRODUCTION_MATERIAL_TOTAL = 114;
-const PRODUCTION_OCCURRENCE_TOTAL = 3154;
+const PRODUCTION_OCCURRENCE_TOTAL = 3251;
 
 const expectedKindsSchema = z.object({
   'common-jna': z.number().int().nonnegative(),
