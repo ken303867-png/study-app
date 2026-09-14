@@ -1,14 +1,14 @@
 import { expect, test, type Page } from '@playwright/test';
 import { sampleDataset } from '../../src/data/sampleDataset';
 
-test('release QA: 726 base + 114 materials + 1917 cloze persist as 2643 questions', async ({
+test('release QA: 726 base + 114 materials + 2014 cloze persist as 2740 questions', async ({
   page
 }) => {
   test.setTimeout(180_000);
   const formalBase = buildFormalBaseDataset(726, 114);
-  const clozeV1 = buildSupplementalClozeDataset(1917, 'v1');
-  const clozeV2 = buildSupplementalClozeDataset(1917, 'v2');
-  const clozeV3 = buildSupplementalClozeDataset(1917, 'v3');
+  const clozeV1 = buildSupplementalClozeDataset(2014, 'v1');
+  const clozeV2 = buildSupplementalClozeDataset(2014, 'v2');
+  const clozeV3 = buildSupplementalClozeDataset(2014, 'v3');
 
   await page.goto('/');
   await page.getByRole('button', { name: 'データ管理' }).click();
@@ -23,29 +23,29 @@ test('release QA: 726 base + 114 materials + 1917 cloze persist as 2643 question
 
   await seedLearningHistory(page, 'SYN-FORMAL-001');
 
-  await uploadJson(page, 'synthetic-cloze-1917-v1.json', clozeV1);
+  await uploadJson(page, 'synthetic-cloze-2014-v1.json', clozeV1);
   await expect(page.getByRole('status')).toContainText(
-    '追加1917問 / 置換0問 / 現在2643問 / Schema 0.5',
+    '追加2014問 / 置換0問 / 現在2740問 / Schema 0.5',
     { timeout: 30_000 }
   );
   await expect(page.getByText(/正式Base: OK/)).toBeVisible();
   await expect(page.getByText(/共通穴抜き: OK/)).toBeVisible();
   expect(await readCounts(page)).toEqual({
-    questions: 2643,
+    questions: 2740,
     materials: 114,
-    sourceOccurrences: 2643,
+    sourceOccurrences: 2740,
     learningHistory: 1
   });
 
-  await uploadJson(page, 'synthetic-cloze-1917-v2.json', clozeV2);
+  await uploadJson(page, 'synthetic-cloze-2014-v2.json', clozeV2);
   await expect(page.getByRole('status')).toContainText(
-    '追加1917問 / 置換1917問 / 現在2643問 / Schema 0.5',
+    '追加2014問 / 置換2014問 / 現在2740問 / Schema 0.5',
     { timeout: 30_000 }
   );
   expect(await readCounts(page)).toEqual({
-    questions: 2643,
+    questions: 2740,
     materials: 114,
-    sourceOccurrences: 2643,
+    sourceOccurrences: 2740,
     learningHistory: 1
   });
 
@@ -63,9 +63,9 @@ test('release QA: 726 base + 114 materials + 1917 cloze persist as 2643 question
   });
 
   // 正式運用順序どおり、Base更新後にsupplementalを再投入する。
-  await uploadJson(page, 'synthetic-cloze-1917-v3.json', clozeV3);
+  await uploadJson(page, 'synthetic-cloze-2014-v3.json', clozeV3);
   await expect(page.getByRole('status')).toContainText(
-    '追加1917問 / 置換0問 / 現在2643問 / Schema 0.5',
+    '追加2014問 / 置換0問 / 現在2740問 / Schema 0.5',
     { timeout: 30_000 }
   );
   await expect(page.getByText(/正式Base: OK/)).toBeVisible();
@@ -74,20 +74,20 @@ test('release QA: 726 base + 114 materials + 1917 cloze persist as 2643 question
   await page.reload();
   await expect(
     page.locator('.metric-grid div').filter({ hasText: '全問題' }).locator('strong')
-  ).toHaveText('2643');
+  ).toHaveText('2740');
   await expect(
     page.locator('.metric-grid div').filter({ hasText: '正式Base' }).locator('strong')
   ).toHaveText('726');
   await expect(
     page.locator('.metric-grid div').filter({ hasText: '追加問題' }).locator('strong')
-  ).toHaveText('1917');
+  ).toHaveText('2014');
   await expect(
     page.locator('.metric-grid div').filter({ hasText: '資料' }).locator('strong')
   ).toHaveText('114');
   expect(await readCounts(page)).toEqual({
-    questions: 2643,
+    questions: 2740,
     materials: 114,
-    sourceOccurrences: 2643,
+    sourceOccurrences: 2740,
     learningHistory: 1
   });
 });
