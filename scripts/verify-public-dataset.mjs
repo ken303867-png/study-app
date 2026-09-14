@@ -49,6 +49,23 @@ function mergePack(bundle, packed) {
   }
 }
 
+async function readBundle(descriptor) {
+  if (descriptor.path) {
+    return readFile(new URL(`public/public-data/${descriptor.path}`, ROOT));
+  }
+
+  assert(Array.isArray(descriptor.chunks) && descriptor.chunks.length > 0, 'chunked bundle must have chunks');
+  assert(descriptor.encoding === 'base64', 'chunked bundle encoding must be base64');
+  const parts = await Promise.all(
+    descriptor.chunks.map((chunkPath) => readFile(new URL(`public/public-data/${chunkPath}`, ROOT), 'utf8'))
+  );
+  const base64Text = parts.join('');
+  assert(base64Text.length === descriptor.base64Length, `chunked base64 length mismatch: ${base64Text.length}`);
+  const bundle = Buffer.from(base64Text, 'base64');
+  assert(bundle.length === descriptor.compressedBytes, `chunked bundle size mismatch: ${bundle.length}`);
+  return bundle;
+}
+
 assert(manifest.schemaVersion === 1, 'manifest schemaVersion must be 1');
 assert(manifest.appMinVersion === '0.17.0', 'appMinVersion must be 0.17.0');
 assert(manifest.expected.questionsTotal === 3251, 'expected total must be 3251');
@@ -61,14 +78,16 @@ assert(bundleDescriptors.length === 2, `expected base + one overlay, got ${bundl
 const packed = new Map();
 let totalBundleBytes = 0;
 for (const descriptor of bundleDescriptors) {
-  const bundleUrl = new URL(`public/public-data/${descriptor.path}`, ROOT);
-  const bundle = await readFile(bundleUrl);
+  const bundle = await readBundle(descriptor);
   totalBundleBytes += bundle.length;
-  assert(sha256(bundle) === descriptor.sha256, `${descriptor.path}: bundle SHA-256 mismatch`);
+  const descriptorName = descriptor.path ?? `chunks:${descriptor.chunks.length}`;
+  assert(sha256(bundle) === descriptor.sha256, `${descriptorName}: bundle SHA-256 mismatch`);
   if (descriptor.path === 'study-app-public-dataset-3154-20260907-v1.0.pack.gz') {
     assert(bundle.length === 1708205, `base bundle size mismatch: ${bundle.length}`);
   }
-  if (descriptor.path === 'common-cloze-2014-20260914-v2.0.pack.gz') {
+  if (descriptor.chunks) {
+    assert(descriptor.chunks.length === 24, `overlay chunk count mismatch: ${descriptor.chunks.length}`);
+    assert(descriptor.base64Length === 327728, `overlay base64 length mismatch: ${descriptor.base64Length}`);
     assert(bundle.length === 245794, `overlay bundle size mismatch: ${bundle.length}`);
   }
   mergePack(bundle, packed);
