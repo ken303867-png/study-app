@@ -15,9 +15,9 @@ import {
   type DatasetPersistenceMetadata
 } from './datasetPersistenceAudit';
 
-const PUBLIC_PRODUCTION_QUESTION_COUNT = 3154;
+const PUBLIC_PRODUCTION_QUESTION_COUNT = 3251;
 const PUBLIC_PRODUCTION_MATERIAL_COUNT = 114;
-const PUBLIC_PRODUCTION_OCCURRENCE_COUNT = 3154;
+const PUBLIC_PRODUCTION_OCCURRENCE_COUNT = 3251;
 
 export interface ContentRepository {
   getQuestions(): Promise<Question[]>;
