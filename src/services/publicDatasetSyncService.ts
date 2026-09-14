@@ -17,6 +17,12 @@ const expectedKindsSchema = z.object({
   'specialty-predicted-case': z.number().int().nonnegative()
 });
 
+const publicDatasetBundleSchema = z.object({
+  path: z.string().min(1),
+  compression: z.literal('gzip'),
+  sha256: z.string().regex(/^[0-9a-f]{64}$/)
+});
+
 const publicDatasetManifestSchema = z.object({
   schemaVersion: z.literal(1),
   releaseVersion: z.string().min(1),
@@ -27,11 +33,8 @@ const publicDatasetManifestSchema = z.object({
     sourceOccurrences: z.number().int().nonnegative(),
     kinds: expectedKindsSchema
   }),
-  bundle: z.object({
-    path: z.string().min(1),
-    compression: z.literal('gzip'),
-    sha256: z.string().regex(/^[0-9a-f]{64}$/)
-  }),
+  bundle: publicDatasetBundleSchema,
+  overlays: z.array(publicDatasetBundleSchema).optional(),
   datasets: z
     .array(
       z.object({
@@ -129,17 +132,32 @@ export async function syncPublicDataset(
     return { status: 'up-to-date', releaseVersion: manifest.releaseVersion };
   }
 
-  report({ stage: 'downloading', message: '公開問題データを取得しています。', current: 1, total: 1 });
-  const bundleResponse = await fetchImpl(`${baseUrl}public-data/${manifest.bundle.path}`, {
-    cache: 'no-store'
-  });
-  if (!bundleResponse.ok) {
-    throw new Error(`公開問題データを取得できませんでした（HTTP ${bundleResponse.status}）。`);
+  const bundleDescriptors = [manifest.bundle, ...(manifest.overlays ?? [])];
+  const datasets = new Map<string, string>();
+
+  for (let index = 0; index < bundleDescriptors.length; index += 1) {
+    const descriptor = bundleDescriptors[index];
+    report({
+      stage: 'downloading',
+      message: '公開問題データを取得しています。',
+      current: index + 1,
+      total: bundleDescriptors.length
+    });
+    const response = await fetchImpl(`${baseUrl}public-data/${descriptor.path}`, {
+      cache: 'no-store'
+    });
+    if (!response.ok) {
+      throw new Error(`公開問題データを取得できませんでした（HTTP ${response.status}）。`);
+    }
+
+    const payload = await response.arrayBuffer();
+    const packText = await decodeFetchedPack(payload, descriptor.sha256);
+    const packedDatasets = parseDatasetPack(packText);
+    for (const [role, text] of packedDatasets) {
+      datasets.set(role, text);
+    }
   }
 
-  const payload = await bundleResponse.arrayBuffer();
-  const packText = await decodeFetchedPack(payload, manifest.bundle.sha256);
-  const datasets = parseDatasetPack(packText);
   const orderedDatasets = [...manifest.datasets].sort((a, b) => a.order - b.order);
   const orderedTexts: string[] = [];
 
