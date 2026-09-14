@@ -5,8 +5,6 @@ import { gunzipSync } from 'node:zlib';
 const ROOT = new URL('../', import.meta.url);
 const manifestUrl = new URL('public/public-data/manifest.json', ROOT);
 const manifest = JSON.parse(await readFile(manifestUrl, 'utf8'));
-const bundleUrl = new URL(`public/public-data/${manifest.bundle.path}`, ROOT);
-const bundle = await readFile(bundleUrl);
 
 function sha256(value) {
   return createHash('sha256').update(value).digest('hex');
@@ -39,25 +37,60 @@ function scanStrings(value, path = '$', issues = []) {
   return issues;
 }
 
+function mergePack(bundle, packed) {
+  const packText = gunzipSync(bundle).toString('utf8');
+  const lines = packText.split('\n').filter(Boolean);
+  for (const line of lines) {
+    const separator = line.indexOf('\t');
+    assert(separator > 0, 'invalid pack line');
+    const role = line.slice(0, separator);
+    const jsonText = line.slice(separator + 1);
+    packed.set(role, { jsonText, data: JSON.parse(jsonText) });
+  }
+}
+
+async function readBundle(descriptor) {
+  if (descriptor.path) {
+    return readFile(new URL(`public/public-data/${descriptor.path}`, ROOT));
+  }
+
+  assert(Array.isArray(descriptor.chunks) && descriptor.chunks.length > 0, 'chunked bundle must have chunks');
+  assert(descriptor.encoding === 'base64', 'chunked bundle encoding must be base64');
+  const parts = await Promise.all(
+    descriptor.chunks.map((chunkPath) => readFile(new URL(`public/public-data/${chunkPath}`, ROOT), 'utf8'))
+  );
+  const base64Text = parts.join('');
+  assert(base64Text.length === descriptor.base64Length, `chunked base64 length mismatch: ${base64Text.length}`);
+  const bundle = Buffer.from(base64Text, 'base64');
+  assert(bundle.length === descriptor.compressedBytes, `chunked bundle size mismatch: ${bundle.length}`);
+  return bundle;
+}
+
 assert(manifest.schemaVersion === 1, 'manifest schemaVersion must be 1');
 assert(manifest.appMinVersion === '0.17.0', 'appMinVersion must be 0.17.0');
-assert(manifest.expected.questionsTotal === 3154, 'expected total must be 3154');
+assert(manifest.expected.questionsTotal === 3251, 'expected total must be 3251');
 assert(manifest.expected.materials === 114, 'expected materials must be 114');
-assert(manifest.expected.sourceOccurrences === 3154, 'expected sourceOccurrences must be 3154');
-assert(bundle.length === 1708205, `bundle size mismatch: ${bundle.length}`);
-assert(sha256(bundle) === manifest.bundle.sha256, 'bundle SHA-256 mismatch');
+assert(manifest.expected.sourceOccurrences === 3251, 'expected sourceOccurrences must be 3251');
 
-const packText = gunzipSync(bundle).toString('utf8');
-const lines = packText.split('\n').filter(Boolean);
+const bundleDescriptors = [manifest.bundle, ...(manifest.overlays ?? [])];
+assert(bundleDescriptors.length === 2, `expected base + one overlay, got ${bundleDescriptors.length}`);
+
 const packed = new Map();
-
-for (const line of lines) {
-  const separator = line.indexOf('\t');
-  assert(separator > 0, 'invalid pack line');
-  const role = line.slice(0, separator);
-  const jsonText = line.slice(separator + 1);
-  assert(!packed.has(role), `duplicate role: ${role}`);
-  packed.set(role, { jsonText, data: JSON.parse(jsonText) });
+let totalBundleBytes = 0;
+for (const descriptor of bundleDescriptors) {
+  const bundle = await readBundle(descriptor);
+  totalBundleBytes += bundle.length;
+  const descriptorName = descriptor.path ?? `chunks:${descriptor.chunks.length}`;
+  assert(sha256(bundle) === descriptor.sha256, `${descriptorName}: bundle SHA-256 mismatch`);
+  if (descriptor.path === 'study-app-public-dataset-3154-20260907-v1.0.pack.gz') {
+    assert(bundle.length === 1708205, `base bundle size mismatch: ${bundle.length}`);
+  }
+  if (descriptor.chunks) {
+    assert(descriptor.chunks.length === 24, `overlay chunk count mismatch: ${descriptor.chunks.length}`);
+    assert(descriptor.base64Length === 327728, `overlay base64 length mismatch: ${descriptor.base64Length}`);
+    assert(bundle.length === 245794, `overlay bundle size mismatch: ${bundle.length}`);
+  }
+  mergePack(bundle, packed);
 }
 
 const ordered = [...manifest.datasets].sort((left, right) => left.order - right.order);
@@ -94,7 +127,7 @@ assert(jnaCount === 536, `common-jna count mismatch: ${jnaCount}`);
 assert(commonPredictedCount === 190, `common-predicted count mismatch: ${commonPredictedCount}`);
 
 const supplementals = [
-  ['common-cloze', commonCloze, 1917, 'common-cloze'],
+  ['common-cloze', commonCloze, 2014, 'common-cloze'],
   ['specialty-past', specialtyPast, 126, 'specialty-past'],
   ['specialty-predicted', specialtyPredicted, 116, 'specialty-predicted'],
   ['specialty-predicted-case', specialtyPredictedCase, 269, 'specialty-predicted-case']
@@ -160,7 +193,7 @@ assert(
 
 console.log('Public Dataset QA PASS');
 console.log(`release=${manifest.releaseVersion}`);
-console.log(`bundleBytes=${bundle.length}`);
-console.log(`bundleSha256=${sha256(bundle)}`);
+console.log(`bundleCount=${bundleDescriptors.length}`);
+console.log(`bundleBytes=${totalBundleBytes}`);
 console.log(`questions=${totalQuestions} materials=${base.sheets.MATERIALS.length} occurrences=${totalOccurrences}`);
-console.log('categories=536/1917/190/126/116/269');
+console.log('categories=536/2014/190/126/116/269');

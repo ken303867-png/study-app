@@ -6,15 +6,15 @@ App v0.17.0 changes the production delivery policy so that the complete Study Ap
 
 The public release currently contains:
 
-- Common subjects: 2,643 questions
+- Common subjects: 2,740 questions
   - Japan Nursing Association e-learning: 536
-  - Cloze: 1,917
+  - Cloze: 2,014
   - Predicted: 190
 - Specialty subjects: 511 questions
   - Past/mock source set: 126
   - Predicted: 116
   - Predicted case questions: 269
-- Total: 3,154 questions
+- Total: 3,251 questions
 - Materials: 114
 - Delivery Schema: 0.5
 
@@ -40,8 +40,8 @@ A public dataset release must pass all of the following before merge to `main`:
 1. Manifest validation.
 2. Production gzip pack SHA-256 validation.
 3. Per-dataset expanded JSON SHA-256 validation.
-4. Exact count validation: 3,154 questions / 114 materials / 3,154 SourceOccurrences.
-5. Six-category count validation: 536 / 1,917 / 190 / 126 / 116 / 269.
+4. Exact count validation: 3,251 questions / 114 materials / 3,251 SourceOccurrences.
+5. Six-category count validation: 536 / 2,014 / 190 / 126 / 116 / 269.
 6. Cross-dataset question-ID and SourceOccurrence-ID collision validation.
 7. Forbidden text-control scan for U+FFFD, NUL, and U+000C.
 8. Existing Schema/Import QA.
