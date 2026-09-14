@@ -150,8 +150,7 @@ export async function syncPublicDataset(
   const bundleDescriptors = [manifest.bundle, ...(manifest.overlays ?? [])];
   const datasets = new Map<string, string>();
 
-  for (let index = 0; index < bundleDescriptors.length; index += 1) {
-    const descriptor = bundleDescriptors[index];
+  for (const [index, descriptor] of bundleDescriptors.entries()) {
     report({
       stage: 'downloading',
       message: '公開問題データを取得しています。',
