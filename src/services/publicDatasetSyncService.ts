@@ -17,11 +17,25 @@ const expectedKindsSchema = z.object({
   'specialty-predicted-case': z.number().int().nonnegative()
 });
 
-const publicDatasetBundleSchema = z.object({
+const publicDatasetFileBundleSchema = z.object({
   path: z.string().min(1),
   compression: z.literal('gzip'),
   sha256: z.string().regex(/^[0-9a-f]{64}$/)
 });
+
+const publicDatasetChunkedBundleSchema = z.object({
+  chunks: z.array(z.string().min(1)).min(1),
+  encoding: z.literal('base64'),
+  compression: z.literal('gzip'),
+  compressedBytes: z.number().int().positive(),
+  base64Length: z.number().int().positive(),
+  sha256: z.string().regex(/^[0-9a-f]{64}$/)
+});
+
+const publicDatasetBundleSchema = z.union([
+  publicDatasetFileBundleSchema,
+  publicDatasetChunkedBundleSchema
+]);
 
 const publicDatasetManifestSchema = z.object({
   schemaVersion: z.literal(1),
@@ -48,6 +62,7 @@ const publicDatasetManifestSchema = z.object({
 });
 
 export type PublicDatasetManifest = z.infer<typeof publicDatasetManifestSchema>;
+type PublicDatasetBundle = z.infer<typeof publicDatasetBundleSchema>;
 
 export type PublicDatasetSyncStage =
   | 'checking'
@@ -143,14 +158,8 @@ export async function syncPublicDataset(
       current: index + 1,
       total: bundleDescriptors.length
     });
-    const response = await fetchImpl(`${baseUrl}public-data/${descriptor.path}`, {
-      cache: 'no-store'
-    });
-    if (!response.ok) {
-      throw new Error(`公開問題データを取得できませんでした（HTTP ${response.status}）。`);
-    }
 
-    const payload = await response.arrayBuffer();
+    const payload = await fetchBundlePayload(descriptor, baseUrl, fetchImpl);
     const packText = await decodeFetchedPack(payload, descriptor.sha256);
     const packedDatasets = parseDatasetPack(packText);
     for (const [role, text] of packedDatasets) {
@@ -190,6 +199,58 @@ export async function syncPublicDataset(
   await db.meta.put({ key: PUBLIC_DATASET_META_KEY, value: manifest.releaseVersion });
   report({ stage: 'ready', message: '問題データの準備が完了しました。' });
   return { status: 'updated', releaseVersion: manifest.releaseVersion };
+}
+
+async function fetchBundlePayload(
+  descriptor: PublicDatasetBundle,
+  baseUrl: string,
+  fetchImpl: typeof fetch
+): Promise<ArrayBuffer> {
+  if ('path' in descriptor) {
+    const response = await fetchImpl(`${baseUrl}public-data/${descriptor.path}`, {
+      cache: 'no-store'
+    });
+    if (!response.ok) {
+      throw new Error(`公開問題データを取得できませんでした（HTTP ${response.status}）。`);
+    }
+    return response.arrayBuffer();
+  }
+
+  let base64Text = '';
+  for (const chunkPath of descriptor.chunks) {
+    const response = await fetchImpl(`${baseUrl}public-data/${chunkPath}`, {
+      cache: 'no-store'
+    });
+    if (!response.ok) {
+      throw new Error(`公開問題データの分割ファイルを取得できませんでした（HTTP ${response.status}）。`);
+    }
+    base64Text += await response.text();
+  }
+
+  if (base64Text.length !== descriptor.base64Length) {
+    throw new Error('公開問題データの分割ファイル結合後サイズが一致しません。');
+  }
+
+  const payload = decodeBase64(base64Text);
+  if (payload.byteLength !== descriptor.compressedBytes) {
+    throw new Error('公開問題データの復元後サイズが一致しません。');
+  }
+  return payload;
+}
+
+function decodeBase64(value: string): ArrayBuffer {
+  let binary: string;
+  try {
+    binary = atob(value);
+  } catch (error) {
+    throw new Error('公開問題データのbase64復元に失敗しました。', { cause: error });
+  }
+
+  const bytes = new Uint8Array(binary.length);
+  for (let index = 0; index < binary.length; index += 1) {
+    bytes[index] = binary.charCodeAt(index);
+  }
+  return bytes.buffer as ArrayBuffer;
 }
 
 function parseDatasetPack(text: string): Map<string, string> {
