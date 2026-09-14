@@ -1,14 +1,14 @@
 {
   "schemaVersion": 1,
-  "releaseVersion": "2026-09-07.1",
+  "releaseVersion": "2026-09-14.1",
   "appMinVersion": "0.17.0",
   "expected": {
-    "questionsTotal": 3154,
+    "questionsTotal": 3251,
     "materials": 114,
-    "sourceOccurrences": 3154,
+    "sourceOccurrences": 3251,
     "kinds": {
       "common-jna": 536,
-      "common-cloze": 1917,
+      "common-cloze": 2014,
       "common-predicted": 190,
       "specialty-past": 126,
       "specialty-predicted": 116,
@@ -16,13 +16,13 @@
     }
   },
   "bundle": {
-    "path": "study-app-public-dataset-3154-20260907-v1.0.pack.gz",
+    "path": "study-app-public-dataset-3251-20260914-v1.0.pack.gz",
     "compression": "gzip",
-    "sha256": "7cc5b510470e0343c92b2974c4b8856495ac1e980dadf7e9d31347ed6b7b5cfe"
+    "sha256": "924dcdcfae4dba2e6ab7c4ded14a3c27c793683442163b948906372e5905847c"
   },
   "datasets": [
     {"order":1,"role":"common-base","originalSha256":"423bae216826b302816953031d46db03f6df3711f9a07f67b825502fa0ad1a71","questionCount":726},
-    {"order":2,"role":"common-cloze","originalSha256":"8d543b6ac846a9cae1abae3ed46b8697c1c967f4b618f97814b5bf2adaf255c5","questionCount":1917},
+    {"order":2,"role":"common-cloze","originalSha256":"0dfe8cc8f51ec0a008f8ac28b18b09055ec7ef0368be6c4629611d19b4076ec9","questionCount":2014},
     {"order":3,"role":"specialty-past","originalSha256":"66c89e41222c53dec7b6effa2a0ae7a5852d8e6fe38b8dc0e224860b937b61a1","questionCount":126},
     {"order":4,"role":"specialty-predicted","originalSha256":"4c8e3a961cc003a236e45b9e5a11a845b3e2db8a7cc233bfbd86f699acf57f08","questionCount":116},
     {"order":5,"role":"specialty-predicted-case","originalSha256":"634463f2b14c24782cbc870dad620a0b825ac6fce8da6adc47412fc7d4c794b1","questionCount":269}
