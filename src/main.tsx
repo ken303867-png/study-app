@@ -26,7 +26,7 @@ createRoot(document.getElementById('root')!).render(
         <PwaControls />
         {!adminToolsVisible && (
           <div className="learner-mode-banner" role="note">
-            全3,154問を利用できます。学習履歴はこの端末に保存されます。
+            全3,251問を利用できます。学習履歴はこの端末に保存されます。
           </div>
         )}
         <LearningStateBackupControls />
