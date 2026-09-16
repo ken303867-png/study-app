@@ -35,6 +35,7 @@ export const QUESTION_KINDS_BY_AREA: Record<LearningArea, readonly QuestionKind[
 };
 
 const COMMON_CLOZE_TAG = 'supplemental:common-cloze';
+const COMMON_FINAL_TAG = 'supplemental:common-final-2026';
 const AREA_COMMON_TAG = 'learning-area:common';
 const AREA_SPECIALTY_TAG = 'learning-area:specialty';
 const KIND_TAG_PREFIX = 'question-kind:';
@@ -59,7 +60,7 @@ export function classifyQuestion(question: Question): QuestionKind | null {
 }
 
 export function questionLearningArea(question: Question): LearningArea | null {
-  const kind = classifyQuestion(question);
+  const kind = displayQuestionKind(question);
   if (!kind) return null;
   return kind.startsWith('common-') ? 'common' : 'specialty';
 }
@@ -69,10 +70,10 @@ export function matchesQuestionCategory(
   area: LearningArea | 'all',
   kind: QuestionKind | 'all' = 'all'
 ): boolean {
-  const classifiedKind = classifyQuestion(question);
-  if (!classifiedKind) return area === 'all' && kind === 'all';
+  const displayKind = displayQuestionKind(question);
+  if (!displayKind) return area === 'all' && kind === 'all';
   if (area !== 'all' && questionLearningArea(question) !== area) return false;
-  if (kind !== 'all' && classifiedKind !== kind) return false;
+  if (kind !== 'all' && displayKind !== kind) return false;
   return true;
 }
 
@@ -83,7 +84,7 @@ export function filterQuestionsByKinds(
   if (!kinds || kinds.length === 0) return kinds ? [] : [...questions];
   const selected = new Set(kinds);
   return questions.filter((question) => {
-    const kind = classifyQuestion(question);
+    const kind = displayQuestionKind(question);
     return kind !== null && selected.has(kind);
   });
 }
@@ -94,10 +95,15 @@ export function countQuestionKinds(questions: readonly Question[]): Record<Quest
     number
   >;
   for (const question of questions) {
-    const kind = classifyQuestion(question);
+    const kind = displayQuestionKind(question);
     if (kind) counts[kind] += 1;
   }
   return counts;
+}
+
+function displayQuestionKind(question: Question): QuestionKind | null {
+  if (question.tags.includes(COMMON_FINAL_TAG)) return 'common-final';
+  return classifyQuestion(question);
 }
 
 function explicitQuestionKind(tags: readonly string[]): QuestionKind | null {
