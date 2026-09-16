@@ -48,3 +48,21 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+  live-smoke:
+    runs-on: ubuntu-latest
+    needs: deploy
+    env:
+      LIVE_BASE_URL: https://ken303867-png.github.io/study-app/
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'npm'
+          cache-dependency-path: 'package-lock.json'
+      - run: npm install --global npm@11.19.1 --no-audit --no-fund
+      - run: npm ci --no-audit --no-fund
+      - run: npx playwright install --with-deps chromium
+      - name: Verify deployed Study App in a real browser
+        run: npx playwright test --config=playwright.live.config.ts
