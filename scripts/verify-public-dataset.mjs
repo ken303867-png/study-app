@@ -45,6 +45,7 @@ function mergePack(bundle, packed) {
     assert(separator > 0, 'invalid pack line');
     const role = line.slice(0, separator);
     const jsonText = line.slice(separator + 1);
+    assert(!packed.has(role), `duplicate dataset role in packs: ${role}`);
     packed.set(role, { jsonText, data: JSON.parse(jsonText) });
   }
 }
@@ -68,12 +69,12 @@ async function readBundle(descriptor) {
 
 assert(manifest.schemaVersion === 1, 'manifest schemaVersion must be 1');
 assert(manifest.appMinVersion === '0.17.0', 'appMinVersion must be 0.17.0');
-assert(manifest.expected.questionsTotal === 3251, 'expected total must be 3251');
+assert(manifest.expected.questionsTotal === 3451, 'expected total must be 3451');
 assert(manifest.expected.materials === 114, 'expected materials must be 114');
-assert(manifest.expected.sourceOccurrences === 3251, 'expected sourceOccurrences must be 3251');
+assert(manifest.expected.sourceOccurrences === 3451, 'expected sourceOccurrences must be 3451');
 
 const bundleDescriptors = [manifest.bundle, ...(manifest.overlays ?? [])];
-assert(bundleDescriptors.length === 2, `expected base + one overlay, got ${bundleDescriptors.length}`);
+assert(bundleDescriptors.length === 3, `expected base + two overlays, got ${bundleDescriptors.length}`);
 
 const packed = new Map();
 let totalBundleBytes = 0;
@@ -82,14 +83,21 @@ for (const descriptor of bundleDescriptors) {
   totalBundleBytes += bundle.length;
   const descriptorName = descriptor.path ?? `chunks:${descriptor.chunks.length}`;
   assert(sha256(bundle) === descriptor.sha256, `${descriptorName}: bundle SHA-256 mismatch`);
+
   if (descriptor.path === 'study-app-public-dataset-3154-20260907-v1.0.pack.gz') {
     assert(bundle.length === 1708205, `base bundle size mismatch: ${bundle.length}`);
+  } else if (descriptor.sha256 === '9b2322c528caf098993f80db045c6f12495a8b6147f2b451ddecce849a75ce61') {
+    assert(descriptor.chunks.length === 24, `common-cloze overlay chunk count mismatch: ${descriptor.chunks.length}`);
+    assert(descriptor.base64Length === 327728, `common-cloze base64 length mismatch: ${descriptor.base64Length}`);
+    assert(bundle.length === 245794, `common-cloze bundle size mismatch: ${bundle.length}`);
+  } else if (descriptor.sha256 === 'a61a8ecada21d47066ded886e8fff20f5b7712e92c15edfea9cf074ba350303d') {
+    assert(descriptor.chunks.length === 6, `common-final overlay chunk count mismatch: ${descriptor.chunks.length}`);
+    assert(descriptor.base64Length === 69736, `common-final base64 length mismatch: ${descriptor.base64Length}`);
+    assert(bundle.length === 52301, `common-final bundle size mismatch: ${bundle.length}`);
+  } else {
+    fail(`unexpected bundle descriptor: ${descriptorName}`);
   }
-  if (descriptor.chunks) {
-    assert(descriptor.chunks.length === 24, `overlay chunk count mismatch: ${descriptor.chunks.length}`);
-    assert(descriptor.base64Length === 327728, `overlay base64 length mismatch: ${descriptor.base64Length}`);
-    assert(bundle.length === 245794, `overlay bundle size mismatch: ${bundle.length}`);
-  }
+
   mergePack(bundle, packed);
 }
 
@@ -110,7 +118,11 @@ const commonCloze = packed.get('common-cloze')?.data;
 const specialtyPast = packed.get('specialty-past')?.data;
 const specialtyPredicted = packed.get('specialty-predicted')?.data;
 const specialtyPredictedCase = packed.get('specialty-predicted-case')?.data;
-assert(base && commonCloze && specialtyPast && specialtyPredicted && specialtyPredictedCase, 'required roles missing');
+const commonFinal = packed.get('common-final-2026')?.data;
+assert(
+  base && commonCloze && specialtyPast && specialtyPredicted && specialtyPredictedCase && commonFinal,
+  'required roles missing'
+);
 
 assert(base.formalDataSpecVersion === '1.2', 'common-base Formal Data Spec mismatch');
 assert(base.sheets.QUESTIONS.length === 726, 'common-base question count mismatch');
@@ -130,7 +142,8 @@ const supplementals = [
   ['common-cloze', commonCloze, 2014, 'common-cloze'],
   ['specialty-past', specialtyPast, 126, 'specialty-past'],
   ['specialty-predicted', specialtyPredicted, 116, 'specialty-predicted'],
-  ['specialty-predicted-case', specialtyPredictedCase, 269, 'specialty-predicted-case']
+  ['specialty-predicted-case', specialtyPredictedCase, 269, 'specialty-predicted-case'],
+  ['common-final-2026', commonFinal, 200, 'common-final-2026']
 ];
 
 for (const [role, data, expectedCount, key] of supplementals) {
@@ -142,18 +155,38 @@ for (const [role, data, expectedCount, key] of supplementals) {
   assert(data.sourceOccurrences.length === expectedCount, `${role}: occurrence count mismatch`);
 }
 
+const finalTag = 'supplemental:common-final-2026';
+assert(
+  commonFinal.questions.every((question) => question.tags.includes(finalTag)),
+  'common-final: supplemental tag missing'
+);
+assert(
+  commonFinal.questions.every((question) => question.tags.includes('learning-area:common')),
+  'common-final: learning-area:common tag missing'
+);
+const finalChoiceCount = commonFinal.questions.filter(
+  (question) => question.tags.includes('question-kind:common-final')
+).length;
+const finalClozeCount = commonFinal.questions.filter(
+  (question) => question.tags.includes('question-kind:common-cloze')
+).length;
+assert(finalChoiceCount === 100, `common-final choice count mismatch: ${finalChoiceCount}`);
+assert(finalClozeCount === 100, `common-final cloze count mismatch: ${finalClozeCount}`);
+
 const totalQuestions =
   base.sheets.QUESTIONS.length +
   commonCloze.questions.length +
   specialtyPast.questions.length +
   specialtyPredicted.questions.length +
-  specialtyPredictedCase.questions.length;
+  specialtyPredictedCase.questions.length +
+  commonFinal.questions.length;
 const totalOccurrences =
   base.sheets.SOURCE_OCCURRENCES.length +
   commonCloze.sourceOccurrences.length +
   specialtyPast.sourceOccurrences.length +
   specialtyPredicted.sourceOccurrences.length +
-  specialtyPredictedCase.sourceOccurrences.length;
+  specialtyPredictedCase.sourceOccurrences.length +
+  commonFinal.sourceOccurrences.length;
 assert(totalQuestions === manifest.expected.questionsTotal, `total question mismatch: ${totalQuestions}`);
 assert(totalOccurrences === manifest.expected.sourceOccurrences, `total occurrence mismatch: ${totalOccurrences}`);
 
@@ -162,7 +195,8 @@ const questionIds = [
   ...commonCloze.questions.map((question) => question.id),
   ...specialtyPast.questions.map((question) => question.id),
   ...specialtyPredicted.questions.map((question) => question.id),
-  ...specialtyPredictedCase.questions.map((question) => question.id)
+  ...specialtyPredictedCase.questions.map((question) => question.id),
+  ...commonFinal.questions.map((question) => question.id)
 ];
 assert(new Set(questionIds).size === questionIds.length, 'duplicate question IDs detected');
 
@@ -171,7 +205,8 @@ const occurrenceIds = [
   ...commonCloze.sourceOccurrences.map((occurrence) => occurrence.source_occurrence_id),
   ...specialtyPast.sourceOccurrences.map((occurrence) => occurrence.source_occurrence_id),
   ...specialtyPredicted.sourceOccurrences.map((occurrence) => occurrence.source_occurrence_id),
-  ...specialtyPredictedCase.sourceOccurrences.map((occurrence) => occurrence.source_occurrence_id)
+  ...specialtyPredictedCase.sourceOccurrences.map((occurrence) => occurrence.source_occurrence_id),
+  ...commonFinal.sourceOccurrences.map((occurrence) => occurrence.source_occurrence_id)
 ];
 assert(new Set(occurrenceIds).size === occurrenceIds.length, 'duplicate SourceOccurrence IDs detected');
 
@@ -184,6 +219,7 @@ const expectedKinds = manifest.expected.kinds;
 assert(expectedKinds['common-jna'] === 536, 'manifest common-jna mismatch');
 assert(expectedKinds['common-cloze'] === commonCloze.questions.length, 'manifest common-cloze mismatch');
 assert(expectedKinds['common-predicted'] === 190, 'manifest common-predicted mismatch');
+assert(expectedKinds['common-final'] === commonFinal.questions.length, 'manifest common-final mismatch');
 assert(expectedKinds['specialty-past'] === specialtyPast.questions.length, 'manifest specialty-past mismatch');
 assert(expectedKinds['specialty-predicted'] === specialtyPredicted.questions.length, 'manifest specialty-predicted mismatch');
 assert(
@@ -196,4 +232,4 @@ console.log(`release=${manifest.releaseVersion}`);
 console.log(`bundleCount=${bundleDescriptors.length}`);
 console.log(`bundleBytes=${totalBundleBytes}`);
 console.log(`questions=${totalQuestions} materials=${base.sheets.MATERIALS.length} occurrences=${totalOccurrences}`);
-console.log('categories=536/2014/190/126/116/269');
+console.log('categories=536/2014/190/200/126/116/269');
