@@ -101,7 +101,7 @@ describe('common cloze self assessment', () => {
   });
 
   it('keeps final-prep fill-blank questions under 最終対策 and disables exam mode', () => {
-    render(
+    const { container } = render(
       <PracticeSetBuilder
         questions={[finalClozeQuestion]}
         historyByQuestionId={history}
@@ -110,10 +110,11 @@ describe('common cloze self assessment', () => {
         onCancel={vi.fn()}
       />
     );
+    const view = within(container);
 
-    expect(screen.getByRole('checkbox', { name: /最終対策\s*1問/ })).toBeChecked();
-    expect(screen.getByRole('checkbox', { name: /穴抜き問題\s*0問/ })).toBeChecked();
-    expect(screen.getByRole('radio', { name: /試験モード/ })).toBeDisabled();
-    expect(screen.getByRole('note')).toHaveTextContent('自己採点問題を含むセットです');
+    expect(view.getByRole('checkbox', { name: /最終対策\s*1問/ })).toBeChecked();
+    expect(view.getByRole('checkbox', { name: /穴抜き問題\s*0問/ })).toBeChecked();
+    expect(view.getByRole('radio', { name: /試験モード/ })).toBeDisabled();
+    expect(view.getByRole('note')).toHaveTextContent('自己採点問題を含むセットです');
   });
 });
