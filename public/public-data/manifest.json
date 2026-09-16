@@ -27,7 +27,7 @@
         "common-cloze-2014-20260914-v2.0/000.b64",
         "common-cloze-2014-20260914-v2.0/001.b64",
         "common-cloze-2014-20260914-v2.0/002.b64",
-        "common-cloze-2014-20260914-v2.0/003.b64",
+        "common-cloze-2014-v2.0/003.b64",
         "common-cloze-2014-20260914-v2.0/004.b64",
         "common-cloze-2014-20260914-v2.0/005.b64",
         "common-cloze-2014-20260914-v2.0/006.b64",
@@ -63,7 +63,12 @@
         "common-final-2026-v1.2/003.b64",
         "common-final-2026-v1.2/004.b64",
         "common-final-2026-v1.2/005a.b64",
-        "common-final-2026-v1.2/005b.b64"
+        "common-final-2026-v1.2/005b1.b64",
+        "common-final-2026-v1.2/005b2.b64",
+        "common-final-2026-v1.2/005b3.b64",
+        "common-final-2026-v1.2/005b4.b64",
+        "common-final-2026-v1.2/005b5.b64",
+        "common-final-2026-v1.2/005b6.b64"
       ],
       "encoding": "base64",
       "compression": "gzip",
