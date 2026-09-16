@@ -110,6 +110,7 @@ test('downloads the public dataset once and reuses IndexedDB after reload', asyn
         'common-jna': 1,
         'common-cloze': 0,
         'common-predicted': 0,
+        'common-final': 0,
         'specialty-past': 0,
         'specialty-predicted': 0,
         'specialty-predicted-case': 0
