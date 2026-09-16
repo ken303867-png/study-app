@@ -62,7 +62,9 @@
         "common-final-2026-v1.2/002.b64",
         "common-final-2026-v1.2/003.b64",
         "common-final-2026-v1.2/004.b64",
-        "common-final-2026-v1.2/005.b64"
+        "common-final-2026-v1.2/005a.b64",
+        "common-final-2026-v1.2/005b.b64",
+        "common-final-2026-v1.2/006.b64"
       ],
       "encoding": "base64",
       "compression": "gzip",
