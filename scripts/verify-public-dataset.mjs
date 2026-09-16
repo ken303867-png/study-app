@@ -40,12 +40,14 @@ function scanStrings(value, path = '$', issues = []) {
 function mergePack(bundle, packed) {
   const packText = gunzipSync(bundle).toString('utf8');
   const lines = packText.split('\n').filter(Boolean);
+  const seenRoles = new Set();
   for (const line of lines) {
     const separator = line.indexOf('\t');
     assert(separator > 0, 'invalid pack line');
     const role = line.slice(0, separator);
     const jsonText = line.slice(separator + 1);
-    assert(!packed.has(role), `duplicate dataset role in packs: ${role}`);
+    assert(!seenRoles.has(role), `duplicate dataset role in bundle: ${role}`);
+    seenRoles.add(role);
     packed.set(role, { jsonText, data: JSON.parse(jsonText) });
   }
 }
