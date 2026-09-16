@@ -69,13 +69,19 @@ export function PracticeSetBuilder({
   );
   const presetCount = presetCountFromSummary(summary, preset);
   const selectedCount = limit === 'all' ? presetCount : Math.min(presetCount, limit);
-  const hasSelfAssessmentCloze =
-    questionKinds.includes('common-cloze') && kindCounts['common-cloze'] > 0;
+  const hasSelfAssessmentQuestions = categoryQuestions.some(
+    (question) => question.questionFormat === 'fill-blank'
+  );
 
   const selectArea = (area: LearningArea) => {
+    const nextKinds = [...QUESTION_KINDS_BY_AREA[area]];
     setLearningArea(area);
-    setQuestionKinds([...QUESTION_KINDS_BY_AREA[area]]);
-    if (area === 'common' && kindCounts['common-cloze'] > 0) {
+    setQuestionKinds(nextKinds);
+    if (
+      filterQuestionsByKinds(questions, nextKinds).some(
+        (question) => question.questionFormat === 'fill-blank'
+      )
+    ) {
       setMode('practice');
       setTimerMinutes(0);
     }
@@ -84,7 +90,12 @@ export function PracticeSetBuilder({
   const toggleKind = (kind: QuestionKind) => {
     setQuestionKinds((current) => {
       const adding = !current.includes(kind);
-      if (kind === 'common-cloze' && adding) {
+      if (
+        adding &&
+        filterQuestionsByKinds(questions, [kind]).some(
+          (question) => question.questionFormat === 'fill-blank'
+        )
+      ) {
         setMode('practice');
         setTimerMinutes(0);
       }
@@ -197,14 +208,14 @@ export function PracticeSetBuilder({
                 name="practice-mode"
                 value="exam"
                 checked={mode === 'exam'}
-                disabled={hasSelfAssessmentCloze}
+                disabled={hasSelfAssessmentQuestions}
                 onChange={() => setMode('exam')}
               />
               <span>
                 <strong>試験モード</strong>
                 <small>
-                  {hasSelfAssessmentCloze
-                    ? '穴抜き問題を含むセットでは利用できません'
+                  {hasSelfAssessmentQuestions
+                    ? '自己採点問題を含むセットでは利用できません'
                     : '終了まで正誤・正答・解説を非表示'}
                 </small>
               </span>
@@ -213,9 +224,9 @@ export function PracticeSetBuilder({
         </fieldset>
       </div>
 
-      {hasSelfAssessmentCloze && (
+      {hasSelfAssessmentQuestions && (
         <div className="panel warning-panel" role="note">
-          <strong>穴抜き問題は自己採点方式です</strong>
+          <strong>自己採点問題を含むセットです</strong>
           <p>「答えを見る」で正答を確認した後、「正解」「不正解」「要復習」から自己採点します。そのため試験モードは利用できません。</p>
         </div>
       )}
