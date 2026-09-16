@@ -20,5 +20,5 @@
     "jsx": "react-jsx",
     "types": ["vite/client", "vitest/globals", "node"]
   },
-  "include": ["src", "tests/unit", "tests/e2e", "tests/helpers"]
+  "include": ["src", "tests/unit", "tests/e2e", "tests/live", "tests/helpers"]
 }
