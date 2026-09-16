@@ -91,7 +91,7 @@ for (const descriptor of bundleDescriptors) {
     assert(descriptor.base64Length === 327728, `common-cloze base64 length mismatch: ${descriptor.base64Length}`);
     assert(bundle.length === 245794, `common-cloze bundle size mismatch: ${bundle.length}`);
   } else if (descriptor.sha256 === 'a61a8ecada21d47066ded886e8fff20f5b7712e92c15edfea9cf074ba350303d') {
-    assert(descriptor.chunks.length === 6, `common-final overlay chunk count mismatch: ${descriptor.chunks.length}`);
+    assert(descriptor.chunks.length === 8, `common-final overlay chunk count mismatch: ${descriptor.chunks.length}`);
     assert(descriptor.base64Length === 69736, `common-final base64 length mismatch: ${descriptor.base64Length}`);
     assert(bundle.length === 52301, `common-final bundle size mismatch: ${bundle.length}`);
   } else {
