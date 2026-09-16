@@ -28,6 +28,20 @@ const clozeQuestion: Question = {
   revision: 1
 };
 
+const finalClozeQuestion: Question = {
+  ...clozeQuestion,
+  id: 'FINAL-CLOZE-TEST-001',
+  unit: '最終対策',
+  topic: '最終暗記',
+  sourceType: 'predicted',
+  sourceLabel: 'final-prep test fixture',
+  tags: [
+    'learning-area:common',
+    'supplemental:common-final-2026',
+    'question-kind:common-cloze'
+  ]
+};
+
 const history = new Map<string, LearningHistory>();
 
 function renderPractice(onRecordResult = vi.fn().mockResolvedValue(undefined)) {
@@ -83,6 +97,24 @@ describe('common cloze self assessment', () => {
     );
 
     expect(screen.getByRole('radio', { name: /試験モード/ })).toBeDisabled();
-    expect(screen.getByRole('note')).toHaveTextContent('穴抜き問題は自己採点方式です');
+    expect(screen.getByRole('note')).toHaveTextContent('自己採点問題を含むセットです');
+  });
+
+  it('keeps final-prep fill-blank questions under 最終対策 and disables exam mode', () => {
+    const { container } = render(
+      <PracticeSetBuilder
+        questions={[finalClozeQuestion]}
+        historyByQuestionId={history}
+        sourceLabel="test-final"
+        onStart={vi.fn()}
+        onCancel={vi.fn()}
+      />
+    );
+    const view = within(container);
+
+    expect(view.getByRole('checkbox', { name: /最終対策\s*1問/ })).toBeChecked();
+    expect(view.getByRole('checkbox', { name: /穴抜き問題\s*0問/ })).toBeChecked();
+    expect(view.getByRole('radio', { name: /試験モード/ })).toBeDisabled();
+    expect(view.getByRole('note')).toHaveTextContent('自己採点問題を含むセットです');
   });
 });
