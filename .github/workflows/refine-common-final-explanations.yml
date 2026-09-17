@@ -26,6 +26,8 @@ jobs:
           cache-dependency-path: 'package-lock.json'
       - run: npm install --global npm@11.19.1 --no-audit --no-fund
       - run: node scripts/refine-common-final-explanations.mjs
+      - name: Keep App version assertion in sync
+        run: sed -i "s/学習アプリ v0\.20\.1/学習アプリ v0.20.2/g" tests/unit/App.test.tsx
       - run: npm ci --no-audit --no-fund
       - run: npm run verify:public-data
       - run: npm run typecheck
@@ -36,7 +38,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add public/public-data/manifest.json public/public-data/common-final-2026-v1.3 src/components/StudyContentCards.tsx src/App.tsx tests/unit/StudyContentCards.finalExplanation.test.tsx
+          git add public/public-data/manifest.json public/public-data/common-final-2026-v1.3 src/components/StudyContentCards.tsx src/App.tsx tests/unit/App.test.tsx tests/unit/StudyContentCards.finalExplanation.test.tsx
           if git diff --cached --quiet; then
             echo "No generated changes"
             exit 0
