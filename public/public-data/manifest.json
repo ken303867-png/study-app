@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "releaseVersion": "2026-09-16.1",
+  "releaseVersion": "2026-09-17.1",
   "appMinVersion": "0.17.0",
   "expected": {
     "questionsTotal": 3451,
@@ -57,32 +57,55 @@
     },
     {
       "chunks": [
-        "common-final-2026-v1.2/000.b64",
-        "common-final-2026-v1.2/001.b64",
-        "common-final-2026-v1.2/002.b64",
-        "common-final-2026-v1.2/003.b64",
-        "common-final-2026-v1.2/004.b64",
-        "common-final-2026-v1.2/005a.b64",
-        "common-final-2026-v1.2/005b1.b64",
-        "common-final-2026-v1.2/005b2.b64",
-        "common-final-2026-v1.2/005b3.b64",
-        "common-final-2026-v1.2/005b4.b64",
-        "common-final-2026-v1.2/005b5.b64",
-        "common-final-2026-v1.2/005b6.b64"
+        "common-final-2026-v1.3/000.b64",
+        "common-final-2026-v1.3/001.b64",
+        "common-final-2026-v1.3/002.b64",
+        "common-final-2026-v1.3/003.b64",
+        "common-final-2026-v1.3/004.b64"
       ],
       "encoding": "base64",
       "compression": "gzip",
-      "compressedBytes": 52301,
-      "base64Length": 69736,
-      "sha256": "a61a8ecada21d47066ded886e8fff20f5b7712e92c15edfea9cf074ba350303d"
+      "compressedBytes": 57273,
+      "base64Length": 76364,
+      "sha256": "55268d219d2381617f19d0edb60abaf0d3caf07252dade3cd1af51f7463fbd8a"
     }
   ],
   "datasets": [
-    {"order":1,"role":"common-base","originalSha256":"423bae216826b302816953031d46db03f6df3711f9a07f67b825502fa0ad1a71","questionCount":726},
-    {"order":2,"role":"common-cloze","originalSha256":"0dfe8cc8f51ec0a008f8ac28b18b09055ec7ef0368be6c4629611d19b4076ec9","questionCount":2014},
-    {"order":3,"role":"specialty-past","originalSha256":"66c89e41222c53dec7b6effa2a0ae7a5852d8e6fe38b8dc0e224860b937b61a1","questionCount":126},
-    {"order":4,"role":"specialty-predicted","originalSha256":"4c8e3a961cc003a236e45b9e5a11a845b3e2db8a7cc233bfbd86f699acf57f08","questionCount":116},
-    {"order":5,"role":"specialty-predicted-case","originalSha256":"634463f2b14c24782cbc870dad620a0b825ac6fce8da6adc47412fc7d4c794b1","questionCount":269},
-    {"order":6,"role":"common-final-2026","originalSha256":"d990797c61ff18dc92fff7f69aba7dafca878521fbd3f6ce5c2af324994f485d","questionCount":200}
+    {
+      "order": 1,
+      "role": "common-base",
+      "originalSha256": "423bae216826b302816953031d46db03f6df3711f9a07f67b825502fa0ad1a71",
+      "questionCount": 726
+    },
+    {
+      "order": 2,
+      "role": "common-cloze",
+      "originalSha256": "0dfe8cc8f51ec0a008f8ac28b18b09055ec7ef0368be6c4629611d19b4076ec9",
+      "questionCount": 2014
+    },
+    {
+      "order": 3,
+      "role": "specialty-past",
+      "originalSha256": "66c89e41222c53dec7b6effa2a0ae7a5852d8e6fe38b8dc0e224860b937b61a1",
+      "questionCount": 126
+    },
+    {
+      "order": 4,
+      "role": "specialty-predicted",
+      "originalSha256": "4c8e3a961cc003a236e45b9e5a11a845b3e2db8a7cc233bfbd86f699acf57f08",
+      "questionCount": 116
+    },
+    {
+      "order": 5,
+      "role": "specialty-predicted-case",
+      "originalSha256": "634463f2b14c24782cbc870dad620a0b825ac6fce8da6adc47412fc7d4c794b1",
+      "questionCount": 269
+    },
+    {
+      "order": 6,
+      "role": "common-final-2026",
+      "originalSha256": "aa496cc986a3a402499791900a3d7b18512f182d3acb44aad10b2a077d82e7e8",
+      "questionCount": 200
+    }
   ]
 }

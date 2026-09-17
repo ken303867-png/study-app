@@ -226,45 +226,49 @@ export function FormalExplanationView({ question, media }: { question: Question;
         media={media}
       />
 
-      <section className="explanation-block">
-        <h4>各選択肢解説</h4>
-        <div className="choice-explanation-list">
-          {sortedChoiceExplanations.map((choice) => {
-            const isCorrect = choice.judgement === 'correct';
-            const correctionText = choice.corrected_statement ?? choice.correction_condition;
-
-            return (
-              <article className="choice-explanation" key={choice.target_key}>
-                <div className="choice-explanation-heading">
-                  <strong>{choice.target_key}</strong>
-                  <span className={`judgement ${choice.judgement}`}>
-                    {isCorrect ? '正答' : '誤答'}
-                  </span>
-                </div>
-                <dl>
-                  <div>
-                    <dt>{isCorrect ? '正答理由' : '誤答理由'}</dt>
-                    <dd>{choice.reason}</dd>
+      {sortedChoiceExplanations.length > 0 && (
+        <>
+        <section className="explanation-block">
+          <h4>各選択肢解説</h4>
+          <div className="choice-explanation-list">
+            {sortedChoiceExplanations.map((choice) => {
+              const isCorrect = choice.judgement === 'correct';
+              const correctionText = choice.corrected_statement ?? choice.correction_condition;
+  
+              return (
+                <article className="choice-explanation" key={choice.target_key}>
+                  <div className="choice-explanation-heading">
+                    <strong>{choice.target_key}</strong>
+                    <span className={`judgement ${choice.judgement}`}>
+                      {isCorrect ? '正答' : '誤答'}
+                    </span>
                   </div>
-                  {!isCorrect && correctionText && (
+                  <dl>
                     <div>
-                      <dt>正しく覚えるなら</dt>
-                      <dd>{correctionText}</dd>
+                      <dt>{isCorrect ? '正答理由' : '誤答理由'}</dt>
+                      <dd>{choice.reason}</dd>
                     </div>
-                  )}
-                  {choice.clinical_caution && (
-                    <div>
-                      <dt>臨床上の注意点</dt>
-                      <dd>{choice.clinical_caution}</dd>
-                    </div>
-                  )}
-                </dl>
-              </article>
-            );
-          })}
-        </div>
-      </section>
-      <MediaAfter placement="choice_explanations" media={media} />
+                    {!isCorrect && correctionText && (
+                      <div>
+                        <dt>正しく覚えるなら</dt>
+                        <dd>{correctionText}</dd>
+                      </div>
+                    )}
+                    {choice.clinical_caution && (
+                      <div>
+                        <dt>臨床上の注意点</dt>
+                        <dd>{choice.clinical_caution}</dd>
+                      </div>
+                    )}
+                  </dl>
+                </article>
+              );
+            })}
+          </div>
+        </section>
+        <MediaAfter placement="choice_explanations" media={media} />
+        </>
+      )}
 
       <ExplanationTextBlock
         title="関連する周辺知識"
