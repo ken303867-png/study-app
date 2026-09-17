@@ -1,0 +1,18 @@
+{
+  "datasetVersion": "common-final-2026-v1.3",
+  "releaseVersion": "2026-09-17.1",
+  "appVersion": "0.20.2",
+  "questions": 200,
+  "singleChoiceQuestions": 100,
+  "clozeQuestions": 100,
+  "refinedChoiceExplanations": 400,
+  "genericChoiceReasonsRemaining": 0,
+  "choiceSectionHiddenWhenEmpty": true,
+  "e2eVersionExpectationsUpdated": true,
+  "compressedBytes": 57273,
+  "base64Length": 76364,
+  "overlaySha256": "55268d219d2381617f19d0edb60abaf0d3caf07252dade3cd1af51f7463fbd8a",
+  "originalSha256": "aa496cc986a3a402499791900a3d7b18512f182d3acb44aad10b2a077d82e7e8",
+  "chunks": 5,
+  "status": "PASS"
+}
