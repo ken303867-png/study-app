@@ -1,16 +1,16 @@
 {
   "schemaVersion": 1,
-  "releaseVersion": "2026-09-17.1",
+  "releaseVersion": "2026-09-20.1",
   "appMinVersion": "0.17.0",
   "expected": {
-    "questionsTotal": 3451,
+    "questionsTotal": 3351,
     "materials": 114,
-    "sourceOccurrences": 3451,
+    "sourceOccurrences": 3351,
     "kinds": {
       "common-jna": 536,
       "common-cloze": 2014,
       "common-predicted": 190,
-      "common-final": 200,
+      "common-final": 100,
       "specialty-past": 126,
       "specialty-predicted": 116,
       "specialty-predicted-case": 269
@@ -57,17 +57,21 @@
     },
     {
       "chunks": [
-        "common-final-2026-v1.3/000.b64",
-        "common-final-2026-v1.3/001.b64",
-        "common-final-2026-v1.3/002.b64",
-        "common-final-2026-v1.3/003.b64",
-        "common-final-2026-v1.3/004.b64"
+        "common-final-2026-v2.4-100-v1.0/000.b64",
+        "common-final-2026-v2.4-100-v1.0/001.b64",
+        "common-final-2026-v2.4-100-v1.0/002.b64",
+        "common-final-2026-v2.4-100-v1.0/003.b64",
+        "common-final-2026-v2.4-100-v1.0/004.b64",
+        "common-final-2026-v2.4-100-v1.0/005.b64",
+        "common-final-2026-v2.4-100-v1.0/006.b64",
+        "common-final-2026-v2.4-100-v1.0/007.b64",
+        "common-final-2026-v2.4-100-v1.0/008.b64"
       ],
       "encoding": "base64",
       "compression": "gzip",
-      "compressedBytes": 57273,
-      "base64Length": 76364,
-      "sha256": "55268d219d2381617f19d0edb60abaf0d3caf07252dade3cd1af51f7463fbd8a"
+      "compressedBytes": 33720,
+      "base64Length": 44960,
+      "sha256": "75fe6117f05cf1123c532df8cc422ab4bae008eb7fa0daef5f789d0ccf2dcd51"
     }
   ],
   "datasets": [
@@ -104,8 +108,8 @@
     {
       "order": 6,
       "role": "common-final-2026",
-      "originalSha256": "aa496cc986a3a402499791900a3d7b18512f182d3acb44aad10b2a077d82e7e8",
-      "questionCount": 200
+      "originalSha256": "cb611725caa86c6c78b9c984badff51618e4d4f5ee0e3b37f315758ad4779b00",
+      "questionCount": 100
     }
   ]
 }
