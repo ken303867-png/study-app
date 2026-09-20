@@ -1,0 +1,21 @@
+{
+  "datasetVersion": "common-final-2026-integrated-300-v3.0-strictqa-historysafe",
+  "releaseVersion": "2026-09-20.1",
+  "appVersion": "0.20.3",
+  "questions": 300,
+  "singleChoiceQuestions": 200,
+  "clozeQuestions": 100,
+  "refinedChoiceExplanations": 800,
+  "genericChoiceReasonsRemaining": 0,
+  "choiceSectionHiddenWhenEmpty": true,
+  "e2eVersionExpectationsUpdated": true,
+  "compressedBytes": 105797,
+  "base64Length": 141064,
+  "overlaySha256": "9d0ac9cb5a509d7c5076cdfd86524e19960ea25416e75a4c0df66f2efd2e24a4",
+  "originalSha256": "10a034e352afad7533afcb3a7d382b2a193b3f6d877abb622ce02754e5f9ed5a",
+  "chunks": 8,
+  "historySafeNewIds": 92,
+  "historyPreservedStableIds": 208,
+  "strictQaStatus": "PASS",
+  "status": "PASS"
+}
