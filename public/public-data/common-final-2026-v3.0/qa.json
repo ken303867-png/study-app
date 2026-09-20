@@ -1,5 +1,5 @@
 {
-  "datasetVersion": "common-final-2026-integrated-300-v3.0-strictqa-historysafe",
+  "datasetVersion": "common-final-2026-integrated-300-v3.0-strictqa-historysafe-app",
   "releaseVersion": "2026-09-20.1",
   "appVersion": "0.20.3",
   "questions": 300,
@@ -9,13 +9,17 @@
   "genericChoiceReasonsRemaining": 0,
   "choiceSectionHiddenWhenEmpty": true,
   "e2eVersionExpectationsUpdated": true,
-  "compressedBytes": 110056,
-  "base64Length": 146744,
-  "overlaySha256": "c86c4ff8588a1bf82027d9fefed6669be074258959110be456776989997f1393",
-  "originalSha256": "df9499b9fd1466c4f988f338608ff8f97fb04b4349f19af2f97d6b57df47a888",
+  "compressedBytes": 109939,
+  "base64Length": 146588,
+  "overlaySha256": "9cb82202a5fcaa85e732a4e36a2c2e0d442ec593b16b7862808add260999a768",
+  "originalSha256": "072feb28eac03fb6ecb1e94690be1eddd68e7b2b36c6640a3b49a38b0d8e6554",
   "chunks": 9,
   "historySafeNewIds": 92,
   "historyPreservedStableIds": 208,
   "strictQaStatus": "PASS",
-  "status": "PASS"
+  "status": "PASS",
+  "questionKindCounts": {
+    "common-final": 200,
+    "common-cloze": 100
+  }
 }
