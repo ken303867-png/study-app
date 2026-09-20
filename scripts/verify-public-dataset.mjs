@@ -73,10 +73,10 @@ function mergePack(bundle, packed) {
 
 assert(manifest.schemaVersion === 1, 'manifest schemaVersion must be 1');
 assert(manifest.appMinVersion === '0.17.0', 'appMinVersion mismatch');
-assert(manifest.expected.questionsTotal === 3451, 'expected total must be 3451');
+assert(manifest.expected.questionsTotal === 3551, 'expected total must be 3551');
 assert(manifest.expected.materials === 114, 'expected materials must be 114');
-assert(manifest.expected.sourceOccurrences === 3451, 'expected sourceOccurrences must be 3451');
-assert(manifest.expected.kinds['common-final'] === 200, 'common-final expected count must be 200');
+assert(manifest.expected.sourceOccurrences === 3551, 'expected sourceOccurrences must be 3551');
+assert(manifest.expected.kinds['common-final'] === 300, 'common-final expected count must be 300');
 
 const descriptors = [manifest.bundle, ...(manifest.overlays ?? [])];
 assert(descriptors.length === 3, `expected 3 bundles, got ${descriptors.length}`);
@@ -117,7 +117,7 @@ const supplementals = [
   ['specialty-past', specialtyPast, 126, 'specialty-past'],
   ['specialty-predicted', specialtyPredicted, 116, 'specialty-predicted'],
   ['specialty-predicted-case', specialtyPredictedCase, 269, 'specialty-predicted-case'],
-  ['common-final-2026', commonFinal, 200, 'common-final-2026']
+  ['common-final-2026', commonFinal, 300, 'common-final-2026']
 ];
 for (const [role, data, expectedCount, key] of supplementals) {
   assert(data.schemaVersion === '0.5', `${role}: schemaVersion mismatch`);
@@ -131,7 +131,7 @@ for (const [role, data, expectedCount, key] of supplementals) {
 const finalTag = 'supplemental:common-final-2026';
 assert(commonFinal.questions.every((q) => q.tags.includes(finalTag)), 'common-final supplemental tag missing');
 assert(commonFinal.questions.every((q) => q.tags.includes('learning-area:common')), 'common-final common-area tag missing');
-assert(commonFinal.questions.filter((q) => q.tags.includes('question-kind:common-final')).length === 100, 'common-final choice split mismatch');
+assert(commonFinal.questions.filter((q) => q.tags.includes('question-kind:common-final')).length === 200, 'common-final choice split mismatch');
 assert(commonFinal.questions.filter((q) => q.tags.includes('question-kind:common-cloze')).length === 100, 'common-final self-assessment split mismatch');
 
 const allQuestions = [
@@ -150,8 +150,8 @@ const allOccurrences = [
   ...specialtyPredictedCase.sourceOccurrences.map((o) => o.source_occurrence_id),
   ...commonFinal.sourceOccurrences.map((o) => o.source_occurrence_id)
 ];
-assert(allQuestions.length === 3451, `total question mismatch: ${allQuestions.length}`);
-assert(allOccurrences.length === 3451, `total occurrence mismatch: ${allOccurrences.length}`);
+assert(allQuestions.length === 3551, `total question mismatch: ${allQuestions.length}`);
+assert(allOccurrences.length === 3551, `total occurrence mismatch: ${allOccurrences.length}`);
 assert(new Set(allQuestions).size === allQuestions.length, 'duplicate question IDs detected');
 assert(new Set(allOccurrences).size === allOccurrences.length, 'duplicate SourceOccurrence IDs detected');
 
@@ -162,5 +162,5 @@ for (const [role, item] of packed) {
 
 console.log('Public Dataset QA PASS');
 console.log(`release=${manifest.releaseVersion}`);
-console.log('questions=3451 materials=114 occurrences=3451');
-console.log('categories=536/2014/190/200/126/116/269');
+console.log('questions=3551 materials=114 occurrences=3551');
+console.log('categories=536/2014/190/300/126/116/269');
