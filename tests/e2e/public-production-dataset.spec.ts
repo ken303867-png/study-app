@@ -49,7 +49,23 @@ test('fresh public URL bootstraps the real 3,551-question production dataset', a
   await expect(page.getByRole('checkbox', { name: /最終対策\s*300問/ })).toBeChecked();
   await expect(page.getByLabel('出題数')).toHaveValue('20');
 
+  await expect(page.locator('input[name="common-subject"]')).toHaveCount(17);
+  await expect(page.getByText('17 / 17科目を選択')).toBeVisible();
+
+  await page.getByRole('checkbox', { name: /看護協会Eラーニング\s*536問/ }).uncheck();
+  await page.getByRole('checkbox', { name: /予想問題\s*190問/ }).uncheck();
+  await page.getByRole('checkbox', { name: /最終対策\s*300問/ }).uncheck();
+  await expect(page.getByRole('checkbox', { name: /穴抜き問題\s*2014問/ })).toBeChecked();
+  await expect(page.getByRole('checkbox', { name: /臨床病態生理学\s*454問/ })).toBeVisible();
+
+  await page.getByRole('button', { name: 'すべて解除' }).click();
+  await page.getByRole('checkbox', { name: /臨床病態生理学\s*454問/ }).check();
+  await expect(
+    page.getByText('母集団：共通科目：穴抜き問題 / 臨床病態生理学 / 454問')
+  ).toBeVisible();
+
   await page.getByRole('radio', { name: /専門科目\s*511問/ }).check();
+  await expect(page.locator('input[name="common-subject"]')).toHaveCount(0);
   await expect(page.getByRole('checkbox', { name: /過去問\s*126問/ })).toBeChecked();
   await expect(page.getByRole('checkbox', { name: /予想問題\s*116問/ })).toBeChecked();
   await expect(page.getByRole('checkbox', { name: /予想事例問題\s*269問/ })).toBeChecked();
