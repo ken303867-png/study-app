@@ -1,6 +1,7 @@
 import type { LearningHistory, Question } from '../types/domain';
 import {
   filterQuestionsByKinds,
+  filterQuestionsBySubjects,
   type LearningArea,
   type QuestionKind
 } from './questionCategories';
@@ -36,6 +37,7 @@ export interface PracticeSetOptions {
   timerMinutes?: ExamTimerMinutes;
   learningArea?: LearningArea;
   questionKinds?: QuestionKind[];
+  subjects?: string[];
 }
 
 export interface PracticeSetSummary {
@@ -70,7 +72,8 @@ export function buildPracticeSet(
   random: () => number = Math.random
 ): Question[] {
   const categoryFiltered = filterQuestionsByKinds(questions, options.questionKinds);
-  const filtered = categoryFiltered.filter((question) =>
+  const subjectFiltered = filterQuestionsBySubjects(categoryFiltered, options.subjects);
+  const filtered = subjectFiltered.filter((question) =>
     matchesPreset(question, historyByQuestionId, options.preset)
   );
   const ordered =
