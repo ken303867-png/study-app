@@ -1,9 +1,12 @@
 import { describe, expect, it } from 'vitest';
 import type { Question } from '../../src/types/domain';
 import {
+  COMMON_CURRICULUM_SUBJECTS,
   classifyQuestion,
+  countCommonSubjectQuestions,
   countQuestionKinds,
   filterQuestionsByKinds,
+  filterQuestionsBySubjects,
   questionLearningArea
 } from '../../src/utils/questionCategories';
 
@@ -79,6 +82,28 @@ describe('questionCategories', () => {
       'specialty-predicted': 1,
       'specialty-predicted-case': 1
     });
+  });
+
+  it('defines the 17 common curriculum subjects and filters/counts them exactly', () => {
+    expect(COMMON_CURRICULUM_SUBJECTS).toHaveLength(17);
+
+    const subjectQuestions: Question[] = [
+      { ...questions[0], id: 'PATHO-1', subject: '臨床病態生理学' },
+      { ...questions[1], id: 'PATHO-2', subject: '臨床病態生理学' },
+      { ...questions[2], id: 'REASONING-1', subject: '臨床推論' },
+      { ...questions[3], id: 'UNKNOWN-1', subject: 'サンプル科目' }
+    ];
+
+    expect(
+      filterQuestionsBySubjects(subjectQuestions, ['臨床推論']).map((question) => question.id)
+    ).toEqual(['REASONING-1']);
+    expect(filterQuestionsBySubjects(subjectQuestions, [])).toEqual([]);
+    expect(filterQuestionsBySubjects(subjectQuestions, undefined)).toHaveLength(4);
+
+    const counts = countCommonSubjectQuestions(subjectQuestions);
+    expect(counts['臨床病態生理学']).toBe(2);
+    expect(counts['臨床推論']).toBe(1);
+    expect(Object.keys(counts)).toHaveLength(17);
   });
 
   it('filters multiple selected specialty kinds', () => {
