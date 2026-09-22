@@ -3,6 +3,10 @@
 ## [Unreleased]
 
 ### Added
+- App v0.21.0: 共通科目の演習セット作成で、選択した問題種類をさらに共通科目カリキュラム17科目で絞り込める科目選択UI
+- 17科目の全選択・全解除、問題種類に連動した科目別問題数表示、科目選択を反映した母集団・演習問題数のリアルタイム更新
+- 問題種類 × 科目のAND条件を実際の出題queueにも適用するsubject filterと、Unit/E2E/Production Dataset QA
+
 - Delivery Schema 0.5 JSONの`importMode: supplemental-replace`による追加教材Import
 - `supplementalKey`単位で既存の追加問題だけを差し替え、正式709問・114資料を維持するImport経路
 - 共通穴抜き問題向け`answer-only`表示（正式解説を生成せず、解答だけを表示）
