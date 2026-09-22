@@ -415,10 +415,9 @@ export function PracticeSetBuilder({
               timerMinutes,
               learningArea,
               questionKinds,
-              subjects:
-                learningArea === 'common' && !allCommonSubjectsSelected
-                  ? selectedSubjects
-                  : undefined
+              ...(learningArea === 'common' && !allCommonSubjectsSelected
+                ? { subjects: selectedSubjects }
+                : {})
             })
           }
         >
