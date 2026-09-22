@@ -12,7 +12,7 @@ test('deployed GitHub Pages serves the 3,551-question production dataset and fin
 
   await page.goto('./?publicSync=1&admin=0', { waitUntil: 'domcontentloaded' });
 
-  const appHeading = page.getByRole('heading', { name: '学習アプリ v0.20.3' });
+  const appHeading = page.getByRole('heading', { name: '学習アプリ v0.21.0' });
   const errorHeading = page.getByRole('heading', { name: '問題データを準備できませんでした' });
 
   await expect(appHeading.or(errorHeading)).toBeVisible({ timeout: 120_000 });

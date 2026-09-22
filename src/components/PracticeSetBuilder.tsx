@@ -11,11 +11,14 @@ import {
   type PracticeSetOptions
 } from '../utils/practiceSets';
 import {
+  COMMON_CURRICULUM_SUBJECTS,
   LEARNING_AREA_LABELS,
   QUESTION_KIND_LABELS,
   QUESTION_KINDS_BY_AREA,
+  countCommonSubjectQuestions,
   countQuestionKinds,
   filterQuestionsByKinds,
+  filterQuestionsBySubjects,
   type LearningArea,
   type QuestionKind
 } from '../utils/questionCategories';
@@ -53,15 +56,34 @@ export function PracticeSetBuilder({
   const [questionKinds, setQuestionKinds] = useState<QuestionKind[]>([
     ...QUESTION_KINDS_BY_AREA[initialArea]
   ]);
+  const [selectedSubjects, setSelectedSubjects] = useState<string[]>([
+    ...COMMON_CURRICULUM_SUBJECTS
+  ]);
   const [preset, setPreset] = useState<PracticePreset>(initialPreset);
   const [order, setOrder] = useState<PracticeOrder>('sequential');
   const [limit, setLimit] = useState<PracticeLimit>(20);
   const [mode, setMode] = useState<PracticeSessionMode>('practice');
   const [timerMinutes, setTimerMinutes] = useState<ExamTimerMinutes>(0);
 
-  const categoryQuestions = useMemo(
+  const kindFilteredQuestions = useMemo(
     () => filterQuestionsByKinds(questions, questionKinds),
     [questions, questionKinds]
+  );
+  const allCommonSubjectsSelected =
+    selectedSubjects.length === COMMON_CURRICULUM_SUBJECTS.length;
+  const categoryQuestions = useMemo(
+    () =>
+      learningArea === 'common'
+        ? filterQuestionsBySubjects(
+            kindFilteredQuestions,
+            allCommonSubjectsSelected ? undefined : selectedSubjects
+          )
+        : kindFilteredQuestions,
+    [kindFilteredQuestions, learningArea, allCommonSubjectsSelected, selectedSubjects]
+  );
+  const subjectCounts = useMemo(
+    () => countCommonSubjectQuestions(kindFilteredQuestions),
+    [kindFilteredQuestions]
   );
   const summary = useMemo(
     () => summarizePracticePool(categoryQuestions, historyByQuestionId),
@@ -105,13 +127,21 @@ export function PracticeSetBuilder({
     });
   };
 
+  const toggleSubject = (subject: string) => {
+    setSelectedSubjects((current) =>
+      current.includes(subject)
+        ? current.filter((value) => value !== subject)
+        : [...current, subject]
+    );
+  };
+
   const areaCount = (area: LearningArea) =>
     QUESTION_KINDS_BY_AREA[area].reduce((total, kind) => total + kindCounts[kind], 0);
 
   const visibleSelectedKinds = QUESTION_KINDS_BY_AREA[learningArea].filter((kind) =>
     questionKinds.includes(kind)
   );
-  const populationLabel =
+  const kindPopulationLabel =
     visibleSelectedKinds.length === QUESTION_KINDS_BY_AREA[learningArea].length
       ? LEARNING_AREA_LABELS[learningArea]
       : visibleSelectedKinds.length === 0
@@ -119,6 +149,17 @@ export function PracticeSetBuilder({
         : `${LEARNING_AREA_LABELS[learningArea]}：${visibleSelectedKinds
             .map((kind) => QUESTION_KIND_LABELS[kind])
             .join('＋')}`;
+  const subjectSelectionLabel =
+    learningArea === 'common' && !allCommonSubjectsSelected
+      ? selectedSubjects.length === 0
+        ? '科目未選択'
+        : selectedSubjects.length <= 2
+          ? selectedSubjects.join('＋')
+          : `${selectedSubjects.length}科目`
+      : null;
+  const populationLabel = subjectSelectionLabel
+    ? `${kindPopulationLabel} / ${subjectSelectionLabel}`
+    : kindPopulationLabel;
 
   return (
     <section className="stack practice-set-builder" aria-label="演習セット作成">
@@ -184,6 +225,50 @@ export function PracticeSetBuilder({
           </div>
         </fieldset>
       </div>
+
+      {learningArea === 'common' && (
+        <div className="panel">
+          <fieldset className="practice-set-fieldset">
+            <legend>科目</legend>
+            <div className="practice-subject-toolbar">
+              <span>{selectedSubjects.length} / {COMMON_CURRICULUM_SUBJECTS.length}科目を選択</span>
+              <div>
+                <button
+                  type="button"
+                  disabled={allCommonSubjectsSelected}
+                  onClick={() => setSelectedSubjects([...COMMON_CURRICULUM_SUBJECTS])}
+                >
+                  すべて選択
+                </button>
+                <button
+                  type="button"
+                  disabled={selectedSubjects.length === 0}
+                  onClick={() => setSelectedSubjects([])}
+                >
+                  すべて解除
+                </button>
+              </div>
+            </div>
+            <div className="practice-preset-grid practice-subject-grid">
+              {COMMON_CURRICULUM_SUBJECTS.map((subject) => (
+                <label key={subject} className="practice-preset-option">
+                  <input
+                    type="checkbox"
+                    name="common-subject"
+                    value={subject}
+                    checked={selectedSubjects.includes(subject)}
+                    onChange={() => toggleSubject(subject)}
+                  />
+                  <span>
+                    <strong>{subject}</strong>
+                    <small>{subjectCounts[subject]}問</small>
+                  </span>
+                </label>
+              ))}
+            </div>
+          </fieldset>
+        </div>
+      )}
 
       <div className="panel">
         <fieldset className="practice-set-fieldset">
@@ -329,7 +414,10 @@ export function PracticeSetBuilder({
               mode,
               timerMinutes,
               learningArea,
-              questionKinds
+              questionKinds,
+              ...(learningArea === 'common' && !allCommonSubjectsSelected
+                ? { subjects: selectedSubjects }
+                : {})
             })
           }
         >

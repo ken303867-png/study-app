@@ -116,6 +116,32 @@ describe('practiceSets', () => {
     ).toEqual(['SPECIALTY', 'CASE']);
   });
 
+  it('filters the practice pool by selected common subjects after question kind filtering', () => {
+    const subjectQuestions: Question[] = [
+      { ...makeQuestion('PATHO'), subject: '臨床病態生理学', sourceType: 'predicted' },
+      { ...makeQuestion('REASONING'), subject: '臨床推論', sourceType: 'predicted' },
+      {
+        ...makeQuestion('SPECIALTY'),
+        subject: '専門科目',
+        sourceType: 'predicted',
+        tags: ['question-kind:specialty-predicted']
+      }
+    ];
+
+    expect(
+      ids(
+        buildPracticeSet(subjectQuestions, new Map(), {
+          preset: 'all',
+          order: 'sequential',
+          limit: 'all',
+          learningArea: 'common',
+          questionKinds: ['common-predicted'],
+          subjects: ['臨床推論']
+        })
+      )
+    ).toEqual(['REASONING']);
+  });
+
   it('applies the question limit after preset filtering', () => {
     const reviewSet = buildPracticeSet(questions, histories, {
       preset: 'review',

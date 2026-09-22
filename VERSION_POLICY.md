@@ -4,7 +4,7 @@
 
 アプリ本体・データ・schemaを独立してVersion管理します。
 
-- App Version: `0.14.0`
+- App Version: `0.21.0`
 - Schema Version: `0.5`
 - Explanation Template Version: `1.0`
 - Formal Data Specification Version: `1.2`
@@ -21,6 +21,8 @@ App 0.12.0はDelivery / Formal Schemaを変更せず、既存`learningHistory`�
 App 0.13.0はDelivery / Formal Schemaを変更せず、通常演習と独立した試験モードを追加します。試験中は正誤・正答・正式解説を表示せず、任意タイマー、終了時一括採点、科目別集計、誤答・未回答一覧を提供します。試験セッション要約は教材データと分離したIndexedDB `examSessions`へローカル保存します。
 
 App 0.14.0はDelivery / Formal Schemaを変更せず、既存`vite-plugin-pwa`のgenerateSW構成を正式なオフライン層として完成させます。manifest installability、192/512 PNGアイコン、maskable指定、iOS metadata、install prompt、接続状態表示、Service Worker制御後の実オフライン再読込とIndexedDB学習継続をrelease gateで検証します。
+
+App 0.21.0はDelivery / Formal Schemaを変更せず、共通科目の演習セット作成に共通科目カリキュラム17科目の科目フィルターを追加します。問題種類同士・科目同士はOR、問題種類と科目の間はANDで絞り込み、初期状態は17科目すべて選択として従来挙動を維持します。
 
 ## Semantic versioning
 
@@ -98,6 +100,10 @@ App 0.14.0はDelivery / Formal Schemaを変更せず、既存`vite-plugin-pwa`�
 - ランダム出題は元の問題配列を破壊せず、演習用queueのコピーだけをshuffleする
 - 出題数は `全件 / 10 / 20 / 50問` とし、対象件数より大きい指定では対象全件を使用する
 - 0件の演習セットは開始不可とし、別条件の選択を促す
+- 共通科目では、問題種類で絞り込んだ後に共通科目カリキュラム17科目の科目フィルターを適用する
+- 問題種類同士・科目同士はOR、問題種類と科目の間はANDとする
+- 科目フィルターの初期状態は17科目すべて選択とし、全選択時は従来と同じ母集団を使用する
+- 専門科目では共通17科目フィルターを表示・適用しない
 - 演習セット構成はローカルUI状態であり、Formal Master / Deliveryへ保存しない
 
 ## Exam mode policy
