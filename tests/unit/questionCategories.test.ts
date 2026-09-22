@@ -88,10 +88,16 @@ describe('questionCategories', () => {
     expect(COMMON_CURRICULUM_SUBJECTS).toHaveLength(17);
 
     const subjectQuestions: Question[] = [
-      { ...questions[0], id: 'PATHO-1', subject: '臨床病態生理学' },
-      { ...questions[1], id: 'PATHO-2', subject: '臨床病態生理学' },
-      { ...questions[2], id: 'REASONING-1', subject: '臨床推論' },
-      { ...questions[3], id: 'UNKNOWN-1', subject: 'サンプル科目' }
+      {
+        ...makeQuestion('PATHO-1', 'japan-nursing-association', []),
+        subject: '臨床病態生理学'
+      },
+      {
+        ...makeQuestion('PATHO-2', 'other', ['supplemental:common-cloze']),
+        subject: '臨床病態生理学'
+      },
+      { ...makeQuestion('REASONING-1', 'predicted', []), subject: '臨床推論' },
+      { ...makeQuestion('UNKNOWN-1', 'predicted', []), subject: 'サンプル科目' }
     ];
 
     expect(
