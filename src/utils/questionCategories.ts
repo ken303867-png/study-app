@@ -19,6 +19,27 @@ export const LEARNING_AREA_LABELS: Record<LearningArea, string> = {
   specialty: '専門科目'
 };
 
+export const COMMON_CURRICULUM_SUBJECTS = [
+  '臨床病態生理学',
+  '臨床推論',
+  'フィジカルアセスメント：基礎',
+  'フィジカルアセスメント：応用',
+  '臨床推論：医療面接',
+  '疾病・臨床病態概論',
+  '疾病・臨床病態概論：状況別',
+  '臨床薬理学：薬理作用',
+  '臨床薬理学：薬物動態',
+  '臨床薬理学：薬物治療・管理',
+  '医療安全学：医療安全管理',
+  '医療安全学：医療倫理',
+  'チーム医療論（特定行為実践）',
+  '特定行為実践',
+  '看護管理',
+  '指導',
+  '相談'
+] as const;
+export type CommonCurriculumSubject = (typeof COMMON_CURRICULUM_SUBJECTS)[number];
+
 export const QUESTION_KIND_LABELS: Record<QuestionKind, string> = {
   'common-jna': '看護協会Eラーニング',
   'common-cloze': '穴抜き問題',
@@ -89,6 +110,28 @@ export function filterQuestionsByKinds(
   });
 }
 
+export function filterQuestionsBySubjects(
+  questions: readonly Question[],
+  subjects: readonly string[] | undefined
+): Question[] {
+  if (!subjects) return [...questions];
+  if (subjects.length === 0) return [];
+  const selected = new Set(subjects);
+  return questions.filter((question) => selected.has(question.subject));
+}
+
+export function countCommonSubjectQuestions(
+  questions: readonly Question[]
+): Record<CommonCurriculumSubject, number> {
+  const counts = Object.fromEntries(
+    COMMON_CURRICULUM_SUBJECTS.map((subject) => [subject, 0])
+  ) as Record<CommonCurriculumSubject, number>;
+  for (const question of questions) {
+    if (isCommonCurriculumSubject(question.subject)) counts[question.subject] += 1;
+  }
+  return counts;
+}
+
 export function countQuestionKinds(questions: readonly Question[]): Record<QuestionKind, number> {
   const counts = Object.fromEntries(QUESTION_KINDS.map((kind) => [kind, 0])) as Record<
     QuestionKind,
@@ -133,4 +176,8 @@ function isSpecialtyCaseQuestion(question: Question): boolean {
     question.id.startsWith('PRED-CASE-') ||
     question.id.startsWith('PRED-SPEC-CASE-')
   );
+}
+
+function isCommonCurriculumSubject(subject: string): subject is CommonCurriculumSubject {
+  return (COMMON_CURRICULUM_SUBJECTS as readonly string[]).includes(subject);
 }
