@@ -7,6 +7,7 @@ export const QUESTION_KINDS = [
   'common-jna',
   'common-cloze',
   'common-predicted',
+  'common-predicted-30',
   'common-final',
   'specialty-past',
   'specialty-predicted',
@@ -44,6 +45,7 @@ export const QUESTION_KIND_LABELS: Record<QuestionKind, string> = {
   'common-jna': '看護協会Eラーニング',
   'common-cloze': '穴抜き問題',
   'common-predicted': '予想問題',
+  'common-predicted-30': '予想問題30',
   'common-final': '最終対策',
   'specialty-past': '過去問',
   'specialty-predicted': '予想問題',
@@ -51,7 +53,7 @@ export const QUESTION_KIND_LABELS: Record<QuestionKind, string> = {
 };
 
 export const QUESTION_KINDS_BY_AREA: Record<LearningArea, readonly QuestionKind[]> = {
-  common: ['common-jna', 'common-cloze', 'common-predicted', 'common-final'],
+  common: ['common-jna', 'common-cloze', 'common-predicted', 'common-predicted-30', 'common-final'],
   specialty: ['specialty-past', 'specialty-predicted', 'specialty-predicted-case']
 };
 
