@@ -23,6 +23,11 @@ const questions: Question[] = [
   makeQuestion('JNA-1', 'japan-nursing-association', []),
   makeQuestion('CLOZE-1', 'other', ['supplemental:common-cloze']),
   makeQuestion('PRED-COM-1', 'predicted', []),
+  makeQuestion('P30-COM-1', 'predicted', [
+    'supplemental:common-predicted-30-v2',
+    'learning-area:common',
+    'question-kind:common-predicted-30'
+  ]),
   makeQuestion('FINAL-CHOICE-1', 'predicted', [
     'learning-area:common',
     'supplemental:common-final-2026',
@@ -44,6 +49,7 @@ describe('questionCategories', () => {
       'common-jna',
       'common-cloze',
       'common-predicted',
+      'common-predicted-30',
       'common-final',
       'common-cloze',
       'specialty-past',
@@ -53,14 +59,15 @@ describe('questionCategories', () => {
   });
 
   it('derives common and specialty learning areas', () => {
-    expect(questions.slice(0, 5).map(questionLearningArea)).toEqual([
+    expect(questions.slice(0, 6).map(questionLearningArea)).toEqual([
+      'common',
       'common',
       'common',
       'common',
       'common',
       'common'
     ]);
-    expect(questions.slice(5).map(questionLearningArea)).toEqual([
+    expect(questions.slice(6).map(questionLearningArea)).toEqual([
       'specialty',
       'specialty',
       'specialty'
@@ -77,6 +84,7 @@ describe('questionCategories', () => {
       'common-jna': 1,
       'common-cloze': 1,
       'common-predicted': 1,
+      'common-predicted-30': 1,
       'common-final': 2,
       'specialty-past': 1,
       'specialty-predicted': 1,
@@ -110,6 +118,11 @@ describe('questionCategories', () => {
     expect(counts['臨床病態生理学']).toBe(2);
     expect(counts['臨床推論']).toBe(1);
     expect(Object.keys(counts)).toHaveLength(17);
+  });
+
+  it('filters the additional 30-question common type independently', () => {
+    expect(filterQuestionsByKinds(questions, ['common-predicted-30']).map((question) => question.id)).toEqual(['P30-COM-1']);
+    expect(filterQuestionsByKinds(questions, ['common-predicted']).map((question) => question.id)).toEqual(['PRED-COM-1']);
   });
 
   it('filters multiple selected specialty kinds', () => {
