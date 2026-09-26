@@ -77,11 +77,26 @@ describe('questionCategories', () => {
       'common-jna': 1,
       'common-cloze': 1,
       'common-predicted': 1,
+      'common-predicted30': 0,
       'common-final': 2,
       'specialty-past': 1,
       'specialty-predicted': 1,
       'specialty-predicted-case': 1
     });
+  });
+
+  it('keeps supplemental predicted30 distinct from existing common predicted questions', () => {
+    const imported = makeQuestion('PRED-PATH-001', 'predicted', [
+      'learning-area:common',
+      'question-kind:common-predicted30',
+      'supplemental:common-predicted30'
+    ]);
+    expect(classifyQuestion(imported)).toBe('common-predicted30');
+    expect(questionLearningArea(imported)).toBe('common');
+    expect(filterQuestionsByKinds([...questions, imported], ['common-predicted30'])).toEqual([
+      imported
+    ]);
+    expect(countQuestionKinds([...questions, imported])['common-predicted30']).toBe(1);
   });
 
   it('defines the 17 common curriculum subjects and filters/counts them exactly', () => {
