@@ -39,7 +39,7 @@ const manifest = {
 };
 
 const fetchManifest = (payload: object) =>
-  (async () => ({ ok: true, json: async () => payload }) as Response) as typeof fetch;
+  (() => Promise.resolve({ ok: true, json: () => Promise.resolve(payload) } as Response)) as typeof fetch;
 
 describe('public auto-sync protects locally imported predicted30', () => {
   beforeEach(async () => {
