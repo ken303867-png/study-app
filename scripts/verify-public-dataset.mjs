@@ -167,7 +167,7 @@ const knowledgeKeys = [
   'commonMistakes',
   'correctionConditions'
 ];
-const knowledgeHeadings = /^(surroundingKnowledge|comparisonText|commonMistakes|correctionConditions):[ \\t]*/gm;
+const knowledgeHeadings = /^(surroundingKnowledge|comparisonText|commonMistakes|correctionConditions):[ \t]*/gm;
 for (const question of predicted30.questions) {
   const id = question.id;
   assert(typeof id === 'string' && id.trim(), 'predicted30: missing question ID');
