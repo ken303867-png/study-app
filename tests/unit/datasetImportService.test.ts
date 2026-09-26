@@ -84,6 +84,89 @@ describe('datasetImportService', () => {
     expect((await db.meta.get('formalDataSpecVersion'))?.value).toBe('1.2');
   });
 
+  it('imports and replaces common predicted30 without overwriting older categories or learning history', async () => {
+    await db.learningHistory.clear();
+    await contentRepository.replaceDataset(sampleDataset, {
+      explanationTemplateVersion: '1.0',
+      formalDataSpecVersion: '1.2'
+    });
+    await db.learningHistory.put({
+      questionId: 'SAMPLE-Q-001',
+      attempts: 3,
+      correctCount: 2,
+      incorrectCount: 1,
+      uncertainCount: 0,
+      consecutiveCorrect: 2,
+      lastResult: 'correct',
+      lastAnsweredAt: '2026-09-26T00:00:00Z',
+      needsReview: false
+    });
+
+    const source = {
+      importMode: 'supplemental-replace',
+      supplementalKey: 'common-predicted30',
+      datasetVersion: 'common-predicted30-test-v1',
+      schemaVersion: '0.5',
+      questions: [
+        {
+          ...sampleDataset.questions[0],
+          id: 'PRED-PATH-001',
+          subject: '臨床病態生理学',
+          sourceLabel: '予想問題30 fixture',
+          relatedMaterialIds: [],
+          tags: [
+            'learning-area:common',
+            'question-kind:common-predicted30',
+            'supplemental:common-predicted30'
+          ]
+        }
+      ],
+      materials: [],
+      sources: [
+        {
+          source_id: 'SRC-PRED30-TEST',
+          source_group: 'supplemental:common-predicted30',
+          title: '予想問題30 unit test',
+          answer_authority: 'audited'
+        }
+      ],
+      sourceOccurrences: [
+        {
+          source_occurrence_id: 'OCC-PRED30-001',
+          canonical_question_id: 'PRED-PATH-001',
+          source_id: 'SRC-PRED30-TEST',
+          source_set_id: 'SRC-PRED30-TEST-SET01',
+          source_set_label: '臨床病態生理学',
+          source_set_order: 1,
+          source_question_no: 1,
+          source_occurrence_order: 1,
+          source_answer: 'B'
+        }
+      ],
+      media: []
+    };
+
+    const first = await importDatasetJsonText(JSON.stringify(source));
+    expect(first.kind).toBe('supplemental-delivery');
+    expect(first.supplementalQuestionCount).toBe(1);
+    expect(first.replacedSupplementalQuestionCount).toBe(0);
+    expect((await db.learningHistory.get('SAMPLE-Q-001'))?.attempts).toBe(3);
+    expect((await contentRepository.getQuestions()).map((question) => question.id).sort()).toEqual([
+      'PRED-PATH-001',
+      'SAMPLE-Q-001'
+    ]);
+
+    source.questions[0]!.explanation.reasoning = '更新後の予想問題30解説';
+    const second = await importDatasetJsonText(JSON.stringify(source));
+    expect(second.replacedSupplementalQuestionCount).toBe(1);
+    expect(second.questionCount).toBe(2);
+    expect((await db.learningHistory.get('SAMPLE-Q-001'))?.attempts).toBe(3);
+    expect((await db.questions.get('PRED-PATH-001'))?.explanation.reasoning).toBe(
+      '更新後の予想問題30解説'
+    );
+    expect((await db.questions.get('SAMPLE-Q-001'))?.id).toBe('SAMPLE-Q-001');
+  });
+
   it('imports a canonical master .xlsx through the same atomic pipeline', async () => {
     const master = canonicalMasterExportSchema.parse(fixture);
     const bytes = await buildCanonicalMasterXlsx(master);
