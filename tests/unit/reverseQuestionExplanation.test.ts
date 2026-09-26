@@ -5,8 +5,10 @@ import { FormalExplanationView } from '../../src/components/StudyContentCards';
 import { sampleDataset } from '../../src/data/sampleDataset';
 import type { Question } from '../../src/types/domain';
 
+const baselineQuestion = sampleDataset.questions[0]! as unknown as Question;
+
 const inverseQuestion = {
-  ...sampleDataset.questions[0]!,
+  ...baselineQuestion,
   id: 'PRED-INTERVIEW-023',
   prompt: '進行がんの病状説明前の準備として最も不適切なのはどれか。',
   choices: [
@@ -17,7 +19,7 @@ const inverseQuestion = {
   ],
   correctChoiceIndexes: [3],
   explanation: {
-    ...sampleDataset.questions[0]!.explanation,
+    ...baselineQuestion.explanation,
     answer: 'D. 廊下で家族の希望だけに基づいて説明する。',
     choice_explanations: ['A', 'B', 'C', 'D'].map((letter, index) => ({
       target_key: letter,
@@ -45,7 +47,7 @@ describe('negatively worded single-choice explanation', () => {
 
   it('preserves normal labels for positively worded questions', () => {
     const html = renderToStaticMarkup(
-      createElement(FormalExplanationView, { question: sampleDataset.questions[0]!, media: [] })
+      createElement(FormalExplanationView, { question: baselineQuestion, media: [] })
     );
     expect(html).not.toContain('逆向き設問');
     expect(html).toContain('正答理由');
