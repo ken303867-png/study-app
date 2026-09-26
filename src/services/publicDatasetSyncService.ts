@@ -198,8 +198,8 @@ export async function syncPublicDataset(
     const payload = await fetchBundlePayload(descriptor, baseUrl, fetchImpl);
     const packText = await decodeFetchedPack(payload, descriptor.sha256);
     const packedDatasets = parseDatasetPack(packText);
+    // Release overlays intentionally replace older versions of the same role in the base pack.
     for (const [role, text] of packedDatasets) {
-      if (datasets.has(role)) throw new Error(`公開問題データ「${role}」が重複しています。`);
       datasets.set(role, text);
     }
   }
