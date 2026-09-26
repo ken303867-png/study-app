@@ -84,6 +84,188 @@ describe('datasetImportService', () => {
     expect((await db.meta.get('formalDataSpecVersion'))?.value).toBe('1.2');
   });
 
+  it('imports and replaces common predicted30 without overwriting older categories or learning history', async () => {
+    await db.learningHistory.clear();
+    await contentRepository.replaceDataset(sampleDataset, {
+      explanationTemplateVersion: '1.0',
+      formalDataSpecVersion: '1.2'
+    });
+    await db.learningHistory.put({
+      questionId: 'SAMPLE-Q-001',
+      attempts: 3,
+      correctCount: 2,
+      incorrectCount: 1,
+      uncertainCount: 0,
+      consecutiveCorrect: 2,
+      lastResult: 'correct',
+      lastAnsweredAt: '2026-09-26T00:00:00Z',
+      needsReview: false
+    });
+
+    const source = {
+      importMode: 'supplemental-replace',
+      supplementalKey: 'common-predicted30',
+      datasetVersion: 'common-predicted30-test-v1',
+      schemaVersion: '0.5',
+      questions: [
+        {
+          ...sampleDataset.questions[0],
+          id: 'PRED-PATH-001',
+          subject: '臨床病態生理学',
+          sourceLabel: '予想問題30 fixture',
+          relatedMaterialIds: [],
+          tags: [
+            'learning-area:common',
+            'question-kind:common-predicted30',
+            'supplemental:common-predicted30'
+          ]
+        }
+      ],
+      materials: [],
+      sources: [
+        {
+          source_id: 'SRC-PRED30-TEST',
+          source_group: 'supplemental:common-predicted30',
+          title: '予想問題30 unit test',
+          answer_authority: 'audited'
+        }
+      ],
+      sourceOccurrences: [
+        {
+          source_occurrence_id: 'OCC-PRED30-001',
+          canonical_question_id: 'PRED-PATH-001',
+          source_id: 'SRC-PRED30-TEST',
+          source_set_id: 'SRC-PRED30-TEST-SET01',
+          source_set_label: '臨床病態生理学',
+          source_set_order: 1,
+          source_question_no: 1,
+          source_occurrence_order: 1,
+          source_answer: 'B'
+        }
+      ],
+      media: []
+    };
+
+    const first = await importDatasetJsonText(JSON.stringify(source));
+    expect(first.kind).toBe('supplemental-delivery');
+    expect(first.supplementalQuestionCount).toBe(1);
+    expect(first.replacedSupplementalQuestionCount).toBe(0);
+    expect((await db.learningHistory.get('SAMPLE-Q-001'))?.attempts).toBe(3);
+    expect((await contentRepository.getQuestions()).map((question) => question.id).sort()).toEqual([
+      'PRED-PATH-001',
+      'SAMPLE-Q-001'
+    ]);
+
+    const updatedSource = {
+      ...source,
+      questions: [
+        {
+          ...source.questions[0],
+          explanation: {
+            ...sampleDataset.questions[0]!.explanation,
+            reasoning: '更新後の予想問題30解説'
+          }
+        }
+      ]
+    };
+    const second = await importDatasetJsonText(JSON.stringify(updatedSource));
+    expect(second.replacedSupplementalQuestionCount).toBe(1);
+    expect(second.questionCount).toBe(2);
+    expect((await db.learningHistory.get('SAMPLE-Q-001'))?.attempts).toBe(3);
+    expect((await db.questions.get('PRED-PATH-001'))?.explanation.reasoning).toBe(
+      '更新後の予想問題30解説'
+    );
+    expect((await db.questions.get('SAMPLE-Q-001'))?.id).toBe('SAMPLE-Q-001');
+  });
+
+  it('imports the full predicted30 scale of 510 synthetic questions across 17 subjects', async () => {
+    await contentRepository.replaceDataset(sampleDataset, {
+      explanationTemplateVersion: '1.0',
+      formalDataSpecVersion: '1.2'
+    });
+
+    const subjects = [
+      '臨床病態生理学',
+      '臨床推論',
+      '臨床推論：医療面接',
+      'フィジカルアセスメント：基礎',
+      'フィジカルアセスメント：応用',
+      '臨床薬理学：薬物動態',
+      '臨床薬理学：薬理作用',
+      '臨床薬理学：薬物治療・管理',
+      '疾病・臨床病態概論',
+      '疾病・臨床病態概論：状況別',
+      '医療安全学：医療倫理',
+      '医療安全学：医療安全管理',
+      'チーム医療論（特定行為実践）',
+      '特定行為実践',
+      '指導',
+      '相談',
+      '看護管理'
+    ];
+    const sourceId = 'SRC-PRED30-SCALE-TEST';
+    const questions = subjects.flatMap((subject, subjectIndex) =>
+      Array.from({ length: 30 }, (_, questionIndex) => ({
+        ...sampleDataset.questions[0]!,
+        id: `PRED30-SCALE-${String(subjectIndex + 1).padStart(2, '0')}-${String(
+          questionIndex + 1
+        ).padStart(2, '0')}`,
+        subject,
+        sourceLabel: '予想問題30 scale fixture',
+        relatedMaterialIds: [],
+        tags: [
+          'learning-area:common',
+          'question-kind:common-predicted30',
+          'supplemental:common-predicted30',
+          `subject-id:${String(subjectIndex + 1).padStart(2, '0')}`
+        ]
+      }))
+    );
+    const sourceOccurrences = questions.map((question, index) => ({
+      source_occurrence_id: `OCC-PRED30-SCALE-${String(index + 1).padStart(3, '0')}`,
+      canonical_question_id: question.id,
+      source_id: sourceId,
+      source_set_id: `PRED30-SCALE-SET-${String(Math.floor(index / 30) + 1).padStart(2, '0')}`,
+      source_set_label: question.subject,
+      source_set_order: Math.floor(index / 30) + 1,
+      source_question_no: (index % 30) + 1,
+      source_occurrence_order: index + 1,
+      source_answer: 'B'
+    }));
+
+    const result = await importDatasetJsonText(
+      JSON.stringify({
+        importMode: 'supplemental-replace',
+        supplementalKey: 'common-predicted30',
+        datasetVersion: 'common-predicted30-scale-test-v1',
+        schemaVersion: '0.5',
+        questions,
+        materials: [],
+        sources: [
+          {
+            source_id: sourceId,
+            source_group: 'supplemental:common-predicted30',
+            title: '予想問題30 scale unit test',
+            answer_authority: 'audited'
+          }
+        ],
+        sourceOccurrences,
+        media: []
+      })
+    );
+
+    expect(result.kind).toBe('supplemental-delivery');
+    expect(result.supplementalQuestionCount).toBe(510);
+    expect(result.questionCount).toBe(511);
+    const imported = await db.questions.where('tags').equals('supplemental:common-predicted30').toArray();
+    expect(imported).toHaveLength(510);
+    for (const subject of subjects) {
+      expect(imported.filter((question) => question.subject === subject)).toHaveLength(30);
+    }
+    expect(await db.sourceOccurrences.where('source_id').equals(sourceId).count()).toBe(510);
+    expect((await db.questions.get('SAMPLE-Q-001'))?.id).toBe('SAMPLE-Q-001');
+  });
+
   it('imports a canonical master .xlsx through the same atomic pipeline', async () => {
     const master = canonicalMasterExportSchema.parse(fixture);
     const bytes = await buildCanonicalMasterXlsx(master);

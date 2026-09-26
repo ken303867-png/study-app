@@ -3,6 +3,7 @@ import { db } from '../db/database';
 import { importDatasetJsonTextsAsBatch } from './datasetImportService';
 
 const PUBLIC_DATASET_META_KEY = 'publicDatasetReleaseVersion';
+const PROTECTED_PREDICTED30_TAG = 'supplemental:common-predicted30';
 const PUBLIC_DATASET_MANIFEST_PATH = 'public-data/manifest.json';
 const PRODUCTION_QUESTION_TOTAL = 3551;
 const PRODUCTION_MATERIAL_TOTAL = 114;
@@ -140,12 +141,23 @@ export async function syncPublicDataset(
   }
 
   const storedRelease = await db.meta.get(PUBLIC_DATASET_META_KEY);
+  const protectedSupplemental = await inspectProtectedPredicted30();
   if (
     storedRelease?.value === manifest.releaseVersion &&
-    (await storedStateMatchesManifest(manifest))
+    (await storedStateMatchesManifest(manifest, protectedSupplemental))
   ) {
     report({ stage: 'ready', message: '問題データは最新版です。' });
     return { status: 'up-to-date', releaseVersion: manifest.releaseVersion };
+  }
+
+  // A public release is a full replacement. Never silently delete locally imported
+  // private predicted30 questions on reload or when a newer release is published.
+  if (protectedSupplemental.questions > 0) {
+    return {
+      status: 'offline-existing',
+      warning:
+        '予想問題30の端末内データを保護するため、公開問題データの自動更新を保留しました。追加問題と学習履歴をバックアップしてから更新してください。'
+    };
   }
 
   const bundleDescriptors = [manifest.bundle, ...(manifest.overlays ?? [])];
@@ -267,35 +279,58 @@ function parseDatasetPack(text: string): Map<string, string> {
   return datasets;
 }
 
-async function storedStateMatchesManifest(manifest: PublicDatasetManifest): Promise<boolean> {
-  const [questionCount, materialCount, occurrenceCount, schemaMeta] = await Promise.all([
-    db.questions.count(),
-    db.materials.count(),
-    db.sourceOccurrences.count(),
-    db.meta.get('schemaVersion')
-  ]);
+interface ProtectedSupplementalCounts {
+  questions: number;
+  sourceOccurrences: number;
+}
+
+async function inspectProtectedPredicted30(): Promise<ProtectedSupplementalCounts> {
+  const questions = await db.questions.where('tags').equals(PROTECTED_PREDICTED30_TAG).toArray();
+  if (questions.length === 0) return { questions: 0, sourceOccurrences: 0 };
+  const questionIds = questions.map((question) => question.id);
+  const sourceOccurrences = await db.sourceOccurrences
+    .where('canonical_question_id')
+    .anyOf(questionIds)
+    .count();
+  return { questions: questions.length, sourceOccurrences };
+}
+
+async function storedStateMatchesManifest(
+  manifest: PublicDatasetManifest,
+  protectedSupplemental?: ProtectedSupplementalCounts
+): Promise<boolean> {
+  const [questionCount, materialCount, occurrenceCount, schemaMeta, protectedCounts] =
+    await Promise.all([
+      db.questions.count(),
+      db.materials.count(),
+      db.sourceOccurrences.count(),
+      db.meta.get('schemaVersion'),
+      protectedSupplemental ? Promise.resolve(protectedSupplemental) : inspectProtectedPredicted30()
+    ]);
 
   return (
     schemaMeta?.value === '0.5' &&
-    questionCount === manifest.expected.questionsTotal &&
+    questionCount === manifest.expected.questionsTotal + protectedCounts.questions &&
     materialCount === manifest.expected.materials &&
-    occurrenceCount === manifest.expected.sourceOccurrences
+    occurrenceCount === manifest.expected.sourceOccurrences + protectedCounts.sourceOccurrences
   );
 }
 
 async function hasUsableStoredContent(): Promise<boolean> {
-  const [questionCount, materialCount, occurrenceCount, schemaMeta] = await Promise.all([
-    db.questions.count(),
-    db.materials.count(),
-    db.sourceOccurrences.count(),
-    db.meta.get('schemaVersion')
-  ]);
+  const [questionCount, materialCount, occurrenceCount, schemaMeta, protectedCounts] =
+    await Promise.all([
+      db.questions.count(),
+      db.materials.count(),
+      db.sourceOccurrences.count(),
+      db.meta.get('schemaVersion'),
+      inspectProtectedPredicted30()
+    ]);
 
   return (
     schemaMeta?.value === '0.5' &&
-    questionCount === PRODUCTION_QUESTION_TOTAL &&
+    questionCount === PRODUCTION_QUESTION_TOTAL + protectedCounts.questions &&
     materialCount === PRODUCTION_MATERIAL_TOTAL &&
-    occurrenceCount === PRODUCTION_OCCURRENCE_TOTAL
+    occurrenceCount === PRODUCTION_OCCURRENCE_TOTAL + protectedCounts.sourceOccurrences
   );
 }
 
