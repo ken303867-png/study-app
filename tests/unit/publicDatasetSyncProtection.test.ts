@@ -95,6 +95,28 @@ describe('public auto-sync protects locally imported predicted30', () => {
     expect(await db.sourceOccurrences.count()).toBe(2);
   });
 
+  it('does not double count an already published predicted30 category on existing devices', async () => {
+    const publishedManifest = {
+      ...manifest,
+      expected: {
+        ...manifest.expected,
+        questionsTotal: 2,
+        sourceOccurrences: 2,
+        kinds: {
+          ...manifest.expected.kinds,
+          'common-predicted30': 1
+        }
+      }
+    };
+    const result = await syncPublicDataset({
+      baseUrl: '/',
+      fetchImpl: fetchManifest(publishedManifest)
+    });
+    expect(result.status).toBe('up-to-date');
+    expect(await db.questions.count()).toBe(2);
+    expect(await db.sourceOccurrences.count()).toBe(2);
+  });
+
   it('defers a newer public release instead of deleting local predicted30 questions', async () => {
     const result = await syncPublicDataset({
       baseUrl: '/',
