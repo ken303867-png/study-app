@@ -10,6 +10,7 @@ import type {
   Question
 } from '../types/domain';
 import { domTargetId } from '../utils/domTargetId';
+import { splitPredicted30Knowledge } from '../utils/splitPredicted30Knowledge';
 import { LearningStateControls } from './LearningStateControls';
 import { MaterialBodyView } from './MaterialBodyView';
 
@@ -209,6 +210,10 @@ export function FormalExplanationView({ question, media }: { question: Question;
   const sortedChoiceExplanations = [...explanation.choice_explanations].sort(
     (a, b) => a.display_order - b.display_order
   );
+  const isPredicted30 = question.tags.includes('question-kind:common-predicted30');
+  const structuredKnowledge = isPredicted30
+    ? splitPredicted30Knowledge(explanation.surrounding_knowledge)
+    : null;
   // For negatively worded questions, grading correctness and the clinical
   // appropriateness of the option are intentionally different concepts.
   const isReverseQuestion =
@@ -229,6 +234,12 @@ export function FormalExplanationView({ question, media }: { question: Question;
         placement="reasoning"
         media={media}
       />
+      {isPredicted30 && explanation.source_explanation_raw && (
+        <section className="explanation-block">
+          <h4>元資料の全体解説</h4>
+          <p>{explanation.source_explanation_raw}</p>
+        </section>
+      )}
 
       {sortedChoiceExplanations.length > 0 && (
         <>
@@ -290,12 +301,24 @@ export function FormalExplanationView({ question, media }: { question: Question;
         </>
       )}
 
-      <ExplanationTextBlock
-        title="関連する周辺知識"
-        value={explanation.surrounding_knowledge}
-        placement="surrounding_knowledge"
-        media={media}
-      />
+      {structuredKnowledge ? (
+        <>
+          {structuredKnowledge.map((section) => (
+            <section className="explanation-block" key={section.key}>
+              <h4>{section.title}</h4>
+              <p>{section.text}</p>
+            </section>
+          ))}
+          <MediaAfter placement="surrounding_knowledge" media={media} />
+        </>
+      ) : (
+        <ExplanationTextBlock
+          title="関連する周辺知識"
+          value={explanation.surrounding_knowledge}
+          placement="surrounding_knowledge"
+          media={media}
+        />
+      )}
       <ExplanationTextBlock
         title="臨床現場での注意点"
         value={explanation.clinical_notes}
