@@ -27,10 +27,10 @@ const predicted30: Question = {
     reasoning: '情報共有と共同実践を考える。',
     source_explanation_raw: 'IPWは単なる多職種の同居ではなく共同意思決定を含む。',
     choice_explanations: [
-      { target_key: 'A', display_order: 1, judgement: 'incorrect', reason: '誤答A', mapping_provenance: 'source_structured' },
-      { target_key: 'B', display_order: 2, judgement: 'incorrect', reason: '誤答B', mapping_provenance: 'source_structured' },
-      { target_key: 'C', display_order: 3, judgement: 'incorrect', reason: '誤答C', mapping_provenance: 'source_structured' },
-      { target_key: 'D', display_order: 4, judgement: 'correct', reason: '正答D', mapping_provenance: 'source_structured' }
+      { target_key: 'A', display_order: 1, judgement: 'incorrect', reason: '誤答A', correction_condition: '該当しない', mapping_provenance: 'source_structured' },
+      { target_key: 'B', display_order: 2, judgement: 'incorrect', reason: '誤答B', correction_condition: '該当しない', mapping_provenance: 'source_structured' },
+      { target_key: 'C', display_order: 3, judgement: 'incorrect', reason: '誤答C', correction_condition: '該当しない', mapping_provenance: 'source_structured' },
+      { target_key: 'D', display_order: 4, judgement: 'correct', reason: '正答D', correction_condition: '正答肢のため修正不要', mapping_provenance: 'source_structured' }
     ],
     surrounding_knowledge: composite,
     key_points: '協働する。',
