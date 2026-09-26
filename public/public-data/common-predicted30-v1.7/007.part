@@ -1,0 +1,5000 @@
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: 出血、脂肪、水、軟部、骨などはCT値が異なり、病態推論の手がかりになる。\ncomparisonText: 肺野条件は肺実質、縦隔条件は軟部組織、骨条件は骨病変の観察に向く。\ncommonMistakes: 「同じ画像だからどのウィンドウでも同じ」と考えない。\ncorrectionConditions: Bが正しくなる条件はない。表示条件は臨床解釈に影響する。",
+        "key_points": "・空気＝低\n・骨＝高\n・windowで見やすさを変える",
+        "references": "共通科目 学習まとめ集 v1.22（画像診断・POCUS） / 看護協会共通科目模試【臨床推論】.pdf（出題重点のみ）",
+        "mnemonic": "「CTは値＋窓」",
+        "source_explanation_raw": "同じ生データでもウィンドウ設定で見やすい濃度範囲が変わり、病変評価の精度に影響する。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:02",
+        "original-id:PRED-REASON-017",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 1,
+      "choices": [
+        "空気は骨より高いCT値を示すため、肺野条件で白くなる。",
+        "ウィンドウを変えても表示される濃度範囲は変化しない。",
+        "空気は低CT値、骨は高CT値であり、観察対象に合わせて表示するCT値の範囲を変える。",
+        "CT値はX線減弱と無関係な任意の色番号である。"
+      ],
+      "correctChoiceIndexes": [
+        2
+      ]
+    },
+    {
+      "id": "PRED-REASON-018",
+      "subject": "臨床推論",
+      "unit": "画像診断・POCUS",
+      "topic": "MRI拡散強調画像と急性脳梗塞",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "突然の片麻痺が出現した患者。急性期脳虚血の検出に特に有用なMRIシーケンスはどれか。",
+      "explanation": {
+        "answer": "A. 拡散強調画像（DWI）",
+        "question_intent": "MRIシーケンスと代表的な臨床用途を対応づけられるか。",
+        "reasoning": "DWIは急性脳梗塞の虚血性変化を早期に高信号として捉えるのに有用である。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "correct",
+            "reason": "正しい。急性虚血評価で重要。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "incorrect",
+            "reason": "誤り。脳虚血評価には不適。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "incorrect",
+            "reason": "誤り。DWIほど急性虚血に特化しない。",
+            "correction_condition": "Cが役立つ場面は解剖や造影前後の評価などで、急性梗塞早期検出の第一の狙いとは異なる。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "incorrect",
+            "reason": "誤り。骨評価用である。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: DWI高信号は臨床所見とADC等を合わせて解釈し、画像のみで時間経過を断定しない。\ncomparisonText: T1＝解剖、T2/FLAIR＝水分の多い病変、DWI＝急性虚血を覚える。\ncommonMistakes: 「MRIなら全部同じ情報」と考えない。\ncorrectionConditions: Cが役立つ場面は解剖や造影前後の評価などで、急性梗塞早期検出の第一の狙いとは異なる。",
+        "key_points": "・DWI＝急性虚血\n・T2＝水が白い\n・FLAIR＝CSF抑制",
+        "references": "共通科目 学習まとめ集 v1.22（画像診断・POCUS） / 看護協会共通科目模試【臨床推論】.pdf（出題重点のみ）",
+        "mnemonic": "「急性脳梗塞はDWI」",
+        "source_explanation_raw": "MRIではT2で水が高信号になりやすく、FLAIRは自由水信号を抑えて病変を見やすくする。DWIは水分子拡散制限を利用する。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:02",
+        "original-id:PRED-REASON-018",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 1,
+      "choices": [
+        "拡散強調画像（DWI）",
+        "単純X線像",
+        "T1強調画像だけ",
+        "骨条件CTだけ"
+      ],
+      "correctChoiceIndexes": [
+        0
+      ]
+    },
+    {
+      "id": "PRED-REASON-019",
+      "subject": "臨床推論",
+      "unit": "画像診断・POCUS",
+      "topic": "超音波プローブと周波数",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "橈骨動脈のような皮膚表面から浅い血管を超音波で描出し、穿刺位置を確認したい。最も適した選択はどれか。",
+      "explanation": {
+        "answer": "D. 高周波リニア型を用い、浅部を高分解能で観察する。",
+        "question_intent": "周波数と深達度・分解能のトレードオフを理解しているか。",
+        "reasoning": "高周波は分解能が高いが深達度が低く、表在構造に適する。低周波は深部まで届きやすい。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "incorrect",
+            "reason": "誤り。高周波ほど深達度は低下。",
+            "correction_condition": "Aが正しくなる条件はない。物理的には周波数と深達度は逆方向。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "incorrect",
+            "reason": "誤り。リニアは高周波が多い。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "incorrect",
+            "reason": "誤り。セクタは心臓などに向く。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "correct",
+            "reason": "正しい。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: 超音波では目的臓器の深さと必要分解能に応じてプローブを選ぶ。\ncomparisonText: 高周波＝浅い・細かい、低周波＝深い・粗い。\ncommonMistakes: 「高性能＝高周波＝何でも深く見える」と誤解しない。\ncorrectionConditions: Aが正しくなる条件はない。物理的には周波数と深達度は逆方向。",
+        "key_points": "・高周波＝高分解能/浅い\n・低周波＝深い\n・プローブは目的で選ぶ",
+        "references": "共通科目 学習まとめ集 v1.22（画像診断・POCUS） / 看護協会共通科目模試【臨床推論】.pdf（出題重点のみ）",
+        "mnemonic": "「高い周波数は、浅く細かく」",
+        "source_explanation_raw": "リニアは表在・血管、セクタは狭い窓から心臓、コンベックスは腹部など深部臓器に使いやすい。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:02",
+        "original-id:PRED-REASON-019",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 1,
+      "choices": [
+        "低周波コンベックス型を用い、深達度を最優先する。",
+        "低周波セクタ型で広い腹部視野を得る。",
+        "プローブの周波数は深さや分解能に影響しないため何でもよい。",
+        "高周波リニア型を用い、浅部を高分解能で観察する。"
+      ],
+      "correctChoiceIndexes": [
+        3
+      ]
+    },
+    {
+      "id": "PRED-REASON-020",
+      "subject": "臨床推論",
+      "unit": "画像診断・POCUS",
+      "topic": "POCUSの位置づけ",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "救急外来で低血圧患者を診察している。診療者が「心嚢液があるか」「腹腔内自由液があるか」など具体的な疑問を絞ってベッドサイド超音波を行う。この使い方の説明として正しいものはどれか。",
+      "explanation": {
+        "answer": "B. POCUSとして病歴・身体所見・バイタルと統合し、その場の臨床判断を補助する。",
+        "question_intent": "POCUSを「画像検査」ではなく臨床推論の一部として位置づけられるか。",
+        "reasoning": "POCUSはfocused questionに答えるためのベッドサイド超音波で、病歴・身体所見・バイタルと統合して使う。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "incorrect",
+            "reason": "誤り。包括的正式エコーとは目的が異なる。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "correct",
+            "reason": "正しい。POCUSの本質。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "incorrect",
+            "reason": "誤り。operator dependenceがある。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "incorrect",
+            "reason": "誤り。陰性でも必要な追加検査を省略できるとは限らない。",
+            "correction_condition": "Dが適切になるのは検証済みのプロトコルで十分に除外可能な条件を満たす限定場面。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: POCUSは肺、心臓、胆嚢、尿路、腹腔内液体など多くの場面で使えるが、限界と偽陰性を理解する必要がある。\ncomparisonText: POCUS＝focused、formal ultrasound＝comprehensiveという違いを押さえる。\ncommonMistakes: 「POCUSで見えない＝病気なし」としない。\ncorrectionConditions: Dが適切になるのは検証済みのプロトコルで十分に除外可能な条件を満たす限定場面。",
+        "key_points": "・focused question\n・bedside\n・clinical integration\n・operator dependent",
+        "references": "Guidance for clinical practice using emergency and point-of-care ultrasonography (2024) / 共通科目 学習まとめ集 v1.22",
+        "mnemonic": "「POCUSは答えを探す超音波」",
+        "source_explanation_raw": "日本の急性期POCUS guidanceでも、POCUSは身体診察の一部として捉えられ、目的を絞った評価と教育・技能が重要とされる。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:02",
+        "original-id:PRED-REASON-020",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 1,
+      "choices": [
+        "全身を網羅的に評価する包括的超音波検査と同義である。",
+        "POCUSとして病歴・身体所見・バイタルと統合し、その場の臨床判断を補助する。",
+        "検査者の技量に影響されない。",
+        "POCUSが陰性なら他の検査や再評価は不要である。"
+      ],
+      "correctChoiceIndexes": [
+        1
+      ]
+    },
+    {
+      "id": "PRED-REASON-021",
+      "subject": "臨床推論",
+      "unit": "臨床疫学・EBM",
+      "topic": "2×2表から求める感度",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "基準診断で疾患ありと確定した100人に新しい検査を行ったところ、90人が陽性、10人が陰性だった。この検査の感度として正しいのはどれか。",
+      "explanation": {
+        "answer": "A. 90%",
+        "question_intent": "感度を定義だけでなく2×2表の実数から計算できるか。",
+        "reasoning": "感度＝真陽性/(真陽性＋偽陰性)なので、90/(90+10)=0.90、すなわち90%である。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "correct",
+            "reason": "正しい。90/100=90%。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "incorrect",
+            "reason": "誤り。10%は偽陰性割合に相当する。",
+            "correction_condition": "Bが正答になるのは偽陰性率を問う場合。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "incorrect",
+            "reason": "誤り。計算結果と一致しない。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "incorrect",
+            "reason": "誤り。疾患あり集団の陽性/陰性が分かれば感度は求められる。",
+            "correction_condition": "Dは特異度を求める場合なら非疾患者データが必要。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: 特異度＝真陰性/(真陰性＋偽陽性)。PPV＝真陽性/全陽性、NPV＝真陰性/全陰性で、分母が異なる。\ncomparisonText: 感度は「疾患あり」を分母、PPVは「検査陽性」を分母にする。\ncommonMistakes: 分子よりも「分母をどこに置くか」で間違えやすい。\ncorrectionConditions: Bが正答になるのは偽陰性率を問う場合。Dは特異度を求める場合なら非疾患者データが必要。",
+        "key_points": "・感度＝TP/(TP+FN)\n・疾患ありを分母",
+        "references": "JAMAevidence: Users' Guides to the Medical Literature / Cochrane Handbook for Systematic Reviews of Interventions / 共通科目 学習まとめ集 v1.22（臨床疫学・EBM）",
+        "mnemonic": "「感度は病気100人のうち何人拾えたか」",
+        "source_explanation_raw": "感度は「疾患がある人をどれだけ陽性にできたか」を表す。非疾患者のデータは特異度計算に必要だが、感度計算には不要である。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:02",
+        "original-id:PRED-REASON-021",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 1,
+      "choices": [
+        "90%",
+        "10%",
+        "50%",
+        "この情報だけでは感度を計算できない。"
+      ],
+      "correctChoiceIndexes": [
+        0
+      ]
+    },
+    {
+      "id": "PRED-REASON-022",
+      "subject": "臨床推論",
+      "unit": "臨床疫学・EBM",
+      "topic": "的中率と有病率",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "同じ感度・特異度の検査を、疾患有病率が高い集団と低い集団に用いた場合、一般に正しいのはどれか。",
+      "explanation": {
+        "answer": "C. 有病率が高いほど陽性的中率は高くなる傾向がある。",
+        "question_intent": "PPV/NPVが検査固有値ではなく対象集団に依存することを理解しているか。",
+        "reasoning": "有病率（検査前確率）が高い集団では、陽性者の中に真陽性が増えやすくPPVは高くなる。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "incorrect",
+            "reason": "誤り。PPVは有病率の影響を受ける。",
+            "correction_condition": "Aが近づくのは有病率が固定された同一集団内の比較に限る。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "incorrect",
+            "reason": "誤り。有病率上昇でNPVは一般に低下方向。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "correct",
+            "reason": "正しい。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "incorrect",
+            "reason": "誤り。別概念。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: スクリーニング集団と専門外来では検査前確率が異なるため、同じ陽性結果でも診断後確率は異なる。\ncomparisonText: 感度/特異度は検査特性、PPV/NPVは検査＋集団特性。\ncommonMistakes: 「PPVは検査カタログの固定値」と覚えない。\ncorrectionConditions: Aが近づくのは有病率が固定された同一集団内の比較に限る。",
+        "key_points": "・PPV↑：有病率↑\n・NPV↑：有病率↓",
+        "references": "JAMAevidence: Users' Guides to the Medical Literature / Cochrane Handbook for Systematic Reviews of Interventions / 共通科目 学習まとめ集 v1.22（臨床疫学・EBM）",
+        "mnemonic": "「的中率は患者集団で変わる」",
+        "source_explanation_raw": "逆に有病率が低い集団ではNPVが高くなる傾向があり、同じ検査でも「陽性の意味」が変わる。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:02",
+        "original-id:PRED-REASON-022",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 1,
+      "choices": [
+        "有病率は陽性的中率に影響しない。",
+        "有病率が高いほど陰性的中率は必ず高くなる。",
+        "有病率が高いほど陽性的中率は高くなる傾向がある。",
+        "感度と特異度は有病率と完全に同じ意味である。"
+      ],
+      "correctChoiceIndexes": [
+        2
+      ]
+    },
+    {
+      "id": "PRED-REASON-023",
+      "subject": "臨床推論",
+      "unit": "臨床疫学・EBM",
+      "topic": "尤度比と検査後確率",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "ある検査の陽性尤度比が10であった。最も適切な解釈はどれか。",
+      "explanation": {
+        "answer": "D. 陽性結果は疾患オッズを約10倍にし、検査前確率と組み合わせて検査後確率を更新する。",
+        "question_intent": "尤度比をベイズ更新の道具として理解しているか。",
+        "reasoning": "陽性尤度比LR+は感度/(1-特異度)で、検査前オッズ×LR+＝検査後オッズとなる。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "incorrect",
+            "reason": "誤り。確定を保証しない。",
+            "correction_condition": "Aが成立するのは実質的に確定的な検査結果・診断基準が別にある場合。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "incorrect",
+            "reason": "誤り。事前確率で変わる。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "incorrect",
+            "reason": "誤り。感度と特異度から算出。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "correct",
+            "reason": "正しい。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: 陰性尤度比LR-=(1-感度)/特異度で、0に近いほど陰性結果が疾患可能性を下げる。\ncomparisonText: LRは有病率に比較的依存しにくい一方、最終の検査後確率は検査前確率に依存する。\ncommonMistakes: 「LR10＝90%」のように直接確率へ読み替えない。\ncorrectionConditions: Aが成立するのは実質的に確定的な検査結果・診断基準が別にある場合。",
+        "key_points": "・LR+大→確率↑\n・LR-小→確率↓\n・前確率と掛ける",
+        "references": "JAMAevidence: Users' Guides to the Medical Literature / Cochrane Handbook for Systematic Reviews of Interventions / 共通科目 学習まとめ集 v1.22（臨床疫学・EBM）",
+        "mnemonic": "「尤度比は確率を動かす倍率」",
+        "source_explanation_raw": "LR+が大きいほど陽性結果で疾患可能性が上がるが、出発点となる検査前確率が低ければ絶対的な検査後確率は必ずしも高くない。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:02",
+        "original-id:PRED-REASON-023",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 1,
+      "choices": [
+        "陽性なら必ず疾患がある。",
+        "検査前確率にかかわらず検査後確率は100%になる。",
+        "陽性尤度比は感度だけから算出する。",
+        "陽性結果は疾患オッズを約10倍にし、検査前確率と組み合わせて検査後確率を更新する。"
+      ],
+      "correctChoiceIndexes": [
+        3
+      ]
+    },
+    {
+      "id": "PRED-REASON-024",
+      "subject": "臨床推論",
+      "unit": "臨床疫学・EBM",
+      "topic": "ベイズ推論と検査選択",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "肺血栓塞栓症の検査前確率が極めて低い患者に、偽陽性が一定数出る検査を無差別に行う問題点として最も適切なのはどれか。",
+      "explanation": {
+        "answer": "B. 検査前確率が低いと、陽性でも偽陽性の割合が増え不要な追加検査につながり得る。",
+        "question_intent": "ベイズの定理を過剰検査の問題へ応用できるか。",
+        "reasoning": "低い検査前確率の集団では陽性結果の中の偽陽性割合が増えやすく、追加画像・造影・被ばく・不安などの害が増える。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "incorrect",
+            "reason": "誤り。前確率は検査後確率に影響する。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "correct",
+            "reason": "正しい。低前確率では偽陽性の影響が大きくなる。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "incorrect",
+            "reason": "誤り。過剰検査には害・コストがある。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "incorrect",
+            "reason": "誤り。低有病率ではPPVは低下する傾向。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: 検査閾値と治療閾値の考え方では、前確率が極端に低い/高い場合に検査の付加価値が下がることがある。\ncomparisonText: 検査閾値と治療閾値の考え方では、前確率が極端に低い/高い場合に検査価値が下がることがある。\ncommonMistakes: 検査の「念のため」を安全と同義にしない。\ncorrectionConditions: Bが正しくなる条件はない。前確率を無視する診断推論は不適切。",
+        "key_points": "・前確率が低い→偽陽性の影響大\n・検査は意思決定を変えるとき",
+        "references": "JAMAevidence: Users' Guides to the Medical Literature / Cochrane Handbook for Systematic Reviews of Interventions / 共通科目 学習まとめ集 v1.22（臨床疫学・EBM）",
+        "mnemonic": "「検査は多さでなく、前確率」",
+        "source_explanation_raw": "検査は「できるか」ではなく、「結果で意思決定が変わるか」「前確率に合うか」で選ぶ。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:02",
+        "original-id:PRED-REASON-024",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 1,
+      "choices": [
+        "検査前確率は検査結果の意味に影響しない。",
+        "検査前確率が低いと、陽性でも偽陽性の割合が増え不要な追加検査につながり得る。",
+        "検査は多いほど常に患者利益が増える。",
+        "低確率患者ほど陽性的中率は必ず高い。"
+      ],
+      "correctChoiceIndexes": [
+        1
+      ]
+    },
+    {
+      "id": "PRED-REASON-025",
+      "subject": "臨床推論",
+      "unit": "臨床疫学・EBM",
+      "topic": "PICOの設定",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "「高齢入院患者で、通常ケアと比べ早期離床プログラムは退院時ADL低下を減らすか」という疑問で、Iに相当するものはどれか。",
+      "explanation": {
+        "answer": "A. 早期離床プログラム",
+        "question_intent": "PICOを具体的な臨床疑問へ対応づけられるか。",
+        "reasoning": "PICOはP=Patient/Population、I=Intervention、C=Comparison、O=Outcomeである。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "correct",
+            "reason": "正しい。介入。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "incorrect",
+            "reason": "誤り。高齢入院患者はPICOのP（患者・集団）であり、I（介入）は早期離床プログラムである。",
+            "correction_condition": "Bが正答になるのはPを問う場合、CはComparison、DはOutcome。",
+            "mapping_provenance": "source_answer_rationale"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "incorrect",
+            "reason": "誤り。通常ケアはC（比較対象）に相当するため、I（介入）ではない。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_answer_rationale"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "incorrect",
+            "reason": "誤り。退院時ADL低下はO（アウトカム）に相当するため、I（介入）ではない。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_answer_rationale"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: 診断疑問ではPICOを変形してindex testやreference standardを意識することもある。\ncomparisonText: PICOは暗記ではなく「誰に、何を、何と比べ、何がどうなる」を一文で言えるようにする。\ncommonMistakes: OutcomeとInterventionを取り違えない。\ncorrectionConditions: Bが正答になるのはPを問う場合、CはComparison、DはOutcome。",
+        "key_points": "・P＝誰\n・I＝何をする\n・C＝何と比べる\n・O＝何が起こる",
+        "references": "JAMAevidence: Users' Guides to the Medical Literature / Cochrane Handbook for Systematic Reviews of Interventions / 共通科目 学習まとめ集 v1.22（臨床疫学・EBM）",
+        "mnemonic": "「PICO＝誰に何を、何と比べて、どうなる」",
+        "source_explanation_raw": "臨床疑問をPICOへ構造化すると検索語・適切な研究デザイン・評価アウトカムを明確にしやすい。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:02",
+        "original-id:PRED-REASON-025",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 2,
+      "choices": [
+        "早期離床プログラム",
+        "高齢入院患者",
+        "通常ケア",
+        "退院時ADL低下"
+      ],
+      "correctChoiceIndexes": [
+        0
+      ]
+    },
+    {
+      "id": "PRED-REASON-026",
+      "subject": "臨床推論",
+      "unit": "臨床疫学・EBM",
+      "topic": "NNTの計算",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "ある治療でイベント発生率が20%から10%へ低下した。NNT（1人のイベントを追加で防ぐために治療が必要な人数）として最も近いのはどれか。",
+      "explanation": {
+        "answer": "C. 10",
+        "question_intent": "絶対リスク減少ARRとNNTを計算できるか。",
+        "reasoning": "ARR=0.20-0.10=0.10、NNT=1/0.10=10である。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "incorrect",
+            "reason": "誤り。ARR 50%ならNNT2。",
+            "correction_condition": "Aが正しくなるのはARR=0.5の場合。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "incorrect",
+            "reason": "誤り。ARR20%ならNNT5。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "correct",
+            "reason": "正しい。ARR10%なのでNNT10。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "incorrect",
+            "reason": "誤り。ARR5%ならNNT20。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: CochraneはNNTを一定期間内に1人の追加イベントを予防/発生させるための治療人数として定義する。\ncomparisonText: RRRは相対的な見せ方、ARR/NNTは絶対的な臨床効果を患者へ説明しやすい。\ncommonMistakes: 20%→10%を「50%減ったからNNT2」と誤計算しない。\ncorrectionConditions: Aが正しくなるのはARR=0.5の場合。",
+        "key_points": "・ARR=対照-治療\n・NNT=1/ARR",
+        "references": "JAMAevidence: Users' Guides to the Medical Literature / Cochrane Handbook for Systematic Reviews of Interventions / 共通科目 学習まとめ集 v1.22（臨床疫学・EBM）",
+        "mnemonic": "「NNTは1÷絶対差」",
+        "source_explanation_raw": "NNTは相対リスク低下ではなく絶対リスク差から考える。ベースラインリスクが違えば、同じ相対効果でもNNTは変わる。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:02",
+        "original-id:PRED-REASON-026",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 1,
+      "choices": [
+        "2",
+        "5",
+        "10",
+        "20"
+      ],
+      "correctChoiceIndexes": [
+        2
+      ]
+    },
+    {
+      "id": "PRED-REASON-027",
+      "subject": "臨床推論",
+      "unit": "臨床疫学・EBM",
+      "topic": "研究デザインの選択",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "まれな疾患の患者（症例）と疾患のない対照を集め、過去の特定曝露歴を比較する研究デザインはどれか。",
+      "explanation": {
+        "answer": "D. 症例対照研究",
+        "question_intent": "研究デザインを「どこから始め、どちら向きに調べるか」で区別できるか。",
+        "reasoning": "症例対照研究はアウトカムの有無から対象を選び、過去の曝露を比較する。まれな疾患の研究に効率的である。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "incorrect",
+            "reason": "誤り。介入試験。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "incorrect",
+            "reason": "誤り。一時点で曝露・アウトカムを測る。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "incorrect",
+            "reason": "誤り。曝露群から将来を追う。",
+            "correction_condition": "Cが正しくなるのは曝露情報を起点にアウトカム発生を比較する場合。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "correct",
+            "reason": "正しい。症例/対照から過去曝露へ。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: 症例対照研究では一般にオッズ比を用い、選択バイアス・想起バイアスに注意する。\ncomparisonText: コホート＝原因→結果、症例対照＝結果→過去原因、RCT＝介入割付。\ncommonMistakes: 「後ろ向き＝すべて症例対照」ではない。後ろ向きコホートもある。\ncorrectionConditions: Cが正しくなるのは曝露情報を起点にアウトカム発生を比較する場合。",
+        "key_points": "・case-control＝結果から過去\n・cohort＝曝露から結果",
+        "references": "JAMAevidence: Users' Guides to the Medical Literature / Cochrane Handbook for Systematic Reviews of Interventions / 共通科目 学習まとめ集 v1.22（臨床疫学・EBM）",
+        "mnemonic": "「症例対照は、病気から過去へ」",
+        "source_explanation_raw": "コホート研究は曝露からアウトカムへ追跡し、RCTは介入をランダム割付する。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:02",
+        "original-id:PRED-REASON-027",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 1,
+      "choices": [
+        "ランダム化比較試験",
+        "横断研究",
+        "前向きコホート研究",
+        "症例対照研究"
+      ],
+      "correctChoiceIndexes": [
+        3
+      ]
+    },
+    {
+      "id": "PRED-REASON-028",
+      "subject": "臨床推論",
+      "unit": "臨床疫学・EBM",
+      "topic": "信頼区間と統計学的有意性",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "ある治療のリスク比RR=0.80、95%信頼区間0.58-1.12であった。最も適切な解釈はどれか。",
+      "explanation": {
+        "answer": "B. 95%信頼区間が1を含むため、通常の5%有意水準では統計学的有意差を示していない。",
+        "question_intent": "比の効果指標と95%CIを正しく解釈できるか。",
+        "reasoning": "RRやORでは「差がない」基準値は1であり、95%CIが1をまたぐ場合、通常は両側5%水準で統計学的有意ではない。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "incorrect",
+            "reason": "誤り。CIが1を含み推定に不確実性がある。",
+            "correction_condition": "Aが近づくのは十分狭いCIで1を明確に下回り、臨床的にも重要な効果が支持される場合。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "correct",
+            "reason": "正しい。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "incorrect",
+            "reason": "誤り。CI幅は精度の手がかり。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "incorrect",
+            "reason": "誤り。RRのnull valueは1。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: CochraneではRR/ORの95%CIが1を含む場合、利益と害の両方向を含み得るため慎重な解釈が必要とされる。\ncomparisonText: 差（MD/RD）のnullは0、比（RR/OR/HR）のnullは1。\ncommonMistakes: 「有意差なし＝同等」と断定しない。\ncorrectionConditions: Aが近づくのは十分狭いCIで1を明確に下回り、臨床的にも重要な効果が支持される場合。",
+        "key_points": "・比のnull＝1\n・差のnull＝0\n・CI幅＝精度",
+        "references": "JAMAevidence: Users' Guides to the Medical Literature / Cochrane Handbook for Systematic Reviews of Interventions / 共通科目 学習まとめ集 v1.22（臨床疫学・EBM）",
+        "mnemonic": "「比は1、差は0を見る」",
+        "source_explanation_raw": "ただし「有意差なし＝効果なし」とは限らず、CIの幅と臨床的に重要な効果範囲を確認する。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:02",
+        "original-id:PRED-REASON-028",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 1,
+      "choices": [
+        "治療効果が確実に20%あると断定できる。",
+        "95%信頼区間が1を含むため、通常の5%有意水準では統計学的有意差を示していない。",
+        "信頼区間の幅は推定の不確実性と無関係である。",
+        "RRは0未満になることがあるので1を基準にしない。"
+      ],
+      "correctChoiceIndexes": [
+        1
+      ]
+    },
+    {
+      "id": "PRED-REASON-029",
+      "subject": "臨床推論",
+      "unit": "臨床疫学・EBM",
+      "topic": "EBMとShared Decision Making",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "治療AとBは生命予後がほぼ同等だが、副作用・通院頻度・費用が異なる。患者は「通院回数を減らすこと」を強く希望している。EBMに基づく最も適切な対応はどれか。",
+      "explanation": {
+        "answer": "A. 最良の研究根拠、臨床状況・専門性、患者の価値観・希望を統合して選択肢を共有し意思決定する。",
+        "question_intent": "EBMを「論文至上主義」ではなく患者中心の意思決定として理解しているか。",
+        "reasoning": "EBMは最良の利用可能な研究根拠だけでなく、患者の臨床状況・価値観・選好を統合する。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "correct",
+            "reason": "正しい。EBM/SDMの本質。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "incorrect",
+            "reason": "誤り。患者価値観を無視している。",
+            "correction_condition": "Bが合理的になるのは選択肢間に明確な安全性・予後差があり、患者へ十分説明した上で強い推奨が成立する場面でも対話は必要。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "incorrect",
+            "reason": "誤り。安全性・根拠も必要。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "incorrect",
+            "reason": "誤り。経験だけにも依存しない。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: Shared Decision Makingでは選択肢、利益・害・不確実性を共有し、患者が重要視するアウトカムを明らかにする。\ncomparisonText: EBM＝evidence onlyではなく、evidence＋clinical expertise＋patient values。\ncommonMistakes: ガイドライン推奨を患者へ機械的に当てはめない。\ncorrectionConditions: Bが合理的になるのは選択肢間に明確な安全性・予後差があり、患者へ十分説明した上で強い推奨が成立する場面でも対話は必要。",
+        "key_points": "・best evidence\n・clinical context\n・patient values\n・shared decision",
+        "references": "JAMAevidence: Users' Guides to the Medical Literature / Cochrane Handbook for Systematic Reviews of Interventions / 共通科目 学習まとめ集 v1.22（臨床疫学・EBM）",
+        "mnemonic": "「EBMは論文＋患者＋臨床」",
+        "source_explanation_raw": "JAMA Users’ Guidesは、エビデンス単独では臨床意思決定に不十分であり、患者の状況とpreferencesを組み合わせることを強調する。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:02",
+        "original-id:PRED-REASON-029",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 1,
+      "choices": [
+        "最良の研究根拠、臨床状況・専門性、患者の価値観・希望を統合して選択肢を共有し意思決定する。",
+        "最新論文で平均効果が高い治療を患者希望に関係なく選ぶ。",
+        "患者の希望だけで安全性やエビデンスを無視して決める。",
+        "医療者の経験だけで決め、研究結果を用いない。"
+      ],
+      "correctChoiceIndexes": [
+        0
+      ]
+    },
+    {
+      "id": "PRED-REASON-030",
+      "subject": "臨床推論",
+      "unit": "臨床疫学・EBM",
+      "topic": "批判的吟味と外的妥当性",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S",
+      "prompt": "RCTで有効性が示された治療を、自施設の90歳フレイル患者へ適用するか検討している。試験参加者の平均年齢は55歳で重い併存症患者は除外されていた。最も適切な考え方はどれか。",
+      "explanation": {
+        "answer": "C. 研究の内的妥当性に加え、対象集団・利益害・患者価値観を確認し、自患者への適用可能性を吟味する。",
+        "question_intent": "研究の「正しさ」と「目の前の患者へ適用できるか」を分けて評価できるか。",
+        "reasoning": "批判的吟味では内的妥当性、効果の大きさ・精度、そして患者への適用可能性（外的妥当性）を考える。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "incorrect",
+            "reason": "誤り。外的妥当性を無視している。",
+            "correction_condition": "Aが近づくのは試験対象と自患者が非常に類似し、利益害・実施条件も同等の場合でも「必ず」は不適切。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "incorrect",
+            "reason": "誤り。有意差だけでは臨床的意味・適用性が分からない。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "correct",
+            "reason": "正しい。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "incorrect",
+            "reason": "誤り。差を吟味しつつ根拠として利用できる。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: 適用可能性では患者のベースラインリスク、併存症、治療負担、アウトカムの重要性、フォロー体制などを確認する。\ncomparisonText: 内的妥当性＝研究内で結果が信頼できるか、外的妥当性＝他の患者/環境へ一般化できるか。\ncommonMistakes: RCT＝万能、観察研究＝無価値という二分法を避ける。\ncorrectionConditions: Aが近づくのは試験対象と自患者が非常に類似し、利益害・実施条件も同等の場合でも「必ず」は不適切。",
+        "key_points": "・Validity\n・Magnitude/precision\n・Applicability\n・Patient values",
+        "references": "JAMAevidence: Users' Guides to the Medical Literature / Cochrane Handbook for Systematic Reviews of Interventions / 共通科目 学習まとめ集 v1.22（臨床疫学・EBM）",
+        "mnemonic": "「論文が正しくても、自分の患者に合うかは別」",
+        "source_explanation_raw": "高齢・フレイル・多疾患併存では試験集団との差が利益害バランスを変える可能性があるため、エビデンスを捨てるのでも盲目的に適用するのでもない。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:02",
+        "original-id:PRED-REASON-030",
+        "prediction-v2.0",
+        "importance:S"
+      ],
+      "revision": 1,
+      "choices": [
+        "RCTなので対象患者の違いを考えず必ず同じ効果が得られる。",
+        "統計学的有意差だけ見れば適用可能性は判断できる。",
+        "研究の内的妥当性に加え、対象集団・利益害・患者価値観を確認し、自患者への適用可能性を吟味する。",
+        "対象患者が高齢なら研究結果は一切利用できない。"
+      ],
+      "correctChoiceIndexes": [
+        2
+      ]
+    },
+    {
+      "id": "PRED-INTERVIEW-001",
+      "subject": "臨床推論：医療面接",
+      "unit": "鑑別診断・評価計画",
+      "topic": "直観的推論と分析的推論",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "経験豊富な看護師が患者を見て「敗血症かもしれない」と直観的に感じた。医療面接・診断推論として最も適切な次の行動はどれか。",
+      "explanation": {
+        "answer": "B. 直観を初期仮説として用い、バイタル・病歴・身体所見を系統的に確認して分析的に検証する。",
+        "question_intent": "直観的推論と分析的推論を対立させず、安全に組み合わせられるか。",
+        "reasoning": "直観は迅速な仮説形成に有用だが、アンカリングや確証バイアスの影響を受け得るため、系統的情報収集で検証する。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "incorrect",
+            "reason": "誤り。反証情報を集めないと確証バイアスが強まる。",
+            "correction_condition": "Aが適切になる場面はない。初期仮説は常に新しい情報で更新可能に保つ。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "correct",
+            "reason": "正しい。直観を仮説として分析的に検証する。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "incorrect",
+            "reason": "誤り。直観は熟練者の迅速な判断に有用なことがある。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "incorrect",
+            "reason": "誤り。検査前確率は病歴・身体所見から形成する。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: デュアルプロセスの考え方では、速い直観的判断と遅い分析的判断を場面に応じて使う。患者状態が重い、所見が矛盾する、治療反応が悪い場合は意識的な再検討が特に重要である。\ncomparisonText: 直観＝速いがバイアスに注意、分析＝系統的だが時間と認知負荷を要する。\ncommonMistakes: 「経験豊富だから思い込みは起こらない」と考えない。\ncorrectionConditions: Aが適切になる場面はない。初期仮説は常に新しい情報で更新可能に保つ。",
+        "key_points": "・直観は仮説\n・分析で検証\n・矛盾所見で立ち止まる",
+        "references": "共通科目 学習まとめ集 v1.22（臨床推論：医療面接） / 共通科目試験対策問題集 v1.65 正本 / 看護協会共通科目模試【医療面接】.pdf（出題重点のみ） / JAMA Internal Medicine: Diagnostic Error in Internal Medicine（premature closure）",
+        "mnemonic": "「ひらめきは答えではなく、仮説」",
+        "source_explanation_raw": "臨床推論では経験に基づくパターン認識と、仮説を意識的に検討する分析的推論を往復する。重要なのは直観を「確定診断」にしないことである。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:03",
+        "original-id:PRED-INTERVIEW-001",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 1,
+      "choices": [
+        "直観で思いついた診断は経験に基づくため、反証情報は集めない。",
+        "直観を初期仮説として用い、バイタル・病歴・身体所見を系統的に確認して分析的に検証する。",
+        "直観的推論は常に誤りなので、経験に基づく判断は使用しない。",
+        "診断は検査結果だけで決めるため、面接や身体所見は不要である。"
+      ],
+      "correctChoiceIndexes": [
+        1
+      ]
+    },
+    {
+      "id": "PRED-INTERVIEW-002",
+      "subject": "臨床推論：医療面接",
+      "unit": "鑑別診断・評価計画",
+      "topic": "CommonとCriticalの優先順位",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "56歳男性。食後に胸やけを繰り返していたが、本日は20分以上続く前胸部圧迫感、冷汗、悪心がある。最も適切な鑑別診断の優先順位はどれか。",
+      "explanation": {
+        "answer": "A. 逆流性食道炎も考えるが、急性冠症候群など見逃すと致命的な疾患を先に除外する。",
+        "question_intent": "Common（頻度）とCritical（緊急度）を同時に考えられるか。",
+        "reasoning": "日常的に多い疾患だけでなく、見逃した際の損失が大きい疾患を初期から並行して評価する。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "correct",
+            "reason": "正しい。頻度と危険度の両方を評価する。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "incorrect",
+            "reason": "誤り。既往の類似症状はアンカリングの原因になる。",
+            "correction_condition": "Bが妥当になるのはCriticalな疾患を適切に除外し、今回の症状が既知の良性疾患と十分に整合した場合。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "incorrect",
+            "reason": "誤り。Criticalは初期段階から評価する。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "incorrect",
+            "reason": "誤り。単回の正常心電図だけでACSを除外できない。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: 鑑別の優先順位は「ありそうか」と「見逃したら危険か」の2軸で考えると整理しやすい。\ncomparisonText: Commonは確率、Criticalは見逃しリスクを重視する。両者は一致しないことがある。\ncommonMistakes: 以前と同じ症状という情報だけで今回も同じ原因と決めない。\ncorrectionConditions: Bが妥当になるのはCriticalな疾患を適切に除外し、今回の症状が既知の良性疾患と十分に整合した場合。",
+        "key_points": "・Commonだけに寄らない\n・Criticalを先に除外\n・過去の診断に固定しない",
+        "references": "共通科目 学習まとめ集 v1.22（臨床推論：医療面接） / 共通科目試験対策問題集 v1.65 正本 / 看護協会共通科目模試【医療面接】.pdf（出題重点のみ） / JAMA Internal Medicine: Diagnostic Error in Internal Medicine（premature closure） / 【2026-09-26 中心論点の外部照合】2025 ACC/AHA急性冠症候群診療ガイドライン: https://www.jacc.org/doi/10.1016/j.jacc.2024.11.009",
+        "mnemonic": "「よくある病気＋死ぬ病気」",
+        "source_explanation_raw": "胸痛では胃食道逆流症や筋骨格痛のようなCommonな原因も多いが、ACS、大動脈症候群、肺塞栓、緊張性気胸などCriticalな病態を早期に評価する。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:03",
+        "original-id:PRED-INTERVIEW-002",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 2,
+      "choices": [
+        "逆流性食道炎も考えるが、急性冠症候群など見逃すと致命的な疾患を先に除外する。",
+        "過去に胸やけがあるため、今回も消化器疾患として扱う。",
+        "頻度の高い良性疾患を確定してからCriticalな疾患を考える。",
+        "心電図が正常であれば医療面接で致死的疾患を考える必要はない。"
+      ],
+      "correctChoiceIndexes": [
+        0
+      ]
+    },
+    {
+      "id": "PRED-INTERVIEW-003",
+      "subject": "臨床推論：医療面接",
+      "unit": "鑑別診断・評価計画",
+      "topic": "鑑別診断を広げるフレーム",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "原因不明の発熱が続く患者で、感染症だけに鑑別が偏っている。鑑別を安全に広げる方法として最も適切なのはどれか。",
+      "explanation": {
+        "answer": "D. 解剖学的分類やVINDICATE-P、臓器別などのフレームを使い、感染・腫瘍・自己免疫・薬剤などを系統的に再検討する。",
+        "question_intent": "鑑別の漏れを減らすための構造化手法を理解しているか。",
+        "reasoning": "難しい症例では分類フレームを使い、最初に思いつかなかった病態カテゴリーを意図的に探索する。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "incorrect",
+            "reason": "誤り。確証バイアスを助長する。",
+            "correction_condition": "Aが正しくなる条件はない。反証可能性を残すことが安全な診断推論に必要。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "incorrect",
+            "reason": "誤り。症候から複数の原因を考える。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "incorrect",
+            "reason": "誤り。検査前に鑑別仮説を作る。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "correct",
+            "reason": "正しい。系統的に鑑別を広げられる。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: 発熱では感染だけでなく、炎症性疾患、悪性腫瘍、薬剤熱、血栓症なども患者背景に応じて考える。\ncomparisonText: フレームは鑑別を広げる道具、検査前確率はその後に優先順位をつける道具である。\ncommonMistakes: フレームを使った疾患名の羅列だけで満足せず、患者文脈で順位づけする。\ncorrectionConditions: Aが正しくなる条件はない。反証可能性を残すことが安全な診断推論に必要。",
+        "key_points": "・分類で広げる\n・文脈で絞る\n・漏れを防ぐ",
+        "references": "共通科目 学習まとめ集 v1.22（臨床推論：医療面接） / 共通科目試験対策問題集 v1.65 正本 / 看護協会共通科目模試【医療面接】.pdf（出題重点のみ）",
+        "mnemonic": "「鑑別は、広げてから絞る」",
+        "source_explanation_raw": "鑑別診断の列挙法には解剖学的アプローチ、臓器別、病因別のニーモニックなどがある。目的は暗記ではなく「カテゴリの抜け」を減らすことである。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:03",
+        "original-id:PRED-INTERVIEW-003",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 1,
+      "choices": [
+        "最初の診断仮説に合う情報だけを集める。",
+        "症状が一つなら鑑別は一疾患に絞る。",
+        "検査結果が出るまで鑑別を作らない。",
+        "解剖学的分類やVINDICATE-P、臓器別などのフレームを使い、感染・腫瘍・自己免疫・薬剤などを系統的に再検討する。"
+      ],
+      "correctChoiceIndexes": [
+        3
+      ]
+    },
+    {
+      "id": "PRED-INTERVIEW-004",
+      "subject": "臨床推論：医療面接",
+      "unit": "鑑別診断・評価計画",
+      "topic": "premature closureの回避",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "82歳女性。発熱と意識変容があり尿検査で白血球陽性だったため「尿路感染症」と判断した。しかし右上腹部痛と黄疸が新たに判明した。最も適切な対応はどれか。",
+      "explanation": {
+        "answer": "C. 胆道感染など別の感染源を含め鑑別を再開し、診断仮説を更新する。",
+        "question_intent": "早期に診断を固定するpremature closureを認識し、矛盾情報で再評価できるか。",
+        "reasoning": "新しい所見が初期診断と整合しない場合、診断を再オープンして代替仮説を検討する。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "incorrect",
+            "reason": "誤り。尿検査異常は非特異的なことがある。",
+            "correction_condition": "Aが妥当になるには症状・所見・画像などが一貫し、代替診断を合理的に除外できている必要がある。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "incorrect",
+            "reason": "誤り。高齢者では多疾患併存が一般的。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "correct",
+            "reason": "正しい。矛盾所見を契機に再評価する。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "incorrect",
+            "reason": "誤り。仮説修正は臨床推論の正常な過程。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: 治療反応不良、予想外のバイタル変化、新しい局在所見などは診断の再検討サインである。\ncomparisonText: アンカリング＝最初の情報に固定、premature closure＝探索を早く終了、confirmation bias＝支持情報を過大評価。\ncommonMistakes: 「検査陽性＝原因」と直結させない。\ncorrectionConditions: Aが妥当になるには症状・所見・画像などが一貫し、代替診断を合理的に除外できている必要がある。",
+        "key_points": "・矛盾所見で再開\n・治療反応も診断情報\n・陽性検査だけで固定しない",
+        "references": "共通科目 学習まとめ集 v1.22（臨床推論：医療面接） / 共通科目試験対策問題集 v1.65 正本 / 看護協会共通科目模試【医療面接】.pdf（出題重点のみ） / JAMA Internal Medicine: Diagnostic Error in Internal Medicine（premature closure）",
+        "mnemonic": "「合わない所見は、診断を開き直す合図」",
+        "source_explanation_raw": "premature closureは、合理的な代替診断を十分検討する前に診断探索を止める認知エラーである。診断は新情報に応じて更新する。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:03",
+        "original-id:PRED-INTERVIEW-004",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 1,
+      "choices": [
+        "尿検査が陽性なので診断は確定しており、追加情報は無視する。",
+        "高齢者では複数疾患は同時に起こらないため、尿路感染症だけで説明する。",
+        "胆道感染など別の感染源を含め鑑別を再開し、診断仮説を更新する。",
+        "最初の診断を変えることは診断エラーなので避ける。"
+      ],
+      "correctChoiceIndexes": [
+        2
+      ]
+    },
+    {
+      "id": "PRED-INTERVIEW-005",
+      "subject": "臨床推論：医療面接",
+      "unit": "鑑別診断・評価計画",
+      "topic": "problem representation",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S",
+      "prompt": "長い病歴を診断推論に使いやすい「problem representation」にまとめる方法として最も適切なのはどれか。",
+      "explanation": {
+        "answer": "B. 年齢・背景、症候の時間軸、重要な陽性/陰性所見を抽出し、鑑別を分ける特徴を短く要約する。",
+        "question_intent": "病歴を単なる記録ではなく診断仮説形成に使える形へ圧縮できるか。",
+        "reasoning": "problem representationは患者の重要情報を選び、時間軸と識別力の高い所見を含めた一文程度の要約にする。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "incorrect",
+            "reason": "誤り。情報過多で重要度が見えにくい。",
+            "correction_condition": "Aが必要なのは逐語録が目的の特殊な場面であり、通常の臨床要約とは異なる。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "correct",
+            "reason": "正しい。臨床推論に使える要約。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "incorrect",
+            "reason": "誤り。病歴・時間軸は重要。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "incorrect",
+            "reason": "誤り。暫定診断段階でも要約は有用。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: 例：「高血圧のある70歳男性の、突然発症し背部へ放散する持続性胸痛と上肢血圧左右差」のように、鑑別を動かす特徴を入れる。\ncomparisonText: 口頭提示は相手の意思決定を支える要約、診療録は再現可能性と連続性を支える詳細記録。\ncommonMistakes: 形容詞を増やしすぎて長文化しない。\ncorrectionConditions: Aが必要なのは逐語録が目的の特殊な場面であり、通常の臨床要約とは異なる。",
+        "key_points": "・患者背景\n・時間軸\n・識別力の高い所見\n・短く要約",
+        "references": "共通科目 学習まとめ集 v1.22（臨床推論：医療面接） / 共通科目試験対策問題集 v1.65 正本 / 看護協会共通科目模試【医療面接】.pdf（出題重点のみ）",
+        "mnemonic": "「長い病歴を、診断に効く一文へ」",
+        "source_explanation_raw": "情報の圧縮は「省略」ではなく、診断に寄与する情報の優先順位づけである。長い生データを短い臨床表現へ変換するとillness scriptとの照合がしやすくなる。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:03",
+        "original-id:PRED-INTERVIEW-005",
+        "prediction-v2.0",
+        "importance:S"
+      ],
+      "revision": 1,
+      "choices": [
+        "患者が話した順番を省略せず全文再現する。",
+        "年齢・背景、症候の時間軸、重要な陽性/陰性所見を抽出し、鑑別を分ける特徴を短く要約する。",
+        "検査結果だけを並べ、症状や経過は含めない。",
+        "診断名が確定するまで要約を作らない。"
+      ],
+      "correctChoiceIndexes": [
+        1
+      ]
+    },
+    {
+      "id": "PRED-INTERVIEW-006",
+      "subject": "臨床推論：医療面接",
+      "unit": "鑑別診断・評価計画",
+      "topic": "問題リストと心理社会的問題",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "心不全で入院した独居患者に、呼吸困難、腎機能悪化、服薬中断、食料不足、退院後の通院困難がある。問題リストとして最も適切なのはどれか。",
+      "explanation": {
+        "answer": "A. 医学的問題に加え、服薬・栄養・生活環境・支援体制なども問題として整理し優先順位をつける。",
+        "question_intent": "問題リストを診断名一覧ではなく、患者のケアに必要な課題の構造化として使えるか。",
+        "reasoning": "複雑な患者では医学的・機能的・心理社会的課題を整理し、緊急度と患者目標に応じて優先順位を設定する。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "correct",
+            "reason": "正しい。包括的な問題リスト。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "incorrect",
+            "reason": "誤り。未確定の問題も整理できる。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "incorrect",
+            "reason": "誤り。社会的要因は治療実行可能性に直結する。",
+            "correction_condition": "Cが適切になるのは別文書へ記録する制度上の理由があっても、臨床判断では社会課題を無視しない。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "incorrect",
+            "reason": "誤り。複数問題の優先順位づけが必要。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: 問題リストは各問題にAssessmentとPlanを対応させると、治療・検査・教育・支援の抜けが減る。\ncomparisonText: 診断名＝病名、問題＝患者に対応を要する状態。両者は一致しない。\ncommonMistakes: 心理社会的課題を「医学ではない」と除外しない。\ncorrectionConditions: Cが適切になるのは別文書へ記録する制度上の理由があっても、臨床判断では社会課題を無視しない。",
+        "key_points": "・問題は病名だけではない\n・未確定でも整理可\n・優先順位をつける",
+        "references": "共通科目 学習まとめ集 v1.22（臨床推論：医療面接） / 共通科目試験対策問題集 v1.65 正本 / 看護協会共通科目模試【医療面接】.pdf（出題重点のみ）",
+        "mnemonic": "「問題リストは、患者の困りごとの地図」",
+        "source_explanation_raw": "問題リストは診断確定前でも「低酸素血症」「食事摂取低下」「退院支援困難」のような問題として記載できる。計画の漏れを防ぎ、多職種共有に役立つ。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:03",
+        "original-id:PRED-INTERVIEW-006",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 1,
+      "choices": [
+        "医学的問題に加え、服薬・栄養・生活環境・支援体制なども問題として整理し優先順位をつける。",
+        "確定診断がつくまで問題リストは作成しない。",
+        "心不全だけを記載し、社会的問題は診療とは分離する。",
+        "問題数が多いと混乱するため最も重い疾患1つだけにする。"
+      ],
+      "correctChoiceIndexes": [
+        0
+      ]
+    },
+    {
+      "id": "PRED-INTERVIEW-007",
+      "subject": "臨床推論：医療面接",
+      "unit": "鑑別診断・評価計画",
+      "topic": "検査前確率と検査選択",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "健康な25歳女性。数秒だけ続く胸部の刺す痛みで、運動との関連はなく、バイタル正常、心血管リスクもない。医療面接後の検査計画として最も適切な考え方はどれか。",
+      "explanation": {
+        "answer": "D. 致死的疾患のRed Flagを確認したうえで検査前確率を見積もり、結果が管理を変える検査を選ぶ。",
+        "question_intent": "検査の前に病歴・身体所見から検査前確率を作り、検査適応を考えられるか。",
+        "reasoning": "検査は症状名だけで自動的に選ぶのではなく、Criticalな疾患のRed Flagと検査前確率、検査の害・利益を考慮する。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "incorrect",
+            "reason": "誤り。主訴だけでは検査適応は決まらない。",
+            "correction_condition": "Aは高リスク所見があり緊急評価が必要な患者でも「全員・侵襲的」は不適切。Cも年齢だけで除外できない。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "incorrect",
+            "reason": "誤り。過剰検査には偽陽性・侵襲・コストの害がある。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "incorrect",
+            "reason": "誤り。低頻度でもCritical疾患は文脈に応じ検討する。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "correct",
+            "reason": "正しい。検査前確率と意思決定への影響を考える。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: 検査前確率が極端に低い場合は検査による追加情報が小さくなることがある。一方Red Flagがあれば年齢にかかわらず検査を強化する。\ncomparisonText: スクリーニング目的と診断目的では、適切な検査閾値が異なる。\ncommonMistakes: 「検査しない＝見逃し」と短絡しない。\ncorrectionConditions: Aは高リスク所見があり緊急評価が必要な患者でも「全員・侵襲的」は不適切。Cも年齢だけで除外できない。",
+        "key_points": "・Red Flag確認\n・検査前確率\n・結果で管理が変わるか",
+        "references": "共通科目 学習まとめ集 v1.22（臨床推論：医療面接） / 共通科目試験対策問題集 v1.65 正本 / 看護協会共通科目模試【医療面接】.pdf（出題重点のみ）",
+        "mnemonic": "「検査は症状名でなく、前確率で選ぶ」",
+        "source_explanation_raw": "低い検査前確率で非特異的な検査を大量に行うと偽陽性や偶発所見が増え、不要な追加検査につながることがある。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:03",
+        "original-id:PRED-INTERVIEW-007",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 1,
+      "choices": [
+        "胸痛という主訴だけで全員に侵襲的検査を行う。",
+        "検査前確率に関係なく検査数を増やすほど診断精度は必ず上がる。",
+        "若年者ではCriticalな疾患を一切考えない。",
+        "致死的疾患のRed Flagを確認したうえで検査前確率を見積もり、結果が管理を変える検査を選ぶ。"
+      ],
+      "correctChoiceIndexes": [
+        3
+      ]
+    },
+    {
+      "id": "PRED-INTERVIEW-008",
+      "subject": "臨床推論：医療面接",
+      "unit": "鑑別診断・評価計画",
+      "topic": "矛盾所見で診断仮説を更新する",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "「肺炎」と考えて抗菌薬治療を開始したが、発熱はなく、BNP高値、起坐呼吸、頸静脈怒張、両側下腿浮腫が目立つ。最も適切な診断推論はどれか。",
+      "explanation": {
+        "answer": "C. 急性心不全を含め鑑別を再評価し、病歴・身体所見・検査を統合して仮説を更新する。",
+        "question_intent": "初期仮説と新しい所見が矛盾した際に診断を再評価できるか。",
+        "reasoning": "病歴・所見の集積が初期診断より別の仮説に適合するなら、診断確率を更新する。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "incorrect",
+            "reason": "誤り。重要な反証情報を無視している。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "incorrect",
+            "reason": "誤り。仮説変更は必要な臨床行為。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "correct",
+            "reason": "正しい。再評価する。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "incorrect",
+            "reason": "誤り。BNPは臨床文脈と統合する。",
+            "correction_condition": "Dが近づくのは典型所見と画像等が一致し、代替診断を合理的に除外できた場合でもBNP単独確定は不可。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: 呼吸困難では肺炎、心不全、PE、COPD増悪などが重なり得る。単一疾患に固執せず、複数病態併存も考える。\ncomparisonText: 反証情報は「診断を崩す情報」、支持情報は「診断を強める情報」。両方を意識的に確認する。\ncommonMistakes: 「治療開始＝診断確定」ではない。\ncorrectionConditions: Dが近づくのは典型所見と画像等が一致し、代替診断を合理的に除外できた場合でもBNP単独確定は不可。",
+        "key_points": "・新情報で更新\n・反証所見を重視\n・治療反応も再評価",
+        "references": "共通科目 学習まとめ集 v1.22（臨床推論：医療面接） / 共通科目試験対策問題集 v1.65 正本 / 看護協会共通科目模試【医療面接】.pdf（出題重点のみ） / JAMA Internal Medicine: Diagnostic Error in Internal Medicine（premature closure）",
+        "mnemonic": "「診断は固定せず、毎回アップデート」",
+        "source_explanation_raw": "臨床推論は診断名を固定する作業ではなく、新しい情報で仮説の確率を更新する反復過程である。治療反応も診断情報になる。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:03",
+        "original-id:PRED-INTERVIEW-008",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 1,
+      "choices": [
+        "肺炎と決めたため心不全の所見は無視する。",
+        "治療開始後は診断を変更してはいけない。",
+        "急性心不全を含め鑑別を再評価し、病歴・身体所見・検査を統合して仮説を更新する。",
+        "BNPだけで心不全を確定し、他疾患を除外する。"
+      ],
+      "correctChoiceIndexes": [
+        2
+      ]
+    },
+    {
+      "id": "PRED-INTERVIEW-009",
+      "subject": "臨床推論：医療面接",
+      "unit": "鑑別診断・評価計画",
+      "topic": "複数問題の優先順位づけ",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "救急外来の患者に、SpO2 86%、血圧82/48 mmHg、3日前からの便秘、慢性肩こりがある。問題リストの優先順位として最も適切なのはどれか。",
+      "explanation": {
+        "answer": "B. 低酸素血症と循環不全を最優先で評価・介入し、安定化後に便秘や肩こりを扱う。",
+        "question_intent": "問題リストを作るだけでなく重症度・緊急度で優先順位をつけられるか。",
+        "reasoning": "問題リストは羅列ではなく、生命危機、時間依存性、患者希望、実行可能性などから優先順位を設定する。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "incorrect",
+            "reason": "誤り。主訴の提示順と緊急度は一致しない。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "correct",
+            "reason": "正しい。生命危機を最優先する。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "incorrect",
+            "reason": "誤り。慢性問題を先にしない。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "incorrect",
+            "reason": "誤り。緊急度に応じ優先順位をつける。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: 緊急場面ではABCDEで生理学的異常を先に扱い、安定化しながら情報収集を続ける。\ncomparisonText: 「患者が気にしている問題」と「今すぐ危険な問題」の両方を扱うが順序をつける。\ncommonMistakes: 主訴の順序＝優先順位と誤認しない。\ncorrectionConditions: AやCが優先されるのはA/B/Cの生命危機がなく、患者が安定している場合に限る。",
+        "key_points": "・生命危機が最優先\n・安定化と面接を並行\n・慢性問題は後順位",
+        "references": "共通科目 学習まとめ集 v1.22（臨床推論：医療面接） / 共通科目試験対策問題集 v1.65 正本 / 看護協会共通科目模試【医療面接】.pdf（出題重点のみ） / 【2026-09-26 中心論点の外部照合】Royal College of Physicians NEWS2: https://www.rcp.ac.uk/resources/national-early-warning-score-news-2/",
+        "mnemonic": "「問題リストは、危険度で並べ替える」",
+        "source_explanation_raw": "低酸素血症とショック所見は直ちに対応すべき生理学的異常である。病歴聴取を完成させるより安定化を優先する。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:03",
+        "original-id:PRED-INTERVIEW-009",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 2,
+      "choices": [
+        "患者が最初に話した便秘から順番に対応する。",
+        "低酸素血症と循環不全を最優先で評価・介入し、安定化後に便秘や肩こりを扱う。",
+        "慢性症状を先に解決してからバイタル異常を評価する。",
+        "問題はすべて同じ緊急度として扱う。"
+      ],
+      "correctChoiceIndexes": [
+        1
+      ]
+    },
+    {
+      "id": "PRED-INTERVIEW-010",
+      "subject": "臨床推論：医療面接",
+      "unit": "鑑別診断・評価計画",
+      "topic": "呼吸困難の鑑別と評価計画",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "75歳男性。急な呼吸困難。発熱なし、片脚腫脹、脈拍118/分、SpO2 89%。聴診で明らかな湿性ラ音はない。最も適切な評価計画はどれか。",
+      "explanation": {
+        "answer": "A. 肺血栓塞栓症をCriticalな鑑別に置き、循環・酸素化を評価しながら検査前確率に応じた画像・検査を検討する。",
+        "question_intent": "病歴と身体所見を統合し、Criticalな鑑別に沿った評価計画を立てられるか。",
+        "reasoning": "突然の呼吸困難、頻脈、低酸素、片脚腫脹はPEを示唆する。診断確定を待たず生理学的安定性も並行評価する。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "correct",
+            "reason": "正しい。所見を統合した評価計画。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "incorrect",
+            "reason": "誤り。PEは発熱を伴わないことが多い。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "incorrect",
+            "reason": "誤り。聴診正常でもPEはあり得る。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "incorrect",
+            "reason": "誤り。DVT徴候は重要。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: 呼吸困難では心不全、肺炎、COPD/喘息、PE、気胸、ACSなどを患者背景・時間軸・所見から順位づけする。\ncomparisonText: 診断仮説→必要な検査→結果で次の行動、という連結がAssessment/Planの基本。\ncommonMistakes: 「一つ正常所見がある＝重症疾患なし」と判断しない。\ncorrectionConditions: BやCが正しくなる条件はない。重症疾患は症状・所見を統合して評価する。",
+        "key_points": "・Criticalを上位に\n・検査前確率\n・生理学的安定性を並行評価",
+        "references": "共通科目 学習まとめ集 v1.22（臨床推論：医療面接） / 共通科目試験対策問題集 v1.65 正本 / 看護協会共通科目模試【医療面接】.pdf（出題重点のみ） / 【2026-09-26 中心論点の外部照合】2026 AHA/ACC急性肺塞栓症ガイドライン: https://professional.heart.org/en/science-news/2026-guideline-for-the-evaluation-and-management-of-acute-pulmonary-embolism-in-adults",
+        "mnemonic": "「鑑別は、次の一手まで考える」",
+        "source_explanation_raw": "鑑別診断は疾患名の列挙だけでなく、「どの仮説を何の情報で上げ下げするか」まで計画する。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:03",
+        "original-id:PRED-INTERVIEW-010",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 2,
+      "choices": [
+        "肺血栓塞栓症をCriticalな鑑別に置き、循環・酸素化を評価しながら検査前確率に応じた画像・検査を検討する。",
+        "発熱がないので重篤な疾患は否定する。",
+        "呼吸音が正常なので肺・循環疾患は除外する。",
+        "片脚腫脹は呼吸困難と無関係として扱う。"
+      ],
+      "correctChoiceIndexes": [
+        0
+      ]
+    },
+    {
+      "id": "PRED-INTERVIEW-011",
+      "subject": "臨床推論：医療面接",
+      "unit": "記録・病歴聴取",
+      "topic": "SOAPのSとO",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "患者が「昨日から38℃くらいの熱があります」と話し、来院時に看護師が体温38.4℃を測定した。SOAP記録として正しいのはどれか。",
+      "explanation": {
+        "answer": "D. 患者の訴えはS、実測した体温38.4℃はOに記載する。",
+        "question_intent": "主観的情報と客観的情報を区別できるか。",
+        "reasoning": "Sは患者や家族から得た主観的情報、Oは観察・診察・検査で得た客観的情報である。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "incorrect",
+            "reason": "誤り。S/Oが逆。",
+            "correction_condition": "Aが正しくなるのは看護師が解釈した病態評価を問う場合。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "incorrect",
+            "reason": "誤り。Aは解釈・評価。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "incorrect",
+            "reason": "誤り。Pは今後の計画。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "correct",
+            "reason": "正しい。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: Sに「息が苦しい」、OにRR 30/分・SpO2 89%、Aに低酸素を伴う呼吸状態悪化、Pに酸素化評価や医師報告などを整理する。\ncomparisonText: S＝患者の語り、O＝測定/観察、A＝解釈、P＝次の行動。\ncommonMistakes: 患者の発言内の数値でも、患者が述べた内容ならSである。\ncorrectionConditions: Aが正しくなるのは看護師が解釈した病態評価を問う場合。",
+        "key_points": "・S＝主観\n・O＝客観\n・同じテーマでも情報源で分ける",
+        "references": "共通科目 学習まとめ集 v1.22（臨床推論：医療面接） / 共通科目試験対策問題集 v1.65 正本 / 看護協会共通科目模試【医療面接】.pdf（出題重点のみ）",
+        "mnemonic": "「言ったことはS、測ったことはO」",
+        "source_explanation_raw": "同じ「発熱」に関する情報でも、患者の発言と実測値では記録区分が異なる。SOAPは情報源と推論・計画を明確に分ける。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:03",
+        "original-id:PRED-INTERVIEW-011",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 1,
+      "choices": [
+        "患者の「38℃くらい」はO、測定体温38.4℃はSに記載する。",
+        "両方ともAに記載する。",
+        "両方ともPに記載する。",
+        "患者の訴えはS、実測した体温38.4℃はOに記載する。"
+      ],
+      "correctChoiceIndexes": [
+        3
+      ]
+    },
+    {
+      "id": "PRED-INTERVIEW-012",
+      "subject": "臨床推論：医療面接",
+      "unit": "記録・病歴聴取",
+      "topic": "SOAPのAssessmentとPlan",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "「咳・発熱、右下肺野の湿性ラ音、SpO2 90%、胸部X線で右下葉浸潤影」を得た。SOAPのAとして最も適切なのはどれか。",
+      "explanation": {
+        "answer": "B. 「右下葉肺炎が疑われ、低酸素血症を伴っている」",
+        "question_intent": "客観所見を解釈してAssessmentへ変換できるか。",
+        "reasoning": "AはS/Oから導く病態評価・診断仮説・問題の重症度を記載する。\n【Phase4直接根拠照合】SOAPのAは症状・診察・画像を統合した解釈・問題点、Pは検査や治療など次の行動を記す。提示例で低酸素血症がある場合、記載の分類を考える間に臨床対応を遅らせてよいわけではない。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "incorrect",
+            "reason": "誤り。Planに相当する。",
+            "correction_condition": "AがPlanとして正答になるのは「次に何をするか」を問う設問。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "correct",
+            "reason": "正しい。所見の統合と病態評価。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "incorrect",
+            "reason": "誤り。SpO₂90%は客観的観察値としてSOAPのOに記載する内容であり、Aの評価・臨床的解釈とは区別する。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "incorrect",
+            "reason": "誤り。患者が語った咳の経過はSOAPのS（主観的情報）に相当し、Aの統合評価そのものではない。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: Aでは確定していない場合「〜疑い」「〜の可能性」と不確実性を明示し、Pで次の検証や対応につなげる。\ncomparisonText: A＝意味づけ、P＝行動。\ncommonMistakes: Assessmentに「検査する」「投薬する」といった行動だけを書かない。\ncorrectionConditions: AがPlanとして正答になるのは「次に何をするか」を問う設問。",
+        "key_points": "・A＝解釈\n・P＝行動\n・不確実性を明示",
+        "references": "共通科目 学習まとめ集 v1.22（臨床推論：医療面接） / 共通科目試験対策問題集 v1.65 正本 / 看護協会共通科目模試【医療面接】.pdf（出題重点のみ）\n【Phase4確認資料】StatPearls (updated 2023), SOAP Notes: S/O synthesis in A and interventions in P: https://www.ncbi.nlm.nih.gov/books/NBK482263/",
+        "mnemonic": "「Aは考え、Pは次の一手」",
+        "source_explanation_raw": "Pは検査・治療・観察・教育などの計画である。S/Oの羅列とA/Pを混同しない。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:03",
+        "original-id:PRED-INTERVIEW-012",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 2,
+      "choices": [
+        "「酸素投与を開始し、抗菌薬の指示を確認する」",
+        "「右下葉肺炎が疑われ、低酸素血症を伴っている」",
+        "「SpO2 90%」",
+        "「患者は3日前から咳があると話した」"
+      ],
+      "correctChoiceIndexes": [
+        1
+      ]
+    },
+    {
+      "id": "PRED-INTERVIEW-013",
+      "subject": "臨床推論：医療面接",
+      "unit": "記録・病歴聴取",
+      "topic": "病歴聴取の基本構造",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "68歳男性が発熱で救急受診した。主訴と現病歴は聴取できたが、これから抗菌薬や造影検査を含む評価を検討する。次に安全性と鑑別のため優先して補完すべき病歴として最も適切なのはどれか。",
+      "explanation": {
+        "answer": "C. 主訴・現病歴に加え、既往歴、薬歴、アレルギー、家族歴・社会歴などを患者状態に応じて確認する。",
+        "question_intent": "医療面接で必須の病歴要素を構造化して聴取できるか。",
+        "reasoning": "主訴・現病歴だけでなく、既往歴、薬剤、アレルギー、家族歴、生活背景は鑑別と治療安全性に影響する。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "incorrect",
+            "reason": "誤り。薬歴は早期に確認する。",
+            "correction_condition": "Aが一部妥当なのは急変時に生命維持を優先し、詳細薬歴を安定化後に補完する場面だが、可能な限り早期に確認する。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "incorrect",
+            "reason": "誤り。アレルギー歴は重要な病歴情報。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "correct",
+            "reason": "正しい。病歴の基本構造。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "incorrect",
+            "reason": "誤り。既往歴は鑑別・治療安全性に影響する。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: 抗凝固薬、免疫抑制薬、インスリン、ステロイドなどは急性期判断を大きく変えることがある。\ncomparisonText: 現病歴＝今回の症状、既往・薬歴＝背景リスクと治療制約。\ncommonMistakes: 「主訴に直接関係ないから薬歴不要」としない。\ncorrectionConditions: Aが一部妥当なのは急変時に生命維持を優先し、詳細薬歴を安定化後に補完する場面だが、可能な限り早期に確認する。",
+        "key_points": "・主訴/現病歴\n・既往/薬歴\n・アレルギー\n・生活背景",
+        "references": "共通科目 学習まとめ集 v1.22（臨床推論：医療面接） / 共通科目試験対策問題集 v1.65 正本 / 看護協会共通科目模試【医療面接】.pdf（出題重点のみ）",
+        "mnemonic": "「病歴は今回＋背景」",
+        "source_explanation_raw": "薬剤は症状の原因、副作用、相互作用、処置時の出血リスクなどに関係するため早期に確認する。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:03",
+        "original-id:PRED-INTERVIEW-013",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 1,
+      "choices": [
+        "薬歴は治療が決まった後にだけ確認する。",
+        "アレルギーは検査値から分かるので聴取不要である。",
+        "主訴・現病歴に加え、既往歴、薬歴、アレルギー、家族歴・社会歴などを患者状態に応じて確認する。",
+        "主訴と無関係に見える既往歴は安全性に影響しない。"
+      ],
+      "correctChoiceIndexes": [
+        2
+      ]
+    },
+    {
+      "id": "PRED-INTERVIEW-014",
+      "subject": "臨床推論：医療面接",
+      "unit": "記録・病歴聴取",
+      "topic": "現病歴の時間軸とOPQRST",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "腹痛の現病歴として最も診断推論に役立つ記載はどれか。",
+      "explanation": {
+        "answer": "A. 「6時間前に臍周囲痛で発症し、3時間前から右下腹部へ移動。歩行で増悪し、悪心と微熱を伴う」",
+        "question_intent": "現病歴を時間軸、部位、性状、増悪因子、随伴症状で構造化できるか。",
+        "reasoning": "現病歴では発症時刻、経過、部位・放散、性状、程度、増悪/寛解因子、随伴症状を具体化する。\n【Phase4直接根拠照合】最も情報量が多い現病歴は発症時刻・部位移動・経過・誘発因子・随伴症状を具体的に含むAである。典型的な症状パターンは診断推論に有用だが、病歴だけで確定診断はしない。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "correct",
+            "reason": "正しい。時間軸と識別情報が具体的。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "incorrect",
+            "reason": "誤り。「腹痛あり。詳細不明」では発症時刻、痛みの移動、増悪因子、随伴症状などが不足しており、診断推論に必要な時間軸が乏しい。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_answer_rationale"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "incorrect",
+            "reason": "誤り。「痛い」との記述のみでは部位、発症、経過、性状、随伴症状などが不明で、鑑別に必要な情報量が不足する。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_answer_rationale"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "incorrect",
+            "reason": "発症や経過が曖昧。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_answer_rationale"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: OPQRST/LQQTSFAは患者の語りを遮るための質問表ではなく、自由な語りの後に不足情報を補う枠組みとして使う。\ncomparisonText: 「昨日から」より「約18時間前から」のように具体化できると経過共有がしやすい。\ncommonMistakes: 略語を埋めることが目的になり、患者の主訴の意味を失わないようにする。\ncorrectionConditions: Dも慢性反復性症状の入口にはなるが、頻度・持続時間・誘因などの具体化が必要。\n【現病歴の記述】痛みの発症時刻・部位の移動・随伴症状・増悪因子が診断推論の手がかりになる。臍周囲から右下腹部へ移る腹痛は急性虫垂炎を示唆し得るが、問診所見だけで確定診断しない。",
+        "key_points": "・発症\n・経過\n・部位/性状\n・増悪寛解\n・随伴症状",
+        "references": "共通科目 学習まとめ集 v1.22（臨床推論：医療面接） / 共通科目試験対策問題集 v1.65 正本 / 看護協会共通科目模試【医療面接】.pdf（出題重点のみ）\n【Phase4確認資料】Macaluso & McNamara (2012), Evaluation and management of acute abdominal pain in the ED: PQRST symptom history: https://pmc.ncbi.nlm.nih.gov/articles/PMC3468117/",
+        "mnemonic": "「現病歴は時間の物語」",
+        "source_explanation_raw": "診断推論では「いつから」「どのように変化したか」が強い識別情報になる。相対時間も用い、経過を再現できるように記録する。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:03",
+        "original-id:PRED-INTERVIEW-014",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 3,
+      "choices": [
+        "「6時間前に臍周囲痛で発症し、3時間前から右下腹部へ移動。歩行で増悪し、悪心と微熱を伴う」",
+        "「腹痛あり。詳細不明」",
+        "「痛いと言っている」",
+        "「以前から時々痛い」"
+      ],
+      "correctChoiceIndexes": [
+        0
+      ]
+    },
+    {
+      "id": "PRED-INTERVIEW-015",
+      "subject": "臨床推論：医療面接",
+      "unit": "記録・病歴聴取",
+      "topic": "患者の解釈モデルとICE",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "検査前の患者が「父が肺がんだったので、自分も同じ病気ではないかと怖い」と話した。医療面接で最も適切な対応はどれか。",
+      "explanation": {
+        "answer": "D. 「何を一番心配されていますか」「今回、どのような説明や検査を期待していますか」と考え・懸念・期待を確認する。",
+        "question_intent": "患者のIdeas/Concerns/Expectationsを病歴の一部として聴取できるか。",
+        "reasoning": "患者の解釈、懸念、期待は受療行動・理解・意思決定に影響するため、医療面接で確認する。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "incorrect",
+            "reason": "誤り。患者の懸念は意思決定に重要。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "incorrect",
+            "reason": "誤り。一方向の説明になっている。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "incorrect",
+            "reason": "誤り。感情の確認は患者中心面接の一部。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "correct",
+            "reason": "正しい。患者の解釈モデルと期待を確認する。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: 患者の懸念を聞くことで「がんが怖い」「仕事を休めない」など、同じ疾患でも重要アウトカムが異なることが分かる。\ncomparisonText: 疾患中心＝病態情報、患者中心＝病態＋意味＋生活＋価値観。\ncommonMistakes: 患者の考えを聞くことを「診断を患者に決めさせること」と混同しない。\ncorrectionConditions: A〜Cが正答になる通常の医療面接場面はない。急変時は感情探索より救命処置を先行するが、安定化後に補う。",
+        "key_points": "・Ideas\n・Concerns\n・Expectations\n・生活への影響",
+        "references": "共通科目 学習まとめ集 v1.22（臨床推論：医療面接） / 共通科目試験対策問題集 v1.65 正本 / 看護協会共通科目模試【医療面接】.pdf（出題重点のみ） / AHRQ Clinician-Patient Communication / AHRQ SHARE Approach",
+        "mnemonic": "「病気だけでなく、患者が病気をどう見ているか」",
+        "source_explanation_raw": "患者中心の病歴聴取では生物医学的情報だけでなく、症状が生活へ与える影響や患者自身の意味づけを聞く。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:03",
+        "original-id:PRED-INTERVIEW-015",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 1,
+      "choices": [
+        "患者の心配は診断に無関係なので話題を変える。",
+        "医療者の鑑別だけを説明し患者の考えは確認しない。",
+        "感情を確認すると不安が増えるので避ける。",
+        "「何を一番心配されていますか」「今回、どのような説明や検査を期待していますか」と考え・懸念・期待を確認する。"
+      ],
+      "correctChoiceIndexes": [
+        3
+      ]
+    },
+    {
+      "id": "PRED-INTERVIEW-016",
+      "subject": "臨床推論：医療面接",
+      "unit": "記録・病歴聴取",
+      "topic": "症状と徴候の区別",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "「息が苦しい」と患者が訴え、診察で呼吸数32/分、陥没呼吸を認めた。SymptomとSignの組み合わせとして正しいのはどれか。",
+      "explanation": {
+        "answer": "B. 「息が苦しい」はSymptom、呼吸数32/分と陥没呼吸はSignである。",
+        "question_intent": "Symptom（症状）とSign（徴候）を情報源で区別できるか。",
+        "reasoning": "Symptomは患者が経験し訴える主観的現象、Signは観察・診察で確認できる客観的徴候である。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "incorrect",
+            "reason": "誤り。逆である。",
+            "correction_condition": "Aが正答になることはない。定義が逆。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "correct",
+            "reason": "正しい。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "incorrect",
+            "reason": "誤り。呼吸数と陥没呼吸はSign。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "incorrect",
+            "reason": "誤り。息苦しさはSymptom。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: 症状が軽くてもSignが重い場合や、逆に症状が強くてもバイタルが安定する場合があり、両者を統合して評価する。\ncomparisonText: Symptom＝患者の体験、Sign＝観察可能な徴候。\ncommonMistakes: 「数値が含まれる患者発言」をOと決めない。患者が述べた値はSになり得る。\ncorrectionConditions: Aが正答になることはない。定義が逆。",
+        "key_points": "・Symptom＝主観\n・Sign＝客観",
+        "references": "共通科目 学習まとめ集 v1.22（臨床推論：医療面接） / 共通科目試験対策問題集 v1.65 正本 / 看護協会共通科目模試【医療面接】.pdf（出題重点のみ）",
+        "mnemonic": "「症状は患者が感じ、徴候は医療者が確認」",
+        "source_explanation_raw": "同じ病態でも患者の主観と観察所見を分けて記録すると、状態変化と臨床推論が追いやすい。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:03",
+        "original-id:PRED-INTERVIEW-016",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 1,
+      "choices": [
+        "「息が苦しい」がSign、呼吸数32/分がSymptomである。",
+        "「息が苦しい」はSymptom、呼吸数32/分と陥没呼吸はSignである。",
+        "すべてSymptomである。",
+        "すべてSignである。"
+      ],
+      "correctChoiceIndexes": [
+        1
+      ]
+    },
+    {
+      "id": "PRED-INTERVIEW-017",
+      "subject": "臨床推論：医療面接",
+      "unit": "記録・病歴聴取",
+      "topic": "電子カルテの認証と患者確認",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "夜勤中、電子カルテが一度ログアウトした。同僚から「私のIDで先に記録してよい」と言われた。患者誤認と記録責任を防ぐ対応として最も適切なのはどれか。",
+      "explanation": {
+        "answer": "C. 自分の認証情報を用い、記録対象患者を確認し、誰がいつ記録したか追跡可能な形で入力する。",
+        "question_intent": "電子記録の真正性・責任所在・患者誤認防止を理解しているか。",
+        "reasoning": "電子カルテでは適切な認証、アクセス管理、患者識別、監査可能性が重要である。他人の資格情報を共有してはならない。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "incorrect",
+            "reason": "誤り。責任所在とセキュリティを損なう。",
+            "correction_condition": "Aが許容される通常運用はない。代行入力機能がある場合も施設規程に従い記録者・承認者を明確にする。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "incorrect",
+            "reason": "誤り。電子カルテでも患者誤認防止が必要。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "correct",
+            "reason": "正しい。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "incorrect",
+            "reason": "誤り。最小権限と適切なアクセス管理が必要。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: 電子記録は臨床情報であると同時に法的・業務的記録でもあり、後から経過を再現できる正確性・時系列性が重要。\ncomparisonText: 情報セキュリティの基本は機密性・完全性・可用性。記録では真正性・責任所在も重要となる。\ncommonMistakes: 「内容が正しいなら他人のIDでもよい」と考えない。\ncorrectionConditions: Aが許容される通常運用はない。代行入力機能がある場合も施設規程に従い記録者・承認者を明確にする。",
+        "key_points": "・本人認証\n・患者確認\n・追跡可能性\n・アクセス権限",
+        "references": "共通科目 学習まとめ集 v1.22（臨床推論：医療面接） / 共通科目試験対策問題集 v1.65 正本 / 看護協会共通科目模試【医療面接】.pdf（出題重点のみ） / 厚生労働省 医療情報システムの安全管理に関するガイドライン 第7.0版（2026年6月）",
+        "mnemonic": "「電子カルテは、正しい内容＋正しい人＋正しい患者」",
+        "source_explanation_raw": "厚生労働省の医療情報システム安全管理ガイドライン第7.0版でも、医療情報の安全管理、アクセス制御、適切な運用管理が求められる。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:03",
+        "original-id:PRED-INTERVIEW-017",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 1,
+      "choices": [
+        "同僚のID・パスワードで入力しても、内容が正しければ問題ない。",
+        "患者確認は紙カルテだけで必要で、電子カルテでは不要である。",
+        "自分の認証情報を用い、記録対象患者を確認し、誰がいつ記録したか追跡可能な形で入力する。",
+        "記録の効率を優先し、アクセス権限は職種を問わず共有する。"
+      ],
+      "correctChoiceIndexes": [
+        2
+      ]
+    },
+    {
+      "id": "PRED-INTERVIEW-018",
+      "subject": "臨床推論：医療面接",
+      "unit": "記録・病歴聴取",
+      "topic": "記録訂正と追記の原則",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "前日の電子カルテに薬剤アレルギー歴の記載漏れを発見した。最も適切な対応はどれか。",
+      "explanation": {
+        "answer": "A. 施設の記録規程に従い、現在時刻で追記・訂正したことが分かる形にし、必要な安全対応も共有する。",
+        "question_intent": "医療記録の訂正で真正性と追跡可能性を保てるか。",
+        "reasoning": "記録の誤りや漏れは、改ざんと誤解される方法ではなく、誰がいつ何を訂正したか追跡できる形で修正する。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "correct",
+            "reason": "正しい。訂正の透明性と安全共有を確保する。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "incorrect",
+            "reason": "誤り。追跡不能な変更は不適切。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "incorrect",
+            "reason": "誤り。履歴を消さない。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "incorrect",
+            "reason": "誤り。重要情報は記録と共有が必要。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: 電子記録では変更履歴、アクセスログ、権限管理が医療情報安全管理の重要要素となる。\ncomparisonText: 「訂正」＝透明な修正、「改ざん」＝履歴を隠す変更。\ncommonMistakes: 過去時点の記録を現在の知識で書き換え、当時から知っていたように見せない。\ncorrectionConditions: B/Cが適切になることはない。システム上の訂正方法は施設規程に従うが、変更履歴を隠さない原則は共通。",
+        "key_points": "・訂正履歴を残す\n・現在時刻で追記\n・安全情報はチーム共有",
+        "references": "共通科目 学習まとめ集 v1.22（臨床推論：医療面接） / 共通科目試験対策問題集 v1.65 正本 / 看護協会共通科目模試【医療面接】.pdf（出題重点のみ） / 厚生労働省 医療情報システムの安全管理に関するガイドライン 第7.0版（2026年6月）",
+        "mnemonic": "「記録は直しても、履歴は消さない」",
+        "source_explanation_raw": "重要な安全情報の漏れを見つけた場合、記録訂正だけでなく患者安全上必要なチーム共有も行う。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:03",
+        "original-id:PRED-INTERVIEW-018",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 1,
+      "choices": [
+        "施設の記録規程に従い、現在時刻で追記・訂正したことが分かる形にし、必要な安全対応も共有する。",
+        "元の記録時刻にさかのぼって、追跡できないよう内容を書き換える。",
+        "誤記を削除して記録が存在しなかったようにする。",
+        "記載漏れを放置し、口頭でだけ共有する。"
+      ],
+      "correctChoiceIndexes": [
+        0
+      ]
+    },
+    {
+      "id": "PRED-INTERVIEW-019",
+      "subject": "臨床推論：医療面接",
+      "unit": "コミュニケーション・傾聴",
+      "topic": "開かれた質問から焦点化へ",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "初診患者の医療面接開始時の質問として最も適切なのはどれか。",
+      "explanation": {
+        "answer": "D. 「今日はどのようなことで受診されましたか」と開かれた質問で始め、語りを聞いた後に具体的質問で不足情報を補う。",
+        "question_intent": "自由な語りと構造化質問を適切に使い分けられるか。",
+        "reasoning": "面接初期は開かれた質問で患者の主訴・文脈を把握し、その後に閉じた質問や構造化質問で診断に必要な情報を補完する。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "incorrect",
+            "reason": "誤り。初期から閉じた質問だけでは主訴の意味を取りこぼす。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "incorrect",
+            "reason": "誤り。早い遮断は情報損失につながる。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "incorrect",
+            "reason": "誤り。患者反応に合わせて柔軟に進める。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "correct",
+            "reason": "正しい。開放型から焦点化へ進む。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: 緊急時には開かれた質問よりABCDEや短い焦点質問を優先することがある。\ncomparisonText: 開かれた質問＝広く語ってもらう、閉じた質問＝具体化・確認。\ncommonMistakes: 「傾聴＝質問しないこと」と誤解しない。\ncorrectionConditions: Aのような閉じた質問が中心になるのは、緊急時の短時間評価や特定情報の確認時。",
+        "key_points": "・openで開始\n・focusedで補完\n・患者反応で調整",
+        "references": "共通科目 学習まとめ集 v1.22（臨床推論：医療面接） / 共通科目試験対策問題集 v1.65 正本 / 看護協会共通科目模試【医療面接】.pdf（出題重点のみ） / AHRQ Clinician-Patient Communication / AHRQ SHARE Approach",
+        "mnemonic": "「広く聞いて、必要な所を深く聞く」",
+        "source_explanation_raw": "傾聴と効率は対立しない。まず患者の語りを短時間でも受け止め、重要テーマを抽出したうえで焦点化すると、情報の質が上がる。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:03",
+        "original-id:PRED-INTERVIEW-019",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 1,
+      "choices": [
+        "最初から「胸痛は5分以内ですか、はい・いいえ」と閉じた質問だけを続ける。",
+        "患者の語りは時間がかかるため最初から遮る。",
+        "患者の答えに関係なく決められた質問順だけを守る。",
+        "「今日はどのようなことで受診されましたか」と開かれた質問で始め、語りを聞いた後に具体的質問で不足情報を補う。"
+      ],
+      "correctChoiceIndexes": [
+        3
+      ]
+    },
+    {
+      "id": "PRED-INTERVIEW-020",
+      "subject": "臨床推論：医療面接",
+      "unit": "コミュニケーション・傾聴",
+      "topic": "沈黙と非言語情報",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "患者ががん再発の可能性を聞いた後、下を向いて30秒ほど沈黙した。最も適切な対応はどれか。",
+      "explanation": {
+        "answer": "B. 急かさず待ち、表情や姿勢を観察しながら「今、どのようなお気持ちですか」と必要に応じて声をかける。",
+        "question_intent": "沈黙や非言語行動をコミュニケーション情報として扱えるか。",
+        "reasoning": "沈黙は感情処理、迷い、悲嘆、質問を考える時間など多様な意味を持つため、即座に決めつけず待つ。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "incorrect",
+            "reason": "誤り。沈黙の意味を決めつけない。",
+            "correction_condition": "Aが適切になるのは患者が明確に話題変更を希望した場合。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "correct",
+            "reason": "正しい。待つことと感情確認を組み合わせる。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "incorrect",
+            "reason": "誤り。情報過多になる。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "incorrect",
+            "reason": "誤り。関係形成を阻害し得る。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: 沈黙の後に「何か気になっていることがありますか」と開かれた問いを用いると、患者の懸念を言語化しやすい。\ncomparisonText: 沈黙＝情報欠如ではなく、非言語的メッセージになり得る。\ncommonMistakes: 沈黙を「話したくない」と一義的に解釈しない。\ncorrectionConditions: Aが適切になるのは患者が明確に話題変更を希望した場合。",
+        "key_points": "・待つ\n・観察する\n・意味を確認する",
+        "references": "共通科目 学習まとめ集 v1.22（臨床推論：医療面接） / 共通科目試験対策問題集 v1.65 正本 / 看護協会共通科目模試【医療面接】.pdf（出題重点のみ） / AHRQ Clinician-Patient Communication / AHRQ SHARE Approach",
+        "mnemonic": "「沈黙も会話の一部」",
+        "source_explanation_raw": "表情、視線、声の調子、姿勢、沈黙は患者の感情や理解度を示す手がかりになる。医療者自身の姿勢・視線・距離も話しやすさに影響する。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:03",
+        "original-id:PRED-INTERVIEW-020",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 1,
+      "choices": [
+        "沈黙は拒否と判断してすぐ別の話題へ移る。",
+        "急かさず待ち、表情や姿勢を観察しながら「今、どのようなお気持ちですか」と必要に応じて声をかける。",
+        "沈黙を避けるため医学情報を連続して説明する。",
+        "目を合わせずPC入力を続ける。"
+      ],
+      "correctChoiceIndexes": [
+        1
+      ]
+    },
+    {
+      "id": "PRED-INTERVIEW-021",
+      "subject": "臨床推論：医療面接",
+      "unit": "コミュニケーション・傾聴",
+      "topic": "不安への共感的応答",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "患者が「悪い病気だったらどうしよう。子どものことが心配です」と涙ぐんだ。最も適切な最初の応答はどれか。",
+      "explanation": {
+        "answer": "A. 「お子さんのことも含めて、とても心配されているのですね」と気持ちを受け止め、何が最も心配か尋ねる。",
+        "question_intent": "感情を認識し、共感を示してから情報提供へ進めるか。",
+        "reasoning": "患者が感情を表出したときは、まず感情を認識・言語化し、懸念を確認する。否定や早すぎる安心は避ける。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "correct",
+            "reason": "正しい。共感と懸念探索。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "incorrect",
+            "reason": "誤り。感情を否定している。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "incorrect",
+            "reason": "誤り。まず感情を受け止める。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "incorrect",
+            "reason": "誤り。感情・生活背景は意思決定に重要。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: 感情を扱った後、患者が知りたい情報量を確認し、必要な医学情報を段階的に提示する。\ncomparisonText: 共感＝感情の認識、同情＝医療者側の感情、安心保証＝根拠なく「大丈夫」と言うことではない。\ncommonMistakes: 「大丈夫です」と不確実な結果を保証しない。\ncorrectionConditions: Cの情報提供は、患者の感情を受け止め、知りたい情報量を確認した後に行うと適切。",
+        "key_points": "・感情を認識\n・言語化\n・懸念を尋ねる\n・その後情報提供",
+        "references": "共通科目 学習まとめ集 v1.22（臨床推論：医療面接） / 共通科目試験対策問題集 v1.65 正本 / 看護協会共通科目模試【医療面接】.pdf（出題重点のみ） / AHRQ Clinician-Patient Communication / AHRQ SHARE Approach",
+        "mnemonic": "「感情が出たら、まず受け止める」",
+        "source_explanation_raw": "共感的応答は「同意すること」ではなく、患者の体験を理解しようとし、その気持ちを言葉にして返すことである。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:03",
+        "original-id:PRED-INTERVIEW-021",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 1,
+      "choices": [
+        "「お子さんのことも含めて、とても心配されているのですね」と気持ちを受け止め、何が最も心配か尋ねる。",
+        "「結果が出るまでは心配しても仕方ないですよ」と不安を否定する。",
+        "すぐに統計データを提示して安心させる。",
+        "感情は診断に関係しないため質問を続ける。"
+      ],
+      "correctChoiceIndexes": [
+        0
+      ]
+    },
+    {
+      "id": "PRED-INTERVIEW-022",
+      "subject": "臨床推論：医療面接",
+      "unit": "患者中心コミュニケーション",
+      "topic": "Teach-backによる理解確認",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S",
+      "prompt": "複雑な退院後の薬剤変更を説明した。患者が「分かりました」と答えた。理解確認として最も適切なのはどれか。",
+      "explanation": {
+        "answer": "C. 「私の説明が分かりやすかったか確認したいので、家で薬をどう飲むかご自身の言葉で教えていただけますか」と尋ねる。",
+        "question_intent": "患者の理解を医療者側の説明責任として確認できるか。",
+        "reasoning": "Teach-backは患者を試験するのではなく、説明が伝わったかを確認する方法である。患者自身の言葉で説明してもらい、不足があれば再説明する。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "incorrect",
+            "reason": "誤り。Yes/Noでは理解を確認しにくい。",
+            "correction_condition": "Aは簡単な事実確認には使えるが、複雑な自己管理の理解確認にはTeach-backが有用。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "incorrect",
+            "reason": "誤り。非言語的同意だけでは不十分。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "correct",
+            "reason": "正しい。Teach-back。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "incorrect",
+            "reason": "誤り。説明を調整する責任がある。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: 数字・薬剤・受診基準など重要情報は、少量ずつ説明し理解確認を繰り返すと安全性が上がる。\ncomparisonText: Teach-back＝説明を再現、Ask-tell-ask＝知識確認→説明→再確認。\ncommonMistakes: Teach-backを「患者の記憶力テスト」と言わない。\ncorrectionConditions: Aは簡単な事実確認には使えるが、複雑な自己管理の理解確認にはTeach-backが有用。",
+        "key_points": "・患者の言葉で確認\n・分からなければ再説明\n・患者を試験しない",
+        "references": "共通科目 学習まとめ集 v1.22（臨床推論：医療面接） / 共通科目試験対策問題集 v1.65 正本 / 看護協会共通科目模試【医療面接】.pdf（出題重点のみ） / AHRQ Clinician-Patient Communication / AHRQ SHARE Approach",
+        "mnemonic": "「分かったか聞くより、どう理解したか聞く」",
+        "source_explanation_raw": "「分かりましたか？」は社会的に「はい」と答えやすく、理解度を正確に評価しにくい。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:03",
+        "original-id:PRED-INTERVIEW-022",
+        "prediction-v2.0",
+        "importance:S"
+      ],
+      "revision": 1,
+      "choices": [
+        "「分かりましたね？」と再度はい・いいえで確認する。",
+        "患者がうなずいたので理解済みと判断する。",
+        "「私の説明が分かりやすかったか確認したいので、家で薬をどう飲むかご自身の言葉で教えていただけますか」と尋ねる。",
+        "理解できなければ患者の責任なので説明を終了する。"
+      ],
+      "correctChoiceIndexes": [
+        2
+      ]
+    },
+    {
+      "id": "PRED-INTERVIEW-023",
+      "subject": "臨床推論：医療面接",
+      "unit": "患者中心コミュニケーション",
+      "topic": "P-SPIKES：PreparationとSetting",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "進行がんの病状説明前の準備として最も不適切なのはどれか。",
+      "explanation": {
+        "answer": "D. 時間短縮を優先し、廊下で立ったまま家族の希望だけを基に説明する。",
+        "question_intent": "悪い知らせを伝える前の準備と環境設定を理解しているか。",
+        "reasoning": "Preparation/Settingでは内容、参加者、場所、時間、プライバシー、支援体制を整える。患者本人の意向を中心にする。【設問の正答と記述の適切性】本問は「最も不適切なもの」を選ぶ。Dは設問の正答だが、その選択肢に書かれた対応自体は不適切であり、A～Cの記述は適切である。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "incorrect",
+            "reason": "適切。準備に含まれる。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_answer_rationale"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "incorrect",
+            "reason": "適切。環境と患者意向を確認する。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_answer_rationale"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "incorrect",
+            "reason": "適切。時間・支援を準備する。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_answer_rationale"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "correct",
+            "reason": "不適切。プライバシーと患者中心性を損なう。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_answer_rationale"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: 悪い知らせは内容だけでなく、環境、座る位置、遮断されない時間、同席者の希望などが患者体験に影響する。\ncomparisonText: Preparation＝事前準備、Setting＝場の設定。\ncommonMistakes: 家族が希望しても患者本人の同席希望・情報共有範囲を確認する。\ncorrectionConditions: Dが正しくなる通常場面はない。緊急時でも可能な範囲でプライバシーと尊厳を守る。",
+        "key_points": "・本問は「最も不適切」を選ぶ逆向き設問。設問上の正答Dは、行為としては不適切。\n・A～Cは記述としては適切だが、設問で求める解答ではない。\n・患者の意向、同席者、静かな場所、十分な時間を確認する。",
+        "references": "共通科目 学習まとめ集 v1.22（臨床推論：医療面接） / 共通科目試験対策問題集 v1.65 正本 / 看護協会共通科目模試【医療面接】.pdf（出題重点のみ） / Rivera et al. SPIKES: Breaking bad news in the emergency department. AEM Educ Train. 2024 / Mahendiran et al. Evaluating the Effectiveness of the SPIKES Model - A Systematic Review. 2023",
+        "mnemonic": "「悪い知らせは、話す前の準備から始まる」",
+        "source_explanation_raw": "SPIKESは悪い知らせを構造化して伝える枠組みで、近年も教育・臨床コミュニケーションで利用されている。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:03",
+        "original-id:PRED-INTERVIEW-023",
+        "prediction-v2.0",
+        "importance:S+",
+        "qa:reverse-worded-item"
+      ],
+      "revision": 3,
+      "choices": [
+        "伝える内容と予想される質問を整理する。",
+        "患者が希望する同席者を確認し、静かでプライバシーの守れる場所を用意する。",
+        "面談時間を確保し、支援が必要な場合の連携先を考える。",
+        "時間短縮を優先し、廊下で立ったまま家族の希望だけを基に説明する。"
+      ],
+      "correctChoiceIndexes": [
+        3
+      ]
+    },
+    {
+      "id": "PRED-INTERVIEW-024",
+      "subject": "臨床推論：医療面接",
+      "unit": "患者中心コミュニケーション",
+      "topic": "P-SPIKES：PerceptionとInvitation",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "検査結果説明を始める際、P-SPIKESの考え方として最も適切なのはどれか。",
+      "explanation": {
+        "answer": "B. まず患者が病状をどう理解しているか確認し、その後どの程度詳しい情報を知りたいかを尋ねる。",
+        "question_intent": "PerceptionとInvitationを実際の会話へ適用できるか。",
+        "reasoning": "Perceptionでは患者の現在の理解、Invitationではどの程度情報を知りたいか・誰と共有したいかを確認する。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "incorrect",
+            "reason": "誤り。一方向説明。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "correct",
+            "reason": "正しい。Perception→Invitation。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "incorrect",
+            "reason": "誤り。患者本人の意向を基本にする。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "incorrect",
+            "reason": "誤り。情報希望を尊重する。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: 患者が情報を限定してほしい場合は、その希望が自発的か、誰へ説明してほしいかを確認し、必要な安全情報は適切に共有する。\ncomparisonText: Perception＝今どう理解しているか、Invitation＝どこまで知りたいか。\ncommonMistakes: 「患者は全部知りたいはず」と決めつけない。\ncorrectionConditions: Aのような一方向説明は、生命危機で即時同意が不要な救命行為の簡潔説明など特殊場面でも、可能な限り理解確認を行う。",
+        "key_points": "・理解を確認\n・情報希望を確認\n・本人の意向中心",
+        "references": "共通科目 学習まとめ集 v1.22（臨床推論：医療面接） / 共通科目試験対策問題集 v1.65 正本 / 看護協会共通科目模試【医療面接】.pdf（出題重点のみ） / Rivera et al. SPIKES: Breaking bad news in the emergency department. AEM Educ Train. 2024 / Mahendiran et al. Evaluating the Effectiveness of the SPIKES Model - A Systematic Review. 2023",
+        "mnemonic": "「何を知っているか、どこまで知りたいか」",
+        "source_explanation_raw": "患者の認識を知らずに説明すると、情報量や言葉のレベルが合わないことがある。情報希望には個人差がある。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:03",
+        "original-id:PRED-INTERVIEW-024",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 1,
+      "choices": [
+        "患者の理解は確認せず、全情報を一度に伝える。",
+        "まず患者が病状をどう理解しているか確認し、その後どの程度詳しい情報を知りたいかを尋ねる。",
+        "家族が知りたい量を患者本人より優先する。",
+        "患者が知りたくないと言っても詳細を強制的に説明する。"
+      ],
+      "correctChoiceIndexes": [
+        1
+      ]
+    },
+    {
+      "id": "PRED-INTERVIEW-025",
+      "subject": "臨床推論：医療面接",
+      "unit": "患者中心コミュニケーション",
+      "topic": "P-SPIKES：KnowledgeとEmotion",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "「検査で悪性腫瘍が強く疑われます」と伝えた直後、患者が泣き出した。次の対応として最も適切なのはどれか。",
+      "explanation": {
+        "answer": "A. 「驚かれましたよね」と感情を認識し、間を置いて患者の反応を確認してから必要な情報を続ける。",
+        "question_intent": "医学情報の提示と感情への対応を適切な順序で行えるか。",
+        "reasoning": "悪い知らせの後に強い感情が出た場合、情報を詰め込むより感情を認識し、患者が再び情報を受け取れる状態になるのを待つ。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "correct",
+            "reason": "正しい。共感して情報提供を調整する。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "incorrect",
+            "reason": "誤り。情報過多になる。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "incorrect",
+            "reason": "誤り。理解・意思決定を確認する。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "incorrect",
+            "reason": "誤り。患者を一人にせず支援する。",
+            "correction_condition": "Dは患者が「一人になりたい」と明確に希望し、安全が確保されている場合に配慮し得るが、無断退室は不適切。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: 強い感情時は認知的処理能力が低下することがあるため、重要情報は後で要約し、書面や再面談も活用する。\ncomparisonText: Knowledge＝情報、Emotion＝感情への応答。両者を交互に調整する。\ncommonMistakes: 「説明を終えること」を面談の目的にしない。\ncorrectionConditions: Dは患者が「一人になりたい」と明確に希望し、安全が確保されている場合に配慮し得るが、無断退室は不適切。",
+        "key_points": "・小分けに伝える\n・感情を受け止める\n・間を置く\n・再確認",
+        "references": "共通科目 学習まとめ集 v1.22（臨床推論：医療面接） / 共通科目試験対策問題集 v1.65 正本 / 看護協会共通科目模試【医療面接】.pdf（出題重点のみ） / Rivera et al. SPIKES: Breaking bad news in the emergency department. AEM Educ Train. 2024 / Mahendiran et al. Evaluating the Effectiveness of the SPIKES Model - A Systematic Review. 2023",
+        "mnemonic": "「感情が強い時は、説明より共感が先」",
+        "source_explanation_raw": "Knowledgeでは分かりやすく小分けに情報を伝え、Emotionでは感情を認識・共感する。SPIKESの教育効果を支持する研究も報告されている。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:03",
+        "original-id:PRED-INTERVIEW-025",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 1,
+      "choices": [
+        "「驚かれましたよね」と感情を認識し、間を置いて患者の反応を確認してから必要な情報を続ける。",
+        "医学情報を最後まで一気に読み上げる。",
+        "泣いている間に治療同意書への署名を求める。",
+        "感情が落ち着くまで無言で退室する。"
+      ],
+      "correctChoiceIndexes": [
+        0
+      ]
+    },
+    {
+      "id": "PRED-INTERVIEW-026",
+      "subject": "臨床推論：医療面接",
+      "unit": "患者中心コミュニケーション",
+      "topic": "動機づけ面接とOARS",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "喫煙継続中の患者が「やめたい気持ちはあるけど、仕事のストレスで無理です」と話した。動機づけ面接として最も適切なのはどれか。",
+      "explanation": {
+        "answer": "C. 「やめたい気持ちもある一方、ストレス時には難しいのですね。やめるとしたらどんな良いことがありますか」と両価性を探索する。",
+        "question_intent": "患者の自律性を尊重し、変化への内的動機を引き出せるか。",
+        "reasoning": "動機づけ面接では対立を避け、開かれた質問、是認、反映、要約（OARS）などを用いて両価性を探索しchange talkを引き出す。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "incorrect",
+            "reason": "誤り。評価・非難は抵抗を高める。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "incorrect",
+            "reason": "誤り。一方向説得。",
+            "correction_condition": "Bは患者が明確に情報提供を求めた後、短く根拠を伝える場面なら一部用いるが、説得一辺倒にはしない。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "correct",
+            "reason": "正しい。反映と開かれた質問。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "incorrect",
+            "reason": "誤り。両価性を探索する。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: 患者が変化を望まない場合も自律性を尊重し、情報提供の許可を取り、次回再検討できる関係を保つ。\ncomparisonText: OARS：Open questions, Affirmations, Reflections, Summaries。\ncommonMistakes: 「正論を強く言えば行動が変わる」と考えない。\ncorrectionConditions: Bは患者が明確に情報提供を求めた後、短く根拠を伝える場面なら一部用いるが、説得一辺倒にはしない。",
+        "key_points": "・OARS\n・両価性\n・自律性\n・change talk",
+        "references": "共通科目 学習まとめ集 v1.22（臨床推論：医療面接） / 共通科目試験対策問題集 v1.65 正本 / 看護協会共通科目模試【医療面接】.pdf（出題重点のみ） / Motivational interviewing: person-centred approach to behaviour change（current evidence reviews）",
+        "mnemonic": "「説得するより、本人の理由を引き出す」",
+        "source_explanation_raw": "医療者が説得して「正解」を押しつけるより、患者自身が変化の理由や可能性を語れるよう支援する。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:03",
+        "original-id:PRED-INTERVIEW-026",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 1,
+      "choices": [
+        "「今すぐ禁煙できないなら意思が弱い」と指摘する。",
+        "「禁煙しないと病気になります」と一方的に説得する。",
+        "「やめたい気持ちもある一方、ストレス時には難しいのですね。やめるとしたらどんな良いことがありますか」と両価性を探索する。",
+        "患者が迷っている間は何も質問しない。"
+      ],
+      "correctChoiceIndexes": [
+        2
+      ]
+    },
+    {
+      "id": "PRED-INTERVIEW-027",
+      "subject": "臨床推論：医療面接",
+      "unit": "身体診察・バイタル",
+      "topic": "全身状態とバイタルの位置づけ",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S",
+      "prompt": "医療面接と身体診察の基本として正しいのはどれか。",
+      "explanation": {
+        "answer": "D. 全身状態とバイタルサインを早期に確認し、緊急性に応じて面接・身体診察の深さと順序を調整する。",
+        "question_intent": "医療面接と身体診察を患者の重症度に応じて組み立てられるか。",
+        "reasoning": "第一印象、意識、呼吸仕事量、皮膚色などは触れる前から得られる重要情報であり、バイタルと合わせて緊急度を判断する。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "incorrect",
+            "reason": "誤り。第一印象も重要な診察情報。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "incorrect",
+            "reason": "誤り。重症度に合わせて順序を変える。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "incorrect",
+            "reason": "誤り。バイタルは早期に確認する。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "correct",
+            "reason": "正しい。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: 医療面接は「話を最後まで聞いてから診察」ではなく、危険所見があれば途中でも生理学的評価へ切り替える。\ncomparisonText: 安定＝系統的、急変＝focused/ABCDE。\ncommonMistakes: 形式的な順序を患者安全より優先しない。\ncorrectionConditions: Bのhead-to-toeは安定患者の系統的診察で有用だが、生命危機では優先順位を変更する。",
+        "key_points": "・第一印象\n・バイタル早期\n・緊急性で順序変更",
+        "references": "共通科目 学習まとめ集 v1.22（臨床推論：医療面接） / 共通科目試験対策問題集 v1.65 正本 / 看護協会共通科目模試【医療面接】.pdf（出題重点のみ）",
+        "mnemonic": "「面接中でも、患者の危険サインを見続ける」",
+        "source_explanation_raw": "安定患者では系統的面接・診察を行えるが、急変患者ではABCDEと必要な焦点診察を優先する。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:03",
+        "original-id:PRED-INTERVIEW-027",
+        "prediction-v2.0",
+        "importance:S"
+      ],
+      "revision": 1,
+      "choices": [
+        "患者に触れる前の第一印象や呼吸状態は診察に含めない。",
+        "主訴に関係なく全例で詳細な全身診察を同じ順序で完遂してからバイタルを見る。",
+        "バイタルサインは検査結果が出た後に確認する。",
+        "全身状態とバイタルサインを早期に確認し、緊急性に応じて面接・身体診察の深さと順序を調整する。"
+      ],
+      "correctChoiceIndexes": [
+        3
+      ]
+    },
+    {
+      "id": "PRED-INTERVIEW-028",
+      "subject": "臨床推論：医療面接",
+      "unit": "身体診察・バイタル",
+      "topic": "鑑別診断を意識した焦点身体診察",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "呼吸困難患者で「肺炎か心不全か」を鑑別したい。身体診察として最も適切なのはどれか。",
+      "explanation": {
+        "answer": "B. 呼吸音の局在、呼吸仕事量に加え、頸静脈怒張、末梢浮腫、心音など鑑別を分ける所見を確認する。",
+        "question_intent": "身体診察をルーチン手技ではなく診断仮説を上げ下げする情報収集として使えるか。",
+        "reasoning": "呼吸困難の鑑別では肺所見だけでなく循環所見を統合する。診断仮説ごとに「あると上がる/ないと下がる所見」を選ぶ。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "incorrect",
+            "reason": "誤り。心不全評価に循環所見が重要。",
+            "correction_condition": "Aが十分な場面は単純な局所症状でも、必要な関連系統は確認する。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "correct",
+            "reason": "正しい。鑑別に沿った焦点診察。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "incorrect",
+            "reason": "誤り。身体所見は診断仮説形成に必要。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "incorrect",
+            "reason": "誤り。検査と診察を統合する。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: focused examは省略ではなく、診断疑問に最も情報量の高い所見を選ぶ方法である。\ncomparisonText: head-to-toe＝網羅的、focused＝仮説指向。患者状態に応じ使い分ける。\ncommonMistakes: 一つの徴候だけで肺炎/心不全を二分しない。\ncorrectionConditions: Aが十分な場面は単純な局所症状でも、必要な関連系統は確認する。",
+        "key_points": "・仮説に沿って診察\n・肺＋循環を統合\n・単一所見で確定しない",
+        "references": "共通科目 学習まとめ集 v1.22（臨床推論：医療面接） / 共通科目試験対策問題集 v1.65 正本 / 看護協会共通科目模試【医療面接】.pdf（出題重点のみ）",
+        "mnemonic": "「診察は、鑑別を動かす所見を取りに行く」",
+        "source_explanation_raw": "肺炎では局在性呼吸音・発熱など、心不全では頸静脈怒張・浮腫・両側性うっ血所見などが手がかりになるが、単独所見で確定しない。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:03",
+        "original-id:PRED-INTERVIEW-028",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 1,
+      "choices": [
+        "肺の聴診だけを行い、循環所見は見ない。",
+        "呼吸音の局在、呼吸仕事量に加え、頸静脈怒張、末梢浮腫、心音など鑑別を分ける所見を確認する。",
+        "診断名が決まるまで身体診察は行わない。",
+        "検査結果があれば身体診察は不要である。"
+      ],
+      "correctChoiceIndexes": [
+        1
+      ]
+    },
+    {
+      "id": "PRED-INTERVIEW-029",
+      "subject": "臨床推論：医療面接",
+      "unit": "身体診察・バイタル",
+      "topic": "身体診察の説明・羞恥・手指衛生",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S",
+      "prompt": "腹痛で受診した患者に腹部診察を行う。患者は衣服を開けることに戸惑う様子をみせている。診察の質と患者の尊厳を両立する対応として最も適切なのはどれか。",
+      "explanation": {
+        "answer": "A. 目的と方法を説明して同意を得て、必要範囲のみ露出し、プライバシー・保温・手指衛生に配慮する。",
+        "question_intent": "身体診察を技術だけでなく患者安全・尊厳と一体で実施できるか。",
+        "reasoning": "診察前には説明、同意、手指衛生、適切な露出とプライバシー確保を行う。患者の疼痛・不安・文化的背景にも配慮する。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "correct",
+            "reason": "正しい。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "incorrect",
+            "reason": "誤り。説明と尊厳への配慮が必要。",
+            "correction_condition": "Bが許容されるのは生命救命の緊急時で詳細説明ができない場合でも、可能な範囲で声かけと尊厳を守る。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "incorrect",
+            "reason": "誤り。患者体験と協力に影響する。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "incorrect",
+            "reason": "誤り。手袋は手指衛生の代替ではない。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: 痛む部位は最後に触診するなど、患者負担を減らしながら診断情報を得る工夫も重要。\ncomparisonText: 技術的正確性と患者中心性は対立しない。\ncommonMistakes: 「医療行為だから触れて当然」と考えない。\ncorrectionConditions: Bが許容されるのは生命救命の緊急時で詳細説明ができない場合でも、可能な範囲で声かけと尊厳を守る。",
+        "key_points": "・説明\n・同意\n・必要最小限の露出\n・手指衛生",
+        "references": "共通科目 学習まとめ集 v1.22（臨床推論：医療面接） / 共通科目試験対策問題集 v1.65 正本 / 看護協会共通科目模試【医療面接】.pdf（出題重点のみ）",
+        "mnemonic": "「診察は、触る前の説明から」",
+        "source_explanation_raw": "患者が安心して診察を受けられる環境は協力を得やすくし、結果として質の高い身体診察につながる。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:03",
+        "original-id:PRED-INTERVIEW-029",
+        "prediction-v2.0",
+        "importance:S"
+      ],
+      "revision": 1,
+      "choices": [
+        "目的と方法を説明して同意を得て、必要範囲のみ露出し、プライバシー・保温・手指衛生に配慮する。",
+        "診察効率を優先して説明なしに衣服を大きく開ける。",
+        "患者が緊張していても羞恥への配慮は診断精度に影響しない。",
+        "手袋を着用すれば手指衛生は不要である。"
+      ],
+      "correctChoiceIndexes": [
+        0
+      ]
+    },
+    {
+      "id": "PRED-INTERVIEW-030",
+      "subject": "臨床推論：医療面接",
+      "unit": "身体診察・バイタル",
+      "topic": "面接中の急変とABCDEへの切替",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "胸痛の病歴聴取中、患者が急に会話困難となり、冷汗、SpO2 82%、血圧76/44 mmHgを認めた。最も適切な対応はどれか。",
+      "explanation": {
+        "answer": "C. 面接を中断して救援要請し、ABCDEで気道・呼吸・循環を評価・介入しながら必要な最小限の病歴を並行収集する。",
+        "question_intent": "医療面接を患者安全より優先せず、急変時に救急評価へ切り替えられるか。",
+        "reasoning": "生命危機所見が出現したら、完成度の高い病歴より生理学的安定化が優先される。必要情報は処置と並行して収集する。\n【Phase4直接根拠照合】会話困難・低酸素・低血圧の発生は病歴聴取を中断する理由となる。直ちに救援要請しABCDEで評価・介入しつつ、救命上必要な最小限の情報を同時収集する。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "incorrect",
+            "reason": "誤り。危険な遅延となる。",
+            "correction_condition": "Aが適切になるのは患者が安定しており緊急性がない場合のみ。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "incorrect",
+            "reason": "誤り。退室せず救援要請・初期対応する。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "correct",
+            "reason": "正しい。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "incorrect",
+            "reason": "誤り。蘇生と診断は並行する。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: 急変時の短い情報収集では発症時刻、アレルギー、薬剤、重要既往などSAMPLEの要素も役立つ。\ncomparisonText: 安定患者＝詳細面接、急変患者＝ABCDE＋focused history。\ncommonMistakes: 「問診を完遂すること」を目的にしない。\ncorrectionConditions: Aが適切になるのは患者が安定しており緊急性がない場合のみ。",
+        "key_points": "・面接を中断できる\n・ABCDE優先\n・蘇生と情報収集を並行",
+        "references": "共通科目 学習まとめ集 v1.22（臨床推論：医療面接） / 共通科目試験対策問題集 v1.65 正本 / 看護協会共通科目模試【医療面接】.pdf（出題重点のみ）\n【Phase4確認資料】Resuscitation Council UK: The ABCDE Approach, updated Jul 2024: https://www.resus.org.uk/library/abcde-approach",
+        "mnemonic": "「患者が悪くなったら、問診よりABC」",
+        "source_explanation_raw": "医療面接は固定された手順ではなく、患者の状態に応じて中断・短縮・再開する。ABCDEでは生命を脅かす異常を見つけ次第治療する。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:03",
+        "original-id:PRED-INTERVIEW-030",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 1,
+      "choices": [
+        "病歴聴取の質問項目を最後まで完了してから処置を開始する。",
+        "患者が話せないため面接を中止して退室する。",
+        "面接を中断して救援要請し、ABCDEで気道・呼吸・循環を評価・介入しながら必要な最小限の病歴を並行収集する。",
+        "診断名が確定するまで酸素化・循環対応は行わない。"
+      ],
+      "correctChoiceIndexes": [
+        2
+      ]
+    }
+  ],
+  "materials": [],
+  "sources": [
+    {
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_group": "supplemental:common-predicted30",
+      "title": "得点特化予想30問 v2.0（17科目）",
+      "edition_year": "2026",
+      "publisher_org": "AI作成予想問題",
+      "source_location": "Phase1_予想問題_canonical_v1.0.json",
+      "answer_authority": "audited",
+      "notes": "過去に監査したAI予想問題510問。正式試験問題ではない。"
+    }
+  ],
+  "sourceOccurrences": [
+    {
+      "source_occurrence_id": "PRED30-2026-V2-01-Q01",
+      "canonical_question_id": "PRED-PATH-001",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-01",
+      "source_set_label": "臨床病態生理学",
+      "source_set_order": 1,
+      "source_question_no": 1,
+      "source_question_label": "Q1",
+      "source_occurrence_order": 1,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "B",
+      "source_prompt_snapshot": "虚血による細胞傷害について最も適切な説明はどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-01-Q02",
+      "canonical_question_id": "PRED-PATH-002",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-01",
+      "source_set_label": "臨床病態生理学",
+      "source_set_order": 1,
+      "source_question_no": 2,
+      "source_question_label": "Q2",
+      "source_occurrence_order": 2,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "D",
+      "source_prompt_snapshot": "ある疾患が男女ほぼ同頻度で、複数世代に連続してみられる。患者の父も同疾患で、母は未発症である。遺伝形式として最も考えやすいものはどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-01-Q03",
+      "canonical_question_id": "PRED-PATH-003",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-01",
+      "source_set_label": "臨床病態生理学",
+      "source_set_order": 1,
+      "source_question_no": 3,
+      "source_question_label": "Q3",
+      "source_occurrence_order": 3,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "A",
+      "source_prompt_snapshot": "発がん機序について最も適切なのはどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-01-Q04",
+      "canonical_question_id": "PRED-PATH-004",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-01",
+      "source_set_label": "臨床病態生理学",
+      "source_set_order": 1,
+      "source_question_no": 4,
+      "source_question_label": "Q4",
+      "source_occurrence_order": 4,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "C",
+      "source_prompt_snapshot": "急性の著明な血圧上昇により左室が通常より高い大動脈圧に抗して駆出しなければならなくなった。収縮性が変わらない直後の圧-容積関係として最も考えやすい変化はどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-01-Q05",
+      "canonical_question_id": "PRED-PATH-005",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-01",
+      "source_set_label": "臨床病態生理学",
+      "source_set_order": 1,
+      "source_question_no": 5,
+      "source_question_label": "Q5",
+      "source_occurrence_order": 5,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "B",
+      "source_prompt_snapshot": "右心不全の患者で肝腫大、頸静脈怒張、下腿浮腫を認める。この状態の説明として最も適切なのはどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-01-Q06",
+      "canonical_question_id": "PRED-PATH-006",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-01",
+      "source_set_label": "臨床病態生理学",
+      "source_set_order": 1,
+      "source_question_no": 6,
+      "source_question_label": "Q6",
+      "source_occurrence_order": 6,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "D",
+      "source_prompt_snapshot": "人工股関節術後5日目。離床が進まず、左下腿腫脹の後に突然の呼吸困難と頻脈が出現した。病態生理として最も適切なのはどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-01-Q07",
+      "canonical_question_id": "PRED-PATH-007",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-01",
+      "source_set_label": "臨床病態生理学",
+      "source_set_order": 1,
+      "source_question_no": 7,
+      "source_question_label": "Q7",
+      "source_occurrence_order": 7,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "A",
+      "source_prompt_snapshot": "長期喫煙歴があり、労作時呼吸困難と慢性咳嗽を認める。COPDの病態生理として最も適切なのはどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-01-Q08",
+      "canonical_question_id": "PRED-PATH-008",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-01",
+      "source_set_label": "臨床病態生理学",
+      "source_set_order": 1,
+      "source_question_no": 8,
+      "source_question_label": "Q8",
+      "source_occurrence_order": 8,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "C",
+      "source_prompt_snapshot": "肺炎で一部肺胞が滲出液に満たされ換気されない一方、血流は保たれている。低酸素血症の機序として最も適切なのはどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-01-Q09",
+      "canonical_question_id": "PRED-PATH-009",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-01",
+      "source_set_label": "臨床病態生理学",
+      "source_set_order": 1,
+      "source_question_no": 9,
+      "source_question_label": "Q9",
+      "source_occurrence_order": 9,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "B",
+      "source_prompt_snapshot": "鎮静薬投与後に呼吸数6/分となり、血液ガスが pH 7.28、PaCO2 60 mmHg、HCO3- 27 mEq/L であった。最も適切な解釈はどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-01-Q10",
+      "canonical_question_id": "PRED-PATH-010",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-01",
+      "source_set_label": "臨床病態生理学",
+      "source_set_order": 1,
+      "source_question_no": 10,
+      "source_question_label": "Q10",
+      "source_occurrence_order": 10,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "D",
+      "source_prompt_snapshot": "脳幹病変後、嚥下反射の惹起遅延と咽頭残留があり、食事中に湿性嗄声を認める。病態生理として最も適切なのはどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-01-Q11",
+      "canonical_question_id": "PRED-PATH-011",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-01",
+      "source_set_label": "臨床病態生理学",
+      "source_set_order": 1,
+      "source_question_no": 11,
+      "source_question_label": "Q11",
+      "source_occurrence_order": 11,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "A",
+      "source_prompt_snapshot": "十二指腸で起こる生理機能として最も適切なのはどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-01-Q12",
+      "canonical_question_id": "PRED-PATH-012",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-01",
+      "source_set_label": "臨床病態生理学",
+      "source_set_order": 1,
+      "source_question_no": 12,
+      "source_question_label": "Q12",
+      "source_occurrence_order": 12,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "C",
+      "source_prompt_snapshot": "便が直腸へ流入した際の正常な排便機構として最も適切なのはどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-01-Q13",
+      "canonical_question_id": "PRED-PATH-013",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-01",
+      "source_set_label": "臨床病態生理学",
+      "source_set_order": 1,
+      "source_question_no": 13,
+      "source_question_label": "Q13",
+      "source_occurrence_order": 13,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "B",
+      "source_prompt_snapshot": "進行肝硬変で腹水、脾腫、食道静脈瘤、低アルブミン血症を認める。腹水形成の病態として最も適切なのはどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-01-Q14",
+      "canonical_question_id": "PRED-PATH-014",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-01",
+      "source_set_label": "臨床病態生理学",
+      "source_set_order": 1,
+      "source_question_no": 14,
+      "source_question_label": "Q14",
+      "source_occurrence_order": 14,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "D",
+      "source_prompt_snapshot": "総胆管結石で黄疸、褐色尿、灰白色便を認める。ビリルビン代謝の説明として最も適切なのはどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-01-Q15",
+      "canonical_question_id": "PRED-PATH-015",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-01",
+      "source_set_label": "臨床病態生理学",
+      "source_set_order": 1,
+      "source_question_no": 15,
+      "source_question_label": "Q15",
+      "source_occurrence_order": 15,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "A",
+      "source_prompt_snapshot": "急性膵炎で心窩部から背部へ放散する強い疼痛と血清リパーゼ上昇を認める。病態生理として最も適切なのはどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-01-Q16",
+      "canonical_question_id": "PRED-PATH-016",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-01",
+      "source_set_label": "臨床病態生理学",
+      "source_set_order": 1,
+      "source_question_no": 16,
+      "source_question_label": "Q16",
+      "source_occurrence_order": 16,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "C",
+      "source_prompt_snapshot": "嘔吐が続き、血圧低下、口腔乾燥、尿量減少を認める。腎灌流低下に対する初期代償反応として最も適切なのはどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-01-Q17",
+      "canonical_question_id": "PRED-PATH-017",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-01",
+      "source_set_label": "臨床病態生理学",
+      "source_set_order": 1,
+      "source_question_no": 17,
+      "source_question_label": "Q17",
+      "source_occurrence_order": 17,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "B",
+      "source_prompt_snapshot": "進行CKDの患者に倦怠感があり、正球性貧血を認める。出血所見はなく、網赤血球の増加も乏しい。骨髄の赤血球産生反応が十分に高まらない理由として最も適切なのはどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-01-Q18",
+      "canonical_question_id": "PRED-PATH-018",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-01",
+      "source_set_label": "臨床病態生理学",
+      "source_set_order": 1,
+      "source_question_no": 18,
+      "source_question_label": "Q18",
+      "source_occurrence_order": 18,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "D",
+      "source_prompt_snapshot": "腎機能低下患者でK 6.8 mEq/L、心電図で尖鋭化T波を認めた。病態生理として最も適切なのはどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-01-Q19",
+      "canonical_question_id": "PRED-PATH-019",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-01",
+      "source_set_label": "臨床病態生理学",
+      "source_set_order": 1,
+      "source_question_no": 19,
+      "source_question_label": "Q19",
+      "source_occurrence_order": 19,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "A",
+      "source_prompt_snapshot": "子宮頸癌の発生部位と病態について最も適切なのはどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-01-Q20",
+      "canonical_question_id": "PRED-PATH-020",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-01",
+      "source_set_label": "臨床病態生理学",
+      "source_set_order": 1,
+      "source_question_no": 20,
+      "source_question_label": "Q20",
+      "source_occurrence_order": 20,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "C",
+      "source_prompt_snapshot": "25歳女性。不妊精査中。過去に症状の乏しいクラミジア感染が疑われる。病態として最も適切なのはどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-01-Q21",
+      "canonical_question_id": "PRED-PATH-021",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-01",
+      "source_set_label": "臨床病態生理学",
+      "source_set_order": 1,
+      "source_question_no": 21,
+      "source_question_label": "Q21",
+      "source_occurrence_order": 21,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "B",
+      "source_prompt_snapshot": "正常乳腺の終末乳管小葉単位（TDLU）について最も適切なのはどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-01-Q22",
+      "canonical_question_id": "PRED-PATH-022",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-01",
+      "source_set_label": "臨床病態生理学",
+      "source_set_order": 1,
+      "source_question_no": 22,
+      "source_question_label": "Q22",
+      "source_occurrence_order": 22,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "D",
+      "source_prompt_snapshot": "月経周期を記録している女性で、排卵を境に基礎体温が約0.3℃上昇し、その後およそ2週間高温相が続いた。この高温相形成に最も関与する内分泌変化はどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-01-Q23",
+      "canonical_question_id": "PRED-PATH-023",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-01",
+      "source_set_label": "臨床病態生理学",
+      "source_set_order": 1,
+      "source_question_no": 23,
+      "source_question_label": "Q23",
+      "source_occurrence_order": 23,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "A",
+      "source_prompt_snapshot": "片麻痺患者で筋緊張亢進、深部腱反射亢進、Babinski反射陽性を認める。病変局在として最も適切なのはどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-01-Q24",
+      "canonical_question_id": "PRED-PATH-024",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-01",
+      "source_set_label": "臨床病態生理学",
+      "source_set_order": 1,
+      "source_question_no": 24,
+      "source_question_label": "Q24",
+      "source_occurrence_order": 24,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "C",
+      "source_prompt_snapshot": "夕方に眼瞼下垂と複視が増悪し、休息で改善する。感覚障害はない。病態として最も適切なのはどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-01-Q25",
+      "canonical_question_id": "PRED-PATH-025",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-01",
+      "source_set_label": "臨床病態生理学",
+      "source_set_order": 1,
+      "source_question_no": 25,
+      "source_question_label": "Q25",
+      "source_occurrence_order": 25,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "B",
+      "source_prompt_snapshot": "暗所でふらつきが増悪しRomberg徴候陽性。振動覚と位置覚が低下している。障害が最も疑われる感覚路はどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-01-Q26",
+      "canonical_question_id": "PRED-PATH-026",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-01",
+      "source_set_label": "臨床病態生理学",
+      "source_set_order": 1,
+      "source_question_no": 26,
+      "source_question_label": "Q26",
+      "source_occurrence_order": 26,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "D",
+      "source_prompt_snapshot": "血液ガスが pH 7.28、HCO3- 12 mEq/L、PaCO2 26 mmHg であった。最も適切な解釈はどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-01-Q27",
+      "canonical_question_id": "PRED-PATH-027",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-01",
+      "source_set_label": "臨床病態生理学",
+      "source_set_order": 1,
+      "source_question_no": 27,
+      "source_question_label": "Q27",
+      "source_occurrence_order": 27,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "A",
+      "source_prompt_snapshot": "発熱39.5℃、乳酸アシドーシスを伴う重症感染症患者。末梢組織での酸素放出に関する変化として最も適切なのはどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-01-Q28",
+      "canonical_question_id": "PRED-PATH-028",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-01",
+      "source_set_label": "臨床病態生理学",
+      "source_set_order": 1,
+      "source_question_no": 28,
+      "source_question_label": "Q28",
+      "source_occurrence_order": 28,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "C",
+      "source_prompt_snapshot": "敗血症患者で血小板低下、PT延長、D-dimer著明上昇、皮下出血を認める。病態として最も適切なのはどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-01-Q29",
+      "canonical_question_id": "PRED-PATH-029",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-01",
+      "source_set_label": "臨床病態生理学",
+      "source_set_order": 1,
+      "source_question_no": 29,
+      "source_question_label": "Q29",
+      "source_occurrence_order": 29,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "A",
+      "source_prompt_snapshot": "感染初期の免疫応答について最も適切なのはどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-01-Q30",
+      "canonical_question_id": "PRED-PATH-030",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-01",
+      "source_set_label": "臨床病態生理学",
+      "source_set_order": 1,
+      "source_question_no": 30,
+      "source_question_label": "Q30",
+      "source_occurrence_order": 30,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "B",
+      "source_prompt_snapshot": "大量出血後、血圧低下、冷汗、乏尿、意識低下、乳酸上昇を認める。乳酸上昇の病態として最も適切なのはどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-11-Q01",
+      "canonical_question_id": "PRED-ETHICS-001",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-11",
+      "source_set_label": "医療安全学：医療倫理",
+      "source_set_order": 11,
+      "source_question_no": 1,
+      "source_question_label": "Q1",
+      "source_occurrence_order": 31,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "A",
+      "source_prompt_snapshot": "重度貧血で輸血が医学的に推奨される成人患者が、説明内容を理解したうえで宗教上の理由から輸血を拒否している。看護師の対応として最も適切なのはどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-11-Q02",
+      "canonical_question_id": "PRED-ETHICS-002",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-11",
+      "source_set_label": "医療安全学：医療倫理",
+      "source_set_order": 11,
+      "source_question_no": 2,
+      "source_question_label": "Q2",
+      "source_occurrence_order": 32,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "B",
+      "source_prompt_snapshot": "高齢患者に侵襲性の高い処置を提案する際、無危害原則と善行原則を最も適切に統合した考え方はどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-11-Q03",
+      "canonical_question_id": "PRED-ETHICS-003",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-11",
+      "source_set_label": "医療安全学：医療倫理",
+      "source_set_order": 11,
+      "source_question_no": 3,
+      "source_question_label": "Q3",
+      "source_occurrence_order": 33,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "A",
+      "source_prompt_snapshot": "災害時にICU病床が不足し、複数患者が入室を必要としている。正義原則に最も合致する判断はどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-11-Q04",
+      "canonical_question_id": "PRED-ETHICS-004",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-11",
+      "source_set_label": "医療安全学：医療倫理",
+      "source_set_order": 11,
+      "source_question_no": 4,
+      "source_question_label": "Q4",
+      "source_occurrence_order": 34,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "A",
+      "source_prompt_snapshot": "認知症患者を在宅で介護する娘が「もう限界だが、施設に入れるのは見捨てるようでつらい」と話している。ケアの倫理の視点として最も適切なのはどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-11-Q05",
+      "canonical_question_id": "PRED-ETHICS-005",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-11",
+      "source_set_label": "医療安全学：医療倫理",
+      "source_set_order": 11,
+      "source_question_no": 5,
+      "source_question_label": "Q5",
+      "source_occurrence_order": 35,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "C",
+      "source_prompt_snapshot": "進行がん患者が「治療を続ければ少し長く生きられるかもしれないが、孫と話せる時間を失うのが一番つらい」と語った。ナラティヴを用いた倫理的検討として最も適切なのはどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-11-Q06",
+      "canonical_question_id": "PRED-ETHICS-006",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-11",
+      "source_set_label": "医療安全学：医療倫理",
+      "source_set_order": 11,
+      "source_question_no": 6,
+      "source_question_label": "Q6",
+      "source_occurrence_order": 36,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "C",
+      "source_prompt_snapshot": "病棟カンファレンスで「法律に違反していなければ倫理的にも問題ない」という意見が出た。この発言を評価する説明として最も適切なのはどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-11-Q07",
+      "canonical_question_id": "PRED-ETHICS-007",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-11",
+      "source_set_label": "医療安全学：医療倫理",
+      "source_set_order": 11,
+      "source_question_no": 7,
+      "source_question_label": "Q7",
+      "source_occurrence_order": 37,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "B",
+      "source_prompt_snapshot": "手術説明後、患者は同意書に署名したが、「内容はよく分からないが先生が勧めるので任せる」と話している。最も適切な対応はどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-11-Q08",
+      "canonical_question_id": "PRED-ETHICS-008",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-11",
+      "source_set_label": "医療安全学：医療倫理",
+      "source_set_order": 11,
+      "source_question_no": 8,
+      "source_question_label": "Q8",
+      "source_occurrence_order": 38,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "B",
+      "source_prompt_snapshot": "患者が推奨された抗がん治療を「副作用で自宅生活が崩れるのが怖い」と拒否している。意思決定能力は保たれている。看護師の支援として最も適切なのはどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-11-Q09",
+      "canonical_question_id": "PRED-ETHICS-009",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-11",
+      "source_set_label": "医療安全学：医療倫理",
+      "source_set_order": 11,
+      "source_question_no": 9,
+      "source_question_label": "Q9",
+      "source_occurrence_order": 39,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "C",
+      "source_prompt_snapshot": "軽度認知症の患者が、採血には同意できるが高リスク手術の説明では利益・不利益を比較できない。意思決定能力の評価として最も適切なのはどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-11-Q10",
+      "canonical_question_id": "PRED-ETHICS-010",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-11",
+      "source_set_label": "医療安全学：医療倫理",
+      "source_set_order": 11,
+      "source_question_no": 10,
+      "source_question_label": "Q10",
+      "source_occurrence_order": 40,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "B",
+      "source_prompt_snapshot": "12歳の小児に予定手術を行う。保護者は同意しているが、本人は「怖い。何をするのかもっと知りたい」と話している。最も適切なのはどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-11-Q11",
+      "canonical_question_id": "PRED-ETHICS-011",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-11",
+      "source_set_label": "医療安全学：医療倫理",
+      "source_set_order": 11,
+      "source_question_no": 11,
+      "source_question_label": "Q11",
+      "source_occurrence_order": 41,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "C",
+      "source_prompt_snapshot": "ACP（アドバンス・ケア・プランニング）の説明として最も適切なのはどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-11-Q12",
+      "canonical_question_id": "PRED-ETHICS-012",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-11",
+      "source_set_label": "医療安全学：医療倫理",
+      "source_set_order": 11,
+      "source_question_no": 12,
+      "source_question_label": "Q12",
+      "source_occurrence_order": 42,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "D",
+      "source_prompt_snapshot": "意思決定能力を失った患者について、過去に「人工呼吸器で長期間寝たきりになる治療は望まない」と繰り返し話していた記録がある。代理意思決定で最も重視すべきなのはどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-11-Q13",
+      "canonical_question_id": "PRED-ETHICS-013",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-11",
+      "source_set_label": "医療安全学：医療倫理",
+      "source_set_order": 11,
+      "source_question_no": 13,
+      "source_question_label": "Q13",
+      "source_occurrence_order": 43,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "A",
+      "source_prompt_snapshot": "意思決定能力を失った患者に事前指示はなく、過去の価値観や希望を推定できる情報もほとんどない。最も適切な意思決定の基準はどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-11-Q14",
+      "canonical_question_id": "PRED-ETHICS-014",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-11",
+      "source_set_label": "医療安全学：医療倫理",
+      "source_set_order": 11,
+      "source_question_no": 14,
+      "source_question_label": "Q14",
+      "source_occurrence_order": 44,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "C",
+      "source_prompt_snapshot": "終末期患者の治療方針について家族が「積極治療継続」と「苦痛緩和中心」に分かれて対立している。本人の過去の意思も一部しか分からない。最も適切な対応はどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-11-Q15",
+      "canonical_question_id": "PRED-ETHICS-015",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-11",
+      "source_set_label": "医療安全学：医療倫理",
+      "source_set_order": 11,
+      "source_question_no": 15,
+      "source_question_label": "Q15",
+      "source_occurrence_order": 45,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "D",
+      "source_prompt_snapshot": "主治医が担当患者に自らの臨床研究への参加を依頼する。患者は「断ると今後の診療に影響しますか」と不安を示している。倫理的に最も重要な対応はどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-11-Q16",
+      "canonical_question_id": "PRED-ETHICS-016",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-11",
+      "source_set_label": "医療安全学：医療倫理",
+      "source_set_order": 11,
+      "source_question_no": 16,
+      "source_question_label": "Q16",
+      "source_occurrence_order": 46,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "B",
+      "source_prompt_snapshot": "人を対象とする研究を開始する前の倫理審査について最も適切なのはどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-11-Q17",
+      "canonical_question_id": "PRED-ETHICS-017",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-11",
+      "source_set_label": "医療安全学：医療倫理",
+      "source_set_order": 11,
+      "source_question_no": 17,
+      "source_question_label": "Q17",
+      "source_occurrence_order": 47,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "D",
+      "source_prompt_snapshot": "2024年改訂の世界医師会ヘルシンキ宣言の基本的な考え方として最も適切なのはどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-11-Q18",
+      "canonical_question_id": "PRED-ETHICS-018",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-11",
+      "source_set_label": "医療安全学：医療倫理",
+      "source_set_order": 11,
+      "source_question_no": 18,
+      "source_question_label": "Q18",
+      "source_occurrence_order": 48,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "C",
+      "source_prompt_snapshot": "独居の高齢患者が退院後に訪問看護とケアマネジャーの支援を受けることになった。病棟看護師が退院前カンファレンスで情報共有する際、守秘義務の観点から最も適切なのはどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-11-Q19",
+      "canonical_question_id": "PRED-ETHICS-019",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-11",
+      "source_set_label": "医療安全学：医療倫理",
+      "source_set_order": 11,
+      "source_question_no": 19,
+      "source_question_label": "Q19",
+      "source_occurrence_order": 49,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "B",
+      "source_prompt_snapshot": "看護師が「氏名も顔も出していないから大丈夫」と考え、珍しい症例の経過を私的SNSに投稿しようとしている。最も適切なのはどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-11-Q20",
+      "canonical_question_id": "PRED-ETHICS-020",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-11",
+      "source_set_label": "医療安全学：医療倫理",
+      "source_set_order": 11,
+      "source_question_no": 20,
+      "source_question_label": "Q20",
+      "source_occurrence_order": 50,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "A",
+      "source_prompt_snapshot": "医師の説明後、患者が看護師にだけ「本当は手術を受けたくないが、先生に悪いので言えない」と話した。看護職の倫理的役割として最も適切なのはどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-11-Q21",
+      "canonical_question_id": "PRED-ETHICS-021",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-11",
+      "source_set_label": "医療安全学：医療倫理",
+      "source_set_order": 11,
+      "source_question_no": 21,
+      "source_question_label": "Q21",
+      "source_occurrence_order": 51,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "D",
+      "source_prompt_snapshot": "看護師が「患者には別のケアが倫理的に望ましいと考えるが、組織上の制約で実行できず苦しい」と訴えている。この状態として最も適切なのはどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-11-Q22",
+      "canonical_question_id": "PRED-ETHICS-022",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-11",
+      "source_set_label": "医療安全学：医療倫理",
+      "source_set_order": 11,
+      "source_question_no": 22,
+      "source_question_label": "Q22",
+      "source_occurrence_order": 52,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "D",
+      "source_prompt_snapshot": "経験の浅い看護師が、上級医の指示に患者へ重大な危害を生じ得る疑問点を見つけた。最も適切な行動はどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-11-Q23",
+      "canonical_question_id": "PRED-ETHICS-023",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-11",
+      "source_set_label": "医療安全学：医療倫理",
+      "source_set_order": 11,
+      "source_question_no": 23,
+      "source_question_label": "Q23",
+      "source_occurrence_order": 53,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "B",
+      "source_prompt_snapshot": "長期療養患者から担当看護師に高額な商品券が贈られ、「あなただけ特別だから受け取って」と強く頼まれた。最も適切なのはどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-11-Q24",
+      "canonical_question_id": "PRED-ETHICS-024",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-11",
+      "source_set_label": "医療安全学：医療倫理",
+      "source_set_order": 11,
+      "source_question_no": 24,
+      "source_question_label": "Q24",
+      "source_occurrence_order": 54,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "C",
+      "source_prompt_snapshot": "研究発表を行う看護師が、評価対象となる医療機器メーカーから講演料を受け取っている。利益相反への対応として最も適切なのはどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-11-Q25",
+      "canonical_question_id": "PRED-ETHICS-025",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-11",
+      "source_set_label": "医療安全学：医療倫理",
+      "source_set_order": 11,
+      "source_question_no": 25,
+      "source_question_label": "Q25",
+      "source_occurrence_order": 55,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "D",
+      "source_prompt_snapshot": "倫理カンファレンスで情報を漏れなく整理するため臨床倫理四分割法（four-box method）を用いることになった。4領域の組み合わせとして正しいのはどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-11-Q26",
+      "canonical_question_id": "PRED-ETHICS-026",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-11",
+      "source_set_label": "医療安全学：医療倫理",
+      "source_set_order": 11,
+      "source_question_no": 26,
+      "source_question_label": "Q26",
+      "source_occurrence_order": 56,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "D",
+      "source_prompt_snapshot": "治療方針をめぐり患者・家族・医療者の価値観が対立している個別症例について、対話を支援する組織・機能として最も適切なのはどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-11-Q27",
+      "canonical_question_id": "PRED-ETHICS-027",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-11",
+      "source_set_label": "医療安全学：医療倫理",
+      "source_set_order": 11,
+      "source_question_no": 27,
+      "source_question_label": "Q27",
+      "source_occurrence_order": 57,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "A",
+      "source_prompt_snapshot": "倫理カンファレンスで、家族が「治療をやめるなんて見殺しだ」と強く訴えている。進行役の最初の対応として最も適切なのはどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-11-Q28",
+      "canonical_question_id": "PRED-ETHICS-028",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-11",
+      "source_set_label": "医療安全学：医療倫理",
+      "source_set_order": 11,
+      "source_question_no": 28,
+      "source_question_label": "Q28",
+      "source_occurrence_order": 58,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "A",
+      "source_prompt_snapshot": "多臓器不全が進行し、治療を強化しても回復可能性が極めて低く、処置による苦痛が増えている患者について治療方針を再検討する。最も適切なのはどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-11-Q29",
+      "canonical_question_id": "PRED-ETHICS-029",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-11",
+      "source_set_label": "医療安全学：医療倫理",
+      "source_set_order": 11,
+      "source_question_no": 29,
+      "source_question_label": "Q29",
+      "source_occurrence_order": 59,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "A",
+      "source_prompt_snapshot": "終末期がん患者に治療抵抗性の耐えがたい苦痛があり、緩和ケアチームが鎮静を検討している。倫理的に最も適切な考え方はどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-11-Q30",
+      "canonical_question_id": "PRED-ETHICS-030",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-11",
+      "source_set_label": "医療安全学：医療倫理",
+      "source_set_order": 11,
+      "source_question_no": 30,
+      "source_question_label": "Q30",
+      "source_occurrence_order": 60,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "B",
+      "source_prompt_snapshot": "人生の最終段階にある患者の医療・ケア方針を決める際の基本として最も適切なのはどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-12-Q01",
+      "canonical_question_id": "PRED-SAFETY-001",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-12",
+      "source_set_label": "医療安全学：医療安全管理",
+      "source_set_order": 12,
+      "source_question_no": 1,
+      "source_question_label": "Q1",
+      "source_occurrence_order": 61,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "A",
+      "source_prompt_snapshot": "2026年4月1日施行の医療安全管理体制の改正について、病院における対応として正しいものはどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-12-Q02",
+      "canonical_question_id": "PRED-SAFETY-002",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-12",
+      "source_set_label": "医療安全学：医療安全管理",
+      "source_set_order": 12,
+      "source_question_no": 2,
+      "source_question_label": "Q2",
+      "source_occurrence_order": 62,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "B",
+      "source_prompt_snapshot": "病院の医療安全管理体制を見直している。2026年4月施行の改正を踏まえ、新たに法令上明確化された対応として最も適切なのはどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-12-Q03",
+      "canonical_question_id": "PRED-SAFETY-003",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-12",
+      "source_set_label": "医療安全学：医療安全管理",
+      "source_set_order": 12,
+      "source_question_no": 3,
+      "source_question_label": "Q3",
+      "source_occurrence_order": 63,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "C",
+      "source_prompt_snapshot": "2026年の医療安全制度改正で定められた、管理者等の「医療事故に係る適切な対応に関する研修」の受講規定について正しいものはどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-12-Q04",
+      "canonical_question_id": "PRED-SAFETY-004",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-12",
+      "source_set_label": "医療安全学：医療安全管理",
+      "source_set_order": 12,
+      "source_question_no": 4,
+      "source_question_label": "Q4",
+      "source_occurrence_order": 64,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "D",
+      "source_prompt_snapshot": "2026年の通知で示された、医療安全管理委員会が把握すべき重大事象の考え方として最も適切なのはどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-12-Q05",
+      "canonical_question_id": "PRED-SAFETY-005",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-12",
+      "source_set_label": "医療安全学：医療安全管理",
+      "source_set_order": 12,
+      "source_question_no": 5,
+      "source_question_label": "Q5",
+      "source_occurrence_order": 65,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "A",
+      "source_prompt_snapshot": "患者家族が「医療機関との話し合いがうまく進まない。中立的な相談先を知りたい」と希望した。医療安全支援センターの役割として最も適切なのはどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-12-Q06",
+      "canonical_question_id": "PRED-SAFETY-006",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-12",
+      "source_set_label": "医療安全学：医療安全管理",
+      "source_set_order": 12,
+      "source_question_no": 6,
+      "source_question_label": "Q6",
+      "source_occurrence_order": 66,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "B",
+      "source_prompt_snapshot": "入院中の患者が死亡した。医療事故調査制度の対象となる「医療事故」の説明として正しいものはどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-12-Q07",
+      "canonical_question_id": "PRED-SAFETY-007",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-12",
+      "source_set_label": "医療安全学：医療安全管理",
+      "source_set_order": 12,
+      "source_question_no": 7,
+      "source_question_label": "Q7",
+      "source_occurrence_order": 67,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "C",
+      "source_prompt_snapshot": "点滴薬の誤投与直後に患者の血圧が低下した。医療安全上、最も優先すべき初期対応はどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-12-Q08",
+      "canonical_question_id": "PRED-SAFETY-008",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-12",
+      "source_set_label": "医療安全学：医療安全管理",
+      "source_set_order": 12,
+      "source_question_no": 8,
+      "source_question_label": "Q8",
+      "source_occurrence_order": 68,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "D",
+      "source_prompt_snapshot": "別患者の内服薬を配薬直前に発見し、患者には投与されなかった。組織の対応として最も適切なのはどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-12-Q09",
+      "canonical_question_id": "PRED-SAFETY-009",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-12",
+      "source_set_label": "医療安全学：医療安全管理",
+      "source_set_order": 12,
+      "source_question_no": 9,
+      "source_question_label": "Q9",
+      "source_occurrence_order": 69,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "A",
+      "source_prompt_snapshot": "薬剤取り違えが起きた。部署では「事故を起こした人を処罰すれば再発しない」という意見が出ている。Just Cultureに最も合致する対応はどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-12-Q10",
+      "canonical_question_id": "PRED-SAFETY-010",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-12",
+      "source_set_label": "医療安全学：医療安全管理",
+      "source_set_order": 12,
+      "source_question_no": 10,
+      "source_question_label": "Q10",
+      "source_occurrence_order": 70,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "B",
+      "source_prompt_snapshot": "患者誤認事故の分析で、本人確認、バーコード、リストバンド、電子警告の複数防御が同時に機能しなかった。Swiss cheese modelで最も適切な解釈はどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-12-Q11",
+      "canonical_question_id": "PRED-SAFETY-011",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-12",
+      "source_set_label": "医療安全学：医療安全管理",
+      "source_set_order": 12,
+      "source_question_no": 11,
+      "source_question_label": "Q11",
+      "source_occurrence_order": 71,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "C",
+      "source_prompt_snapshot": "夜勤帯に似た名称の薬剤の取り違えが続いている。再発防止策としてヒューマンファクターの考え方に最も合致するものはどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-12-Q12",
+      "canonical_question_id": "PRED-SAFETY-012",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-12",
+      "source_set_label": "医療安全学：医療安全管理",
+      "source_set_order": 12,
+      "source_question_no": 12,
+      "source_question_label": "Q12",
+      "source_occurrence_order": 72,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "D",
+      "source_prompt_snapshot": "電子処方支援システムが「腎機能に問題なし」と表示したため、担当者が最新の検査値を確認せず通常量を投与した。安全管理上の教訓として最も適切なのはどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-12-Q13",
+      "canonical_question_id": "PRED-SAFETY-013",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-12",
+      "source_set_label": "医療安全学：医療安全管理",
+      "source_set_order": 12,
+      "source_question_no": 13,
+      "source_question_label": "Q13",
+      "source_occurrence_order": 73,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "A",
+      "source_prompt_snapshot": "術後患者の血圧が80/46 mmHgへ低下し、医師へ緊急報告する。SBARの使い方として最も適切なのはどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-12-Q14",
+      "canonical_question_id": "PRED-SAFETY-014",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-12",
+      "source_set_label": "医療安全学：医療安全管理",
+      "source_set_order": 12,
+      "source_question_no": 14,
+      "source_question_label": "Q14",
+      "source_occurrence_order": 74,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "B",
+      "source_prompt_snapshot": "医師が口頭で「ノルアドレナリンを0.05 µg/kg/minで開始」と指示した。closed-loop communicationとして適切なのはどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-12-Q15",
+      "canonical_question_id": "PRED-SAFETY-015",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-12",
+      "source_set_label": "医療安全学：医療安全管理",
+      "source_set_order": 12,
+      "source_question_no": 15,
+      "source_question_label": "Q15",
+      "source_occurrence_order": 75,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "C",
+      "source_prompt_snapshot": "新しい抗がん薬投与プロセスを導入する前に、起こり得る失敗を予測して優先順位を付け、対策を設計したい。最も適した方法はどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-12-Q16",
+      "canonical_question_id": "PRED-SAFETY-016",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-12",
+      "source_set_label": "医療安全学：医療安全管理",
+      "source_set_order": 12,
+      "source_question_no": 16,
+      "source_question_label": "Q16",
+      "source_occurrence_order": 76,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "D",
+      "source_prompt_snapshot": "輸液ポンプ事故の出来事流れ図を作成する。記載方法として最も適切なのはどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-12-Q17",
+      "canonical_question_id": "PRED-SAFETY-017",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-12",
+      "source_set_label": "医療安全学：医療安全管理",
+      "source_set_order": 12,
+      "source_question_no": 17,
+      "source_question_label": "Q17",
+      "source_occurrence_order": 77,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "A",
+      "source_prompt_snapshot": "RCA後の再発防止策として、同じ薬剤選択ミスを最も起こりにくくする対策はどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-12-Q18",
+      "canonical_question_id": "PRED-SAFETY-018",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-12",
+      "source_set_label": "医療安全学：医療安全管理",
+      "source_set_order": 12,
+      "source_question_no": 18,
+      "source_question_label": "Q18",
+      "source_occurrence_order": 78,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "B",
+      "source_prompt_snapshot": "高濃度塩化カリウム製剤の誤急速投与を予防する病棟対策として最も適切なのはどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-12-Q19",
+      "canonical_question_id": "PRED-SAFETY-019",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-12",
+      "source_set_label": "医療安全学：医療安全管理",
+      "source_set_order": 12,
+      "source_question_no": 19,
+      "source_question_label": "Q19",
+      "source_occurrence_order": 79,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "C",
+      "source_prompt_snapshot": "ハイリスク薬でダブルチェックを導入しているが、2人が一緒に同じ画面を見て確認するため同じ見落としが続いている。改善として最も適切なのはどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-12-Q20",
+      "canonical_question_id": "PRED-SAFETY-020",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-12",
+      "source_set_label": "医療安全学：医療安全管理",
+      "source_set_order": 12,
+      "source_question_no": 20,
+      "source_question_label": "Q20",
+      "source_occurrence_order": 80,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "D",
+      "source_prompt_snapshot": "人工呼吸器の高圧アラームが鳴り、患者のSpO2が急低下した。最初の対応として最も適切なのはどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-12-Q21",
+      "canonical_question_id": "PRED-SAFETY-021",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-12",
+      "source_set_label": "医療安全学：医療安全管理",
+      "source_set_order": 12,
+      "source_question_no": 21,
+      "source_question_label": "Q21",
+      "source_occurrence_order": 81,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "A",
+      "source_prompt_snapshot": "採血前の患者確認として最も安全性が高い方法はどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-12-Q22",
+      "canonical_question_id": "PRED-SAFETY-022",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-12",
+      "source_set_label": "医療安全学：医療安全管理",
+      "source_set_order": 12,
+      "source_question_no": 22,
+      "source_question_label": "Q22",
+      "source_occurrence_order": 82,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "B",
+      "source_prompt_snapshot": "患者が「昨日と薬の色が違う気がする」と服薬前に伝えた。医療者の対応として最も適切なのはどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-12-Q23",
+      "canonical_question_id": "PRED-SAFETY-023",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-12",
+      "source_set_label": "医療安全学：医療安全管理",
+      "source_set_order": 12,
+      "source_question_no": 23,
+      "source_question_label": "Q23",
+      "source_occurrence_order": 83,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "C",
+      "source_prompt_snapshot": "Donabedianの医療の質評価で、Process（過程）指標に該当するものはどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-12-Q24",
+      "canonical_question_id": "PRED-SAFETY-024",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-12",
+      "source_set_label": "医療安全学：医療安全管理",
+      "source_set_order": 12,
+      "source_question_no": 24,
+      "source_question_label": "Q24",
+      "source_occurrence_order": 84,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "D",
+      "source_prompt_snapshot": "病棟の転倒予防プロセスを評価する指標を作成する。最も適切な指標設計はどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-12-Q25",
+      "canonical_question_id": "PRED-SAFETY-025",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-12",
+      "source_set_label": "医療安全学：医療安全管理",
+      "source_set_order": 12,
+      "source_question_no": 25,
+      "source_question_label": "Q25",
+      "source_occurrence_order": 85,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "A",
+      "source_prompt_snapshot": "病棟で新しい転倒予防チェックリストを導入したい。PDSAの最初の使い方として最も適切なのはどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-12-Q26",
+      "canonical_question_id": "PRED-SAFETY-026",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-12",
+      "source_set_label": "医療安全学：医療安全管理",
+      "source_set_order": 12,
+      "source_question_no": 26,
+      "source_question_label": "Q26",
+      "source_occurrence_order": 86,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "B",
+      "source_prompt_snapshot": "転倒率が月ごとに上下している。改善策の効果を判断するうえで最も適切な考え方はどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-12-Q27",
+      "canonical_question_id": "PRED-SAFETY-027",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-12",
+      "source_set_label": "医療安全学：医療安全管理",
+      "source_set_order": 12,
+      "source_question_no": 27,
+      "source_question_label": "Q27",
+      "source_occurrence_order": 87,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "C",
+      "source_prompt_snapshot": "2026年改正後の医療安全管理者の業務として最も適切なのはどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-12-Q28",
+      "canonical_question_id": "PRED-SAFETY-028",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-12",
+      "source_set_label": "医療安全学：医療安全管理",
+      "source_set_order": 12,
+      "source_question_no": 28,
+      "source_question_label": "Q28",
+      "source_occurrence_order": 88,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "D",
+      "source_prompt_snapshot": "制度の組み合わせとして正しいものはどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-12-Q29",
+      "canonical_question_id": "PRED-SAFETY-029",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-12",
+      "source_set_label": "医療安全学：医療安全管理",
+      "source_set_order": 12,
+      "source_question_no": 29,
+      "source_question_label": "Q29",
+      "source_occurrence_order": 89,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "A",
+      "source_prompt_snapshot": "ある部署では「報告すると能力が低いと思われる」と職員が感じ、ニアミス報告がほとんどない。安全文化を改善する介入として最も適切なのはどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-12-Q30",
+      "canonical_question_id": "PRED-SAFETY-030",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-12",
+      "source_set_label": "医療安全学：医療安全管理",
+      "source_set_order": 12,
+      "source_question_no": 30,
+      "source_question_label": "Q30",
+      "source_occurrence_order": 90,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "B",
+      "source_prompt_snapshot": "治療に伴う重大な有害事象が発生し、患者は安定した。組織のその後の対応として最も適切なのはどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-13-Q01",
+      "canonical_question_id": "PRED-TEAM-001",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-13",
+      "source_set_label": "チーム医療論（特定行為実践）",
+      "source_set_order": 13,
+      "source_question_no": 1,
+      "source_question_label": "Q1",
+      "source_occurrence_order": 91,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "A",
+      "source_prompt_snapshot": "複数職種が関わる肺炎患者の治療開始時、各職種が異なる優先事項を挙げている。チームとして最初に行う対応として最も適切なものはどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-13-Q02",
+      "canonical_question_id": "PRED-TEAM-002",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-13",
+      "source_set_label": "チーム医療論（特定行為実践）",
+      "source_set_order": 13,
+      "source_question_no": 2,
+      "source_question_label": "Q2",
+      "source_occurrence_order": 92,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "B",
+      "source_prompt_snapshot": "気管切開チューブ交換を多職種で行う直前である。TeamSTEPPSのbriefとして最も適切な内容はどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-13-Q03",
+      "canonical_question_id": "PRED-TEAM-003",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-13",
+      "source_set_label": "チーム医療論（特定行為実践）",
+      "source_set_order": 13,
+      "source_question_no": 3,
+      "source_question_label": "Q3",
+      "source_occurrence_order": 93,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "C",
+      "source_prompt_snapshot": "予定していた処置中に患者の血圧が急低下し、新たな検査と人員追加が必要になった。チームの行動として最も適切なのはどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-13-Q04",
+      "canonical_question_id": "PRED-TEAM-004",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-13",
+      "source_set_label": "チーム医療論（特定行為実践）",
+      "source_set_order": 13,
+      "source_question_no": 4,
+      "source_question_label": "Q4",
+      "source_occurrence_order": 94,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "D",
+      "source_prompt_snapshot": "急変対応後のdebriefで、最も望ましい進め方はどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-13-Q05",
+      "canonical_question_id": "PRED-TEAM-005",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-13",
+      "source_set_label": "チーム医療論（特定行為実践）",
+      "source_set_order": 13,
+      "source_question_no": 5,
+      "source_question_label": "Q5",
+      "source_occurrence_order": 95,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "A",
+      "source_prompt_snapshot": "SBARで患者の急変を報告する際、A（Assessment）に相当する内容はどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-13-Q06",
+      "canonical_question_id": "PRED-TEAM-006",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-13",
+      "source_set_label": "チーム医療論（特定行為実践）",
+      "source_set_order": 13,
+      "source_question_no": 6,
+      "source_question_label": "Q6",
+      "source_occurrence_order": 96,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "B",
+      "source_prompt_snapshot": "医師が「生理食塩液500mLを2時間で投与」と指示した。Check-backとして適切なのはどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-13-Q07",
+      "canonical_question_id": "PRED-TEAM-007",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-13",
+      "source_set_label": "チーム医療論（特定行為実践）",
+      "source_set_order": 13,
+      "source_question_no": 7,
+      "source_question_label": "Q7",
+      "source_occurrence_order": 97,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "C",
+      "source_prompt_snapshot": "心肺蘇生中、モニターに心室細動が出現した。情報共有として最も適切なのはどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-13-Q08",
+      "canonical_question_id": "PRED-TEAM-008",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-13",
+      "source_set_label": "チーム医療論（特定行為実践）",
+      "source_set_order": 13,
+      "source_question_no": 8,
+      "source_question_label": "Q8",
+      "source_occurrence_order": 98,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "D",
+      "source_prompt_snapshot": "夜勤者へのhandoffとして最も適切な内容はどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-13-Q09",
+      "canonical_question_id": "PRED-TEAM-009",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-13",
+      "source_set_label": "チーム医療論（特定行為実践）",
+      "source_set_order": 13,
+      "source_question_no": 9,
+      "source_question_label": "Q9",
+      "source_occurrence_order": 99,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "A",
+      "source_prompt_snapshot": "チームで患者状態を継続的に監視する際、TeamSTEPPSのSTEPの考え方に最も合致するものはどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-13-Q10",
+      "canonical_question_id": "PRED-TEAM-010",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-13",
+      "source_set_label": "チーム医療論（特定行為実践）",
+      "source_set_order": 13,
+      "source_question_no": 10,
+      "source_question_label": "Q10",
+      "source_occurrence_order": 100,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "B",
+      "source_prompt_snapshot": "病棟で1人の看護師に急変対応と複数の時間指定薬が集中し、別の看護師には余裕がある。最も適切なチーム行動はどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-13-Q11",
+      "canonical_question_id": "PRED-TEAM-011",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-13",
+      "source_set_label": "チーム医療論（特定行為実践）",
+      "source_set_order": 13,
+      "source_question_no": 11,
+      "source_question_label": "Q11",
+      "source_occurrence_order": 101,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "C",
+      "source_prompt_snapshot": "医師がアレルギー歴のある抗菌薬を投与しようとしている。看護師が一度懸念を伝えたが、十分に取り合われなかった。次の発言として最も適切なのはどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-13-Q12",
+      "canonical_question_id": "PRED-TEAM-012",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-13",
+      "source_set_label": "チーム医療論（特定行為実践）",
+      "source_set_order": 13,
+      "source_question_no": 12,
+      "source_question_label": "Q12",
+      "source_occurrence_order": 102,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "D",
+      "source_prompt_snapshot": "処置方法に重大な安全懸念があり、最初の指摘が無視された。Two-Challenge Ruleに沿う対応として適切なのはどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-13-Q13",
+      "canonical_question_id": "PRED-TEAM-013",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-13",
+      "source_set_label": "チーム医療論（特定行為実践）",
+      "source_set_order": 13,
+      "source_question_no": 13,
+      "source_question_label": "Q13",
+      "source_occurrence_order": 103,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "A",
+      "source_prompt_snapshot": "若手看護師が上級医の判断に疑問を感じているが、「言うと怒られそう」と発言をためらっている。チームリーダーの対応として最も適切なのはどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-13-Q14",
+      "canonical_question_id": "PRED-TEAM-014",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-13",
+      "source_set_label": "チーム医療論（特定行為実践）",
+      "source_set_order": 13,
+      "source_question_no": 14,
+      "source_question_label": "Q14",
+      "source_occurrence_order": 104,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "B",
+      "source_prompt_snapshot": "退院時期をめぐり医師とリハビリ職の意見が対立している。協調的な問題解決として最も適切なのはどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-13-Q15",
+      "canonical_question_id": "PRED-TEAM-015",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-13",
+      "source_set_label": "チーム医療論（特定行為実践）",
+      "source_set_order": 13,
+      "source_question_no": 15,
+      "source_question_label": "Q15",
+      "source_occurrence_order": 105,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "C",
+      "source_prompt_snapshot": "同じ職員が繰り返し重要な申し送りを中断し、情報欠落が生じている。DESCを用いた対応として最も適切なのはどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-13-Q16",
+      "canonical_question_id": "PRED-TEAM-016",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-13",
+      "source_set_label": "チーム医療論（特定行為実践）",
+      "source_set_order": 13,
+      "source_question_no": 16,
+      "source_question_label": "Q16",
+      "source_occurrence_order": 106,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "D",
+      "source_prompt_snapshot": "チームメンバーへのフィードバックとして最も効果的なのはどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-13-Q17",
+      "canonical_question_id": "PRED-TEAM-017",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-13",
+      "source_set_label": "チーム医療論（特定行為実践）",
+      "source_set_order": 13,
+      "source_question_no": 17,
+      "source_question_label": "Q17",
+      "source_occurrence_order": 107,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "A",
+      "source_prompt_snapshot": "急変時、呼吸管理に詳しい看護師が具体的な対応案を提示し、当初のリーダーがその専門性を生かして一時的に進行役を任せた。このチーム行動の評価として正しいものはどれか。"
+    },
+    {
+      "source_occurrence_id": "PRED30-2026-V2-13-Q18",
+      "canonical_question_id": "PRED-TEAM-018",
+      "source_id": "AI-PREDICTED30-2026-V2",
+      "source_set_id": "PRED30-2026-V2-13",
+      "source_set_label": "チーム医療論（特定行為実践）",
+      "source_set_order": 13,
+      "source_question_no": 18,
+      "source_question_label": "Q18",
+      "source_occurrence_order": 108,
+      "section_type": "predicted",
+      "exam_label": "得点特化予想30問 v2.0",
+      "source_year": 2026,
+      "source_answer": "B",
+      "source_prompt_snapshot": "退院支援で看護師と薬剤師の患者教育内容が一部重複し、重要事項が逆に抜けている。最も適切な対応はどれか。"
+    },

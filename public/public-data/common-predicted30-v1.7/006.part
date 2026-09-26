@@ -1,0 +1,5000 @@
+        "急速進行性糸球体腎炎が確定する。"
+      ],
+      "correctChoiceIndexes": [
+        2
+      ]
+    },
+    {
+      "id": "PRED-DISEASE-011",
+      "subject": "疾病・臨床病態概論",
+      "unit": "内分泌・代謝",
+      "topic": "糖尿病の診断基準",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "健診で空腹時血糖132mg/dL、HbA1c 6.8%を同日に認めた。明らかな高血糖症状はない。最も適切な解釈はどれか。",
+      "explanation": {
+        "answer": "D. 空腹時血糖とHbA1cの2つが糖尿病診断域にあり、診断基準を満たすと判断できる。",
+        "question_intent": "糖尿病診断の閾値と確認ルールを理解しているか。",
+        "reasoning": "132≥126、6.8≥6.5の2条件が同時に満たされている。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "incorrect",
+            "reason": "誤り。両方とも診断域である。",
+            "correction_condition": "Aが正しくなる条件：両検査が診断閾値未満の場合。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "incorrect",
+            "reason": "誤り。標準化されたHbA1cは診断に用いられる。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "incorrect",
+            "reason": "誤り。FPG 126mg/dL以上は診断域。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "correct",
+            "reason": "正しい。異なる2検査が同日に診断域にある。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: HbA1cと血糖が大きく乖離する場合は貧血・腎疾患・異常Hbなど干渉要因も考える。\ncomparisonText: 糖尿病：FPG126、A1c6.5、2h200、症状＋随時200。\ncommonMistakes: 「HbA1cが高い＝必ず平均血糖を正確に反映」とは限らない。\ncorrectionConditions: Aが正しくなる条件：両検査が診断閾値未満の場合。",
+        "key_points": "糖尿病の数字は126・6.5・200。",
+        "references": "LEARN-COM-324 / 2026年度模試 DISEASE-10 / ADA Standards of Care in Diabetes 2026",
+        "mnemonic": "「126・6.5・200をセットで」",
+        "source_explanation_raw": "糖尿病はFPG 126mg/dL以上、HbA1c 6.5%以上、75gOGTT 2時間値200mg/dL以上、または典型症状＋随時血糖200mg/dL以上等で診断する。明白な高血糖がない場合は異常結果の確認が必要だが、同日に異なる2検査が診断域なら診断を支持する。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:09",
+        "original-id:PRED-DISEASE-011",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 1,
+      "choices": [
+        "どちらも糖尿病型ではない。",
+        "HbA1cだけでは診断に使えない。",
+        "空腹時血糖132mg/dLだけなら必ず正常である。",
+        "空腹時血糖とHbA1cの2つが糖尿病診断域にあり、診断基準を満たすと判断できる。"
+      ],
+      "correctChoiceIndexes": [
+        3
+      ]
+    },
+    {
+      "id": "PRED-DISEASE-012",
+      "subject": "疾病・臨床病態概論",
+      "unit": "腎・内分泌・代謝",
+      "topic": "DKAの酸塩基平衡",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "1型糖尿病患者。悪心、腹痛、脱水、深く大きい呼吸があり、血糖高値、βヒドロキシ酪酸高値、pH 7.18、HCO3-低下を認める。最も適切な診断はどれか。",
+      "explanation": {
+        "answer": "A. 糖尿病性ケトアシドーシス",
+        "question_intent": "Kussmaul呼吸を病態生理と結びつけられるか。",
+        "reasoning": "深大呼吸＋ケトン＋HCO3低下＝代謝性アシドーシスのDKA。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "correct",
+            "reason": "正しい。ケトーシス＋代謝性アシドーシスを伴う典型DKA。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "incorrect",
+            "reason": "誤り。一次性障害は代謝性アシドーシス。",
+            "correction_condition": "Bが正しくなる条件：pH上昇とPaCO2低下が一次性に存在する場合。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "incorrect",
+            "reason": "誤り。尿崩症は多尿・高Naなどで、ケトアシドーシスを説明しない。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "incorrect",
+            "reason": "誤り。甲状腺機能低下症ではKussmaul呼吸を来さない。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: DKAではK、Na、腎機能、浸透圧、誘因（感染、インスリン中断等）も評価する。\ncomparisonText: DKA＝ケトン・アシドーシス、HHS＝著明高浸透圧・ケトーシスは軽いことが多い。\ncommonMistakes: 血糖値だけでDKAを判断しない。\ncorrectionConditions: Bが正しくなる条件：pH上昇とPaCO2低下が一次性に存在する場合。",
+        "key_points": "DKA＝糖代謝異常＋ケトン＋代謝性アシドーシス。",
+        "references": "LEARN-COM-317/326 / 高血糖緊急症",
+        "mnemonic": "「DKAはケトンで酸性、呼吸は深くなる」",
+        "source_explanation_raw": "DKAは糖尿病/高血糖、ケトーシス、代謝性アシドーシスの組み合わせで診断する。Kussmaul呼吸は代謝性アシドーシスに対する呼吸性代償である。SGLT2阻害薬関連では血糖が著明高値でないDKAもあり得る。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:09",
+        "original-id:PRED-DISEASE-012",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 1,
+      "choices": [
+        "糖尿病性ケトアシドーシス",
+        "単純な呼吸性アルカローシス",
+        "尿崩症",
+        "甲状腺機能低下症"
+      ],
+      "correctChoiceIndexes": [
+        0
+      ]
+    },
+    {
+      "id": "PRED-DISEASE-013",
+      "subject": "疾病・臨床病態概論",
+      "unit": "内分泌・代謝",
+      "topic": "甲状腺機能低下症",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "70歳女性。寒がり、便秘、易疲労感、皮膚乾燥、徐脈、高コレステロール血症がある。最も疑う疾患はどれか。",
+      "explanation": {
+        "answer": "B. 甲状腺機能低下症",
+        "question_intent": "甲状腺機能低下症の全身症状をまとめて認識できるか。",
+        "reasoning": "代謝が「遅くなる」所見がそろっている。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "incorrect",
+            "reason": "誤り。亢進症では暑がり、発汗、頻脈、体重減少などが典型。",
+            "correction_condition": "Aが正しくなる条件：頻脈、発汗、振戦、体重減少、FT4上昇などがある場合。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "correct",
+            "reason": "正しい。症状の組合せが典型的。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "incorrect",
+            "reason": "誤り。褐色細胞腫では発作性高血圧、動悸、発汗など。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "incorrect",
+            "reason": "誤り。原発性アルドステロン症は高血圧・低K血症などが中心。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: 高齢者では症状が非特異的で認知機能低下や抑うつ様に見えることもある。\ncomparisonText: 亢進＝暑い・速い・痩せる、低下＝寒い・遅い・便秘。\ncommonMistakes: 高齢者の徐脈・便秘・認知変化を加齢だけで説明しない。\ncorrectionConditions: Aが正しくなる条件：頻脈、発汗、振戦、体重減少、FT4上昇などがある場合。",
+        "key_points": "甲状腺低下は「寒い・遅い・乾く」。",
+        "references": "2026年度模試 DISEASE-11 / 内分泌・代謝",
+        "mnemonic": "「低下症＝寒・遅・便秘」",
+        "source_explanation_raw": "甲状腺機能低下症では代謝低下により寒がり、便秘、易疲労、皮膚乾燥、徐脈、体重増加、脂質異常などを来し得る。原発性では一般にTSH高値・FT4低値を示す。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:09",
+        "original-id:PRED-DISEASE-013",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 1,
+      "choices": [
+        "甲状腺機能亢進症",
+        "甲状腺機能低下症",
+        "褐色細胞腫",
+        "原発性アルドステロン症"
+      ],
+      "correctChoiceIndexes": [
+        1
+      ]
+    },
+    {
+      "id": "PRED-DISEASE-014",
+      "subject": "疾病・臨床病態概論",
+      "unit": "腎・内分泌・代謝",
+      "topic": "副腎クリーゼ",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "長期ステロイド内服中の患者が自己判断で急に中止した。その後、嘔吐、著明な倦怠感、低血圧、低Na血症、高K血症、低血糖が出現した。最も疑う病態はどれか。",
+      "explanation": {
+        "answer": "D. 副腎クリーゼ",
+        "question_intent": "薬歴と電解質・循環所見から内分泌緊急症を見抜けるか。",
+        "reasoning": "「長期ステロイドを急にやめた」が最重要情報。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "incorrect",
+            "reason": "誤り。甲状腺クリーゼは高熱・頻脈・中枢神経症状など。",
+            "correction_condition": "Aが正しくなる条件：甲状腺機能亢進の既往＋高熱・頻脈・心不全等がある場合。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "incorrect",
+            "reason": "誤り。HHSは著明な高血糖・高浸透圧。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "incorrect",
+            "reason": "誤り。SIADHでは高K・低血糖・循環虚脱は説明しにくい。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "correct",
+            "reason": "正しい。ステロイド中断後の典型像。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: 長期ステロイドは原則漸減し、急性ストレス時には補充量が必要になることがある。\ncomparisonText: 副腎クリーゼ＝低血圧・低Na・低血糖、原発性では高K。\ncommonMistakes: ステロイド中止後の倦怠感を単なる離脱症状として軽視しない。\ncorrectionConditions: Aが正しくなる条件：甲状腺機能亢進の既往＋高熱・頻脈・心不全等がある場合。",
+        "key_points": "長期ステロイドは急中止しない。低血圧なら副腎クリーゼを疑う。",
+        "references": "LEARN-COM-607（既存予想テーマ） / 内分泌緊急症",
+        "mnemonic": "「ステロイド急中止＋低血圧＝副腎」",
+        "source_explanation_raw": "長期外因性ステロイドはHPA軸を抑制する。急な中止や感染・手術など強いストレスで相対的/絶対的コルチゾール不足となり、副腎クリーゼを生じ得る。低血圧、消化器症状、低Na、低血糖（原発性では高Kも）を来す。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:09",
+        "original-id:PRED-DISEASE-014",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 1,
+      "choices": [
+        "甲状腺クリーゼ",
+        "HHS",
+        "SIADHのみ",
+        "副腎クリーゼ"
+      ],
+      "correctChoiceIndexes": [
+        3
+      ]
+    },
+    {
+      "id": "PRED-DISEASE-015",
+      "subject": "疾病・臨床病態概論",
+      "unit": "血液・凝固・免疫",
+      "topic": "自然免疫と獲得免疫",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "免疫機構について最も適切なのはどれか。",
+      "explanation": {
+        "answer": "C. 自然免疫は比較的迅速に反応し、好中球・マクロファージ・NK細胞・補体などが関与する。",
+        "question_intent": "免疫の基本構造を区別できるか。",
+        "reasoning": "「速い防御＝自然」「特異的・記憶＝獲得」で判断する。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "incorrect",
+            "reason": "誤り。自然免疫は迅速で、免疫記憶は主に獲得免疫の特徴。",
+            "correction_condition": "Aが正しくなる条件：獲得免疫の特徴を問う場合。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "incorrect",
+            "reason": "誤り。T/Bリンパ球が獲得免疫の中心。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "correct",
+            "reason": "正しい。自然免疫の基本。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "incorrect",
+            "reason": "誤り。自己免疫疾患は免疫寛容破綻と関連する。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: 自然免疫と獲得免疫は独立ではなく、抗原提示などを介して相互に連携する。\ncomparisonText: 自然：好中球/NK/補体。獲得：T/B細胞・抗体・記憶。\ncommonMistakes: 自然免疫を「非特異的だから重要でない」と考えない。\ncorrectionConditions: Aが正しくなる条件：獲得免疫の特徴を問う場合。",
+        "key_points": "自然免疫＝速い、獲得免疫＝特異的＋記憶。",
+        "references": "2026年度模試 DISEASE-12 / 免疫・血液",
+        "mnemonic": "「自然は先発、獲得は指名手配」",
+        "source_explanation_raw": "自然免疫は迅速で非特異的な初期防御を担い、好中球、マクロファージ、NK細胞、補体などが関与する。獲得免疫はT/Bリンパ球が中心で、特異性と免疫記憶を持つ。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:09",
+        "original-id:PRED-DISEASE-015",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 1,
+      "choices": [
+        "自然免疫では免疫記憶が主役で、初回反応は遅い。",
+        "獲得免疫にはリンパ球は関与しない。",
+        "自然免疫は比較的迅速に反応し、好中球・マクロファージ・NK細胞・補体などが関与する。",
+        "自己免疫疾患は自己に対する免疫寛容の破綻とは無関係である。"
+      ],
+      "correctChoiceIndexes": [
+        2
+      ]
+    },
+    {
+      "id": "PRED-DISEASE-016",
+      "subject": "疾病・臨床病態概論",
+      "unit": "血液・凝固・免疫",
+      "topic": "DICの検査所見",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "敗血症患者。皮下出血が増え、血小板低下、PT延長、フィブリノゲン低下、Dダイマー著明上昇を認める。最も疑う病態はどれか。",
+      "explanation": {
+        "answer": "A. 播種性血管内凝固（DIC）",
+        "question_intent": "敗血症に伴う凝固異常パターンを認識できるか。",
+        "reasoning": "血小板だけでなくPT・フィブリノゲン・Dダイマーが同時に崩れている。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "correct",
+            "reason": "正しい。敗血症＋消費性凝固障害の典型像。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "incorrect",
+            "reason": "誤り。鉄欠乏では小球性貧血が中心で凝固因子消費を説明しない。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "incorrect",
+            "reason": "誤り。ITPは主に血小板減少で、PT延長・低フィブリノゲンは通常みられない。",
+            "correction_condition": "Cが正しくなる条件：孤立性血小板減少で凝固系が保たれ、他原因が除外された場合。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "incorrect",
+            "reason": "誤り。血友病AはAPTT延長が主体。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: DICでは出血と血栓が同時に起こり得る。治療は基礎疾患治療が最重要。\ncomparisonText: ITP＝血小板単独、DIC＝血小板＋凝固因子＋線溶。\ncommonMistakes: Dダイマー高値単独でDICと診断しない。\ncorrectionConditions: Cが正しくなる条件：孤立性血小板減少で凝固系が保たれ、他原因が除外された場合。",
+        "key_points": "DIC＝消費で血小板/フィブリノゲン↓、Dダイマー↑。",
+        "references": "LEARN-COM-692（既存予想テーマ） / 血液・凝固・免疫",
+        "mnemonic": "「DICは固めて使い切り、出血する」",
+        "source_explanation_raw": "DICは基礎疾患に伴って全身で凝固系が過剰活性化し、微小血栓形成と凝固因子・血小板消費、二次線溶が生じる。血小板低下、PT延長、フィブリノゲン低下、Dダイマー/FDP上昇などを示し得る。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:09",
+        "original-id:PRED-DISEASE-016",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 1,
+      "choices": [
+        "播種性血管内凝固（DIC）",
+        "鉄欠乏性貧血",
+        "単純性ITPのみ",
+        "血友病Aのみ"
+      ],
+      "correctChoiceIndexes": [
+        0
+      ]
+    },
+    {
+      "id": "PRED-DISEASE-017",
+      "subject": "疾病・臨床病態概論",
+      "unit": "血液・凝固・免疫",
+      "topic": "多発性骨髄腫とCRAB",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "68歳男性。腰痛、正球性貧血、腎機能低下、高Ca血症を認める。血清蛋白電気泳動でM蛋白を認めた。最も疑う疾患はどれか。",
+      "explanation": {
+        "answer": "B. 多発性骨髄腫",
+        "question_intent": "CRAB所見から形質細胞腫瘍を結びつけられるか。",
+        "reasoning": "C・R・A・Bが複数そろいM蛋白があるため骨髄腫。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "incorrect",
+            "reason": "誤り。ALLの典型像とは異なる。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "correct",
+            "reason": "正しい。CRAB＋M蛋白が典型的。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "incorrect",
+            "reason": "誤り。鉄欠乏では小球性貧血で高Ca・M蛋白を説明しない。",
+            "correction_condition": "Cが正しくなる条件：フェリチン低下・小球性貧血など鉄欠乏所見が中心の場合。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "incorrect",
+            "reason": "誤り。真性多血症では赤血球増加が中心。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: 骨痛、病的骨折、反復感染も重要。腎障害ではNSAIDsや造影剤など腎毒性にも注意する。\ncomparisonText: 骨髄腫＝CRAB、悪性リンパ腫＝リンパ節腫大/B症状など。\ncommonMistakes: 高Ca血症を原発性副甲状腺機能亢進症だけで考えない。\ncorrectionConditions: Cが正しくなる条件：フェリチン低下・小球性貧血など鉄欠乏所見が中心の場合。",
+        "key_points": "骨髄腫はCRABで覚える。",
+        "references": "LEARN-COM-335 / 免疫・血液",
+        "mnemonic": "「Ca・腎・貧血・骨＝CRAB」",
+        "source_explanation_raw": "多発性骨髄腫は形質細胞腫瘍で、臓器障害として高Ca血症（C）、腎障害（R）、貧血（A）、骨病変（B）のCRABが重要である。M蛋白、骨髄形質細胞、画像などを組み合わせて診断する。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:09",
+        "original-id:PRED-DISEASE-017",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 1,
+      "choices": [
+        "急性リンパ性白血病",
+        "多発性骨髄腫",
+        "鉄欠乏性貧血",
+        "真性多血症"
+      ],
+      "correctChoiceIndexes": [
+        1
+      ]
+    },
+    {
+      "id": "PRED-DISEASE-018",
+      "subject": "疾病・臨床病態概論",
+      "unit": "神経・筋・高次脳機能",
+      "topic": "せん妄と認知症",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "82歳。軽度認知症で生活していたが、尿路感染を契機に1日で注意力低下、見当識の変動、夜間の興奮が出現した。最も適切な判断はどれか。",
+      "explanation": {
+        "answer": "D. 認知症に重なったせん妄を疑い、感染・低酸素・薬剤・代謝異常など誘因を検索する。",
+        "question_intent": "慢性認知機能低下に急性変化が加わったときの鑑別。",
+        "reasoning": "「急に・揺れる・注意が落ちる」＝せん妄。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "incorrect",
+            "reason": "誤り。1日での急変・変動は認知症単独の進行として非典型。",
+            "correction_condition": "Aが正しくなる条件：数か月〜年単位で徐々に進行し、急性誘因・意識変動がない場合。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "incorrect",
+            "reason": "誤り。高齢者急性発症ではまず器質性原因を評価する。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "incorrect",
+            "reason": "誤り。うつ病のみでは注意・意識の急性変動を説明しにくい。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "correct",
+            "reason": "正しい。せん妄の典型像。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: せん妄は認知症患者に合併しやすい。CAMなど評価ツールは補助となる。\ncomparisonText: 認知症＝慢性進行、せん妄＝急性・変動。\ncommonMistakes: 認知症患者の急変を「いつもの認知症」と片付けない。\ncorrectionConditions: Aが正しくなる条件：数か月〜年単位で徐々に進行し、急性誘因・意識変動がない場合。",
+        "key_points": "せん妄は急性・変動・注意障害。",
+        "references": "LEARN-COM-693（既存予想テーマ） / 2026年度模試 DISEASE-13 / 【2026-09-26 中心論点の外部照合】NICEせん妄 CG103: https://www.nice.org.uk/guidance/cg103/chapter/Recommendations",
+        "mnemonic": "「急・揺・注意＝せん妄」",
+        "source_explanation_raw": "せん妄は急性発症、日内変動、注意障害・意識レベル変動が特徴で、高齢者では感染、脱水、薬剤、低酸素、電解質異常などで生じやすい。認知症が基礎にあっても急変はせん妄を優先評価する。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:09",
+        "original-id:PRED-DISEASE-018",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 2,
+      "choices": [
+        "認知症の自然進行なので感染評価は不要である。",
+        "統合失調症の初発と考える。",
+        "うつ病のみによる症状と考える。",
+        "認知症に重なったせん妄を疑い、感染・低酸素・薬剤・代謝異常など誘因を検索する。"
+      ],
+      "correctChoiceIndexes": [
+        3
+      ]
+    },
+    {
+      "id": "PRED-DISEASE-019",
+      "subject": "疾病・臨床病態概論",
+      "unit": "神経・筋・高次脳機能",
+      "topic": "レビー小体型認知症",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "認知機能低下に加え、具体的な人や動物の幻視、認知機能の日内変動、レム睡眠行動異常、パーキンソニズムを認める。最も考えやすい疾患はどれか。",
+      "explanation": {
+        "answer": "C. レビー小体型認知症",
+        "question_intent": "DLBの中核症状を認識できるか。",
+        "reasoning": "幻視＋変動＋RBD＋パーキンソニズムの組合せが決め手。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "incorrect",
+            "reason": "誤り。前頭側頭型では早期の行動・人格変化や言語障害が目立つ。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "incorrect",
+            "reason": "誤り。NPHでは歩行障害・認知機能低下・尿失禁が代表。",
+            "correction_condition": "Bが正しくなる条件：歩行障害、尿失禁、脳室拡大が前景の場合。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "correct",
+            "reason": "正しい。DLBの中核特徴がそろう。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "incorrect",
+            "reason": "誤り。血管性では脳血管病変との時間的関係や局在症状が重要。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: DATスキャンやMIBG心筋シンチグラフィなどが補助診断に用いられることがある。\ncomparisonText: AD＝記憶障害中心、DLB＝幻視・変動・RBD・パーキンソニズム。\ncommonMistakes: 幻視を単なる精神症状として切り離さない。\ncorrectionConditions: Bが正しくなる条件：歩行障害、尿失禁、脳室拡大が前景の場合。",
+        "key_points": "DLBは「変動・幻視・RBD・パーキンソン」。",
+        "references": "2026年度模試 DISEASE-14 / 神経・高次脳機能",
+        "mnemonic": "「レビーは、揺れて・見えて・寝て動き・固くなる」",
+        "source_explanation_raw": "レビー小体型認知症では認知機能の変動、反復する具体的幻視、REM睡眠行動異常、パーキンソニズムが中核的臨床特徴である。自律神経症状や抗精神病薬への過敏性にも注意する。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:09",
+        "original-id:PRED-DISEASE-019",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 1,
+      "choices": [
+        "前頭側頭型認知症",
+        "正常圧水頭症",
+        "レビー小体型認知症",
+        "血管性認知症のみ"
+      ],
+      "correctChoiceIndexes": [
+        2
+      ]
+    },
+    {
+      "id": "PRED-DISEASE-020",
+      "subject": "疾病・臨床病態概論",
+      "unit": "感覚器",
+      "topic": "中枢性めまいのRed Flag",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "突然のめまいで受診。難聴はないが、起立できないほどの体幹失調、構音障害、複視を認める。最も適切な判断はどれか。",
+      "explanation": {
+        "answer": "A. 中枢性めまいを疑い、脳卒中を含め緊急評価する。",
+        "question_intent": "めまいで生命に関わる中枢病変を見抜けるか。",
+        "reasoning": "体幹失調＋脳神経症状がある時点で末梢性と決めない。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "correct",
+            "reason": "正しい。神経症状を伴う急性めまいは中枢性を優先。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "incorrect",
+            "reason": "誤り。中枢性でも回転性めまいを呈し得る。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "incorrect",
+            "reason": "誤り。BPPVは頭位誘発・特徴的眼振などで判断する。",
+            "correction_condition": "Cが正しくなる条件：典型的頭位誘発眼振があり中枢神経徴候がない場合。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "incorrect",
+            "reason": "誤り。時間経過・誘発因子・神経所見が重要。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: HINTSは適切な訓練を受けた診察者が急性前庭症候群に用いる補助評価で、単純な自己判断用ではない。\ncomparisonText: 末梢性＝耳症状・誘発性が多い、中枢性＝神経症状・強い体幹失調。\ncommonMistakes: 「回る＝耳」と決めつけない。\ncorrectionConditions: Cが正しくなる条件：典型的頭位誘発眼振があり中枢神経徴候がない場合。",
+        "key_points": "めまい＋神経症状＝中枢性を疑う。",
+        "references": "LEARN-COM-360 / 2026年度模試 DISEASE-16",
+        "mnemonic": "「めまいで立てない・しゃべれない・二重に見える＝脳」",
+        "source_explanation_raw": "体幹失調、構音障害、複視など局在神経症状は中枢性めまい、特に後方循環脳卒中を示唆する。めまいが回転性かどうかだけでは中枢/末梢を確定できない。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:09",
+        "original-id:PRED-DISEASE-020",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 1,
+      "choices": [
+        "中枢性めまいを疑い、脳卒中を含め緊急評価する。",
+        "回転性めまいなので中枢性疾患は否定できる。",
+        "難聴がないのでBPPVと確定する。",
+        "症状の性状だけで末梢性と判断し画像評価は不要である。"
+      ],
+      "correctChoiceIndexes": [
+        0
+      ]
+    },
+    {
+      "id": "PRED-DISEASE-021",
+      "subject": "疾病・臨床病態概論",
+      "unit": "運動器・外傷",
+      "topic": "脊椎圧迫骨折と悪性疾患Red Flag",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S",
+      "prompt": "79歳女性。明らかな転倒はないが、椅子へ強く腰掛けた後から腰痛が続く。夜間痛と体重減少があり、画像で椎体圧潰を認めた。最も適切な対応はどれか。",
+      "explanation": {
+        "answer": "B. 脆弱性骨折を考えつつ、夜間痛・体重減少から腫瘍や感染など病的骨折の原因も評価する。",
+        "question_intent": "骨折の有無だけでなく原因のRed Flagを評価できるか。",
+        "reasoning": "軽微外力＝脆弱性骨折、体重減少/夜間痛＝悪性疾患も考える。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "incorrect",
+            "reason": "誤り。脆弱性骨折は軽微な外力でも起こる。",
+            "correction_condition": "Aが正しくなる条件：十分な画像評価と臨床所見から骨折が否定された場合。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "correct",
+            "reason": "正しい。骨粗鬆症と病的骨折の両方を考える。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "incorrect",
+            "reason": "誤り。原因検索が重要。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "incorrect",
+            "reason": "誤り。Red Flagがあり遅延評価は不適切。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: 膀胱直腸障害、鞍部感覚障害、進行筋力低下があれば馬尾症候群など緊急疾患を疑う。\ncomparisonText: 骨粗鬆症性圧迫骨折と病的骨折は画像だけでなく臨床背景で鑑別。\ncommonMistakes: 高齢者の「転倒していない」を骨折否定材料にしない。\ncorrectionConditions: Aが正しくなる条件：十分な画像評価と臨床所見から骨折が否定された場合。",
+        "key_points": "圧迫骨折＋Red Flagなら原因検索。",
+        "references": "LEARN-COM-357 / 2026年度模試 DISEASE-17",
+        "mnemonic": "「骨折を見たら、なぜ折れたかも見る」",
+        "source_explanation_raw": "高齢者・骨粗鬆症では軽微な外力でも椎体圧迫骨折を起こし得る。一方、安静時/夜間痛、体重減少、発熱、がん既往、神経症状などは腫瘍・感染などを示すRed Flagで、病的骨折の評価が必要である。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:09",
+        "original-id:PRED-DISEASE-021",
+        "prediction-v2.0",
+        "importance:S"
+      ],
+      "revision": 1,
+      "choices": [
+        "軽微な外力なので骨折は否定する。",
+        "脆弱性骨折を考えつつ、夜間痛・体重減少から腫瘍や感染など病的骨折の原因も評価する。",
+        "椎体圧潰があれば原因評価は不要である。",
+        "鎮痛薬のみで半年経過を見る。"
+      ],
+      "correctChoiceIndexes": [
+        1
+      ]
+    },
+    {
+      "id": "PRED-DISEASE-022",
+      "subject": "疾病・臨床病態概論",
+      "unit": "感染症・敗血症",
+      "topic": "敗血症の早期認識",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "90歳男性。『いつもより反応が悪い』ため救急搬送された。体温36.0℃、呼吸数27/分、血圧94/58mmHg、四肢冷感、毛細血管再充満遅延、尿量低下を認め、感染症が疑われている。最も適切な判断はどれか。",
+      "explanation": {
+        "answer": "C. 感染に伴う臓器低灌流・機能障害を疑い、感染源検索と蘇生・治療を並行して開始する。",
+        "question_intent": "スコアではなく臨床像から敗血症を認識できるか。",
+        "reasoning": "感染疑い＋反応低下＋頻呼吸＋末梢循環不良＋乏尿＝臓器低灌流を疑う。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "incorrect",
+            "reason": "誤り。高齢者敗血症では発熱を欠くことがある。",
+            "correction_condition": "Aが正しくなる条件：該当しない。qSOFA低値でも敗血症はあり得る。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "incorrect",
+            "reason": "誤り。qSOFA単独で敗血症を除外しない。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "correct",
+            "reason": "正しい。感染＋臓器低灌流を疑い治療を遅らせない。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "incorrect",
+            "reason": "誤り。乳酸は有用だが循環評価・初期対応を待つ理由にはならない。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: 血液培養は可能なら抗菌薬前に採取するが、採取のため治療を大きく遅延させない。\ncomparisonText: スクリーニングツール＝診断そのものではない。\ncommonMistakes: 「発熱がない＝敗血症ではない」「qSOFAが低い＝除外」と暗記しない。\ncorrectionConditions: Aが正しくなる条件：該当しない。qSOFA低値でも敗血症はあり得る。",
+        "key_points": "敗血症は単一スコアでなく、感染＋臓器障害で判断。",
+        "references": "LEARN-COM-365/598 / 2026年度模試 DISEASE-18 / Surviving Sepsis Campaign 2026 / 【2026-09-26 中心論点の外部照合】Surviving Sepsis Campaign成人版2026: https://sccm.org/clinical-resources/guidelines/guidelines/surviving-sepsis-campaign-international-guidelines-for-management-of-sepsis-and-septic-shock-2026",
+        "mnemonic": "「感染＋臓器障害＝待たない」",
+        "source_explanation_raw": "敗血症は感染に伴う生命を脅かす臓器障害で、臨床診断である。高齢者では高熱を欠くことがあり、急性の意識変化、頻呼吸、低血圧、末梢循環不全、乏尿は重要な重症所見である。2026 SSCではNEWS/NEWS2、MEWS、SIRSをqSOFA単独より推奨し、単一スコア・単一検査でrule in/outしない。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:09",
+        "original-id:PRED-DISEASE-022",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 2,
+      "choices": [
+        "発熱がないため敗血症は考えない。",
+        "qSOFAが基準未満なら敗血症を除外できる。",
+        "感染に伴う臓器低灌流・機能障害を疑い、感染源検索と蘇生・治療を並行して開始する。",
+        "乳酸値が判明するまで循環評価を開始しない。"
+      ],
+      "correctChoiceIndexes": [
+        2
+      ]
+    },
+    {
+      "id": "PRED-DISEASE-023",
+      "subject": "疾病・臨床病態概論",
+      "unit": "腫瘍・がん",
+      "topic": "がん統計と年齢調整死亡率",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "ある国で高齢化に伴いがん死亡数（実数）は増加した一方、年齢調整死亡率は低下している。この解釈として最も適切なのはどれか。",
+      "explanation": {
+        "answer": "D. 高齢化で死亡数が増えても、年齢調整死亡率低下は年齢構成を補正した死亡リスクが低下している可能性を示す。",
+        "question_intent": "粗数と年齢調整指標を区別できるか。",
+        "reasoning": "高齢化は実数を押し上げるため、比較には補正指標が必要。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "incorrect",
+            "reason": "誤り。実数増加だけで医療の悪化とは断定できない。",
+            "correction_condition": "Aが正しくなる条件：人口構成や罹患構造などを十分補正した複数指標で悪化が確認された場合。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "incorrect",
+            "reason": "誤り。年齢調整はむしろ比較のために行う。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "incorrect",
+            "reason": "誤り。実数のみでは高齢化影響を分離できない。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "correct",
+            "reason": "正しい。年齢調整率の意味を正しく解釈している。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: 罹患率、死亡率、生存率はそれぞれ異なる指標で、検診・治療・人口構成の影響を受け方が異なる。\ncomparisonText: 死亡数＝実数、粗死亡率＝人口あたり、年齢調整死亡率＝年齢構成を補正。\ncommonMistakes: 「死亡数が増えた＝医療が悪くなった」と短絡しない。\ncorrectionConditions: Aが正しくなる条件：人口構成や罹患構造などを十分補正した複数指標で悪化が確認された場合。",
+        "key_points": "がん統計は年齢調整して比較する。",
+        "references": "LEARN-COM-368/373 / 2026年度模試 DISEASE-19",
+        "mnemonic": "「高齢化の影響を外して見る＝年齢調整」",
+        "source_explanation_raw": "死亡数・粗死亡率は人口規模や高齢化の影響を受ける。年齢調整死亡率は年齢構成の違いを補正し、地域間・経年の比較に有用である。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:09",
+        "original-id:PRED-DISEASE-023",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 1,
+      "choices": [
+        "死亡数が増えているため、年齢構成を考慮せずがん医療は悪化したと断定できる。",
+        "年齢調整死亡率は人口構成の影響を受けるので経年比較には使えない。",
+        "死亡数の実数だけで治療成績を評価すべきである。",
+        "高齢化で死亡数が増えても、年齢調整死亡率低下は年齢構成を補正した死亡リスクが低下している可能性を示す。"
+      ],
+      "correctChoiceIndexes": [
+        3
+      ]
+    },
+    {
+      "id": "PRED-DISEASE-024",
+      "subject": "疾病・臨床病態概論",
+      "unit": "脳血管・意識障害",
+      "topic": "心原性脳塞栓症",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "心房細動がある患者に突然の右片麻痺と失語が出現した。画像で左中大脳動脈領域の急性虚血性病変を認める。最も考えやすい脳梗塞の病型はどれか。",
+      "explanation": {
+        "answer": "A. 心原性脳塞栓症",
+        "question_intent": "脳梗塞病型を塞栓源と神経症状から推定できるか。",
+        "reasoning": "AFが塞栓源、失語＋片麻痺がMCA皮質病変を示す。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "correct",
+            "reason": "正しい。AF＋突然の皮質症状は心原性塞栓を強く示唆する。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "incorrect",
+            "reason": "誤り。ラクナ梗塞は穿通枝領域の小梗塞で皮質症状を伴わないことが多い。",
+            "correction_condition": "Bが正しくなる条件：純粋運動麻痺など小血管症候群で皮質症状がなく、小梗塞が確認された場合。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "incorrect",
+            "reason": "誤り。SAHは突然激しい頭痛が典型。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "incorrect",
+            "reason": "誤り。外傷歴がなく虚血病変の説明にならない。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: 失語、半側空間無視、共同偏視などは皮質症状で、大血管閉塞を疑う手がかりとなる。\ncomparisonText: ラクナ＝小血管・純粋運動/感覚、心原性＝突然・大血管/皮質症状。\ncommonMistakes: TIAや脳梗塞症状が改善しても評価不要としない。\ncorrectionConditions: Bが正しくなる条件：純粋運動麻痺など小血管症候群で皮質症状がなく、小梗塞が確認された場合。",
+        "key_points": "AF＋突然の皮質症状＝心原性脳塞栓を考える。",
+        "references": "LEARN-COM-377 / 2026年度模試 DISEASE-20",
+        "mnemonic": "「AFから飛んで、太い血管を詰める」",
+        "source_explanation_raw": "心房細動は心腔内血栓形成を介した心原性脳塞栓の主要リスクである。心原性塞栓は突然発症し、主幹動脈領域の大きな皮質症状を呈することがある。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:09",
+        "original-id:PRED-DISEASE-024",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 1,
+      "choices": [
+        "心原性脳塞栓症",
+        "ラクナ梗塞のみ",
+        "くも膜下出血",
+        "硬膜外血腫"
+      ],
+      "correctChoiceIndexes": [
+        0
+      ]
+    },
+    {
+      "id": "PRED-DISEASE-025",
+      "subject": "疾病・臨床病態概論",
+      "unit": "脳血管・意識障害",
+      "topic": "急性虚血性脳卒中の初期対応",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "発症時刻が明確な突然の片麻痺・失語で搬送された患者。最も適切な初期対応はどれか。",
+      "explanation": {
+        "answer": "C. 脳卒中コードを起動し、血糖確認と迅速な脳画像で出血を除外し、血栓溶解・血栓回収療法の適応を並行評価する。",
+        "question_intent": "脳卒中の時間依存性と治療窓の考え方を理解しているか。",
+        "reasoning": "「待ってよくなるか」ではなく「治療可能時間を失わない」が核心。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "incorrect",
+            "reason": "誤り。症状改善待ちで治療機会を失う。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "incorrect",
+            "reason": "誤り。不要な検査で再灌流治療を遅らせない。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "correct",
+            "reason": "正しい。画像と再灌流適応評価を迅速に並行する。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "incorrect",
+            "reason": "誤り。選択例では4.5時間超でも治療可能性がある。",
+            "correction_condition": "Dが正しくなる条件：特定治療の適応時間だけを限定して問う場合。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: 大血管閉塞疑いでは地域搬送プロトコルと血栓回収可能施設へのアクセスが重要。\ncomparisonText: IV血栓溶解＝主に早期、EVT＝選択例でより長い時間窓。\ncommonMistakes: 4.5時間を「すべての治療の絶対終了時間」と誤解しない。\ncorrectionConditions: Dが正しくなる条件：特定治療の適応時間だけを限定して問う場合。",
+        "key_points": "急性脳卒中は迅速画像＋再灌流適応評価。",
+        "references": "LEARN-COM-374/378 / AHA/ASA Acute Ischemic Stroke Guideline 2026 / 日本脳卒中学会 脳卒中治療ガイドライン2021改訂2023",
+        "mnemonic": "「脳卒中は待たずに画像、詰まりを取れるか判断」",
+        "source_explanation_raw": "急性虚血性脳卒中は時間依存性疾患である。迅速に脳画像で出血を除外し、IV血栓溶解と大血管閉塞に対するEVT適応を評価する。2026 AHA/ASAでは4.5時間内の血栓溶解を基本とし、選択例では画像選択による拡張時間窓や24時間までのEVTがある。日本では承認薬・投与量・適応は日本のガイドライン/添付文書に従う。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:09",
+        "original-id:PRED-DISEASE-025",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 1,
+      "choices": [
+        "症状が改善するか数時間観察してから画像を撮る。",
+        "血栓溶解療法候補でも胸部X線や詳細検査がすべて終わるまで脳画像を待つ。",
+        "脳卒中コードを起動し、血糖確認と迅速な脳画像で出血を除外し、血栓溶解・血栓回収療法の適応を並行評価する。",
+        "発症4.5時間を超えればすべての再灌流療法の可能性がなくなる。"
+      ],
+      "correctChoiceIndexes": [
+        2
+      ]
+    },
+    {
+      "id": "PRED-DISEASE-026",
+      "subject": "疾病・臨床病態概論",
+      "unit": "脳血管・意識障害",
+      "topic": "くも膜下出血の初期認識",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "55歳女性。突然「人生最悪」と表現する頭痛と嘔吐で発症し、一時意識を失った。最も適切な判断はどれか。",
+      "explanation": {
+        "answer": "B. くも膜下出血を疑い、緊急脳画像と脳神経外科的評価につなげる。",
+        "question_intent": "雷鳴頭痛のRed Flagを認識できるか。",
+        "reasoning": "「突然・最悪・嘔吐/失神」はSAHを疑う。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "incorrect",
+            "reason": "誤り。雷鳴頭痛は二次性頭痛を最優先。",
+            "correction_condition": "Aが正しくなる条件：危険な二次性頭痛が十分除外され既知の片頭痛発作と確認された場合。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "correct",
+            "reason": "正しい。典型SAH像である。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "incorrect",
+            "reason": "誤り。頸部硬直は発症直後に明瞭でない場合もある。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "incorrect",
+            "reason": "誤り。再破裂リスクがある。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: 初期CTが陰性でも発症時刻・検査感度・臨床疑いに応じ追加評価を検討する。\ncomparisonText: 片頭痛＝反復性、SAH＝突然ピークの雷鳴頭痛。\ncommonMistakes: 痛みが軽快したことを安全の根拠にしない。\ncorrectionConditions: Aが正しくなる条件：危険な二次性頭痛が十分除外され既知の片頭痛発作と確認された場合。",
+        "key_points": "雷鳴頭痛はSAHを除外するまで緊急評価。",
+        "references": "LEARN-COM-379 / 脳血管・意識障害",
+        "mnemonic": "「突然ピークの最悪頭痛＝SAH」",
+        "source_explanation_raw": "SAHは突然発症の雷鳴頭痛、嘔吐、意識障害などで発症する。破裂脳動脈瘤が多く、再破裂は予後不良につながるため緊急評価と再出血予防が重要。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:09",
+        "original-id:PRED-DISEASE-026",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 1,
+      "choices": [
+        "片頭痛として鎮痛薬のみで帰宅させる。",
+        "くも膜下出血を疑い、緊急脳画像と脳神経外科的評価につなげる。",
+        "頸部硬直がなければSAHは否定できる。",
+        "頭痛が一度軽快すれば再破裂リスクはない。"
+      ],
+      "correctChoiceIndexes": [
+        1
+      ]
+    },
+    {
+      "id": "PRED-DISEASE-027",
+      "subject": "疾病・臨床病態概論",
+      "unit": "循環器疾患",
+      "topic": "急性心不全のうっ血と低灌流",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "慢性心不全患者。呼吸困難、起座呼吸、両側湿性ラ音、頸静脈怒張、下腿浮腫に加え、四肢冷感と尿量低下を認める。最も適切な病態評価はどれか。",
+      "explanation": {
+        "answer": "D. うっ血に加えて低灌流も伴う可能性があり、循環動態を緊急評価する。",
+        "question_intent": "心不全のうっ血と灌流を同時に評価できるか。",
+        "reasoning": "症状を「水が多いか」と「血が前に出ているか」に分ける。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "incorrect",
+            "reason": "誤り。四肢冷感・乏尿は低灌流を示し得る。",
+            "correction_condition": "Aが正しくなる条件：四肢冷感・乏尿など低灌流所見がなく、うっ血のみの評価を限定的に問う場合でも「不要」とは言えない。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "incorrect",
+            "reason": "誤り。静脈うっ血があっても有効循環・心拍出が不足し得る。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "incorrect",
+            "reason": "誤り。尿量は腎灌流の重要指標。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "correct",
+            "reason": "正しい。wet＋coldの重症心不全を疑う。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: 急性心不全では血圧、末梢灌流、尿量、腎機能、酸素化を反復評価する。\ncomparisonText: wet＝うっ血、cold＝低灌流。\ncommonMistakes: 浮腫がある＝循環が良い、ではない。\ncorrectionConditions: Aが正しくなる条件：四肢冷感・乏尿など低灌流所見がなく、うっ血のみの評価を限定的に問う場合でも「不要」とは言えない。",
+        "key_points": "心不全はwet/dryとwarm/coldで捉える。",
+        "references": "LEARN-COM-303 / 循環器疾患",
+        "mnemonic": "「濡れて冷たい心不全は重い」",
+        "source_explanation_raw": "心不全では「うっ血」と「灌流」を分けて評価する。JVD、浮腫、肺うっ血は体液貯留を示し、四肢冷感、乏尿、意識変容、低血圧などは低灌流を示す。両者併存（wet-cold）は重症で、緊急の循環評価が必要である。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:09",
+        "original-id:PRED-DISEASE-027",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 1,
+      "choices": [
+        "うっ血所見だけなので循環灌流評価は不要である。",
+        "浮腫があるので必ず循環血液量は十分である。",
+        "尿量低下は心不全と無関係である。",
+        "うっ血に加えて低灌流も伴う可能性があり、循環動態を緊急評価する。"
+      ],
+      "correctChoiceIndexes": [
+        3
+      ]
+    },
+    {
+      "id": "PRED-DISEASE-028",
+      "subject": "疾病・臨床病態概論",
+      "unit": "消化器・肝胆膵",
+      "topic": "肝硬変の非代償化",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "C型肝炎後の肝硬変患者。腹囲増大、下腿浮腫、黄疸、羽ばたき振戦、傾眠傾向が出現した。最も適切な判断はどれか。",
+      "explanation": {
+        "answer": "A. 腹水と肝性脳症を伴う非代償性肝硬変を疑い、誘因と重症度を評価する。",
+        "question_intent": "肝硬変の代償期・非代償期を症候から判断できるか。",
+        "reasoning": "腹水＋黄疸＋脳症＝代償が破綻している。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "correct",
+            "reason": "正しい。非代償性肝硬変の典型的合併症。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "incorrect",
+            "reason": "誤り。急性/亜急性変化で病的。",
+            "correction_condition": "Bが正しくなる条件：急性変化がなく病的所見が除外された場合。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "incorrect",
+            "reason": "誤り。黄疸は肝胆道機能障害を示す重要所見。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "incorrect",
+            "reason": "誤り。羽ばたき振戦は肝性脳症など代謝性脳症でみられる。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: 腹水ではSBP（特発性細菌性腹膜炎）など感染も重要。\ncomparisonText: 代償性＝症状乏しい、非代償性＝腹水・静脈瘤出血・黄疸・脳症など。\ncommonMistakes: 意識変容を認知症と決めつけず肝性脳症を考える。\ncorrectionConditions: Bが正しくなる条件：急性変化がなく病的所見が除外された場合。",
+        "key_points": "肝硬変の非代償化＝腹水・黄疸・出血・脳症。",
+        "references": "LEARN-COM-603（既存予想テーマ） / 消化器・肝胆膵",
+        "mnemonic": "「肝硬変が崩れると、腹・黄・出・脳」",
+        "source_explanation_raw": "腹水、黄疸、浮腫、肝性脳症は肝硬変の非代償化を示す。肝性脳症では意識変容・羽ばたき振戦がみられ、消化管出血、感染、便秘、脱水、電解質異常、薬剤など誘因検索が重要。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:09",
+        "original-id:PRED-DISEASE-028",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 1,
+      "choices": [
+        "腹水と肝性脳症を伴う非代償性肝硬変を疑い、誘因と重症度を評価する。",
+        "単純な加齢変化として経過観察する。",
+        "黄疸があっても肝機能とは無関係である。",
+        "羽ばたき振戦は甲状腺機能低下症に特異的である。"
+      ],
+      "correctChoiceIndexes": [
+        0
+      ]
+    },
+    {
+      "id": "PRED-DISEASE-029",
+      "subject": "疾病・臨床病態概論",
+      "unit": "感染症・敗血症",
+      "topic": "細菌性髄膜炎のRed Flag",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "45歳男性。高熱、強い頭痛、項部硬直、意識障害が急速に進行している。最も適切な対応はどれか。",
+      "explanation": {
+        "answer": "B. 細菌性髄膜炎を疑い、血液培養など必要な検査を迅速に行い、治療開始を不必要に遅らせない。",
+        "question_intent": "発熱＋神経症状のcritical diagnosisを優先できるか。",
+        "reasoning": "4Cのcriticalに該当する典型例。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "incorrect",
+            "reason": "誤り。生命に関わる二次性頭痛・中枢感染を疑う。",
+            "correction_condition": "Aが正しくなる条件：感染徴候・意識障害がなく、二次性頭痛が除外された片頭痛の場合。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "correct",
+            "reason": "正しい。診断と迅速治療を並行する。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "incorrect",
+            "reason": "誤り。検査結果待ちで治療を遅らせるのは危険。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "incorrect",
+            "reason": "誤り。解熱反応で重症感染を除外できない。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: 頭蓋内圧亢進や局在神経症状などがある場合、腰椎穿刺前画像が必要となることがある。\ncomparisonText: 片頭痛＝発熱/意識障害は通常伴わない、髄膜炎＝感染＋髄膜刺激/意識障害。\ncommonMistakes: 髄液検査を優先しすぎて抗菌薬を遅らせない。\ncorrectionConditions: Aが正しくなる条件：感染徴候・意識障害がなく、二次性頭痛が除外された片頭痛の場合。",
+        "key_points": "髄膜炎は「検査しながら治療を遅らせない」。",
+        "references": "2026年度模試 DISEASE-18（4C critical） / 感染症",
+        "mnemonic": "「熱＋頭痛＋首硬い＋意識悪い＝髄膜炎」",
+        "source_explanation_raw": "発熱、頭痛、項部硬直、意識障害は細菌性髄膜炎を疑う重篤な組み合わせである。診断検査は重要だが、重症例で抗菌薬開始を画像や髄液結果のために不必要に遅らせない。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:09",
+        "original-id:PRED-DISEASE-029",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 1,
+      "choices": [
+        "片頭痛として翌日外来予約とする。",
+        "細菌性髄膜炎を疑い、血液培養など必要な検査を迅速に行い、治療開始を不必要に遅らせない。",
+        "項部硬直があれば腰椎穿刺だけを行い抗菌薬は結果が出るまで待つ。",
+        "発熱があるため解熱薬で意識が改善するか確認してから判断する。"
+      ],
+      "correctChoiceIndexes": [
+        1
+      ]
+    },
+    {
+      "id": "PRED-DISEASE-030",
+      "subject": "疾病・臨床病態概論",
+      "unit": "血液・凝固・免疫",
+      "topic": "アナフィラキシー",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S",
+      "prompt": "造影剤投与直後、全身じんま疹、喘鳴、呼吸困難、血圧70/40mmHgが出現した。最も優先する治療はどれか。",
+      "explanation": {
+        "answer": "A. 大腿前外側への筋注アドレナリンを速やかに投与し、気道・呼吸・循環を同時に管理する。",
+        "question_intent": "薬剤曝露後の急変で第一選択治療を選べるか。",
+        "reasoning": "皮膚＋気道＋ショックの急性発症＝アナフィラキシー。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "correct",
+            "reason": "正しい。アナフィラキシーの第一選択。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "incorrect",
+            "reason": "誤り。抗ヒスタミン薬は皮膚症状には有用だがショック治療の代替ではない。",
+            "correction_condition": "Bが正しくなる条件：呼吸・循環症状がなく軽度皮膚症状のみでアナフィラキシーではない場合。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "incorrect",
+            "reason": "誤り。ステロイドは即効性がなく、アドレナリンを遅らせてはならない。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "incorrect",
+            "reason": "誤り。β遮断薬は循環・気管支反応を悪化させ得る。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: アナフィラキシーでは二相性反応もあり、治療後も重症度に応じ観察する。\ncomparisonText: アドレナリン＝第一選択、抗ヒスタミン/ステロイド＝補助。\ncommonMistakes: 「まずステロイド」「まず抗ヒスタミン」としない。\ncorrectionConditions: Bが正しくなる条件：呼吸・循環症状がなく軽度皮膚症状のみでアナフィラキシーではない場合。",
+        "key_points": "アナフィラキシーの第一選択は筋注アドレナリン。",
+        "references": "免疫・血液 / アナフィラキシー診療ガイドライン / 【2026-09-26 中心論点の外部照合】Resuscitation Council UK アナフィラキシー: https://www.resus.org.uk/library/additional-guidance/guidance-anaphylaxis/emergency-treatment-anaphylactic-reactions",
+        "mnemonic": "「アナフィラキシーは、迷わずIMアドレナリン」",
+        "source_explanation_raw": "皮膚症状に呼吸器症状・低血圧を伴う急性発症はアナフィラキシーである。第一選択は筋注アドレナリンで、ABC管理、酸素、輸液などを並行する。抗ヒスタミン薬やステロイドは補助であり、アドレナリンの代替ではない。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:09",
+        "original-id:PRED-DISEASE-030",
+        "prediction-v2.0",
+        "importance:S"
+      ],
+      "revision": 2,
+      "choices": [
+        "大腿前外側への筋注アドレナリンを速やかに投与し、気道・呼吸・循環を同時に管理する。",
+        "抗ヒスタミン薬だけを投与して経過を見る。",
+        "ステロイドの効果が出るまでアドレナリンを待つ。",
+        "血圧低下があるためβ遮断薬を投与する。"
+      ],
+      "correctChoiceIndexes": [
+        0
+      ]
+    },
+    {
+      "id": "PRED-DISEASE-SIT-001",
+      "subject": "疾病・臨床病態概論：状況別",
+      "unit": "在宅医療・急変対応",
+      "topic": "在宅での胸痛とACS搬送判断",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "在宅療養中の74歳男性。突然の胸部圧迫感が20分以上持続し、冷汗と顎への放散痛を伴う。血圧102/68mmHg、SpO2 96%で会話は可能である。最も適切な対応はどれか。",
+      "explanation": {
+        "answer": "B. 急性冠症候群を疑い、救急要請して早期評価につなげる。",
+        "question_intent": "在宅でも「今は会話可能」という安心材料より、症状の質と時間依存性を優先できるか。",
+        "reasoning": "20分以上の胸部圧迫感＋冷汗＋放散痛はACSの典型的警告所見である。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "incorrect",
+            "reason": "誤り。時間依存性疾患であり翌日まで待たない。",
+            "correction_condition": "Aが正しくなるのは生命危機が除外され、短時間で消失する既知の安定症状などの場合。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "correct",
+            "reason": "正しい。ACSを疑う症状で、緊急搬送が必要である。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "incorrect",
+            "reason": "誤り。正常SpO2はACSを否定しない。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "incorrect",
+            "reason": "誤り。途中で不整脈や循環不全へ悪化する可能性があり、救急搬送が望ましい。",
+            "correction_condition": "Dは緊急疾患が否定され安全な移動手段が確保できる場合に限る。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: 胸痛ではACSだけでなく急性大動脈症候群、肺血栓塞栓症、緊張性気胸など生命危機を並行して考える。\ncomparisonText: 安定狭心症は労作で誘発され休息で改善しやすいが、ACSでは安静時や長時間持続する胸痛を認め得る。\ncommonMistakes: SpO2や血圧が正常域だから軽症と判断しない。\ncorrectionConditions: Aが正しくなるのは生命危機が除外され、短時間で消失する既知の安定症状などの場合。Dは緊急疾患が否定され安全な移動手段が確保できる場合に限る。",
+        "key_points": "持続胸痛＋冷汗＋放散痛＝在宅でもACSとして救急要請。",
+        "references": "Resuscitation Council UK 2025 First Aid Guidelines / AHA/ACC Acute Coronary Syndrome guidance / https://www.heart.org/en/health-topics/heart-attack/warning-signs-of-a-heart-attack",
+        "mnemonic": "「胸痛は、歩けるかより時間依存性」",
+        "source_explanation_raw": "持続する圧迫性胸痛、冷汗、放散痛は急性冠症候群を疑う赤旗所見である。在宅で一見循環が保たれていても、心筋梗塞は急変し得るため救急要請し、心電図・トロポニン・再灌流適応を迅速に評価する。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:10",
+        "original-id:PRED-DISEASE-SIT-001",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 1,
+      "choices": [
+        "安静にして翌日の定期受診まで待つ。",
+        "急性冠症候群を疑い、救急要請して早期評価につなげる。",
+        "SpO2が正常なので心疾患は否定する。",
+        "本人が歩けるため家族の自家用車でゆっくり受診する。"
+      ],
+      "correctChoiceIndexes": [
+        1
+      ]
+    },
+    {
+      "id": "PRED-DISEASE-SIT-002",
+      "subject": "疾病・臨床病態概論：状況別",
+      "unit": "在宅医療・急変対応",
+      "topic": "抗凝固療法中の転倒・頭部外傷",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "心房細動で直接作用型経口抗凝固薬を内服中の81歳女性。自宅で転倒し後頭部を打った。直後は会話できたが、2時間後から頭痛が強くなり傾眠傾向が出現した。最も適切な対応はどれか。",
+      "explanation": {
+        "answer": "A. 頭蓋内出血を疑い、救急搬送して頭部画像を含む緊急評価を受ける。",
+        "question_intent": "在宅転倒で「打撲」ではなく頭蓋内出血リスクを拾えるか。",
+        "reasoning": "抗凝固＋頭部打撲＋神経症状の悪化は緊急搬送の組合せである。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "correct",
+            "reason": "正しい。遅発性頭蓋内出血を含め緊急評価が必要である。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "incorrect",
+            "reason": "誤り。外表所見の乏しさで頭蓋内出血は除外できない。",
+            "correction_condition": "Bが許容されるのは抗凝固リスクや神経症状がなく、医療者が低リスクと判断し適切な観察体制がある場合。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "incorrect",
+            "reason": "誤り。抗凝固薬はCTの禁忌ではない。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "incorrect",
+            "reason": "誤り。新規傾眠は神経学的悪化として扱う。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: 頭部外傷後は意識、瞳孔、局在神経症状、嘔吐、頭痛増悪、抗血栓薬の有無を確認する。\ncomparisonText: 単純打撲は症状が改善するが、頭蓋内出血では頭痛・嘔吐・意識変容が進行し得る。\ncommonMistakes: 受傷直後に会話できたことを安全の根拠にしない。\ncorrectionConditions: Bが許容されるのは抗凝固リスクや神経症状がなく、医療者が低リスクと判断し適切な観察体制がある場合。",
+        "key_points": "抗凝固中の頭部外傷＋症状変化＝頭蓋内出血を疑う。",
+        "references": "NICE Head Injury guideline / Resuscitation Council UK 2025 First Aid Guidelines / https://www.nice.org.uk/guidance/ng232/chapter/recommendations",
+        "mnemonic": "「頭を打った抗凝固患者は、後から悪くなるを忘れない」",
+        "source_explanation_raw": "抗凝固療法中の頭部外傷では頭蓋内出血リスクが上がる。頭痛増悪や傾眠など新たな神経症状は特に危険であり、見た目の外傷が軽くても緊急画像評価が必要である。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:10",
+        "original-id:PRED-DISEASE-SIT-002",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 1,
+      "choices": [
+        "頭蓋内出血を疑い、救急搬送して頭部画像を含む緊急評価を受ける。",
+        "皮下出血がなければ自宅で24時間経過観察する。",
+        "抗凝固薬を服用しているため頭部CTは禁忌である。",
+        "傾眠は高齢者の転倒後によくあるため翌朝まで待つ。"
+      ],
+      "correctChoiceIndexes": [
+        0
+      ]
+    },
+    {
+      "id": "PRED-DISEASE-SIT-003",
+      "subject": "疾病・臨床病態概論：状況別",
+      "unit": "在宅医療・急変対応",
+      "topic": "在宅COPD患者の低換気",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "在宅酸素療法中のCOPD患者。家族から「今日は眠そう」と連絡があった。訪問時、酸素投与下SpO2 95%だが、呼吸数8/分、傾眠傾向で呼吸が浅い。最も適切な判断はどれか。",
+      "explanation": {
+        "answer": "D. 低換気による高CO2血症を含む呼吸不全を疑い、換気・意識を評価し緊急対応を検討する。",
+        "question_intent": "酸素化と換気を区別できるか。",
+        "reasoning": "「SpO2正常」より「RR8＋傾眠」の方が生命危機を示す。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "incorrect",
+            "reason": "誤り。正常SpO2でも換気不全は除外できない。",
+            "correction_condition": "Aが正しくなるには呼吸数・意識・換気も正常である必要がある。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "incorrect",
+            "reason": "誤り。原因評価なしの酸素流量大幅変更は危険である。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "incorrect",
+            "reason": "誤り。呼吸数8/分と傾眠は緊急所見。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "correct",
+            "reason": "正しい。低換気・高CO2血症を疑って評価する。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: 呼吸評価は呼吸数、深さ、努力呼吸、胸郭運動、呼吸音、SpO2、意識、必要時血液ガスを統合する。GOLD 2026でもCOPD増悪時の酸素は過不足を避けて管理する。\ncomparisonText: 低酸素血症＝酸素化障害、低換気＝CO2排出障害。両者は別である。\ncommonMistakes: パルスオキシメータだけで呼吸の安全性を判断しない。\ncorrectionConditions: Aが正しくなるには呼吸数・意識・換気も正常である必要がある。",
+        "key_points": "SpO2正常でも低呼吸・傾眠なら換気不全を疑う。",
+        "references": "GOLD 2026 Report and Pocket Guide / Resuscitation Council UK ABCDE Approach / https://doi.org/10.1136/thoraxjnl-2016-209729",
+        "mnemonic": "「酸素が見えてもCO2は見えない」",
+        "source_explanation_raw": "SpO2は酸素化を示すが換気を直接示さない。酸素投与下ではSpO2が保たれていても、低呼吸・浅呼吸によりCO2が蓄積し意識障害が進行することがある。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:10",
+        "original-id:PRED-DISEASE-SIT-003",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 1,
+      "choices": [
+        "SpO2が95%なので呼吸状態は安定している。",
+        "酸素流量を自己判断で大幅に増やして様子を見る。",
+        "酸素化が保たれているため翌日まで観察する。",
+        "低換気による高CO2血症を含む呼吸不全を疑い、換気・意識を評価し緊急対応を検討する。"
+      ],
+      "correctChoiceIndexes": [
+        3
+      ]
+    },
+    {
+      "id": "PRED-DISEASE-SIT-004",
+      "subject": "疾病・臨床病態概論：状況別",
+      "unit": "在宅医療・急変対応",
+      "topic": "嚥下障害患者の誤嚥性肺炎",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "脳卒中後で嚥下障害のある79歳男性。食後の湿性咳嗽が増え、今朝から発熱38.2℃、呼吸数28/分、SpO2 90%（普段96%）、右背側下肺野に新たなcoarse cracklesを認める。最も適切な判断はどれか。",
+      "explanation": {
+        "answer": "C. 誤嚥関連肺炎を疑い、酸素化と重症度を評価して早期の医療評価につなげる。",
+        "question_intent": "在宅で「誤嚥リスク」と「肺炎重症化」を同時に判断できるか。",
+        "reasoning": "嚥下障害＋食後咳＋発熱＋低酸素＋局在性ラ音が連続している。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "incorrect",
+            "reason": "誤り。急性変化を慢性疾患で説明しない。",
+            "correction_condition": "Aが正しいのは慢性症状のみで急性変化がなく、安全な嚥下計画が確立している場合。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "incorrect",
+            "reason": "誤り。食後の湿性咳嗽は誤嚥リスクの手がかりとなる。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "correct",
+            "reason": "正しい。肺炎と低酸素の評価が必要である。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "incorrect",
+            "reason": "誤り。誤嚥が疑われる状況で食形態を無評価で継続しない。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: 再発予防では嚥下評価、食形態・姿勢調整、口腔衛生、薬剤・意識レベル、栄養を統合する。\ncomparisonText: 単なる誤嚥エピソードと肺炎は、発熱・酸素化・呼吸数・肺所見の変化で重症度を判断する。\ncommonMistakes: 高齢者では発熱が軽くても頻呼吸やSpO2低下を重視する。\ncorrectionConditions: Aが正しいのは慢性症状のみで急性変化がなく、安全な嚥下計画が確立している場合。",
+        "key_points": "嚥下障害＋呼吸状態悪化＝誤嚥性肺炎を疑う。",
+        "references": "日本呼吸器学会 肺炎診療資料 / Resuscitation Council UK ABCDE Approach / 【2026-09-26 中心論点の外部照合】BTS 2023誤嚥性肺炎: https://thorax.bmj.com/content/78/Suppl_1/s3",
+        "mnemonic": "「むせだけでなく、呼吸数とSpO2を見る」",
+        "source_explanation_raw": "嚥下障害を背景に食後咳嗽、発熱、頻呼吸、ベースラインからのSpO2低下、新規局在性肺所見があるため誤嚥関連肺炎を疑う。呼吸状態の悪化は在宅でも緊急度を上げる。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:10",
+        "original-id:PRED-DISEASE-SIT-004",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 2,
+      "choices": [
+        "慢性の嚥下障害なので新規対応は不要である。",
+        "湿性咳嗽だけなら誤嚥とは無関係である。",
+        "誤嚥関連肺炎を疑い、酸素化と重症度を評価して早期の医療評価につなげる。",
+        "食事を続ければ咳反射が鍛えられるため通常食を継続する。"
+      ],
+      "correctChoiceIndexes": [
+        2
+      ]
+    },
+    {
+      "id": "PRED-DISEASE-SIT-005",
+      "subject": "疾病・臨床病態概論：状況別",
+      "unit": "在宅医療・急変対応",
+      "topic": "在宅高齢者の脱水とAKIリスク",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "猛暑日の在宅訪問。86歳女性は利尿薬を内服しており、2日間食事・水分摂取が低下している。口腔乾燥、立位でのふらつき、尿量減少、血圧96/60mmHgを認める。最も適切な判断はどれか。",
+      "explanation": {
+        "answer": "B. 脱水・循環血液量減少と腎前性AKIを疑い、摂取量・尿量・薬剤・腎機能を含め早期評価する。",
+        "question_intent": "在宅の「食べない・飲まない」を腎障害リスクまでつなげられるか。",
+        "reasoning": "暑熱＋利尿薬＋摂取低下＋低血圧＋乏尿＝循環血液量減少を疑う。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "incorrect",
+            "reason": "誤り。脱水に浮腫は不要である。",
+            "correction_condition": "Aが正しくなる条件はむしろ体液過剰を示す所見が優位の場合であり、「浮腫なし＝脱水否定」にはならない。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "correct",
+            "reason": "正しい。脱水とAKIリスクを統合して評価する。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "incorrect",
+            "reason": "誤り。高齢者では口渇感が低下し得る。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "incorrect",
+            "reason": "誤り。急な乏尿は重要な病的所見。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: WHO ICOPE 2025は高齢者の脱水原因として口渇低下、糖尿病、腎機能障害、嚥下障害、移動能力低下、利尿薬等を挙げる。\ncomparisonText: 心不全うっ血では体重増加・浮腫・起坐呼吸、脱水では体重減少・口腔乾燥・起立症状・乏尿が手がかり。\ncommonMistakes: 本人の口渇訴えが乏しいことを安心材料にしない。\ncorrectionConditions: Aが正しくなる条件はむしろ体液過剰を示す所見が優位の場合であり、「浮腫なし＝脱水否定」にはならない。",
+        "key_points": "高齢者の脱水は口渇より摂取・尿量・循環所見で拾う。",
+        "references": "WHO ICOPE 2nd ed. 2025 / 日本腎臓学会 AKI関連資料 / 【2026-09-26 中心論点の外部照合】NICE急性腎障害 NG148: https://www.nice.org.uk/guidance/ng148/chapter/Recommendations",
+        "mnemonic": "「高齢者は喉が渇かなくても脱水する」",
+        "source_explanation_raw": "高齢者では口渇感低下や腎予備能低下があり、暑熱、摂取低下、利尿薬で脱水しやすい。低血圧、尿量減少は腎灌流低下を示し、腎前性AKIへ進む可能性がある。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:10",
+        "original-id:PRED-DISEASE-SIT-005",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 2,
+      "choices": [
+        "浮腫がないため脱水は否定できる。",
+        "脱水・循環血液量減少と腎前性AKIを疑い、摂取量・尿量・薬剤・腎機能を含め早期評価する。",
+        "高齢者は口渇を強く感じるため本人が喉の渇きを訴えなければ脱水ではない。",
+        "尿量減少は加齢による正常変化なので評価不要である。"
+      ],
+      "correctChoiceIndexes": [
+        1
+      ]
+    },
+    {
+      "id": "PRED-DISEASE-SIT-006",
+      "subject": "疾病・臨床病態概論：状況別",
+      "unit": "在宅医療・急変対応",
+      "topic": "在宅での低血糖初期対応",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "インスリン治療中の糖尿病患者。訪問時、冷汗と手指振戦があり血糖54mg/dL。意識は清明で安全に嚥下できる。最も適切な初期対応はどれか。",
+      "explanation": {
+        "answer": "A. 速やかに吸収される糖質を摂取させ、一定時間後に血糖と症状を再評価する。",
+        "question_intent": "低血糖時に「嚥下可能か」で経口治療と救急対応を分けられるか。",
+        "reasoning": "血糖54＋交感神経症状＋意識清明なので経口糖質補充が適切。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "correct",
+            "reason": "正しい。経口糖質補充後に再評価する。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "incorrect",
+            "reason": "誤り。症候性低血糖は速やかに治療する。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "incorrect",
+            "reason": "誤り。脂質は吸収が遅く初期補正に不向き。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "incorrect",
+            "reason": "誤り。低血糖時に運動継続は危険。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: 低血糖の原因として食事不足、インスリン・SU薬、運動、飲酒、腎機能低下などを確認し再発予防につなげる。\ncomparisonText: 意識清明＝経口糖質、意識障害＝誤嚥を避け救急・非経口治療。\ncommonMistakes: 意識障害患者へ飲食物を無理に口から入れない。\ncorrectionConditions: 経口糖質が不適切なのは意識障害や嚥下不良がある場合。",
+        "key_points": "低血糖は「糖を入れる→再測定→原因確認」。",
+        "references": "Resuscitation Council UK 2025 First Aid Guidelines / ADA Standards of Care in Diabetes 2026 / https://doi.org/10.2337/dc26-s006",
+        "mnemonic": "「低血糖は15分で再確認」",
+        "source_explanation_raw": "意識があり安全に嚥下できる低血糖では、速やかに吸収される糖質を摂取し、15分程度を目安に再評価する考え方が基本である。意識障害がある場合は経口投与を避け、救急対応を行う。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:10",
+        "original-id:PRED-DISEASE-SIT-006",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 1,
+      "choices": [
+        "速やかに吸収される糖質を摂取させ、一定時間後に血糖と症状を再評価する。",
+        "意識が清明でも何も摂取せず翌朝まで待つ。",
+        "低血糖時は必ず大量の脂質を摂取させる。",
+        "血糖が70mg/dL未満でも症状があれば運動を継続する。"
+      ],
+      "correctChoiceIndexes": [
+        0
+      ]
+    },
+    {
+      "id": "PRED-DISEASE-SIT-007",
+      "subject": "疾病・臨床病態概論：状況別",
+      "unit": "在宅医療・急変対応",
+      "topic": "在宅緩和ケアの急な呼吸困難",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "進行がんで在宅療養中。本人は「可能なら自宅で過ごしたい」と希望している。夜間に呼吸困難が増悪し、家族が強い不安を訴えている。最も適切な対応はどれか。",
+      "explanation": {
+        "answer": "C. 呼吸困難の重症度と可逆的原因、本人の意思・事前の緊急時計画を確認し、症状緩和と必要な連絡・搬送判断を行う。",
+        "question_intent": "在宅の場所ではなく、本人の目標と現在の緊急性を統合できるか。",
+        "reasoning": "まず呼吸困難そのものを評価し、次に本人の希望と既存計画を確認する。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "incorrect",
+            "reason": "誤り。緊急性があれば連絡・評価が必要。",
+            "correction_condition": "Aが適切になるのは、本人が十分な説明のもと特定の介入を望まず、在宅症状緩和体制が具体的に整っている場合でも「連絡不要」とは限らない。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "incorrect",
+            "reason": "誤り。家族支援は在宅継続可能性に直結する。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "correct",
+            "reason": "正しい。病態＋目標＋家族支援を統合する。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "incorrect",
+            "reason": "誤り。終末期でも苦痛症状の評価と緩和は継続する。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: ACPは将来の医療・ケアについて本人を主体に家族・医療者が繰り返し話し合うプロセスで、治療拒否の同義語ではない。\ncomparisonText: 「自宅で過ごしたい」と「救急治療を一切受けない」は同義ではない。\ncommonMistakes: ACPがあるから救命処置禁止、と短絡しない。\ncorrectionConditions: Aが適切になるのは、本人が十分な説明のもと特定の介入を望まず、在宅症状緩和体制が具体的に整っている場合でも「連絡不要」とは限らない。",
+        "key_points": "在宅緩和は「症状＋本人の目標＋家族支援＋緊急時計画」。",
+        "references": "厚生労働省 人生会議（ACP）資料 / WHO Palliative Care",
+        "mnemonic": "「場所より目標、目標よりまず苦痛評価」",
+        "source_explanation_raw": "在宅緩和ケアでは「自宅希望＝搬送しない」と機械的に決めない。苦痛の程度、可逆的原因、意思決定能力、本人の価値観、ACP、家族の介護力を確認し、症状緩和と緊急時方針を共有する。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:10",
+        "original-id:PRED-DISEASE-SIT-007",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 1,
+      "choices": [
+        "本人が在宅希望なので、どの程度の呼吸困難でも医療者へ連絡しない。",
+        "家族の不安は医学的判断に関係しないため評価しない。",
+        "呼吸困難の重症度と可逆的原因、本人の意思・事前の緊急時計画を確認し、症状緩和と必要な連絡・搬送判断を行う。",
+        "終末期では新しい症状の評価は不要である。"
+      ],
+      "correctChoiceIndexes": [
+        2
+      ]
+    },
+    {
+      "id": "PRED-DISEASE-SIT-008",
+      "subject": "疾病・臨床病態概論：状況別",
+      "unit": "在宅医療・急変対応",
+      "topic": "在宅高齢者の急性せん妄",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "普段は会話が成立する83歳女性が、朝から急に話がかみ合わず夜間に落ち着かなくなった。体温37.7℃、SpO2 92%、食事摂取低下がある。最も適切な判断はどれか。",
+      "explanation": {
+        "answer": "D. 急性せん妄を疑い、感染、低酸素、脱水、薬剤、低血糖など可逆的原因を系統的に評価する。",
+        "question_intent": "急性の認知変化を「認知症」ではなく症候として評価できるか。",
+        "reasoning": "時間軸が「朝から急に」であることが最重要。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "incorrect",
+            "reason": "誤り。認知症は通常慢性進行性で、一晩の急変はせん妄を考える。",
+            "correction_condition": "Aが正しくなるのは月〜年単位で進行する持続的認知機能低下が中心の場合。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "incorrect",
+            "reason": "誤り。急性変化は病態悪化のサイン。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "incorrect",
+            "reason": "誤り。まず身体要因を評価する。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "correct",
+            "reason": "正しい。せん妄の基本アプローチである。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: 高齢者では感染が高熱を伴わないこともあり、頻呼吸、低酸素、食欲低下、機能低下を重視する。\ncomparisonText: せん妄＝急性・変動、認知症＝慢性・持続。両者は併存し得る。\ncommonMistakes: 不穏だけを鎮静する前に原因検索を行う。\ncorrectionConditions: Aが正しくなるのは月〜年単位で進行する持続的認知機能低下が中心の場合。",
+        "key_points": "高齢者の急な「いつもと違う」はせん妄として身体原因を探す。",
+        "references": "WHO ICOPE 2nd ed. 2025 / Resuscitation Council UK ABCDE Approach / 【2026-09-26 中心論点の外部照合】NICEせん妄 CG103: https://www.nice.org.uk/guidance/cg103/chapter/Recommendations",
+        "mnemonic": "「急に変わったら、脳より先に全身を見る」",
+        "source_explanation_raw": "せん妄は急性発症・変動性の注意障害を特徴とし、高齢者では感染、低酸素、脱水、薬剤、代謝異常などの身体疾患が原因となる。急な認知・行動変化を慢性認知症として扱わない。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:10",
+        "original-id:PRED-DISEASE-SIT-008",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 2,
+      "choices": [
+        "認知症が一晩で急速に進行したと判断する。",
+        "高齢者ではよくあるため評価せず様子を見る。",
+        "精神疾患だけを疑い身体評価は不要である。",
+        "急性せん妄を疑い、感染、低酸素、脱水、薬剤、低血糖など可逆的原因を系統的に評価する。"
+      ],
+      "correctChoiceIndexes": [
+        3
+      ]
+    },
+    {
+      "id": "PRED-DISEASE-SIT-009",
+      "subject": "疾病・臨床病態概論：状況別",
+      "unit": "在宅医療・急変対応",
+      "topic": "薬剤性起立性低血圧と転倒",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "独居の82歳男性。最近降圧薬と利尿薬が追加され、その後立ち上がるとふらつき、1週間で2回転倒した。臥位血圧128/72mmHg、立位で96/58mmHgまで低下する。最も適切な対応はどれか。",
+      "explanation": {
+        "answer": "A. 起立性低血圧を疑い、薬剤、脱水、貧血、心疾患、環境要因を含め転倒リスクを総合評価する。",
+        "question_intent": "転倒を単一原因ではなく「病態＋薬剤＋環境」で分析できるか。",
+        "reasoning": "薬剤追加との時間関係と立位血圧低下がヒント。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "correct",
+            "reason": "正しい。多因子評価が必要。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "incorrect",
+            "reason": "誤り。薬剤は重要な可逆的因子。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "incorrect",
+            "reason": "誤り。症状がある場合は臥位・立位で比較する。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "incorrect",
+            "reason": "誤り。自己中止ではなく処方者と調整する。",
+            "correction_condition": "Dが適切になるのは医師が有害事象と判断し中止・減量を指示した場合。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: WHO ICOPEでは移動能力、認知、栄養、薬剤、社会支援などを包括的にみる。\ncomparisonText: 転倒は筋力低下だけでなく、低血圧、薬剤、視覚、環境など多因子である。\ncommonMistakes: 正常な臥位血圧だけで安全と判断しない。\ncorrectionConditions: Dが適切になるのは医師が有害事象と判断し中止・減量を指示した場合。",
+        "key_points": "在宅転倒は「薬・脱水・血圧・環境」をセットでみる。",
+        "references": "WHO ICOPE 2nd ed. 2025 / 日本老年医学会 高齢者薬物療法関連資料 / 【2026-09-26 中心論点の外部照合】AAFP起立性低血圧レビュー: https://www.aafp.org/afp/2022/0100/p39",
+        "mnemonic": "「転倒は足元だけでなく薬箱も見る」",
+        "source_explanation_raw": "薬剤追加後の立位症状と血圧低下は起立性低血圧を示唆する。在宅では薬剤だけでなく脱水、貧血、自律神経障害、心疾患、視力、履物、住環境を統合して転倒原因を評価する。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:10",
+        "original-id:PRED-DISEASE-SIT-009",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 2,
+      "choices": [
+        "起立性低血圧を疑い、薬剤、脱水、貧血、心疾患、環境要因を含め転倒リスクを総合評価する。",
+        "転倒は加齢のため薬剤との関連を検討しない。",
+        "立位血圧は測定せず臥位血圧だけで評価する。",
+        "転倒予防のため全ての降圧薬を自己判断で中止する。"
+      ],
+      "correctChoiceIndexes": [
+        0
+      ]
+    },
+    {
+      "id": "PRED-DISEASE-SIT-010",
+      "subject": "疾病・臨床病態概論：状況別",
+      "unit": "在宅医療・急変対応",
+      "topic": "在宅心不全患者の過度な利尿",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "慢性心不全で在宅療養中の80歳男性。利尿薬増量後3日で体重が3kg減少し、起立時めまい、口腔乾燥、血圧88/54mmHg、尿量減少を認める。浮腫や起坐呼吸は改善している。最も適切な判断はどれか。",
+      "explanation": {
+        "answer": "B. 過度な体液減少による低血圧・腎前性AKIを疑い、早期に処方者へ連絡して循環・腎機能を再評価する。",
+        "question_intent": "「体重増加＝うっ血」だけでなく治療過剰も判断できるか。",
+        "reasoning": "うっ血症状が改善した後に低血圧・乾燥・乏尿が出ているため体液不足を考える。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "incorrect",
+            "reason": "誤り。急速な体重減少と循環不全は有害。",
+            "correction_condition": "Aが正しいのは適切な速度でうっ血が改善し、血圧・腎機能・症状が安定している場合。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "correct",
+            "reason": "正しい。過剰利尿とAKIリスクを評価する。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "incorrect",
+            "reason": "誤り。低血圧は臓器灌流低下につながる。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "incorrect",
+            "reason": "誤り。乏尿は腎灌流低下の警告所見。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: 在宅心不全では体重増加だけでなく急激な体重減少、血圧、尿量、食欲、腎機能も追跡する。\ncomparisonText: うっ血＝体重増加・浮腫・起坐呼吸、過剰利尿＝急速体重減少・低血圧・乏尿。\ncommonMistakes: 「体重が減った＝必ず良い」と覚えない。\ncorrectionConditions: Aが正しいのは適切な速度でうっ血が改善し、血圧・腎機能・症状が安定している場合。",
+        "key_points": "心不全の体重は増えすぎも減りすぎも警告。",
+        "references": "American Heart Association Heart Failure Symptom Management / WHO ICOPE 2nd ed. 2025 / 【2026-09-26 中心論点の外部照合】NICE急性腎障害 NG148: https://www.nice.org.uk/guidance/ng148/chapter/Recommendations / 2022 AHA/ACC/HFSA心不全ガイドライン: https://www.jacc.org/doi/10.1016/j.jacc.2021.12.012",
+        "mnemonic": "「除水は、減らして終わりではなく灌流を見る」",
+        "source_explanation_raw": "心不全の体液管理では「うっ血を減らす」一方で、過度な利尿による脱水、低血圧、腎灌流低下を避ける必要がある。短期間の著明な体重減少、めまい、乾燥、乏尿、低血圧は過剰な除水を疑う。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:10",
+        "original-id:PRED-DISEASE-SIT-010",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 2,
+      "choices": [
+        "心不全は体重が減るほど治療成功なので何もしない。",
+        "過度な体液減少による低血圧・腎前性AKIを疑い、早期に処方者へ連絡して循環・腎機能を再評価する。",
+        "浮腫が改善したので低血圧は無視する。",
+        "尿量減少は利尿薬が効いている証拠なので増量する。"
+      ],
+      "correctChoiceIndexes": [
+        1
+      ]
+    },
+    {
+      "id": "PRED-DISEASE-SIT-011",
+      "subject": "疾病・臨床病態概論：状況別",
+      "unit": "在宅医療・急変対応",
+      "topic": "在宅介護者負担と安全支援",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S",
+      "prompt": "認知症と心不全をもつ在宅患者。主介護者の娘が「眠れず限界で、薬の準備も間違えることがある」と訴える。患者の病状は現在安定している。最も適切な対応はどれか。",
+      "explanation": {
+        "answer": "C. 介護負担と安全リスクを評価し、訪問看護・薬剤師・ケアマネジャー・レスパイト等の支援を調整する。",
+        "question_intent": "在宅医療で介護者負担を「患者以外の問題」と切り離さないか。",
+        "reasoning": "薬の準備ミスが出ており、既に安全問題へ波及している。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "incorrect",
+            "reason": "誤り。家族の限界は患者安全に直結する。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "incorrect",
+            "reason": "誤り。責めるよりシステムを整える。",
+            "correction_condition": "Bが適切なのは単純な説明不足が主因でも、責任追及ではなく教育・支援と組み合わせる場合。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "correct",
+            "reason": "正しい。介護力を評価し社会資源へつなぐ。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "incorrect",
+            "reason": "誤り。支援を使うことは在宅継続の重要条件。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: ICOPEは高齢者本人だけでなく社会的支援・介護者支援も重視する。\ncomparisonText: 個人の努力強化より、薬剤一包化、訪問支援、レスパイトなどシステム改善が重要。\ncommonMistakes: 介護者を責めるアプローチは問題を隠す可能性がある。\ncorrectionConditions: Bが適切なのは単純な説明不足が主因でも、責任追及ではなく教育・支援と組み合わせる場合。",
+        "key_points": "在宅安全は「患者＋介護者＋支援体制」。",
+        "references": "WHO ICOPE 2nd ed. 2025 / WHO Palliative Care",
+        "mnemonic": "「介護者の限界は患者のバイタルの一つ」",
+        "source_explanation_raw": "在宅療養の安全は患者の病態だけでなく介護者の能力・疲労・支援体制に依存する。介護者負担が服薬ミスや緊急対応遅延につながる場合、多職種で支援を再設計する。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:10",
+        "original-id:PRED-DISEASE-SIT-011",
+        "prediction-v2.0",
+        "importance:S"
+      ],
+      "revision": 1,
+      "choices": [
+        "患者のバイタルが安定しているので家族支援は不要である。",
+        "服薬ミスは家族の責任として注意だけ行う。",
+        "介護負担と安全リスクを評価し、訪問看護・薬剤師・ケアマネジャー・レスパイト等の支援を調整する。",
+        "在宅療養を続けるなら家族は支援を求めるべきではない。"
+      ],
+      "correctChoiceIndexes": [
+        2
+      ]
+    },
+    {
+      "id": "PRED-DISEASE-SIT-012",
+      "subject": "疾病・臨床病態概論：状況別",
+      "unit": "在宅医療・急変対応",
+      "topic": "在宅での発熱性好中球減少症",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "化学療法後7日目の患者が在宅療養中。38.4℃の発熱と悪寒があるが、咳や排尿痛など感染巣ははっきりしない。前回採血で好中球減少が予測されている。最も適切な対応はどれか。",
+      "explanation": {
+        "answer": "A. 発熱性好中球減少症を疑い、緊急に医療機関へ連絡・受診して血算、培養、経験的抗菌薬の必要性を評価する。",
+        "question_intent": "「感染巣なし」を安心材料にせず免疫抑制背景を重視できるか。",
+        "reasoning": "化学療法後＋発熱＋好中球減少予測＝FNを先に考える。\n【Phase4直接根拠照合】化学療法後の38.4℃の発熱は、好中球数が未確認でも発熱性好中球減少症を疑い緊急評価が必要。至急受診し血算や培養を実施し、確定を待ちすぎず経験的抗菌薬の適応を判断する。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "correct",
+            "reason": "正しい。FNを疑い、緊急評価と経験的抗菌薬治療の必要性を判断する。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "incorrect",
+            "reason": "誤り。FNは時間依存性であり自宅待機しない。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "incorrect",
+            "reason": "誤り。炎症反応が乏しいまま重症化することがある。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "incorrect",
+            "reason": "誤り。38℃台でもFNを考える。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: 化学療法後の発熱では投与日からの時期、好中球数、中心静脈カテーテル、粘膜障害、全身状態を確認する。\ncomparisonText: 免疫正常者では局所炎症所見が手がかりになるが、好中球減少では所見が乏しいことがある。\ncommonMistakes: 解熱しても感染症が否定されたわけではない。\ncorrectionConditions: Aが適切なのは好中球減少がなく、低リスクの非感染性発熱と医療者が判断した場合。",
+        "key_points": "化学療法後の発熱は「感染巣がなくてもFN」。",
+        "references": "ASCO/IDSA Febrile Neutropenia guidance / 国立がん研究センター がん情報サービス\n【Phase4確認資料】ASCO/IDSA (2018), Outpatient Management of Fever and Neutropenia in Adults Treated for Malignancy: https://www.idsociety.org/practice-guideline/fever-and-neutropenia-in-adults-with-cancer/",
+        "mnemonic": "「好中球が少ないほど、炎症所見も少ない」",
+        "source_explanation_raw": "好中球減少時の発熱は明確な感染巣がなくても重症感染の初期徴候となり得る。炎症所見が乏しいこともあるため、治療開始を遅らせず緊急評価につなげる。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:10",
+        "original-id:PRED-DISEASE-SIT-012",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 1,
+      "choices": [
+        "発熱性好中球減少症を疑い、緊急に医療機関へ連絡・受診して血算、培養、経験的抗菌薬の必要性を評価する。",
+        "感染巣が不明なので解熱薬だけで2日間様子を見る。",
+        "好中球減少中は炎症反応が強く出るため重症化しにくい。",
+        "発熱が39℃を超えるまで感染症は考えない。"
+      ],
+      "correctChoiceIndexes": [
+        0
+      ]
+    },
+    {
+      "id": "PRED-DISEASE-SIT-013",
+      "subject": "疾病・臨床病態概論：状況別",
+      "unit": "在宅医療・急変対応",
+      "topic": "在宅フレイル・低栄養の総合評価",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S",
+      "prompt": "87歳女性。半年で6kg体重減少し、歩行速度低下、握力低下、疲れやすさがあり、最近は買い物が難しく食事回数も減っている。最も適切な対応はどれか。",
+      "explanation": {
+        "answer": "A. フレイル・低栄養を疑い、身体機能、栄養、口腔・嚥下、認知、薬剤、社会支援を包括的に評価する。",
+        "question_intent": "病名ではなく機能・生活の低下を評価できるか。",
+        "reasoning": "半年6kg減＋歩行/握力低下＋食事アクセス低下が複数領域にまたがる。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "correct",
+            "reason": "正しい。ICOPEの考え方に沿う包括評価。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "incorrect",
+            "reason": "誤り。意図しない体重減少は赤旗。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "incorrect",
+            "reason": "誤り。栄養・社会要因も重要。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "incorrect",
+            "reason": "誤り。BMIだけでは最近の体重減少や筋量低下を捉えきれない。",
+            "correction_condition": "Dが参考になるのは体重推移・筋量・摂取量など他指標も併用した場合。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: フレイルは可逆性を含むため早期介入が重要で、運動・栄養・社会参加など多面的介入を検討する。\ncomparisonText: サルコペニアは筋量・筋力中心、フレイルは身体・心理・社会を含む脆弱性。\ncommonMistakes: BMI単独で栄養状態を判断しない。\ncorrectionConditions: Dが参考になるのは体重推移・筋量・摂取量など他指標も併用した場合。",
+        "key_points": "フレイルは「体重・筋力・歩行・食事・暮らし」を見る。",
+        "references": "WHO ICOPE 2nd ed. 2025 / 日本老年医学会 フレイル関連資料",
+        "mnemonic": "「痩せた、遅い、弱い、疲れる、動かない」",
+        "source_explanation_raw": "体重減少、筋力・歩行速度低下、疲労、活動性低下はフレイルを示唆する。在宅では食料アクセス、口腔・嚥下、抑うつ、認知、薬剤、独居・経済状況など原因を統合する。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:10",
+        "original-id:PRED-DISEASE-SIT-013",
+        "prediction-v2.0",
+        "importance:S"
+      ],
+      "revision": 1,
+      "choices": [
+        "フレイル・低栄養を疑い、身体機能、栄養、口腔・嚥下、認知、薬剤、社会支援を包括的に評価する。",
+        "体重減少は高齢者では正常なので評価しない。",
+        "筋力低下だけを訓練し食事や生活環境は評価しない。",
+        "BMIが正常範囲なら低栄養は否定できる。"
+      ],
+      "correctChoiceIndexes": [
+        0
+      ]
+    },
+    {
+      "id": "PRED-DISEASE-SIT-014",
+      "subject": "疾病・臨床病態概論：状況別",
+      "unit": "在宅医療・急変対応",
+      "topic": "在宅での腸閉塞Red Flag",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "腹部手術歴のある76歳男性。自宅で2日間排便・排ガスがなく、腹部膨満と間欠的腹痛が増悪し、今朝から胆汁様嘔吐を繰り返している。最も適切な判断はどれか。",
+      "explanation": {
+        "answer": "B. 腸閉塞を疑い、脱水・絞扼の可能性を含め緊急の医療評価につなげる。",
+        "question_intent": "便秘と腸閉塞を症状の組合せで区別できるか。",
+        "reasoning": "「便もガスも出ない＋膨満＋嘔吐」が機械的閉塞を示唆する。\n【Phase4直接根拠照合】術後の腹部膨満・疝痛・排便排ガス停止・嘔吐の組合せでは癒着性小腸閉塞などを疑う。緊急の脱水・腹膜刺激・絞扼・虚血評価につなげるが、疑い例の全員に直ちに手術が必要という意味ではない。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "incorrect",
+            "reason": "誤り。閉塞が疑われる状況で漫然と下剤追加しない。",
+            "correction_condition": "Aが適切なのは閉塞徴候がなく、慢性便秘として評価済みの場合。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "correct",
+            "reason": "正しい。緊急評価が必要。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "incorrect",
+            "reason": "誤り。嘔吐は腸閉塞の重要症状。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "incorrect",
+            "reason": "誤り。膨満は閉塞評価に重要。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: 在宅では腹部所見だけでなく水分摂取、尿量、バイタル、腹部手術歴、ヘルニア、薬剤を確認する。\ncomparisonText: 単純便秘は全身状態が保たれることが多いが、腸閉塞は嘔吐・膨満・脱水・絞扼リスクを伴う。\ncommonMistakes: 「便秘患者だから便秘」とアンカリングしない。\ncorrectionConditions: Aが適切なのは閉塞徴候がなく、慢性便秘として評価済みの場合。",
+        "key_points": "排便・排ガス停止＋膨満＋嘔吐＝腸閉塞を疑う。",
+        "references": "日本腹部救急医学会関連資料 / Resuscitation Council UK ABCDE Approach\n【Phase4確認資料】WSES (2017/2018), Bologna guidelines for adhesive small bowel obstruction: https://pmc.ncbi.nlm.nih.gov/articles/PMC6006983/",
+        "mnemonic": "「便秘＋吐く＋張るは、下剤の前に閉塞」",
+        "source_explanation_raw": "手術歴は癒着性腸閉塞のリスクである。排便・排ガス停止、膨満、間欠的腹痛、嘔吐は典型的で、持続痛、発熱、腹膜刺激、乳酸上昇などがあれば絞扼・虚血を疑う。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:10",
+        "original-id:PRED-DISEASE-SIT-014",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 1,
+      "choices": [
+        "慢性便秘として下剤を追加し1週間観察する。",
+        "腸閉塞を疑い、脱水・絞扼の可能性を含め緊急の医療評価につなげる。",
+        "嘔吐があるため腸閉塞は否定できる。",
+        "排便がないだけなら腹部膨満は評価しない。"
+      ],
+      "correctChoiceIndexes": [
+        1
+      ]
+    },
+    {
+      "id": "PRED-DISEASE-SIT-015",
+      "subject": "疾病・臨床病態概論：状況別",
+      "unit": "在宅医療・急変対応",
+      "topic": "在宅での腎盂腎炎・敗血症判断",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "在宅療養中の78歳女性。発熱39.0℃、悪寒、右側腹部痛、CVA叩打痛があり、血圧88/54mmHg、呼吸数30/分、ぼんやりしている。最も適切な対応はどれか。",
+      "explanation": {
+        "answer": "C. 腎盂腎炎を感染源とする敗血症を疑い、救急搬送して蘇生・培養・抗菌薬を含む迅速評価につなげる。",
+        "question_intent": "感染源と全身重症度を同時に評価できるか。",
+        "reasoning": "感染症状に「低血圧＋RR30＋意識変容」が加わるため緊急度が高い。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "incorrect",
+            "reason": "誤り。上部尿路感染＋ショック所見。",
+            "correction_condition": "Aが正しいのは単純性膀胱炎で全身症状・重症所見がない場合。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "incorrect",
+            "reason": "誤り。低血圧は高齢者でも重症所見。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "correct",
+            "reason": "正しい。敗血症として緊急対応する。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "incorrect",
+            "reason": "誤り。CVA叩打痛は感染源の手がかりで、敗血症を否定しない。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: SSC 2026は敗血症を単一スコア・単一検査でrule in/outせず、臨床診断として早期蘇生・感染治療を開始することを強調する。\ncomparisonText: 膀胱炎＝局所症状中心、腎盂腎炎＝発熱・側腹部痛、敗血症＝臓器障害・灌流異常を伴う。\ncommonMistakes: 「尿路感染だから軽い」と考えない。\ncorrectionConditions: Aが正しいのは単純性膀胱炎で全身症状・重症所見がない場合。",
+        "key_points": "感染＋低血圧/頻呼吸/意識変化＝敗血症を疑う。",
+        "references": "Surviving Sepsis Campaign 2026 / IDSA complicated UTI guidance / 【2026-09-26 中心論点の外部照合】Surviving Sepsis Campaign成人版2026: https://sccm.org/clinical-resources/guidelines/guidelines/surviving-sepsis-campaign-international-guidelines-for-management-of-sepsis-and-septic-shock-2026 / IDSA 2025複雑性尿路感染症: https://www.idsociety.org/~/link/bc125f1fa47a47b7913b884cd368e8a0.aspx",
+        "mnemonic": "「在宅でも敗血症は待たない」",
+        "source_explanation_raw": "発熱、悪寒、側腹部痛、CVA叩打痛は腎盂腎炎を示唆し、低血圧、頻呼吸、意識変容は臓器灌流不全を疑う。敗血症は医療緊急事態であり、在宅で確定診断を待たない。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:10",
+        "original-id:PRED-DISEASE-SIT-015",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 2,
+      "choices": [
+        "下部尿路感染として水分摂取だけで経過を見る。",
+        "血圧が低いが高齢者では正常なので翌日受診とする。",
+        "腎盂腎炎を感染源とする敗血症を疑い、救急搬送して蘇生・培養・抗菌薬を含む迅速評価につなげる。",
+        "CVA叩打痛があれば敗血症は否定できる。"
+      ],
+      "correctChoiceIndexes": [
+        2
+      ]
+    },
+    {
+      "id": "PRED-DISEASE-SIT-016",
+      "subject": "疾病・臨床病態概論：状況別",
+      "unit": "救急初期診療・ABCDE",
+      "topic": "気道熱傷と早期気道確保",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "閉鎖空間の火災から救出された患者。顔面熱傷、鼻毛の焼け、嗄声、口腔内煤付着を認める。現在SpO2 97%で会話可能である。最も適切な判断はどれか。",
+      "explanation": {
+        "answer": "D. 進行する上気道浮腫を想定し、早期に専門的気道評価・確保の準備を行う。",
+        "question_intent": "「今は通っている気道」が将来も安全とは限らないことを判断できるか。",
+        "reasoning": "閉鎖空間火災＋嗄声＋煤付着＝気道浮腫リスクが高い。\n【Phase4直接根拠照合】閉鎖空間火災、嗄声、口腔内煤は吸入熱傷を疑う複数の所見であり、気道浮腫の進行に備えて早期に専門的気道評価・確保準備を行う。鼻毛の焼け単独や一見正常なSpO₂だけでは挿管要否を決められない。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "incorrect",
+            "reason": "誤り。SpO2正常で気道浮腫を除外できない。",
+            "correction_condition": "Aが正しいのは気道・呼吸評価が正常で吸入損傷を示す所見が十分に否定された場合でも断定は慎重にする。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "incorrect",
+            "reason": "誤り。浮腫は進行し得る。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "incorrect",
+            "reason": "誤り。胸部X線は上気道浮腫の安全性を保証しない。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "correct",
+            "reason": "正しい。早期気道戦略が重要。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: ABCDEではAの生命危機を発見したらB以降を待たず対応する。吸入損傷では一酸化炭素中毒なども評価する。\ncomparisonText: 単純顔面熱傷と吸入損傷は、嗄声・stridor・煤・口腔咽頭所見などで区別する。\ncommonMistakes: 正常SpO2を気道安全の指標にしない。\ncorrectionConditions: Aが正しいのは気道・呼吸評価が正常で吸入損傷を示す所見が十分に否定された場合でも断定は慎重にする。\n【過剰な一般化を避ける】顔面熱傷や鼻毛焼損のみで全員に挿管するわけではない。嗄声・煤付着・閉鎖空間火災を併せ持つ本症例は、気道浮腫を見越した早期の熟練者による気道評価と気道確保の準備が必要である。",
+        "key_points": "気道熱傷は「詰まってから挿管」では遅いことがある。",
+        "references": "Resuscitation Council UK 2025 Guidelines / European Resuscitation Council 2025\n【Phase4確認資料】Japanese Society for Burn Injuries (2022), Burn Care Clinical Practice Guidelines, 3rd edition: https://doi.org/10.1002/ams2.739\nInternational expert consensus (2023), Burn inhalation injury: https://pmc.ncbi.nlm.nih.gov/articles/PMC10680253/",
+        "mnemonic": "「煤＋嗄声＝気道を先回り」",
+        "source_explanation_raw": "吸入損傷では初期に会話可能・SpO2正常でも、時間経過とともに上気道浮腫が進行し挿管が困難になることがある。嗄声、顔面熱傷、煤付着などはAの赤旗である。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:10",
+        "original-id:PRED-DISEASE-SIT-016",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 2,
+      "choices": [
+        "SpO2が正常なので気道熱傷は否定する。",
+        "会話可能なら気道浮腫は進行しない。",
+        "胸部X線が正常なら翌日まで待つ。",
+        "進行する上気道浮腫を想定し、早期に専門的気道評価・確保の準備を行う。"
+      ],
+      "correctChoiceIndexes": [
+        3
+      ]
+    },
+    {
+      "id": "PRED-DISEASE-SIT-017",
+      "subject": "疾病・臨床病態概論：状況別",
+      "unit": "救急初期診療・ABCDE",
+      "topic": "皮膚所見のないアナフィラキシー",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "抗菌薬投与直後、患者が突然喘鳴、咽頭違和感、血圧72/40mmHgを呈した。皮疹や蕁麻疹は認めない。最も適切な対応はどれか。",
+      "explanation": {
+        "answer": "A. 皮膚所見がなくてもアナフィラキシーを疑い、筋肉内アドレナリンを速やかに投与しABCDEで対応する。",
+        "question_intent": "アナフィラキシー診断に皮疹が必須ではないことを理解しているか。",
+        "reasoning": "投薬直後＋喘鳴＋咽頭症状＋ショックで診断を急ぐ。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "correct",
+            "reason": "正しい。皮膚所見は必須ではない。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "incorrect",
+            "reason": "誤り。皮疹出現を待つと治療が遅れる。",
+            "correction_condition": "Bが適切になる状況はない。ABC障害がある場合は皮疹待ちは不適切。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "incorrect",
+            "reason": "誤り。ステロイドはアドレナリンの代替ではない。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "incorrect",
+            "reason": "誤り。時間的関連とABC障害から薬剤誘発を疑う。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: RCUK 2025はアナフィラキシーを「皮膚変化の有無にかかわらずABC障害」で認識し、疑った時点でIM adrenalineを推奨する。\ncomparisonText: 軽いアレルギー＝皮膚症状中心、アナフィラキシー＝A/B/C障害。\ncommonMistakes: 皮疹がないからアナフィラキシーを除外しない。\ncorrectionConditions: Bが適切になる状況はない。ABC障害がある場合は皮疹待ちは不適切。",
+        "key_points": "アナフィラキシー＝皮疹ではなくABCで判断。",
+        "references": "Resuscitation Council UK 2025 Special Circumstances Guidelines / 【2026-09-26 中心論点の外部照合】Resuscitation Council UK アナフィラキシー: https://www.resus.org.uk/library/additional-guidance/guidance-anaphylaxis/emergency-treatment-anaphylactic-reactions",
+        "mnemonic": "「皮疹ゼロでもABCが崩れたらアナフィラキシー」",
+        "source_explanation_raw": "アナフィラキシーは皮膚・粘膜所見がなくても、急性の気道・呼吸・循環障害が適切な誘因後に出現すれば疑う。第一選択は筋注アドレナリンである。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:10",
+        "original-id:PRED-DISEASE-SIT-017",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 2,
+      "choices": [
+        "皮膚所見がなくてもアナフィラキシーを疑い、筋肉内アドレナリンを速やかに投与しABCDEで対応する。",
+        "蕁麻疹が出るまでアドレナリンを投与しない。",
+        "ステロイド単独を第一選択として経過を見る。",
+        "低血圧は薬剤投与と無関係と判断する。"
+      ],
+      "correctChoiceIndexes": [
+        0
+      ]
+    },
+    {
+      "id": "PRED-DISEASE-SIT-018",
+      "subject": "疾病・臨床病態概論：状況別",
+      "unit": "救急初期診療・ABCDE",
+      "topic": "緊張性気胸の臨床診断と減圧",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "交通外傷後、患者が急速に呼吸困難となり、血圧68/42mmHg、頸静脈怒張、右胸郭運動低下、右呼吸音著減を認める。最も適切な対応はどれか。",
+      "explanation": {
+        "answer": "D. 緊張性気胸を臨床的に疑い、救命のため緊急減圧を優先する。",
+        "question_intent": "ABCDEで診断確定より生理学的救命処置を優先できるか。",
+        "reasoning": "片側呼吸音低下＋ショックが決め手。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "incorrect",
+            "reason": "誤り。不安定な緊張性気胸は画像待ちにしない。",
+            "correction_condition": "Aが正しいのは患者が安定し、診断が不確実で画像による確認が治療遅延を生まない場合。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "incorrect",
+            "reason": "誤り。病歴よりB/Cの生命危機治療が先。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "incorrect",
+            "reason": "誤り。ショック患者に経口補水は不適切。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "correct",
+            "reason": "正しい。緊急減圧が必要。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: 閉塞性ショックには緊張性気胸、心タンポナーデ、重症肺血栓塞栓症などがある。\ncomparisonText: 緊張性気胸＝片側呼吸音低下、タンポナーデ＝心音・心嚢液、PE＝VTE背景と右心負荷。\ncommonMistakes: 画像を撮ること自体を目的にしない。\ncorrectionConditions: Aが正しいのは患者が安定し、診断が不確実で画像による確認が治療遅延を生まない場合。",
+        "key_points": "不安定な緊張性気胸は臨床診断で減圧。",
+        "references": "Resuscitation Council UK 2025 Special Circumstances Guidelines / 【2026-09-26 中心論点の外部照合】NICE重症外傷 NG39: https://www.nice.org.uk/guidance/ng39/chapter/Recommendations",
+        "mnemonic": "「片肺が聞こえずショックなら、CTより減圧」",
+        "source_explanation_raw": "外傷後の急速な呼吸不全、片側呼吸音低下、ショック、頸静脈怒張は緊張性気胸を強く示唆する。不安定例では画像確認のため治療を遅らせない。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:10",
+        "original-id:PRED-DISEASE-SIT-018",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 2,
+      "choices": [
+        "CTで気胸を確定するまで胸部への処置は行わない。",
+        "まず詳細なSAMPLE聴取を30分かけて行う。",
+        "低血圧なので経口補水を行う。",
+        "緊張性気胸を臨床的に疑い、救命のため緊急減圧を優先する。"
+      ],
+      "correctChoiceIndexes": [
+        3
+      ]
+    },
+    {
+      "id": "PRED-DISEASE-SIT-019",
+      "subject": "疾病・臨床病態概論：状況別",
+      "unit": "救急初期診療・ABCDE",
+      "topic": "骨盤骨折による出血性ショック",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "自動車事故後の患者。意識は不穏、脈拍132/分、血圧78/46mmHg、皮膚冷感、骨盤部痛と不安定性を認める。外出血は目立たない。最も適切な判断はどれか。",
+      "explanation": {
+        "answer": "B. 骨盤出血を疑い、止血を意識した初期蘇生と骨盤安定化、輸血・止血戦略へ迅速につなげる。",
+        "question_intent": "ショック時に外出血がなくても内出血を想起できるか。",
+        "reasoning": "骨盤不安定性＋ショック＝大量内出血を先に考える。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "incorrect",
+            "reason": "誤り。内出血は外から見えない。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "correct",
+            "reason": "正しい。骨盤出血を想定した止血蘇生が必要。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "incorrect",
+            "reason": "誤り。ショック所見を疼痛だけで説明しない。",
+            "correction_condition": "Cが正しいのは循環が安定し重篤な損傷が除外された単純疼痛の場合。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "incorrect",
+            "reason": "誤り。不必要な骨盤操作は出血を悪化させ得る。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: 外傷性出血では胸腔、腹腔、骨盤、長管骨、外出血など「隠れた出血源」を系統的に探す。\ncomparisonText: 出血性ショック＝血液量不足、閉塞性ショック＝流出/流入障害、心原性ショック＝ポンプ不全。\ncommonMistakes: 血圧だけでなく意識、皮膚、CRT、尿量など組織灌流をみる。\ncorrectionConditions: Cが正しいのは循環が安定し重篤な損傷が除外された単純疼痛の場合。",
+        "key_points": "骨盤外傷＋ショック＝見えない出血を疑う。",
+        "references": "Resuscitation Council UK 2025 First Aid/Trauma principles / ATLS primary survey principles / 【2026-09-26 中心論点の外部照合】RCUK 2025 外傷性心停止アルゴリズム: https://www.resus.org.uk/sites/default/files/2025-10/Traumatic%20cardiac%20arrest%20algorithm%202025.pdf",
+        "mnemonic": "「出血は床だけでなく体内にたまる」",
+        "source_explanation_raw": "骨盤骨折は大量の後腹膜出血を起こし得る。頻脈、低血圧、冷感、不穏は組織低灌流を示し、見える出血がなくても出血性ショックを疑う。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:10",
+        "original-id:PRED-DISEASE-SIT-019",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 2,
+      "choices": [
+        "出血が見えないため出血性ショックは否定する。",
+        "骨盤出血を疑い、止血を意識した初期蘇生と骨盤安定化、輸血・止血戦略へ迅速につなげる。",
+        "低血圧は疼痛だけで説明できるため鎮痛薬のみ投与する。",
+        "骨盤を繰り返し強く揺らして不安定性を確認する。"
+      ],
+      "correctChoiceIndexes": [
+        1
+      ]
+    },
+    {
+      "id": "PRED-DISEASE-SIT-020",
+      "subject": "疾病・臨床病態概論：状況別",
+      "unit": "救急初期診療・ABCDE",
+      "topic": "敗血症性低灌流の早期認識",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "肺炎疑いの70歳男性。血圧108/68mmHgだが、呼吸数31/分、脈拍118/分、CRT 5秒、四肢冷感、尿量低下、意識がやや鈍い。最も適切な判断はどれか。",
+      "explanation": {
+        "answer": "C. 敗血症に伴う組織低灌流を疑い、血圧以外の灌流所見も含め迅速に蘇生・感染評価を開始する。",
+        "question_intent": "「血圧がまだ正常」に惑わされず低灌流を認識できるか。",
+        "reasoning": "CRT 5秒・乏尿・意識鈍化は臓器灌流異常を示す。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "incorrect",
+            "reason": "誤り。代償期には血圧が保たれることがある。",
+            "correction_condition": "Aが正しくなるには末梢・臓器灌流所見も正常で、他のショック徴候がないことが必要。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "incorrect",
+            "reason": "誤り。血圧以外の灌流評価が重要。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "correct",
+            "reason": "正しい。早期認識と治療が必要。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "incorrect",
+            "reason": "誤り。SSC 2026はqSOFA単独でscreeningや治療開始を決めない。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: SSC 2026はNEWS/NEWS2、MEWS、SIRSをqSOFA単独より推奨し、敗血症は臨床診断で単一検査・スコアでrule in/outしないとする。\ncomparisonText: 低血圧＝遅いショック所見になり得る。末梢灌流・尿量・意識は早期変化を捉える。\ncommonMistakes: qSOFAを診断基準として暗記しない。\ncorrectionConditions: Aが正しくなるには末梢・臓器灌流所見も正常で、他のショック徴候がないことが必要。",
+        "key_points": "ショックは「血圧」ではなく「組織灌流」で見る。",
+        "references": "Surviving Sepsis Campaign 2026 / 【2026-09-26 中心論点の外部照合】Surviving Sepsis Campaign成人版2026: https://sccm.org/clinical-resources/guidelines/guidelines/surviving-sepsis-campaign-international-guidelines-for-management-of-sepsis-and-septic-shock-2026",
+        "mnemonic": "「血圧が保たれても手足と尿が教える」",
+        "source_explanation_raw": "ショック・低灌流は低血圧だけで定義できない。CRT延長、冷感、乏尿、意識変容は末梢・臓器灌流低下を示し、感染背景があれば敗血症性低灌流を疑う。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:10",
+        "original-id:PRED-DISEASE-SIT-020",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 2,
+      "choices": [
+        "収縮期血圧が100mmHgを超えるためショックは否定できる。",
+        "感染が疑われても血圧が保たれている間は乳酸や灌流評価は不要である。",
+        "敗血症に伴う組織低灌流を疑い、血圧以外の灌流所見も含め迅速に蘇生・感染評価を開始する。",
+        "qSOFAが3点になるまで敗血症治療を開始しない。"
+      ],
+      "correctChoiceIndexes": [
+        2
+      ]
+    },
+    {
+      "id": "PRED-DISEASE-SIT-021",
+      "subject": "疾病・臨床病態概論：状況別",
+      "unit": "救急初期診療・ABCDE",
+      "topic": "意識障害と低血糖の即時対応",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "救急外来に意識障害で搬送された糖尿病患者。気道は開通し呼吸・循環は保たれている。ベッドサイド血糖28mg/dLである。最も適切な対応はどれか。",
+      "explanation": {
+        "answer": "B. 低血糖を可逆的原因として直ちに治療し、反応を再評価しながら他の原因検索を並行する。",
+        "question_intent": "意識障害の可逆的原因を優先治療できるか。",
+        "reasoning": "血糖28は意識障害を十分説明でき、直ちに補正可能。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "incorrect",
+            "reason": "誤り。可逆的低血糖治療を画像待ちにしない。",
+            "correction_condition": "Aが適切なのは低血糖が否定され、神経画像が優先される状況。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "correct",
+            "reason": "正しい。治療と原因検索を並行する。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "incorrect",
+            "reason": "誤り。意識障害時は経口投与を避ける。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "incorrect",
+            "reason": "誤り。血糖は意識障害初期評価の重要項目。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: 低血糖を補正しても意識が戻らなければ脳卒中、中毒、てんかん、感染、電解質異常などを続けて評価する。\ncomparisonText: 低血糖は「診断してから治療」ではなく「測定したら治療して再評価」。\ncommonMistakes: 低血糖で説明できても他原因併存を除外しない。\ncorrectionConditions: Aが適切なのは低血糖が否定され、神経画像が優先される状況。\n【低血糖の緊急介入】血糖28mg/dLは重度低血糖で、意識障害がある場合は経口摂取を強要しない。施設の救急プロトコルに沿って静脈内ブドウ糖や適応に応じたグルカゴンで速やかに補正し、血糖値・意識・再低下を確認する。",
+        "key_points": "Dの血糖チェックは「すぐ測る・すぐ直す」。",
+        "references": "Resuscitation Council UK 2025 First Aid Guidelines / Resuscitation Council UK ABCDE Approach / 【2026-09-26 中心論点の外部照合】ADA 2026院内糖尿病治療・低血糖: https://doi.org/10.2337/dc26-s016",
+        "mnemonic": "「意識障害では血糖を忘れない」",
+        "source_explanation_raw": "ABCDEのDでは意識、瞳孔、血糖などを迅速に確認する。重症低血糖は可逆的かつ時間依存性であり、診断の完全確定を待たず治療する。意識障害時の経口投与は誤嚥リスクがある。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:10",
+        "original-id:PRED-DISEASE-SIT-021",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 2,
+      "choices": [
+        "頭部MRIで原因が確定するまで糖投与を待つ。",
+        "低血糖を可逆的原因として直ちに治療し、反応を再評価しながら他の原因検索を並行する。",
+        "意識障害があるため経口ブドウ糖を無理に飲ませる。",
+        "低血糖はD評価では扱わない。"
+      ],
+      "correctChoiceIndexes": [
+        1
+      ]
+    },
+    {
+      "id": "PRED-DISEASE-SIT-022",
+      "subject": "疾病・臨床病態概論：状況別",
+      "unit": "救急初期診療・ABCDE",
+      "topic": "オピオイド過量と換気障害",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "救急搬送された患者。反応が乏しく、呼吸数5/分、浅い呼吸、縮瞳を認める。SpO2 86%。最も適切な初期対応はどれか。",
+      "explanation": {
+        "answer": "A. 呼吸を補助し救援を要請し、オピオイド過量を疑って適応があればナロキソンを投与する。",
+        "question_intent": "オピオイド過量で解毒薬より先にABCが重要と理解しているか。",
+        "reasoning": "RR5＋浅呼吸が生命危機であり、まず換気を支える。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "correct",
+            "reason": "正しい。呼吸支持＋ナロキソン＋再評価。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "incorrect",
+            "reason": "誤り。呼吸数・換気が核心。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "incorrect",
+            "reason": "誤り。薬物過量の典型像。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "incorrect",
+            "reason": "誤り。再鎮静に備え観察が必要。",
+            "correction_condition": "Dが正しくなる状況はない。効果消失後の再抑制を考え観察する。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: 無反応で正常呼吸がなければCPRを開始する。救急ではトキシドロームとABCを同時にみる。\ncomparisonText: オピオイド過量＝徐呼吸・意識低下・縮瞳。\ncommonMistakes: ナロキソンを投与すれば気道管理が不要になるわけではない。\ncorrectionConditions: Dが正しくなる状況はない。効果消失後の再抑制を考え観察する。",
+        "key_points": "オピオイドは「呼吸を支える＋ナロキソン＋再評価」。",
+        "references": "Resuscitation Council UK 2025 First Aid Guidelines / 【2026-09-26 中心論点の外部照合】CDC ナロキソンによるオピオイド過量への対応: https://www.cdc.gov/overdose-prevention/reversing-overdose/about-naloxone.html",
+        "mnemonic": "「縮瞳より呼吸数を見る」",
+        "source_explanation_raw": "徐呼吸・意識低下・縮瞳はオピオイド過量を示唆する。最優先は換気・酸素化の支持で、適切な状況ではナロキソンを使用する。オピオイド作用がナロキソンより長い場合は再呼吸抑制が起こり得る。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:10",
+        "original-id:PRED-DISEASE-SIT-022",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 2,
+      "choices": [
+        "呼吸を補助し救援を要請し、オピオイド過量を疑って適応があればナロキソンを投与する。",
+        "SpO2だけを観察し、呼吸数は評価しない。",
+        "縮瞳があるので脳卒中だけを考える。",
+        "ナロキソン投与後は再鎮静の可能性がないため観察不要である。"
+      ],
+      "correctChoiceIndexes": [
+        0
+      ]
+    },
+    {
+      "id": "PRED-DISEASE-SIT-023",
+      "subject": "疾病・臨床病態概論：状況別",
+      "unit": "救急初期診療・ABCDE",
+      "topic": "けいれん重積状態の初期対応",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "全身けいれんが6分以上持続している成人。気道分泌物が多くSpO2が低下している。最も適切な初期対応はどれか。",
+      "explanation": {
+        "answer": "C. 気道・呼吸・循環を支持し、血糖を確認しつつ、けいれん重積として速やかに第一選択の抗けいれん治療を開始する。",
+        "question_intent": "けいれんの「時間」を緊急度判断に使えるか。",
+        "reasoning": "6分持続＝重積として対応する閾値を超えている。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "incorrect",
+            "reason": "誤り。6分持続なら治療を開始する。",
+            "correction_condition": "Aが適切なのは短い発作が既に停止し、ABCが安定している場合。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "incorrect",
+            "reason": "誤り。詳細病歴より生命維持と発作停止が先。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "correct",
+            "reason": "正しい。ABC＋血糖＋迅速な抗けいれん治療。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "incorrect",
+            "reason": "誤り。低酸素・誤嚥・外傷を伴い得る。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: 発作停止後も原因として脳卒中、感染、薬物、電解質、服薬中断などを検索する。\ncomparisonText: 単発短時間発作＝支持・原因検索、重積＝発作停止を時間依存で優先。\ncommonMistakes: 発作停止だけに集中して低酸素・低血糖を見落とさない。\ncorrectionConditions: Aが適切なのは短い発作が既に停止し、ABCが安定している場合。",
+        "key_points": "けいれん5分超＝重積として治療開始。",
+        "references": "Resuscitation Council UK 2025 Guidelines / ILAE status epilepticus guidance / 【2026-09-26 中心論点の外部照合】NICEてんかん重積 NG217: https://www.nice.org.uk/guidance/ng217/chapter/7-Treating-status-epilepticus-repeated-or-cluster-seizures-and-prolonged-seizures",
+        "mnemonic": "「5分を超えたら待たない」",
+        "source_explanation_raw": "5分を超えて持続する全身けいれんは自然停止しにくく、けいれん重積として迅速治療が必要である。ABCの支持、低血糖確認、第一選択のベンゾジアゼピン系薬などを遅らせない。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:10",
+        "original-id:PRED-DISEASE-SIT-023",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 2,
+      "choices": [
+        "発作が自然停止するまで15分待つ。",
+        "まず詳細な既往歴を聴取してから治療する。",
+        "気道・呼吸・循環を支持し、血糖を確認しつつ、けいれん重積として速やかに第一選択の抗けいれん治療を開始する。",
+        "けいれん中は低酸素にならないため酸素化評価は不要である。"
+      ],
+      "correctChoiceIndexes": [
+        2
+      ]
+    },
+    {
+      "id": "PRED-DISEASE-SIT-024",
+      "subject": "疾病・臨床病態概論：状況別",
+      "unit": "救急初期診療・ABCDE",
+      "topic": "急性虚血性脳卒中と再灌流評価",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "発症2時間の突然の失語と右片麻痺で搬送された患者。血糖は正常、バイタルは安定している。最も適切な初期方針はどれか。",
+      "explanation": {
+        "answer": "D. 緊急脳画像で出血を除外し、静注血栓溶解・血栓回収療法の適応を時間を失わず評価する。",
+        "question_intent": "脳卒中で「診断」だけでなく治療可能時間を意識できるか。",
+        "reasoning": "発症2時間は再灌流治療を急いで検討する時間帯。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "incorrect",
+            "reason": "誤り。出血除外前の抗凝固は危険。",
+            "correction_condition": "Aが正しくなることはない。出血除外・適応判断なしの一律抗凝固は不適切。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "incorrect",
+            "reason": "誤り。治療可能時間を失う。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "incorrect",
+            "reason": "誤り。発症時刻は再灌流適応の核心。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "correct",
+            "reason": "正しい。2026 AHA/ASAの急性期方針と整合。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: AHA/ASA 2026では適格患者の4.5時間以内IVTを迅速に行い、LVOでは選択患者にEVTを行う。日本の実臨床は国内ガイドライン・承認条件を優先する。\ncomparisonText: 脳出血と脳梗塞は初期症状だけで完全には区別できないため画像が必要。\ncommonMistakes: 検査を増やしすぎて再灌流を遅らせない。\ncorrectionConditions: Aが正しくなることはない。出血除外・適応判断なしの一律抗凝固は不適切。",
+        "key_points": "脳卒中は「時刻確認→画像→再灌流適応」。",
+        "references": "AHA/ASA 2026 Acute Ischemic Stroke Guideline / 日本脳卒中学会関連ガイドライン",
+        "mnemonic": "「Time is brain」",
+        "source_explanation_raw": "急性虚血性脳卒中は時間依存性疾患で、発症/最終健常時刻を確認し、緊急画像で出血を除外して再灌流治療の適応を迅速に判断する。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:10",
+        "original-id:PRED-DISEASE-SIT-024",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 1,
+      "choices": [
+        "症状が重いので画像を撮らず直ちに抗凝固薬を開始する。",
+        "24時間経過してからMRIを行う。",
+        "脳卒中では発症時刻は治療選択に影響しない。",
+        "緊急脳画像で出血を除外し、静注血栓溶解・血栓回収療法の適応を時間を失わず評価する。"
+      ],
+      "correctChoiceIndexes": [
+        3
+      ]
+    },
+    {
+      "id": "PRED-DISEASE-SIT-025",
+      "subject": "疾病・臨床病態概論：状況別",
+      "unit": "救急初期診療・ABCDE",
+      "topic": "高K血症と心電図変化",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "CKD患者が脱力を訴え救急受診した。K 7.2mEq/L、心電図で尖鋭T波とQRS幅延長を認める。最も優先度の高い対応はどれか。",
+      "explanation": {
+        "answer": "A. 心筋膜安定化のため静注カルシウムを行い、同時にKの細胞内移動・体外除去策を進める。",
+        "question_intent": "高K血症で「Kを下げる治療」と「心臓を守る治療」を区別できるか。",
+        "reasoning": "K 7.2＋QRS延長は電気的不安定性を示す。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "correct",
+            "reason": "正しい。心電図変化を伴う高Kは緊急治療。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "incorrect",
+            "reason": "誤り。致死性不整脈リスクがある。",
+            "correction_condition": "Bが許容されるのは軽度高Kで偽性高Kが疑われ、心電図異常もなく臨床的に安定している場合。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "incorrect",
+            "reason": "誤り。Kをさらに増やす。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "incorrect",
+            "reason": "誤り。連続心電図監視と多面的治療が必要。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: カルシウムは血清Kを下げる薬ではなく心筋を保護する。透析が必要な場合もある。\ncomparisonText: カルシウム＝膜安定化、インスリン等＝細胞内移動、透析/排泄＝体外除去。\ncommonMistakes: カルシウム投与だけで治療完了としない。\ncorrectionConditions: Bが許容されるのは軽度高Kで偽性高Kが疑われ、心電図異常もなく臨床的に安定している場合。",
+        "key_points": "高K＋ECG変化＝まず心臓を守り、次にKを動かし除く。",
+        "references": "Resuscitation Council UK 2025 Special Circumstances Guidelines",
+        "mnemonic": "「カルシウムはKを下げず心臓を守る」",
+        "source_explanation_raw": "重症高K血症で心電図変化がある場合、致死性不整脈を防ぐためまず心筋膜安定化を行い、その後または同時にインスリン・ブドウ糖等による細胞内移動とK除去を進める。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:10",
+        "original-id:PRED-DISEASE-SIT-025",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 1,
+      "choices": [
+        "心筋膜安定化のため静注カルシウムを行い、同時にKの細胞内移動・体外除去策を進める。",
+        "心電図変化があっても翌日まで再検査を待つ。",
+        "経口K製剤を追加する。",
+        "利尿薬だけを投与し心電図モニターは不要とする。"
+      ],
+      "correctChoiceIndexes": [
+        0
+      ]
+    },
+    {
+      "id": "PRED-DISEASE-SIT-026",
+      "subject": "疾病・臨床病態概論：状況別",
+      "unit": "救急初期診療・ABCDE",
+      "topic": "熱射病の迅速冷却",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "真夏の屋外作業後、40.8℃の高体温と意識障害で搬送された。皮膚は熱く、頻脈がある。最も適切な対応はどれか。",
+      "explanation": {
+        "answer": "B. 熱射病を疑い、ABCDEを行いながら迅速な能動的冷却を開始する。",
+        "question_intent": "高体温で「発熱」と「熱射病」を区別し、治療を急げるか。",
+        "reasoning": "40.8℃＋意識障害＝熱射病として時間依存性が高い。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "incorrect",
+            "reason": "誤り。解熱薬だけでは不十分。",
+            "correction_condition": "Aが適切なのは通常の感染性発熱で、熱射病が否定されている場合でも原因治療が必要。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "correct",
+            "reason": "正しい。ABCと迅速冷却を並行する。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "incorrect",
+            "reason": "誤り。発汗の有無だけで否定できない。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "incorrect",
+            "reason": "誤り。神経障害があれば温度閾値を待たない。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: 冷却中は気道、循環、電解質、腎・肝機能、凝固障害など多臓器障害も評価する。\ncomparisonText: 感染性発熱＝設定値上昇、熱射病＝熱産生/放散破綻＋CNS障害。\ncommonMistakes: 発汗の有無を診断の必須条件にしない。\ncorrectionConditions: Aが適切なのは通常の感染性発熱で、熱射病が否定されている場合でも原因治療が必要。",
+        "key_points": "熱射病＝高体温＋中枢神経障害→迅速冷却。",
+        "references": "Resuscitation Council UK 2025 First Aid Guidelines",
+        "mnemonic": "「熱射病は薬より冷やす」",
+        "source_explanation_raw": "高体温と中枢神経障害は熱射病を疑う重要所見で、臓器障害を防ぐため迅速な冷却が必要である。解熱薬は視床下部設定値上昇を伴う発熱とは機序が異なり主治療ではない。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:10",
+        "original-id:PRED-DISEASE-SIT-026",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 1,
+      "choices": [
+        "解熱薬のみ投与し自然冷却を待つ。",
+        "熱射病を疑い、ABCDEを行いながら迅速な能動的冷却を開始する。",
+        "発汗があれば熱射病は否定できる。",
+        "意識障害があっても体温が41℃を超えるまで冷却しない。"
+      ],
+      "correctChoiceIndexes": [
+        1
+      ]
+    },
+    {
+      "id": "PRED-DISEASE-SIT-027",
+      "subject": "疾病・臨床病態概論：状況別",
+      "unit": "救急初期診療・ABCDE",
+      "topic": "重症低体温の取り扱い",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S",
+      "prompt": "冬季に屋外で倒れていた患者。深部体温29℃、意識低下、脈拍32/分で非常に弱い。最も適切な対応はどれか。",
+      "explanation": {
+        "answer": "C. 低体温では脈拍・呼吸が非常に遅くなることを考慮し、丁寧に評価しながら保温・再加温と救命処置を行う。",
+        "question_intent": "低体温で通常のバイタル閾値をそのまま当てはめないか。",
+        "reasoning": "29℃では著明な徐脈が病態として説明可能。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "incorrect",
+            "reason": "誤り。著明徐脈は低体温で起こり得る。",
+            "correction_condition": "Aが適切なのは蘇生不可能な致命的損傷など明確な死亡所見がある場合で、低体温徐脈だけではない。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "incorrect",
+            "reason": "誤り。粗暴な操作は不整脈誘発の懸念がある。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "correct",
+            "reason": "正しい。低体温特有の生理を考慮した評価と再加温。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "incorrect",
+            "reason": "誤り。意識障害患者への経口摂取は誤嚥リスク。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: 低体温では「not dead until warm and dead」という考え方が知られるが、実際の中止判断は状況・ガイドライン・蘇生可能性を総合する。\ncomparisonText: 熱射病＝迅速冷却、低体温＝穏やかな扱い＋再加温。\ncommonMistakes: 弱い脈を「脈なし」と早合点しない。\ncorrectionConditions: Aが適切なのは蘇生不可能な致命的損傷など明確な死亡所見がある場合で、低体温徐脈だけではない。",
+        "key_points": "低体温は「遅い」を前提に丁寧に評価。",
+        "references": "Resuscitation Council UK 2025 First Aid/Special Circumstances Guidelines",
+        "mnemonic": "「冷たい患者は、ゆっくりでも生きていることがある」",
+        "source_explanation_raw": "重症低体温では代謝低下により徐脈・徐呼吸となる。評価に時間をかけ、穏やかに扱い、濡れた衣類除去、保温・適切な再加温、必要な蘇生を行う。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:10",
+        "original-id:PRED-DISEASE-SIT-027",
+        "prediction-v2.0",
+        "importance:S"
+      ],
+      "revision": 1,
+      "choices": [
+        "徐脈だけで直ちに死亡と判断する。",
+        "強く揉んで急速に末梢血流を増やす。",
+        "低体温では脈拍・呼吸が非常に遅くなることを考慮し、丁寧に評価しながら保温・再加温と救命処置を行う。",
+        "温かいアルコール飲料を意識障害患者に飲ませる。"
+      ],
+      "correctChoiceIndexes": [
+        2
+      ]
+    },
+    {
+      "id": "PRED-DISEASE-SIT-028",
+      "subject": "疾病・臨床病態概論：状況別",
+      "unit": "救急初期診療・ABCDE",
+      "topic": "閉塞性ショックとしての肺血栓塞栓症",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "術後の患者が突然呼吸困難と失神を来した。血圧74/46mmHg、脈拍128/分、頸静脈怒張、肺野は比較的清、片下肢腫脹を認める。最も疑う病態はどれか。",
+      "explanation": {
+        "answer": "D. 高リスク肺血栓塞栓症による閉塞性ショック",
+        "question_intent": "ショックの型を病歴・肺所見・JVDから推定できるか。",
+        "reasoning": "術後＋片脚腫脹＋突然＋JVD＋clear lungがPEを示す。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "incorrect",
+            "reason": "誤り。左心不全なら肺うっ血が前景となりやすい。",
+            "correction_condition": "Aが正しくなるのは湿性ラ音・肺水腫・左室機能低下が主体の場合。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "incorrect",
+            "reason": "誤り。VTEリスクと突然発症を説明しない。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "incorrect",
+            "reason": "誤り。ショック・JVD・DVT所見を説明しにくい。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "correct",
+            "reason": "正しい。高リスクPEの典型的臨床像。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: 閉塞性ショックの代表はPE、心タンポナーデ、緊張性気胸。原因に応じた迅速な解除・再灌流が必要。\ncomparisonText: PE＝VTE背景、緊張性気胸＝片側呼吸音低下、タンポナーデ＝心嚢液/心音など。\ncommonMistakes: 低血圧をすべて「脱水」としない。\ncorrectionConditions: Aが正しくなるのは湿性ラ音・肺水腫・左室機能低下が主体の場合。",
+        "key_points": "術後＋突然の呼吸困難＋ショック＝高リスクPEを疑う。",
+        "references": "Resuscitation Council UK 2025 Special Circumstances Guidelines / ESC Pulmonary Embolism guidance / 【2026-09-26 中心論点の外部照合】2026 AHA/ACC急性肺塞栓症ガイドライン: https://professional.heart.org/en/science-news/2026-guideline-for-the-evaluation-and-management-of-acute-pulmonary-embolism-in-adults",
+        "mnemonic": "「ショック＋首が張る＋肺が比較的きれい＝閉塞を考える」",
+        "source_explanation_raw": "術後、不動、片下肢腫脹はVTEリスクで、突然の呼吸困難・失神・低血圧・JVD・比較的clear lungは肺血栓塞栓症による右心系閉塞性ショックを示唆する。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:10",
+        "original-id:PRED-DISEASE-SIT-028",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 2,
+      "choices": [
+        "左室心原性肺水腫",
+        "単純な脱水",
+        "気管支喘息のみ",
+        "高リスク肺血栓塞栓症による閉塞性ショック"
+      ],
+      "correctChoiceIndexes": [
+        3
+      ]
+    },
+    {
+      "id": "PRED-DISEASE-SIT-029",
+      "subject": "疾病・臨床病態概論：状況別",
+      "unit": "救急初期診療・ABCDE",
+      "topic": "SAMPLEヒストリーの活用",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S",
+      "prompt": "ABCDEで生命危機を安定化させた後、救急患者の背景情報を短時間で整理するためSAMPLEヒストリーを用いる。SAMPLEのAが表すものはどれか。",
+      "explanation": {
+        "answer": "B. Allergies（アレルギー）",
+        "question_intent": "ABCDEとSAMPLEという救急の2つの枠組みを混同していないか。",
+        "reasoning": "「Aが気道」はABCDEであり、SAMPLEではアレルギー。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "incorrect",
+            "reason": "誤り。AirwayはABCDEのA。",
+            "correction_condition": "Aが正しいのはABCDEのAを問われた場合。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "correct",
+            "reason": "正しい。SAMPLEのAはAllergies。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "incorrect",
+            "reason": "誤り。Assessmentではない。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "incorrect",
+            "reason": "誤り。不整脈ではない。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: SAMPLEはprimary surveyを遅らせるためのものではなく、生命危機への介入と並行または安定化後に用いる。\ncomparisonText: ABCDE＝生理学的生命危機、SAMPLE＝背景・病歴情報。\ncommonMistakes: SAMPLEのAをAirwayと誤記しやすい。\ncorrectionConditions: Aが正しいのはABCDEのAを問われた場合。",
+        "key_points": "SAMPLEのA＝Allergies。",
+        "references": "LEARN-COM-382（既存教材中心論点） / Resuscitation Council UK ABCDE Approach",
+        "mnemonic": "「ABCDEのAはAirway、SAMPLEのAはAllergy」",
+        "source_explanation_raw": "SAMPLEはSigns/Symptoms、Allergies、Medications、Past medical history/Pregnancy、Last oral intake、Events leading to illness/injuryなどを系統的に聴取する枠組みである。AはAllergiesを指す。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:10",
+        "original-id:PRED-DISEASE-SIT-029",
+        "prediction-v2.0",
+        "importance:S"
+      ],
+      "revision": 1,
+      "choices": [
+        "Airway（気道）",
+        "Allergies（アレルギー）",
+        "Assessment（評価）",
+        "Arrhythmia（不整脈）"
+      ],
+      "correctChoiceIndexes": [
+        1
+      ]
+    },
+    {
+      "id": "PRED-DISEASE-SIT-030",
+      "subject": "疾病・臨床病態概論：状況別",
+      "unit": "救急初期診療・ABCDE",
+      "topic": "primary survey後のsecondary surveyと再評価",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "交通外傷患者。到着時にABCDEで生命危機を評価し、気道・呼吸・循環への必要な処置後にバイタルは安定した。次の対応として最も適切なのはどれか。",
+      "explanation": {
+        "answer": "D. 全身を系統的に診察するsecondary surveyとSAMPLE等の病歴聴取を進めつつ、状態が変化すれば再びABCDEへ戻って再評価する。",
+        "question_intent": "救急診療の「primary survey→処置→再評価→secondary survey」という流れを理解しているか。",
+        "reasoning": "まず生命危機を安定化し、その後に詳細評価を行う。ただし悪化すればいつでもABCDEへ戻る。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "incorrect",
+            "reason": "誤り。処置後も再評価を繰り返す。",
+            "correction_condition": "Aが正しくなる条件はない。安定後も再評価は必要である。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "incorrect",
+            "reason": "誤り。診断確定を待たず系統的診察を進める。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "incorrect",
+            "reason": "誤り。画像だけでなく病歴・身体診察を統合する。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "correct",
+            "reason": "正しい。secondary surveyを進めながら必要に応じABCDEへ戻る。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: secondary surveyはprimary surveyの代替ではなく、生命危機が処置され安定した後に行う詳細評価である。\ncomparisonText: primary survey＝生命危機の発見と治療、secondary survey＝詳細な全身評価・病歴補完。\ncommonMistakes: 「ABCDEは一度だけ」と覚えない。救急では反復評価が基本である。\ncorrectionConditions: Aが正しくなる条件はない。安定後も再評価は必要である。",
+        "key_points": "primary survey後も再評価し、安定してからsecondary surveyへ。",
+        "references": "Resuscitation Council UK ABCDE Approach / ATLS/外傷初期診療の一般原則",
+        "mnemonic": "「救急は一周して終わりではない」",
+        "source_explanation_raw": "primary surveyで生命危機を処置した後は、secondary surveyで頭から足先まで系統的に評価し、病歴・受傷機転を補完する。救急診療では一度安定しても悪化し得るため、継続的な再評価が必要である。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:10",
+        "original-id:PRED-DISEASE-SIT-030",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 1,
+      "choices": [
+        "ABCDEが一度安定すれば、その後の再評価は不要である。",
+        "診断名が確定するまで身体診察を追加しない。",
+        "安定後は受傷機転や病歴より画像検査だけを優先する。",
+        "全身を系統的に診察するsecondary surveyとSAMPLE等の病歴聴取を進めつつ、状態が変化すれば再びABCDEへ戻って再評価する。"
+      ],
+      "correctChoiceIndexes": [
+        3
+      ]
+    },
+    {
+      "id": "PRED-REASON-001",
+      "subject": "臨床推論",
+      "unit": "病歴・症候推論",
+      "topic": "臨床推論の基本プロセス",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "臨床推論の進め方として最も適切なのはどれか。",
+      "explanation": {
+        "answer": "B. 患者情報を収集し、解釈して鑑別を更新し、必要な検査・対応を決定する。",
+        "question_intent": "臨床推論を「情報収集→解釈→仮説更新→決断」という動的な過程として理解しているか。",
+        "reasoning": "臨床推論では情報を一方向に当てはめるのではなく、病歴・身体所見・検査で仮説を更新する。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "incorrect",
+            "reason": "誤り。アンカリングと確証バイアスにつながる。",
+            "correction_condition": "Aが適切なのは確定診断後の治療計画など限定的場面であり、初期診断過程では不適切。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "correct",
+            "reason": "正しい。臨床推論の基本的な循環である。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "incorrect",
+            "reason": "誤り。検査前に病歴・身体所見から検査前確率を作る。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "incorrect",
+            "reason": "誤り。反証情報も仮説更新に重要である。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: 診断推論では「何があり得るか」「何を見逃せないか」「次の情報で確率がどう変わるか」を繰り返す。\ncomparisonText: 疾患論は既知の疾患から症状を考え、症候論は患者の症状から鑑別を広げる。実臨床では両方を往復する。\ncommonMistakes: 最初に思いついた診断を正解とみなさない。\ncorrectionConditions: Aが適切なのは確定診断後の治療計画など限定的場面であり、初期診断過程では不適切。",
+        "key_points": "・仮説は暫定\n・情報で確率を更新\n・反証情報も重視",
+        "references": "共通科目 学習まとめ集 v1.22（臨床推論：病歴・症候推論） / 看護協会共通科目模試【臨床推論】.pdf（出題重点のみ）",
+        "mnemonic": "「診断は当てるのでなく、更新する」",
+        "source_explanation_raw": "診断仮説は暫定的であり、新しい情報で確率を上げ下げする。アンカリングを避け、必要に応じて鑑別を再構成する。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:02",
+        "original-id:PRED-REASON-001",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 1,
+      "choices": [
+        "最初に診断名を1つに固定し、その診断に合う情報だけを集める。",
+        "患者情報を収集し、解釈して鑑別を更新し、必要な検査・対応を決定する。",
+        "検査結果が出るまで病歴や身体所見から仮説を立てない。",
+        "症状から診断名を直接決め、反証情報は扱わない。"
+      ],
+      "correctChoiceIndexes": [
+        1
+      ]
+    },
+    {
+      "id": "PRED-REASON-002",
+      "subject": "臨床推論",
+      "unit": "病歴・症候推論",
+      "topic": "LQQTSFAを用いた症候聴取",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "胸痛患者にLQQTSFAを用いて病歴を整理する。Locationに相当する質問はどれか。",
+      "explanation": {
+        "answer": "A. 「痛む場所はどこですか。背中や腕にも広がりますか」",
+        "question_intent": "LQQTSFAの各項目を実際の問診へ結び付けられるか。",
+        "reasoning": "Locationは症状の部位・分布・放散を確認する項目である。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "correct",
+            "reason": "正しい。部位と放散を確認している。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "incorrect",
+            "reason": "Quality（性状）に相当する。",
+            "correction_condition": "Bが正解になるのはQualityを問う設問、CはTiming、DはAssociated symptomsを問う設問。",
+            "mapping_provenance": "source_answer_rationale"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "incorrect",
+            "reason": "Timing（時間経過）に相当する。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_answer_rationale"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "incorrect",
+            "reason": "Associated symptoms（随伴症状）に相当する。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_answer_rationale"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: OPQRSTなど別の枠組みでも、部位・性状・時間・誘因・随伴症状を系統的に確認する点は共通する。\ncomparisonText: LQQTSFAとOPQRSTは文字の対応が異なるが、目的は症候の構造化である。\ncommonMistakes: 略語の文字だけ暗記し、実際の質問に変換できないことが典型的な失点。\ncorrectionConditions: Bが正解になるのはQualityを問う設問、CはTiming、DはAssociated symptomsを問う設問。",
+        "key_points": "・Location＝部位/放散\n・Quality＝性状\n・Timing＝時間\n・Associated＝随伴",
+        "references": "共通科目 学習まとめ集 v1.22（臨床推論：病歴・症候推論） / 看護協会共通科目模試【臨床推論】.pdf（出題重点のみ）",
+        "mnemonic": "「略語は質問文に変換して覚える」",
+        "source_explanation_raw": "LQQTSFAは症状を構造化して聞き漏らしを減らす枠組みで、Location、Quality、Quantity、Timing、Setting、Factors、Associated symptomsなどを整理する。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:02",
+        "original-id:PRED-REASON-002",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 1,
+      "choices": [
+        "「痛む場所はどこですか。背中や腕にも広がりますか」",
+        "「痛みは締め付ける感じですか、刺す感じですか」",
+        "「いつ始まり、どのくらい続きますか」",
+        "「息苦しさや冷汗はありますか」"
+      ],
+      "correctChoiceIndexes": [
+        0
+      ]
+    },
+    {
+      "id": "PRED-REASON-003",
+      "subject": "臨床推論",
+      "unit": "病歴・症候推論",
+      "topic": "発症様式・時間軸からみた血管イベント",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "72歳男性。会話中に突然、右上下肢の脱力と失語が出現し、症状は発症時から最大で持続している。病歴から最も重視すべき病態パターンはどれか。",
+      "explanation": {
+        "answer": "D. 脳血管障害などの突発性血管イベント",
+        "question_intent": "発症速度と症状のピークから病態カテゴリーを推定できるか。",
+        "reasoning": "「突然発症し、発症時から最大」は血管イベントを強く示唆する時間軸である。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "incorrect",
+            "reason": "誤り。変性疾患は通常月〜年単位。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "incorrect",
+            "reason": "誤り。亜急性炎症は時間〜日単位が多い。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "incorrect",
+            "reason": "誤り。まず器質的な時間依存性疾患を除外する。",
+            "correction_condition": "Cが候補になるのは脳卒中等を適切に除外した後で、陽性の機能性徴候などを総合した場合。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "correct",
+            "reason": "正しい。突発性局在神経症状は血管障害を疑う。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: 時間軸は診断の強力な情報で、突然＝血管/破裂/閉塞、数時間〜日＝炎症/感染、月〜年＝変性・腫瘍などの目安になる。\ncomparisonText: 同じ片麻痺でも、突然発症なら脳卒中、徐々に進行なら腫瘍など鑑別の優先順位が変わる。\ncommonMistakes: 症状の「種類」だけでなく「いつ・どの速さで」を必ず聞く。\ncorrectionConditions: Cが候補になるのは脳卒中等を適切に除外した後で、陽性の機能性徴候などを総合した場合。",
+        "key_points": "・突然＝血管イベントを上位\n・発症時刻を具体化\n・最大時刻も確認",
+        "references": "共通科目 学習まとめ集 v1.22（臨床推論：病歴・症候推論） / 看護協会共通科目模試【臨床推論】.pdf（出題重点のみ）",
+        "mnemonic": "「症状名より時間軸」",
+        "source_explanation_raw": "脳梗塞・脳出血などの血管障害は秒〜分単位で突然出現し、発症時刻が急性期治療選択に直結する。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:02",
+        "original-id:PRED-REASON-003",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 1,
+      "choices": [
+        "慢性変性疾患",
+        "感染後の亜急性炎症",
+        "機能性症状を最優先する",
+        "脳血管障害などの突発性血管イベント"
+      ],
+      "correctChoiceIndexes": [
+        3
+      ]
+    },
+    {
+      "id": "PRED-REASON-004",
+      "subject": "臨床推論",
+      "unit": "病歴・症候推論",
+      "topic": "Thunderclap headacheのRed Flag",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "64歳女性。「突然、今までで一番ひどい頭痛」が出現し、1分以内に最大となった。嘔吐を伴う。最も適切な初期判断はどれか。",
+      "explanation": {
+        "answer": "C. くも膜下出血など二次性頭痛を疑い、緊急画像評価につなげる。",
+        "question_intent": "頭痛のRed Flagから生命危険のある二次性頭痛を優先できるか。",
+        "reasoning": "突然発症・1分以内にピーク・人生最悪の頭痛はthunderclap headacheで、SAHなどを除外する。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "incorrect",
+            "reason": "誤り。Red Flagを無視して一次性と決めない。",
+            "correction_condition": "Aが適切なのは二次性Red Flagがなく、既知の一次性頭痛として整合する場合。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "incorrect",
+            "reason": "誤り。神経所見が正常でもSAHはあり得る。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "correct",
+            "reason": "正しい。緊急二次性頭痛として評価する。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "incorrect",
+            "reason": "誤り。痛みの強さだけで一次性とは判断できない。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: 二次性頭痛のRed Flagには突然発症、新規神経症状、発熱、50歳以降の新規頭痛、がん/免疫不全、妊娠周産期、外傷などがある。\ncomparisonText: 片頭痛は既往と類似した反復パターンが参考になるが、「初めて」「突然最大」は別扱い。\ncommonMistakes: 「神経所見正常＝SAHなし」という誤りに注意。\ncorrectionConditions: Aが適切なのは二次性Red Flagがなく、既知の一次性頭痛として整合する場合。",
+        "key_points": "・thunderclap＝二次性を除外\n・初期CTを考慮\n・正常神経所見で除外しない",
+        "references": "ACR Appropriateness Criteria: Headache / 共通科目 学習まとめ集 v1.22 / 【2026-09-26 中心論点の外部照合】ACR頭痛画像適切性基準: https://acsearch.acr.org/docs/69482/Narrative/",
+        "mnemonic": "「突然最大は、まずSAH」",
+        "source_explanation_raw": "ACRでは突然発症で1時間以内に最大となる重度頭痛の初期画像として非造影頭部CTが通常適切とされる。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:02",
+        "original-id:PRED-REASON-004",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 2,
+      "choices": [
+        "片頭痛と決めて鎮痛薬のみで経過を見る。",
+        "神経学的異常がなければ二次性頭痛は否定できる。",
+        "くも膜下出血など二次性頭痛を疑い、緊急画像評価につなげる。",
+        "頭痛が強いほど一次性頭痛の可能性が高い。"
+      ],
+      "correctChoiceIndexes": [
+        2
+      ]
+    },
+    {
+      "id": "PRED-REASON-005",
+      "subject": "臨床推論",
+      "unit": "病歴・症候推論",
+      "topic": "胸痛の一元的鑑別",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "58歳男性。突然の胸痛が背部へ放散し、左右上肢の収縮期血圧差が30mmHgある。最も優先すべき鑑別はどれか。",
+      "explanation": {
+        "answer": "B. 急性大動脈症候群",
+        "question_intent": "胸痛で「見逃してはいけない疾患」を病歴・身体所見から優先できるか。",
+        "reasoning": "突然発症、背部放散、上肢血圧左右差は急性大動脈症候群を強く示唆する。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "incorrect",
+            "reason": "誤り。典型的Red Flagを説明しにくい。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "correct",
+            "reason": "正しい。大動脈解離などを疑う。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "incorrect",
+            "reason": "誤り。血圧左右差を説明しない。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "incorrect",
+            "reason": "誤り。器質的緊急疾患を除外する前に心理要因へ帰属しない。",
+            "correction_condition": "Dが適切になるのは生命危険のある胸痛が合理的に除外された後。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: 「一元的診断」は複数所見を最もよく説明する病態を考えるが、救急では最悪シナリオを並行評価する。\ncomparisonText: ACSは圧迫感・労作関連が典型、大動脈症候群は突然・裂ける痛み・背部放散・脈拍/血圧差が手がかり。\ncommonMistakes: 精神的ストレス歴があっても、Red Flagがあれば器質的疾患を優先。\ncorrectionConditions: Dが適切になるのは生命危険のある胸痛が合理的に除外された後。",
+        "key_points": "・胸痛は致死的5疾患を先に\n・突然＋背部＋左右差＝大動脈",
+        "references": "共通科目 学習まとめ集 v1.22（臨床推論：病歴・症候推論） / 看護協会共通科目模試【臨床推論】.pdf（出題重点のみ） / 【2026-09-26 中心論点の外部照合】2022 ACC/AHA大動脈疾患診療ガイドライン: https://doi.org/10.1161/CIR.0000000000001106",
+        "mnemonic": "「胸痛は、まず死ぬ病気から」",
+        "source_explanation_raw": "胸痛ではACS、急性大動脈症候群、肺血栓塞栓、緊張性気胸、食道破裂などの致死的疾患を先に考える。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:02",
+        "original-id:PRED-REASON-005",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 2,
+      "choices": [
+        "胃食道逆流症",
+        "急性大動脈症候群",
+        "肋間神経痛",
+        "不安発作"
+      ],
+      "correctChoiceIndexes": [
+        1
+      ]
+    },
+    {
+      "id": "PRED-REASON-006",
+      "subject": "臨床推論",
+      "unit": "病歴・症候推論",
+      "topic": "急性腹痛の病歴と腹膜刺激",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "29歳男性。臍周囲痛で始まり、数時間後に右下腹部へ移動した。歩行や咳で痛みが増し、微熱と悪心がある。最も考えやすい病態はどれか。",
+      "explanation": {
+        "answer": "A. 急性虫垂炎",
+        "question_intent": "腹痛の部位変化・時間軸・体動増悪から病態を推定できるか。",
+        "reasoning": "内臓痛から壁側腹膜刺激へ進む虫垂炎では、臍周囲から右下腹部への疼痛移動が典型的な手がかりとなる。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "correct",
+            "reason": "正しい。症状経過が典型的。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "incorrect",
+            "reason": "誤り。局在移動・発熱・腹膜刺激を説明しにくい。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "incorrect",
+            "reason": "誤り。急性発症の局在性炎症所見とは合わない。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "incorrect",
+            "reason": "誤り。悪心・発熱・疼痛移動を説明しにくい。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: 腹痛ではOPQRST/LQQTSFAに加え、嘔吐、便通、血便、発熱、妊娠可能性、手術歴、薬剤などを確認する。\ncomparisonText: 内臓痛は曖昧で正中に感じやすく、壁側腹膜刺激では限局性が明瞭になる。\ncommonMistakes: 「悪心があるから胃腸炎」と単純化しない。\ncorrectionConditions: BやCが候補になるのはRed Flagがなく、慢性・反復性で器質的疾患が除外された場合。",
+        "key_points": "・痛みの移動は重要\n・体動増悪＝腹膜刺激\n・時間軸で急性腹症を拾う",
+        "references": "共通科目 学習まとめ集 v1.22（臨床推論：病歴・症候推論） / 看護協会共通科目模試【臨床推論】.pdf（出題重点のみ）",
+        "mnemonic": "「腹痛は場所だけでなく、動き方を見る」",
+        "source_explanation_raw": "体動や咳で増悪する限局痛は腹膜刺激を示唆し、急性腹症では緊急性の評価が必要である。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:02",
+        "original-id:PRED-REASON-006",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 1,
+      "choices": [
+        "急性虫垂炎",
+        "機能性ディスペプシア",
+        "過敏性腸症候群",
+        "単純な筋肉痛"
+      ],
+      "correctChoiceIndexes": [
+        0
+      ]
+    },
+    {
+      "id": "PRED-REASON-007",
+      "subject": "臨床推論",
+      "unit": "病歴・症候推論",
+      "topic": "心原性失神のRed Flag",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "67歳男性。坂道を歩いている最中に前触れなく失神し、1分ほどで意識が回復した。直前に動悸があり、家族歴に若年突然死がある。最も重要な判断はどれか。",
+      "explanation": {
+        "answer": "D. 不整脈など心原性失神を疑い、緊急度を上げて心電図・循環評価を行う。",
+        "question_intent": "失神で心原性Red Flagを拾えるか。",
+        "reasoning": "労作中、前駆症状乏しい、動悸、突然死家族歴は心原性失神を疑うRed Flagである。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "incorrect",
+            "reason": "誤り。血管迷走神経性は長時間立位・疼痛・悪心など前駆が多い。",
+            "correction_condition": "Aが正しくなるのは典型的誘因・前駆症状があり、心疾患Red Flagが乏しい場合。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "incorrect",
+            "reason": "誤り。脱水だけでは動悸・労作・家族歴を説明しない。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "incorrect",
+            "reason": "誤り。心電図は重要な初期評価。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "correct",
+            "reason": "正しい。心原性失神を疑う。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: 失神歴では体位、誘因、前駆症状、動悸、胸痛、労作、家族歴、回復の速さ、けいれん様運動などを整理する。\ncomparisonText: 血管迷走神経性は前駆症状が比較的多く、心原性は突然・労作中・臥位中などがRed Flag。\ncommonMistakes: 「すぐ意識が戻った＝安全」と判断しない。\ncorrectionConditions: Aが正しくなるのは典型的誘因・前駆症状があり、心疾患Red Flagが乏しい場合。",
+        "key_points": "・労作中失神\n・動悸\n・突然死家族歴＝心原性を疑う",
+        "references": "共通科目 学習まとめ集 v1.22（臨床推論：病歴・症候推論） / 看護協会共通科目模試【臨床推論】.pdf（出題重点のみ） / 【2026-09-26 中心論点の外部照合】2018 ESC失神ガイドライン: https://academic.oup.com/eurheartj/article/39/21/1883/4939241",
+        "mnemonic": "「失神は、倒れ方より倒れる前を見る」",
+        "source_explanation_raw": "心原性失神は突然死リスクと関連し得るため、単純な血管迷走神経性失神より優先評価する。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:02",
+        "original-id:PRED-REASON-007",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 2,
+      "choices": [
+        "迷走神経反射として安心する。",
+        "脱水だけで説明する。",
+        "失神では心疾患の評価は不要である。",
+        "不整脈など心原性失神を疑い、緊急度を上げて心電図・循環評価を行う。"
+      ],
+      "correctChoiceIndexes": [
+        3
+      ]
+    },
+    {
+      "id": "PRED-REASON-008",
+      "subject": "臨床推論",
+      "unit": "病歴・症候推論",
+      "topic": "中枢性めまいの鑑別",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "70歳男性。突然の持続性めまいで、まっすぐ立てず、複視と構音障害を伴う。最も適切な判断はどれか。",
+      "explanation": {
+        "answer": "C. 脳幹・小脳梗塞など中枢性めまいを疑い、緊急神経評価を行う。",
+        "question_intent": "めまいの性状だけでなく神経学的Red Flagを重視できるか。",
+        "reasoning": "起立不能に近い体幹失調、複視、構音障害は中枢神経病変を強く示唆する。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "incorrect",
+            "reason": "誤り。回転性でも中枢性はあり得る。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "incorrect",
+            "reason": "誤り。BPPVは短時間・頭位誘発が典型。",
+            "correction_condition": "Bが適切なのは短時間の頭位変換で誘発され、典型的な末梢性所見が揃う場合。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "correct",
+            "reason": "正しい。後方循環脳卒中を含め緊急評価する。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "incorrect",
+            "reason": "誤り。症状表現のみで確定しない。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: ACRでは典型的なBPPVのような短時間の頭位誘発性めまいでは画像が通常不要だが、中枢所見があれば画像・神経評価の必要性が変わる。\ncomparisonText: BPPV＝短時間＋特定頭位誘発、中枢性＝持続、重度失調、脳神経症状、注視方向性眼振など。\ncommonMistakes: 「ぐるぐる＝耳」と暗記しない。\ncorrectionConditions: Bが適切なのは短時間の頭位変換で誘発され、典型的な末梢性所見が揃う場合。",
+        "key_points": "・めまい＋複視/構音障害/起立不能＝中枢性Red Flag",
+        "references": "ACR Appropriateness Criteria: Dizziness and Ataxia / 共通科目 学習まとめ集 v1.22",
+        "mnemonic": "「めまいは性状より神経所見」",
+        "source_explanation_raw": "回転性か浮動性かという主観的表現だけで中枢/末梢を分けるのは不十分で、時間経過・誘発因子・神経所見を統合する。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:02",
+        "original-id:PRED-REASON-008",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 1,
+      "choices": [
+        "回転性なので末梢性めまいと確定する。",
+        "耳鳴りがないので良性発作性頭位めまい症と診断する。",
+        "脳幹・小脳梗塞など中枢性めまいを疑い、緊急神経評価を行う。",
+        "めまいの主観的表現だけで診断を確定する。"
+      ],
+      "correctChoiceIndexes": [
+        2
+      ]
+    },
+    {
+      "id": "PRED-REASON-009",
+      "subject": "臨床推論",
+      "unit": "病歴・症候推論",
+      "topic": "口頭症例提示の構造",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S",
+      "prompt": "救急外来で上級者へ胸痛患者を口頭提示する方法として最も適切なのはどれか。",
+      "explanation": {
+        "answer": "B. 年齢・性別、主訴、発症からの時間、重要な陽性/陰性所見、バイタル、現時点の評価を簡潔に提示する。",
+        "question_intent": "臨床情報を意思決定に使える形へ圧縮して伝えられるか。",
+        "reasoning": "口頭提示は情報の羅列ではなく、診療判断に必要な情報を時間軸と問題表現に沿って構造化する。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "incorrect",
+            "reason": "誤り。情報量が多すぎ要点が埋もれる。",
+            "correction_condition": "Aが必要なのは詳細な記録作成などであり、緊急口頭提示では情報選択が必要。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "correct",
+            "reason": "正しい。構造化された簡潔な提示。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "incorrect",
+            "reason": "誤り。検査前情報が欠ける。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "incorrect",
+            "reason": "誤り。Assessmentや懸念を共有することが重要。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: SBARやSOAPなど場面に応じたフレームも、要点・評価・依頼を共有するために有用である。\ncomparisonText: 病歴記録は詳細、口頭提示は目的に応じて圧縮する。\ncommonMistakes: 「全部言うほど良い発表」と考えない。\ncorrectionConditions: Aが必要なのは詳細な記録作成などであり、緊急口頭提示では情報選択が必要。",
+        "key_points": "・時間軸\n・重要陽性/陰性\n・バイタル\n・Assessment",
+        "references": "共通科目 学習まとめ集 v1.22（臨床推論：病歴・症候推論） / 看護協会共通科目模試【臨床推論】.pdf（出題重点のみ）",
+        "mnemonic": "「症例提示は、情報量より意思決定」",
+        "source_explanation_raw": "「3時間前から」など相対時間を明示し、重要な陽性所見と陰性所見を選択して伝えると臨床推論が共有しやすい。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:02",
+        "original-id:PRED-REASON-009",
+        "prediction-v2.0",
+        "importance:S"
+      ],
+      "revision": 1,
+      "choices": [
+        "患者が話した順に20分間すべて再現する。",
+        "年齢・性別、主訴、発症からの時間、重要な陽性/陰性所見、バイタル、現時点の評価を簡潔に提示する。",
+        "検査結果だけを読み上げ、病歴は省略する。",
+        "自分の鑑別や懸念は伝えない。"
+      ],
+      "correctChoiceIndexes": [
+        1
+      ]
+    },
+    {
+      "id": "PRED-REASON-010",
+      "subject": "臨床推論",
+      "unit": "病歴・症候推論",
+      "topic": "鑑別診断の優先順位づけ",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "発熱患者の鑑別を考える際、最も適切な考え方はどれか。",
+      "explanation": {
+        "answer": "A. 頻度が高い疾患、見逃すと危険な疾患、治療可能な疾患、患者背景に合う疾患を整理して優先順位をつける。",
+        "question_intent": "鑑別を単なる列挙ではなく優先順位づけできるか。",
+        "reasoning": "鑑別診断はcommon、critical、curable、contextualなどの軸で整理すると見逃しを減らしやすい。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "correct",
+            "reason": "正しい。安全性と確率を両立した考え方。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "incorrect",
+            "reason": "誤り。稀な疾患だけでは非効率。",
+            "correction_condition": "Bが有用なのは既知の曝露や免疫不全など患者文脈が希少疾患を強く示す場合。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "incorrect",
+            "reason": "誤り。病歴・身体所見から検査前仮説を作る。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "incorrect",
+            "reason": "誤り。鑑別を更新する必要がある。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: 検査選択は「この結果で管理が変わるか」「検査前確率はどの程度か」を考えると無駄な検査を減らせる。\ncomparisonText: 最もありそう（likely）と、最も危険（worst-case）は一致しないことがある。\ncommonMistakes: 「頻度が低いから除外不要」としない。\ncorrectionConditions: Bが有用なのは既知の曝露や免疫不全など患者文脈が希少疾患を強く示す場合。",
+        "key_points": "・common\n・critical\n・curable\n・contextual",
+        "references": "共通科目 学習まとめ集 v1.22（臨床推論：病歴・症候推論） / 看護協会共通科目模試【臨床推論】.pdf（出題重点のみ）",
+        "mnemonic": "「鑑別は、ありそう＋危ない＋治せる＋文脈」",
+        "source_explanation_raw": "臨床推論では確率の高いものだけでなく、低頻度でも重大な疾患を「除外すべき診断」として扱う。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:02",
+        "original-id:PRED-REASON-010",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 1,
+      "choices": [
+        "頻度が高い疾患、見逃すと危険な疾患、治療可能な疾患、患者背景に合う疾患を整理して優先順位をつける。",
+        "珍しい疾患だけを網羅すればよい。",
+        "検査値が出るまで鑑別診断は作らない。",
+        "最初に挙げた診断だけを検証する。"
+      ],
+      "correctChoiceIndexes": [
+        0
+      ]
+    },
+    {
+      "id": "PRED-REASON-011",
+      "subject": "臨床推論",
+      "unit": "臨床検査・検査値",
+      "topic": "MCVを用いた貧血分類",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S",
+      "prompt": "Hb 8.9 g/dL、MCV 68 fLの患者。貧血の初期分類として最も適切なのはどれか。",
+      "explanation": {
+        "answer": "D. 小球性貧血として鉄欠乏などを鑑別する",
+        "question_intent": "MCVを「赤血球の大きさ」の指標として貧血分類へ使えるか。",
+        "reasoning": "MCV 68 fLは小球性であり、鉄欠乏、サラセミア、慢性炎症などを鑑別する。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "incorrect",
+            "reason": "誤り。大球性はMCV高値。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "incorrect",
+            "reason": "誤り。正常範囲ではない。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "incorrect",
+            "reason": "誤り。MCVだけで溶血は確定しない。",
+            "correction_condition": "Cが正しくなるには網赤血球、LDH、間接Bil、ハプトグロビン等で溶血所見を確認する必要がある。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "correct",
+            "reason": "正しい。小球性として次の検査へ進む。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: 鉄欠乏ではフェリチン、血清鉄、TIBC/TSATなどを臨床状況に応じて評価する。\ncomparisonText: 小球性＝鉄欠乏など、正球性＝出血/慢性疾患/腎性など、大球性＝B12/葉酸欠乏・薬剤など。\ncommonMistakes: MCVを「ヘモグロビン量」と混同しない。\ncorrectionConditions: Cが正しくなるには網赤血球、LDH、間接Bil、ハプトグロビン等で溶血所見を確認する必要がある。",
+        "key_points": "・MCV＝大きさ\n・低MCV＝小球性\n・病因確定には追加評価",
+        "references": "共通科目 学習まとめ集 v1.22（臨床検査・検査値） / 共通科目試験対策問題集 v1.65 正本",
+        "mnemonic": "「MCVは赤血球のサイズ」",
+        "source_explanation_raw": "MCVは赤血球1個の平均容積を示し、貧血の原因を絞る入口として有用だが、MCVだけで病因は確定しない。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:02",
+        "original-id:PRED-REASON-011",
+        "prediction-v2.0",
+        "importance:S"
+      ],
+      "revision": 1,
+      "choices": [
+        "大球性貧血",
+        "正球性貧血",
+        "溶血性貧血と確定",
+        "小球性貧血として鉄欠乏などを鑑別する"
+      ],
+      "correctChoiceIndexes": [
+        3
+      ]
+    },
+    {
+      "id": "PRED-REASON-012",
+      "subject": "臨床推論",
+      "unit": "臨床検査・検査値",
+      "topic": "尿潜血陽性・赤血球陰性の解釈",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "激しい運動後に筋痛と褐色尿を認めた。尿定性で潜血3+だが、尿沈渣で赤血球をほとんど認めない。最も適切な解釈はどれか。",
+      "explanation": {
+        "answer": "B. ミオグロビン尿など、赤血球以外のヘム蛋白を考える。",
+        "question_intent": "尿定性と尿沈渣を組み合わせて解釈できるか。",
+        "reasoning": "尿潜血試験はヘムを検出するため、赤血球だけでなくヘモグロビンやミオグロビンでも陽性になる。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "incorrect",
+            "reason": "誤り。血尿なら沈渣赤血球を認めるのが通常。",
+            "correction_condition": "Aが正しくなるのは沈渣で赤血球が確認され、臨床的にも血尿として整合する場合。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "correct",
+            "reason": "正しい。ミオグロビン尿を考える。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "incorrect",
+            "reason": "誤り。尿路/腎疾患評価に重要。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "incorrect",
+            "reason": "誤り。生理的に説明できる所見。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: 尿糖、尿蛋白、ビリルビン、亜硝酸なども単独で診断せず、症状・血液検査・沈渣と統合する。\ncomparisonText: 血尿＝潜血＋赤血球、ミオグロビン尿＝潜血陽性＋赤血球乏しい、という組合せで考える。\ncommonMistakes: 「潜血＝赤血球」と短絡しない。\ncorrectionConditions: Aが正しくなるのは沈渣で赤血球が確認され、臨床的にも血尿として整合する場合。",
+        "key_points": "・尿潜血はヘム検出\n・RBCなしならHb/Mbを考える",
+        "references": "共通科目 学習まとめ集 v1.22（臨床検査・検査値） / 共通科目試験対策問題集 v1.65 正本",
+        "mnemonic": "「潜血陽性、赤血球なし＝筋も考える」",
+        "source_explanation_raw": "横紋筋融解症では筋痛・CK上昇・ミオグロビン尿がみられ、尿潜血陽性なのに沈渣赤血球が乏しいことが手がかりになる。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:02",
+        "original-id:PRED-REASON-012",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 1,
+      "choices": [
+        "典型的な血尿である。",
+        "ミオグロビン尿など、赤血球以外のヘム蛋白を考える。",
+        "尿潜血試験は腎疾患とは無関係である。",
+        "赤血球がないので尿潜血3+は必ず検査ミスである。"
+      ],
+      "correctChoiceIndexes": [
+        1
+      ]
+    },
+    {
+      "id": "PRED-REASON-013",
+      "subject": "臨床推論",
+      "unit": "臨床検査・検査値",
+      "topic": "Dダイマーと検査前確率",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "術後患者が突然の呼吸困難を呈した。Dダイマーが高値である。最も適切な解釈はどれか。",
+      "explanation": {
+        "answer": "C. 検査前確率と合わせて解釈し、必要なら画像検査へ進む。",
+        "question_intent": "非特異的検査を検査前確率と統合できるか。",
+        "reasoning": "Dダイマーは血栓の分解産物で感度が高い一方、術後・感染・高齢など多くの状態で上昇し特異度が低い。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "incorrect",
+            "reason": "誤り。高値は確定診断ではない。",
+            "correction_condition": "Aが成立するには決定的な検査・画像所見などが必要で、Dダイマー単独では不十分。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "incorrect",
+            "reason": "誤り。状況に応じて除外戦略などに使う。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "correct",
+            "reason": "正しい。検査前確率と統合する。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "incorrect",
+            "reason": "誤り。凝固・線溶系の検査。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: 臨床予測ルールは診断を自動化するものではなく、検査前確率を構造化する補助として使う。\ncomparisonText: 高感度検査は陰性で除外に向く場合があり、高特異度検査は陽性で確定方向に働きやすい。\ncommonMistakes: 検査値を「陽性＝病気」と二分法で扱わない。\ncorrectionConditions: Aが成立するには決定的な検査・画像所見などが必要で、Dダイマー単独では不十分。",
+        "key_points": "・Dダイマー＝高感度/低特異度\n・検査前確率とセット",
+        "references": "共通科目 学習まとめ集 v1.22（臨床検査・検査値） / 共通科目試験対策問題集 v1.65 正本",
+        "mnemonic": "「Dダイマーは、値より前確率」",
+        "source_explanation_raw": "低〜中程度の検査前確率では陰性結果が除外に有用だが、高確率患者では画像検査を優先するなど、事前確率で使い方が変わる。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:02",
+        "original-id:PRED-REASON-013",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 1,
+      "choices": [
+        "Dダイマー高値だけで肺血栓塞栓症を確定する。",
+        "術後は上昇するのでDダイマーは一切意味がない。",
+        "検査前確率と合わせて解釈し、必要なら画像検査へ進む。",
+        "Dダイマーは赤血球の大きさを示す検査である。"
+      ],
+      "correctChoiceIndexes": [
+        2
+      ]
+    },
+    {
+      "id": "PRED-REASON-014",
+      "subject": "臨床推論",
+      "unit": "臨床検査・検査値",
+      "topic": "高感度トロポニンの経時変化",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "発症1時間の胸痛患者。初回高感度トロポニンは基準範囲内だった。最も適切な判断はどれか。",
+      "explanation": {
+        "answer": "A. 発症早期では単回正常値だけで急性心筋梗塞を除外せず、心電図・症状・推奨アルゴリズムに沿った経時測定を行う。",
+        "question_intent": "時間依存性バイオマーカーを単回値だけで解釈しないか。",
+        "reasoning": "急性心筋梗塞ではトロポニンの上昇/下降という動的変化と虚血の臨床所見を組み合わせる。発症直後はまだ上昇していないことがある。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "correct",
+            "reason": "正しい。発症早期は経時評価が必要。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "incorrect",
+            "reason": "誤り。単回陰性では時期により除外できない。",
+            "correction_condition": "Bが近づくのは十分な時間経過と検証済みのrule-outアルゴリズムを満たす場合。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "incorrect",
+            "reason": "誤り。心筋傷害のバイオマーカー。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "incorrect",
+            "reason": "誤り。デルタ変化が重要。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: トロポニン上昇は心筋梗塞に特異的ではなく、心不全、心筋炎、腎不全などでも上昇し得る。\ncomparisonText: 「心筋傷害」と「心筋梗塞」は同義ではない。梗塞には虚血の臨床文脈が必要。\ncommonMistakes: 陽性でも必ずACS、陰性でも必ず否定、と二分しない。\ncorrectionConditions: Bが近づくのは十分な時間経過と検証済みのrule-outアルゴリズムを満たす場合。",
+        "key_points": "・発症時刻\n・経時変化\n・ECG/症状と統合",
+        "references": "共通科目 学習まとめ集 v1.22（臨床検査・検査値） / 共通科目試験対策問題集 v1.65 正本 / https://doi.org/10.1093/eurheartj/ehad191",
+        "mnemonic": "「トロポニンは1点でなく線で見る」",
+        "source_explanation_raw": "高感度トロポニンはACS評価の中心だが、検査時刻・心電図・胸痛の性状・腎機能などを総合する。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:02",
+        "original-id:PRED-REASON-014",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 1,
+      "choices": [
+        "発症早期では単回正常値だけで急性心筋梗塞を除外せず、心電図・症状・推奨アルゴリズムに沿った経時測定を行う。",
+        "初回正常ならACSは完全に否定できる。",
+        "トロポニンは心筋傷害と無関係である。",
+        "経時変化より単回値だけが重要である。"
+      ],
+      "correctChoiceIndexes": [
+        0
+      ]
+    },
+    {
+      "id": "PRED-REASON-015",
+      "subject": "臨床推論",
+      "unit": "臨床検査・検査値",
+      "topic": "クレアチニンとAKIの時間軸",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S",
+      "prompt": "大量下痢と低血圧の直後に乏尿となった患者。発症直後の血清クレアチニンがまだ基準範囲内である。最も適切な判断はどれか。",
+      "explanation": {
+        "answer": "D. クレアチニン上昇には時間差があるため、尿量・循環状態・経時変化を含めAKIを評価する。",
+        "question_intent": "検査値の時間的遅れと臨床所見を統合できるか。",
+        "reasoning": "血清クレアチニンはGFR低下後すぐに新定常状態へ達するわけではなく、急性期には乏尿や循環不全が先行することがある。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "incorrect",
+            "reason": "誤り。発症直後はCrがまだ上がらないことがある。",
+            "correction_condition": "Aが成立するのは十分な時間をおいて尿量・Crとも安定し、臨床的にAKIが否定できた場合。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "incorrect",
+            "reason": "誤り。尿量は重要な腎機能・灌流指標。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "incorrect",
+            "reason": "誤り。尿量も診断・重症度評価に重要。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "correct",
+            "reason": "正しい。時間軸を踏まえて再評価する。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: 腎前性AKIでは循環血液量低下の是正、腎後性では閉塞解除など原因に応じた対応が重要。\ncomparisonText: 慢性腎障害は長期的な腎機能低下、AKIは時間〜日単位の急性変化で捉える。\ncommonMistakes: 「基準範囲内＝正常」とだけ見ず、患者のベースラインからの変化を見る。\ncorrectionConditions: Aが成立するのは十分な時間をおいて尿量・Crとも安定し、臨床的にAKIが否定できた場合。",
+        "key_points": "・Crは遅れる\n・尿量は早いサイン\n・ベースライン比較",
+        "references": "共通科目 学習まとめ集 v1.22（臨床検査・検査値） / 共通科目試験対策問題集 v1.65 正本",
+        "mnemonic": "「AKIはクレアチニンが上がる前から始まる」",
+        "source_explanation_raw": "AKI評価では基準値との変化、尿量、血圧、脱水・薬剤・感染などの原因を一緒にみる。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:02",
+        "original-id:PRED-REASON-015",
+        "prediction-v2.0",
+        "importance:S"
+      ],
+      "revision": 1,
+      "choices": [
+        "クレアチニン正常なのでAKIは完全に否定できる。",
+        "乏尿は腎機能と無関係である。",
+        "腎機能は尿量を見ずクレアチニンだけで評価する。",
+        "クレアチニン上昇には時間差があるため、尿量・循環状態・経時変化を含めAKIを評価する。"
+      ],
+      "correctChoiceIndexes": [
+        3
+      ]
+    },
+    {
+      "id": "PRED-REASON-016",
+      "subject": "臨床推論",
+      "unit": "画像診断・POCUS",
+      "topic": "胸部X線PA像とAP像",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "ICU患者の臥位ポータブル胸部X線で、前日の立位PA像より心陰影が大きく見えたが、臨床的には急な心不全悪化を示す所見が乏しい。まず考慮すべき撮影上の要因はどれか。",
+      "explanation": {
+        "answer": "B. AP撮影による幾何学的拡大で心陰影が大きく見えること。",
+        "question_intent": "撮影条件による画像の見え方の違いを理解しているか。",
+        "reasoning": "AP撮影では心臓が検出器から離れやすく幾何学的拡大が生じ、心陰影が大きく見えることがある。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "incorrect",
+            "reason": "誤り。むしろ拡大して見えることがある。",
+            "correction_condition": "Aが正しい条件はない。投影による拡大の方向を逆に覚えない。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "correct",
+            "reason": "正しい。AP像の基本的注意点。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "incorrect",
+            "reason": "誤り。体位・投影方向で見え方が異なる。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "incorrect",
+            "reason": "誤り。条件を理解すれば有用。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          }
+        ],
+        "surrounding_knowledge": "surroundingKnowledge: 胸部X線では回旋、吸気、透過、投影方向を確認してから病変を読む。\ncomparisonText: PA立位は標準、APポータブルは重症患者で実用的だが心拡大を過大評価しやすい。\ncommonMistakes: 「心陰影が大きい＝必ず心拡大」とせず撮影条件を確認する。\ncorrectionConditions: Aが正しい条件はない。投影による拡大の方向を逆に覚えない。",
+        "key_points": "・APは心拡大に見えやすい\n・撮影条件を先に確認",
+        "references": "共通科目 学習まとめ集 v1.22（画像診断・POCUS） / 看護協会共通科目模試【臨床推論】.pdf（出題重点のみ）",
+        "mnemonic": "「APは心臓が大きく見える」",
+        "source_explanation_raw": "重症で立位保持困難な患者ではポータブルAP像や臥位像を用いるが、撮影距離・吸気・体位を考慮して解釈する。"
+      },
+      "relatedMaterialIds": [],
+      "tags": [
+        "supplemental:common-predicted30",
+        "learning-area:common",
+        "question-kind:common-predicted30",
+        "subject-id:02",
+        "original-id:PRED-REASON-016",
+        "prediction-v2.0",
+        "importance:S+"
+      ],
+      "revision": 1,
+      "choices": [
+        "AP撮影では心陰影が実際より小さく描出されること。",
+        "AP撮影による幾何学的拡大で心陰影が大きく見えること。",
+        "PA像とAP像では投影方向による差がないこと。",
+        "ポータブル撮影では心陰影を評価できないこと。"
+      ],
+      "correctChoiceIndexes": [
+        1
+      ]
+    },
+    {
+      "id": "PRED-REASON-017",
+      "subject": "臨床推論",
+      "unit": "画像診断・POCUS",
+      "topic": "CT値とウィンドウ設定",
+      "sourceType": "predicted",
+      "sourceLabel": "得点特化予想30問 v2.0（AI作成）",
+      "questionFormat": "single-choice",
+      "importance": "S+",
+      "prompt": "同じ胸部CTデータを肺野条件と縦隔条件で見比べたところ、病変の見え方が異なった。この現象を説明する記述として正しいものはどれか。",
+      "explanation": {
+        "answer": "C. 空気は低CT値、骨は高CT値であり、観察対象に合わせて表示するCT値の範囲を変える。",
+        "question_intent": "CT値と表示条件の基本を理解しているか。",
+        "reasoning": "CTでは空気は低CT値、骨は高CT値で、軟部・肺・骨など目的に応じてウィンドウ幅/レベルを調整する。",
+        "choice_explanations": [
+          {
+            "target_key": "A",
+            "display_order": 1,
+            "judgement": "incorrect",
+            "reason": "誤り。空気は低吸収。",
+            "correction_condition": "原資料に当該選択肢の個別修正条件の記載なし。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "B",
+            "display_order": 2,
+            "judgement": "incorrect",
+            "reason": "誤り。観察対象に適切な設定が重要。",
+            "correction_condition": "Bが正しくなる条件はない。表示条件は臨床解釈に影響する。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "C",
+            "display_order": 3,
+            "judgement": "correct",
+            "reason": "正しい。CTの基本。",
+            "correction_condition": "正答選択肢のため修正不要。",
+            "mapping_provenance": "source_structured"
+          },
+          {
+            "target_key": "D",
+            "display_order": 4,
+            "judgement": "incorrect",
+            "reason": "誤り。X線減弱を数値化したもの。",
