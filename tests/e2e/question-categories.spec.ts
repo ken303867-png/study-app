@@ -16,7 +16,7 @@ test('selects learning area and switches the visible question kinds', async ({ p
   await expect(page.getByRole('checkbox', { name: /看護協会Eラーニング/ })).toBeVisible();
   await expect(page.getByRole('checkbox', { name: /穴抜き問題/ })).toBeVisible();
   await expect(page.getByRole('checkbox', { name: /^予想問題\s+1問$/ })).toBeVisible();
-  await expect(page.getByRole('checkbox', { name: /^予想問題30\\s+0問$/ })).toBeVisible();
+  await expect(page.getByRole('checkbox', { name: /^予想問題30\s+0問$/ })).toBeVisible();
   await expect(page.getByText('科目', { exact: true })).toBeVisible();
   await expect(page.locator('input[name="common-subject"]')).toHaveCount(17);
   await expect(page.getByText('17 / 17科目を選択')).toBeVisible();
