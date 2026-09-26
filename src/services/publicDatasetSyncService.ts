@@ -265,6 +265,9 @@ async function fetchBundlePayload(
   baseUrl: string,
   fetchImpl: typeof fetch
 ): Promise<ArrayBuffer> {
+  if ('encoding' in descriptor && descriptor.encoding === 'utf8') {
+    throw new Error('UTF-8の公開データは専用の読み込み経路を使用してください。');
+  }
   if ('path' in descriptor) {
     const response = await fetchImpl(`${baseUrl}public-data/${descriptor.path}`, {
       cache: 'no-store'
