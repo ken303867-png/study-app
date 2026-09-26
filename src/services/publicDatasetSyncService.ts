@@ -13,6 +13,7 @@ const expectedKindsSchema = z.object({
   'common-jna': z.number().int().nonnegative(),
   'common-cloze': z.number().int().nonnegative(),
   'common-predicted': z.number().int().nonnegative(),
+  'common-predicted30': z.number().int().nonnegative().optional(),
   'common-final': z.number().int().nonnegative(),
   'specialty-past': z.number().int().nonnegative(),
   'specialty-predicted': z.number().int().nonnegative(),
@@ -34,9 +35,19 @@ const publicDatasetChunkedBundleSchema = z.object({
   sha256: z.string().regex(/^[0-9a-f]{64}$/)
 });
 
+const publicDatasetUtf8BundleSchema = z.object({
+  role: z.literal('common-predicted30'),
+  chunks: z.array(z.string().min(1)).min(1),
+  encoding: z.literal('utf8'),
+  compression: z.literal('none'),
+  bytes: z.number().int().positive(),
+  sha256: z.string().regex(/^[0-9a-f]{64}$/)
+});
+
 const publicDatasetBundleSchema = z.union([
   publicDatasetFileBundleSchema,
-  publicDatasetChunkedBundleSchema
+  publicDatasetChunkedBundleSchema,
+  publicDatasetUtf8BundleSchema
 ]);
 
 const publicDatasetManifestSchema = z.object({
@@ -65,6 +76,7 @@ const publicDatasetManifestSchema = z.object({
 
 export type PublicDatasetManifest = z.infer<typeof publicDatasetManifestSchema>;
 type PublicDatasetBundle = z.infer<typeof publicDatasetBundleSchema>;
+type PublicDatasetUtf8Bundle = z.infer<typeof publicDatasetUtf8BundleSchema>;
 
 export type PublicDatasetSyncStage =
   | 'checking'
@@ -152,7 +164,10 @@ export async function syncPublicDataset(
 
   // A public release is a full replacement. Never silently delete locally imported
   // private predicted30 questions on reload or when a newer release is published.
-  if (protectedSupplemental.questions > 0) {
+  // Once the predicted30 collection is part of the signed public manifest, it is safe
+  // to replace the local copy with the same published 510 question IDs. The content
+  // transaction never clears learningHistory or examSessions.
+  if (protectedSupplemental.questions > 0 && !manifest.expected.kinds['common-predicted30']) {
     return {
       status: 'offline-existing',
       warning:
@@ -171,9 +186,19 @@ export async function syncPublicDataset(
       total: bundleDescriptors.length
     });
 
+    if ('encoding' in descriptor && descriptor.encoding === 'utf8') {
+      const text = await fetchUtf8BundlePayload(descriptor, baseUrl, fetchImpl);
+      if (datasets.has(descriptor.role)) {
+        throw new Error(`公開問題データ「${descriptor.role}」が重複しています。`);
+      }
+      datasets.set(descriptor.role, text);
+      continue;
+    }
+
     const payload = await fetchBundlePayload(descriptor, baseUrl, fetchImpl);
     const packText = await decodeFetchedPack(payload, descriptor.sha256);
     const packedDatasets = parseDatasetPack(packText);
+    // Release overlays intentionally replace older versions of the same role in the base pack.
     for (const [role, text] of packedDatasets) {
       datasets.set(role, text);
     }
@@ -213,11 +238,36 @@ export async function syncPublicDataset(
   return { status: 'updated', releaseVersion: manifest.releaseVersion };
 }
 
+async function fetchUtf8BundlePayload(
+  descriptor: PublicDatasetUtf8Bundle,
+  baseUrl: string,
+  fetchImpl: typeof fetch
+): Promise<string> {
+  let text = '';
+  for (const chunkPath of descriptor.chunks) {
+    const response = await fetchImpl(`${baseUrl}public-data/${chunkPath}`, {
+      cache: 'no-store'
+    });
+    if (!response.ok) {
+      throw new Error(`予想問題30の公開データを取得できませんでした（HTTP ${response.status}）。`);
+    }
+    text += await response.text();
+  }
+  const bytes = new TextEncoder().encode(text);
+  if (bytes.byteLength !== descriptor.bytes || (await sha256Hex(bytes)) !== descriptor.sha256) {
+    throw new Error('予想問題30の公開データのサイズまたはSHA-256が一致しません。');
+  }
+  return text;
+}
+
 async function fetchBundlePayload(
   descriptor: PublicDatasetBundle,
   baseUrl: string,
   fetchImpl: typeof fetch
 ): Promise<ArrayBuffer> {
+  if ('encoding' in descriptor && descriptor.encoding === 'utf8') {
+    throw new Error('UTF-8の公開データは専用の読み込み経路を使用してください。');
+  }
   if ('path' in descriptor) {
     const response = await fetchImpl(`${baseUrl}public-data/${descriptor.path}`, {
       cache: 'no-store'
@@ -310,9 +360,13 @@ async function storedStateMatchesManifest(
 
   return (
     schemaMeta?.value === '0.5' &&
-    questionCount === manifest.expected.questionsTotal + protectedCounts.questions &&
+    questionCount ===
+      manifest.expected.questionsTotal +
+        (manifest.expected.kinds['common-predicted30'] ? 0 : protectedCounts.questions) &&
     materialCount === manifest.expected.materials &&
-    occurrenceCount === manifest.expected.sourceOccurrences + protectedCounts.sourceOccurrences
+    occurrenceCount ===
+      manifest.expected.sourceOccurrences +
+        (manifest.expected.kinds['common-predicted30'] ? 0 : protectedCounts.sourceOccurrences)
   );
 }
 
