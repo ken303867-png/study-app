@@ -38,4 +38,29 @@ test('deployed GitHub Pages serves the 4,061-question production dataset and fin
   await expect(page.getByRole('checkbox', { name: /予想問題\s*190問/ })).toBeChecked();
   await expect(page.getByRole('checkbox', { name: /最終対策\s*300問/ })).toBeChecked();
   await expect(page.getByRole('checkbox', { name: /予想問題30\s*510問/ })).toBeChecked();
+
+  // Real production content, not a synthetic fixture: verify the fields shown
+  // in the learner screenshot render as separate sections after deployment.
+  await page.getByRole('button', { name: '問題', exact: true }).click();
+  await page.getByPlaceholder('問題文、論点、IDなど').fill('PRED-TEAM-011');
+  const predictedQuestion = page.locator('.question-card');
+  await expect(predictedQuestion).toHaveCount(1);
+  await expect(predictedQuestion).toContainText('PRED-TEAM-011');
+  await predictedQuestion.locator('.explanation-details summary').click();
+  const explanation = predictedQuestion.locator('.explanation-details');
+
+  for (const heading of [
+    '元資料の全体解説',
+    '関連する周辺知識',
+    '比較・鑑別',
+    '試験で間違いやすいポイント',
+    '正しくなる条件・適用条件'
+  ]) {
+    await expect(explanation.getByRole('heading', { name: heading })).toBeVisible();
+  }
+  await expect(explanation).toContainText('CUSは危険度を段階的に明確化する語彙');
+  await expect(explanation).not.toContainText('surroundingKnowledge:');
+  await expect(explanation).not.toContainText('comparisonText:');
+  await expect(explanation).not.toContainText('commonMistakes:');
+  await expect(explanation).not.toContainText('correctionConditions:');
 });
