@@ -138,11 +138,18 @@ export function PracticeSetBuilder({
   const areaCount = (area: LearningArea) =>
     QUESTION_KINDS_BY_AREA[area].reduce((total, kind) => total + kindCounts[kind], 0);
 
-  const visibleSelectedKinds = QUESTION_KINDS_BY_AREA[learningArea].filter((kind) =>
-    questionKinds.includes(kind)
+  // Hide categories with no imported questions from the human-readable pool label,
+  // while keeping their checkboxes visible for future supplemental imports.
+  const availableKinds = QUESTION_KINDS_BY_AREA[learningArea].filter(
+    (kind) => kindCounts[kind] > 0
   );
+  const visibleSelectedKinds = availableKinds.filter((kind) => questionKinds.includes(kind));
+  const allAvailableKindsSelected =
+    availableKinds.length === 0
+      ? QUESTION_KINDS_BY_AREA[learningArea].every((kind) => questionKinds.includes(kind))
+      : availableKinds.every((kind) => questionKinds.includes(kind));
   const kindPopulationLabel =
-    visibleSelectedKinds.length === QUESTION_KINDS_BY_AREA[learningArea].length
+    allAvailableKindsSelected
       ? LEARNING_AREA_LABELS[learningArea]
       : visibleSelectedKinds.length === 0
         ? `${LEARNING_AREA_LABELS[learningArea]}：未選択`
