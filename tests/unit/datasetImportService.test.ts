@@ -156,8 +156,19 @@ describe('datasetImportService', () => {
       'SAMPLE-Q-001'
     ]);
 
-    source.questions[0]!.explanation.reasoning = '更新後の予想問題30解説';
-    const second = await importDatasetJsonText(JSON.stringify(source));
+    const updatedSource = {
+      ...source,
+      questions: [
+        {
+          ...source.questions[0],
+          explanation: {
+            ...sampleDataset.questions[0]!.explanation,
+            reasoning: '更新後の予想問題30解説'
+          }
+        }
+      ]
+    };
+    const second = await importDatasetJsonText(JSON.stringify(updatedSource));
     expect(second.replacedSupplementalQuestionCount).toBe(1);
     expect(second.questionCount).toBe(2);
     expect((await db.learningHistory.get('SAMPLE-Q-001'))?.attempts).toBe(3);
