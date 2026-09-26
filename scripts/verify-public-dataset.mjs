@@ -157,6 +157,84 @@ assert(predicted30.questions.every((q) => q.tags.includes('supplemental:common-p
 assert(predicted30.questions.every((q) => q.tags.includes('question-kind:common-predicted30')), 'predicted30 category tag missing');
 assert(predicted30.questions.every((q) => q.tags.includes('learning-area:common')), 'predicted30 common-area tag missing');
 assert(predicted30.questions.every((q) => q.choices?.length === 4 && q.correctChoiceIndexes?.length === 1 && q.explanation?.choice_explanations?.length === 4), 'predicted30 four-choice/answer/explanation QA failed');
+// All 510 predicted30 questions must remain renderable under the v1.7
+// five-section explanation UI. Run this check on the actual shipped payload,
+// in addition to fixture-based React tests, to catch partial-content regressions.
+const predicted30Ids = new Set();
+const knowledgeKeys = [
+  'surroundingKnowledge',
+  'comparisonText',
+  'commonMistakes',
+  'correctionConditions'
+];
+const knowledgeHeadings = /^(surroundingKnowledge|comparisonText|commonMistakes|correctionConditions):[ \\t]*/gm;
+for (const question of predicted30.questions) {
+  const id = question.id;
+  assert(typeof id === 'string' && id.trim(), 'predicted30: missing question ID');
+  assert(!predicted30Ids.has(id), `predicted30: duplicate question ID ${id}`);
+  predicted30Ids.add(id);
+  assert(question.questionFormat === 'single-choice', `${id}: not single-choice`);
+  assert(typeof question.prompt === 'string' && question.prompt.trim(), `${id}: empty prompt`);
+  assert(
+    Array.isArray(question.choices) &&
+      question.choices.length === 4 &&
+      question.choices.every((choice) => typeof choice === 'string' && choice.trim()),
+    `${id}: a choice is missing or blank`
+  );
+  const correct = question.correctChoiceIndexes;
+  assert(
+    Array.isArray(correct) &&
+      correct.length === 1 &&
+      Number.isInteger(correct[0]) &&
+      correct[0] >= 0 &&
+      correct[0] < 4,
+    `${id}: expected exactly one valid correctChoiceIndex`
+  );
+
+  const explanation = question.explanation;
+  assert(explanation && typeof explanation === 'object', `${id}: missing formal explanation`);
+  for (const field of ['answer', 'question_intent', 'reasoning', 'source_explanation_raw', 'key_points']) {
+    assert(
+      typeof explanation[field] === 'string' && explanation[field].trim(),
+      `${id}: missing explanation.${field}`
+    );
+  }
+  assert(
+    explanation.answer.trim().startsWith('ABCD'[correct[0]] + '.'),
+    `${id}: answer text does not match correctChoiceIndexes`
+  );
+  const reasons = explanation.choice_explanations;
+  assert(Array.isArray(reasons) && reasons.length === 4, `${id}: expected four choice explanations`);
+  reasons.forEach((reason, index) => {
+    assert(reason.target_key === 'ABCD'[index], `${id}: choice explanation key mismatch at ${index}`);
+    assert(reason.display_order === index + 1, `${id}: choice explanation order mismatch at ${index}`);
+    assert(
+      reason.judgement === (index === correct[0] ? 'correct' : 'incorrect'),
+      `${id}: choice explanation judgement mismatch at ${index}`
+    );
+    assert(typeof reason.reason === 'string' && reason.reason.trim(), `${id}: missing choice rationale at ${index}`);
+  });
+
+  const knowledge = explanation.surrounding_knowledge;
+  assert(typeof knowledge === 'string', `${id}: missing surrounding_knowledge`);
+  const headings = [...knowledge.matchAll(knowledgeHeadings)];
+  assert(
+    headings.length === 4 &&
+      headings[0].index === 0 &&
+      headings.every((match, index) => match[1] === knowledgeKeys[index]),
+    `${id}: predicted30: malformed knowledge section order`
+  );
+  headings.forEach((heading, index) => {
+    const start = heading.index + heading[0].length;
+    const end = headings[index + 1]?.index ?? knowledge.length;
+    assert(knowledge.slice(start, end).trim(), `${id}: empty ${knowledgeKeys[index]} section`);
+  });
+}
+assert(
+  predicted30.sourceOccurrences.every((item) => predicted30Ids.has(item.canonical_question_id)),
+  'predicted30: a source occurrence references a missing question'
+);
+
 const predictedSubjectCounts = new Map();
 for (const question of predicted30.questions) {
   predictedSubjectCounts.set(question.subject, (predictedSubjectCounts.get(question.subject) ?? 0) + 1);
