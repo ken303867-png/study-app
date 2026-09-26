@@ -72,7 +72,7 @@ describe('public auto-sync protects locally imported predicted30', () => {
     } as Question;
     await db.questions.put(supplementalQuestion);
     await db.sourceOccurrences.put({
-      ...sampleDataset.sourceOccurrences[0]!,
+      source_id: sampleDataset.sourceOccurrences[0]!.source_id,
       source_occurrence_id: 'LOCAL-PRED30-OCC-001',
       canonical_question_id: supplementalQuestion.id,
       source_set_id: 'LOCAL-PRED30-SET01',
