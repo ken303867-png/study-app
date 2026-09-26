@@ -33,6 +33,15 @@ function scanStrings(value, path = '$', issues = []) {
 }
 
 async function readBundle(descriptor) {
+  if (descriptor.encoding === 'utf8') {
+    assert(descriptor.compression === 'none', 'UTF-8 bundle must be uncompressed');
+    const parts = await Promise.all(descriptor.chunks.map((path) =>
+      readFile(new URL(`public/public-data/${path}`, ROOT))
+    ));
+    const combined = Buffer.concat(parts);
+    assert(combined.length === descriptor.bytes, `UTF-8 bundle size mismatch: ${combined.length} !== ${descriptor.bytes}`);
+    return combined;
+  }
   if ('path' in descriptor) {
     return readFile(new URL(`public/public-data/${descriptor.path}`, ROOT));
   }
@@ -73,19 +82,27 @@ function mergePack(bundle, packed) {
 
 assert(manifest.schemaVersion === 1, 'manifest schemaVersion must be 1');
 assert(manifest.appMinVersion === '0.17.0', 'appMinVersion mismatch');
-assert(manifest.expected.questionsTotal === 3551, 'expected total must be 3551');
+assert(manifest.expected.questionsTotal === 4061, 'expected total must be 4061');
 assert(manifest.expected.materials === 114, 'expected materials must be 114');
-assert(manifest.expected.sourceOccurrences === 3551, 'expected sourceOccurrences must be 3551');
+assert(manifest.expected.sourceOccurrences === 4061, 'expected sourceOccurrences must be 4061');
+assert(manifest.expected.kinds['common-predicted30'] === 510, 'predicted30 expected count must be 510');
 assert(manifest.expected.kinds['common-final'] === 300, 'common-final expected count must be 300');
 
 const descriptors = [manifest.bundle, ...(manifest.overlays ?? [])];
-assert(descriptors.length === 3, `expected 3 bundles, got ${descriptors.length}`);
+assert(descriptors.length === 4, `expected 4 bundles, got ${descriptors.length}`);
 
 const packed = new Map();
 for (const descriptor of descriptors) {
   const bundle = await readBundle(descriptor);
   assert(sha256(bundle) === descriptor.sha256, 'bundle SHA-256 mismatch');
-  mergePack(bundle, packed);
+  if (descriptor.encoding === 'utf8') {
+    assert(descriptor.role === 'common-predicted30', 'unexpected plain UTF-8 dataset role');
+    assert(!packed.has(descriptor.role), 'duplicate UTF-8 dataset role');
+    const jsonText = bundle.toString('utf8');
+    packed.set(descriptor.role, { jsonText, data: JSON.parse(jsonText) });
+  } else {
+    mergePack(bundle, packed);
+  }
 }
 
 const ordered = [...manifest.datasets].sort((a, b) => a.order - b.order);
@@ -105,7 +122,8 @@ const specialtyPast = packed.get('specialty-past')?.data;
 const specialtyPredicted = packed.get('specialty-predicted')?.data;
 const specialtyPredictedCase = packed.get('specialty-predicted-case')?.data;
 const commonFinal = packed.get('common-final-2026')?.data;
-assert(base && commonCloze && specialtyPast && specialtyPredicted && specialtyPredictedCase && commonFinal, 'required roles missing');
+const predicted30 = packed.get('common-predicted30')?.data;
+assert(base && commonCloze && specialtyPast && specialtyPredicted && specialtyPredictedCase && commonFinal && predicted30, 'required roles missing');
 
 assert(base.formalDataSpecVersion === '1.2', 'common-base Formal Data Spec mismatch');
 assert(base.sheets.QUESTIONS.length === 726, 'common-base question count mismatch');
@@ -117,7 +135,8 @@ const supplementals = [
   ['specialty-past', specialtyPast, 126, 'specialty-past'],
   ['specialty-predicted', specialtyPredicted, 116, 'specialty-predicted'],
   ['specialty-predicted-case', specialtyPredictedCase, 269, 'specialty-predicted-case'],
-  ['common-final-2026', commonFinal, 300, 'common-final-2026']
+  ['common-final-2026', commonFinal, 300, 'common-final-2026'],
+  ['common-predicted30', predicted30, 510, 'common-predicted30']
 ];
 for (const [role, data, expectedCount, key] of supplementals) {
   assert(data.schemaVersion === '0.5', `${role}: schemaVersion mismatch`);
@@ -134,13 +153,24 @@ assert(commonFinal.questions.every((q) => q.tags.includes('learning-area:common'
 assert(commonFinal.questions.filter((q) => q.tags.includes('question-kind:common-final')).length === 200, 'common-final choice split mismatch');
 assert(commonFinal.questions.filter((q) => q.tags.includes('question-kind:common-cloze')).length === 100, 'common-final self-assessment split mismatch');
 
+assert(predicted30.questions.every((q) => q.tags.includes('supplemental:common-predicted30')), 'predicted30 supplemental tag missing');
+assert(predicted30.questions.every((q) => q.tags.includes('question-kind:common-predicted30')), 'predicted30 category tag missing');
+assert(predicted30.questions.every((q) => q.tags.includes('learning-area:common')), 'predicted30 common-area tag missing');
+assert(predicted30.questions.every((q) => q.choices?.length === 4 && q.correctChoiceIndexes?.length === 1 && q.explanation?.choice_explanations?.length === 4), 'predicted30 four-choice/answer/explanation QA failed');
+const predictedSubjectCounts = new Map();
+for (const question of predicted30.questions) {
+  predictedSubjectCounts.set(question.subject, (predictedSubjectCounts.get(question.subject) ?? 0) + 1);
+}
+assert(predictedSubjectCounts.size === 17 && [...predictedSubjectCounts.values()].every((n) => n === 30), 'predicted30 must have exactly 30 questions in each of 17 subjects');
+
 const allQuestions = [
   ...base.sheets.QUESTIONS.map((q) => q.canonical_question_id),
   ...commonCloze.questions.map((q) => q.id),
   ...specialtyPast.questions.map((q) => q.id),
   ...specialtyPredicted.questions.map((q) => q.id),
   ...specialtyPredictedCase.questions.map((q) => q.id),
-  ...commonFinal.questions.map((q) => q.id)
+  ...commonFinal.questions.map((q) => q.id),
+  ...predicted30.questions.map((q) => q.id)
 ];
 const allOccurrences = [
   ...base.sheets.SOURCE_OCCURRENCES.map((o) => o.source_occurrence_id),
@@ -148,10 +178,11 @@ const allOccurrences = [
   ...specialtyPast.sourceOccurrences.map((o) => o.source_occurrence_id),
   ...specialtyPredicted.sourceOccurrences.map((o) => o.source_occurrence_id),
   ...specialtyPredictedCase.sourceOccurrences.map((o) => o.source_occurrence_id),
-  ...commonFinal.sourceOccurrences.map((o) => o.source_occurrence_id)
+  ...commonFinal.sourceOccurrences.map((o) => o.source_occurrence_id),
+  ...predicted30.sourceOccurrences.map((o) => o.source_occurrence_id)
 ];
-assert(allQuestions.length === 3551, `total question mismatch: ${allQuestions.length}`);
-assert(allOccurrences.length === 3551, `total occurrence mismatch: ${allOccurrences.length}`);
+assert(allQuestions.length === 4061, `total question mismatch: ${allQuestions.length}`);
+assert(allOccurrences.length === 4061, `total occurrence mismatch: ${allOccurrences.length}`);
 assert(new Set(allQuestions).size === allQuestions.length, 'duplicate question IDs detected');
 assert(new Set(allOccurrences).size === allOccurrences.length, 'duplicate SourceOccurrence IDs detected');
 
@@ -162,5 +193,5 @@ for (const [role, item] of packed) {
 
 console.log('Public Dataset QA PASS');
 console.log(`release=${manifest.releaseVersion}`);
-console.log('questions=3551 materials=114 occurrences=3551');
-console.log('categories=536/2014/190/300/126/116/269');
+console.log('questions=4061 materials=114 occurrences=4061');
+console.log('categories=536/2014/190/510/300/126/116/269');
