@@ -209,6 +209,10 @@ export function FormalExplanationView({ question, media }: { question: Question;
   const sortedChoiceExplanations = [...explanation.choice_explanations].sort(
     (a, b) => a.display_order - b.display_order
   );
+  // For negatively worded questions, grading correctness and the clinical
+  // appropriateness of the option are intentionally different concepts.
+  const isReverseQuestion =
+    question.prompt.includes('最も不適切') || question.prompt.includes('誤っているもの');
 
   return (
     <div className="explanation-stack">
@@ -228,6 +232,11 @@ export function FormalExplanationView({ question, media }: { question: Question;
 
       {sortedChoiceExplanations.length > 0 && (
         <>
+        {isReverseQuestion && (
+          <p className="inverse-question-note" role="note">
+            逆向き設問：設問の正答は「不適切な記述」です。正答ラベルは採点上の正解を表し、行為の適切性を意味しません。
+          </p>
+        )}
         <section className="explanation-block">
           <h4>各選択肢解説</h4>
           <div className="choice-explanation-list">
@@ -240,15 +249,26 @@ export function FormalExplanationView({ question, media }: { question: Question;
                   <div className="choice-explanation-heading">
                     <strong>{choice.target_key}</strong>
                     <span className={`judgement ${choice.judgement}`}>
-                      {isCorrect ? '正答' : '誤答'}
+                      {isReverseQuestion
+                        ? isCorrect
+                          ? '設問の正答（記述は不適切）'
+                          : '設問では非正答（記述は適切）'
+                        : isCorrect
+                          ? '正答'
+                          : '誤答'}
                     </span>
                   </div>
                   <dl>
                     <div>
-                      <dt>{isCorrect ? '正答理由' : '誤答理由'}</dt>
+                      <dt>
+                        {isReverseQuestion ? '記述の適否と選択理由' : isCorrect ? '正答理由' : '誤答理由'}
+                      </dt>
                       <dd>{choice.reason}</dd>
                     </div>
-                    {!isCorrect && correctionText && (
+                    {!isCorrect &&
+                      !isReverseQuestion &&
+                      correctionText &&
+                      !correctionText.startsWith('原資料に当該選択肢の個別修正条件の記載なし') && (
                       <div>
                         <dt>正しく覚えるなら</dt>
                         <dd>{correctionText}</dd>
