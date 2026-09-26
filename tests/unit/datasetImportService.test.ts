@@ -178,6 +178,94 @@ describe('datasetImportService', () => {
     expect((await db.questions.get('SAMPLE-Q-001'))?.id).toBe('SAMPLE-Q-001');
   });
 
+  it('imports the full predicted30 scale of 510 synthetic questions across 17 subjects', async () => {
+    await contentRepository.replaceDataset(sampleDataset, {
+      explanationTemplateVersion: '1.0',
+      formalDataSpecVersion: '1.2'
+    });
+
+    const subjects = [
+      '臨床病態生理学',
+      '臨床推論',
+      '臨床推論：医療面接',
+      'フィジカルアセスメント：基礎',
+      'フィジカルアセスメント：応用',
+      '臨床薬理学：薬物動態',
+      '臨床薬理学：薬理作用',
+      '臨床薬理学：薬物治療・管理',
+      '疾病・臨床病態概論',
+      '疾病・臨床病態概論：状況別',
+      '医療安全学：医療倫理',
+      '医療安全学：医療安全管理',
+      'チーム医療論（特定行為実践）',
+      '特定行為実践',
+      '指導',
+      '相談',
+      '看護管理'
+    ];
+    const sourceId = 'SRC-PRED30-SCALE-TEST';
+    const questions = subjects.flatMap((subject, subjectIndex) =>
+      Array.from({ length: 30 }, (_, questionIndex) => ({
+        ...sampleDataset.questions[0]!,
+        id: `PRED30-SCALE-${String(subjectIndex + 1).padStart(2, '0')}-${String(
+          questionIndex + 1
+        ).padStart(2, '0')}`,
+        subject,
+        sourceLabel: '予想問題30 scale fixture',
+        relatedMaterialIds: [],
+        tags: [
+          'learning-area:common',
+          'question-kind:common-predicted30',
+          'supplemental:common-predicted30',
+          `subject-id:${String(subjectIndex + 1).padStart(2, '0')}`
+        ]
+      }))
+    );
+    const sourceOccurrences = questions.map((question, index) => ({
+      source_occurrence_id: `OCC-PRED30-SCALE-${String(index + 1).padStart(3, '0')}`,
+      canonical_question_id: question.id,
+      source_id: sourceId,
+      source_set_id: `PRED30-SCALE-SET-${String(Math.floor(index / 30) + 1).padStart(2, '0')}`,
+      source_set_label: question.subject,
+      source_set_order: Math.floor(index / 30) + 1,
+      source_question_no: (index % 30) + 1,
+      source_occurrence_order: index + 1,
+      source_answer: 'B'
+    }));
+
+    const result = await importDatasetJsonText(
+      JSON.stringify({
+        importMode: 'supplemental-replace',
+        supplementalKey: 'common-predicted30',
+        datasetVersion: 'common-predicted30-scale-test-v1',
+        schemaVersion: '0.5',
+        questions,
+        materials: [],
+        sources: [
+          {
+            source_id: sourceId,
+            source_group: 'supplemental:common-predicted30',
+            title: '予想問題30 scale unit test',
+            answer_authority: 'audited'
+          }
+        ],
+        sourceOccurrences,
+        media: []
+      })
+    );
+
+    expect(result.kind).toBe('supplemental-delivery');
+    expect(result.supplementalQuestionCount).toBe(510);
+    expect(result.questionCount).toBe(511);
+    const imported = await db.questions.where('tags').equals('supplemental:common-predicted30').toArray();
+    expect(imported).toHaveLength(510);
+    for (const subject of subjects) {
+      expect(imported.filter((question) => question.subject === subject)).toHaveLength(30);
+    }
+    expect(await db.sourceOccurrences.where('source_id').equals(sourceId).count()).toBe(510);
+    expect((await db.questions.get('SAMPLE-Q-001'))?.id).toBe('SAMPLE-Q-001');
+  });
+
   it('imports a canonical master .xlsx through the same atomic pipeline', async () => {
     const master = canonicalMasterExportSchema.parse(fixture);
     const bytes = await buildCanonicalMasterXlsx(master);
