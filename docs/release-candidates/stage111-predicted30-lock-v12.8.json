@@ -1,0 +1,29 @@
+{
+  "stage": 111,
+  "version": "v12.8",
+  "date": "2026-09-28",
+  "status": "FINAL_DIFF_READY_RELEASE_HOLD",
+  "stage109_gzip_candidate": "SUPERSEDED_DO_NOT_PUBLISH",
+  "corrected_pack": {
+    "dataset_originalSha256": "8b3841260fb6080bcc0fe9362e97c2df5807f76371880317c4c225dab95166c8",
+    "gzip_sha256": "3674ee944a985f8d710e5657bcefaa6bfd9d4d7ffd881eb71df911e12679f85b",
+    "gzip_bytes": 386169,
+    "base64Length": 514892,
+    "chunks": 10,
+    "parser_roundtrip": "PASS",
+    "logical_object_equals_RC510": true
+  },
+  "target": {
+    "releaseVersion": "2026-09-28.1",
+    "questions": 4061,
+    "materials": 114,
+    "sourceOccurrences": 4061,
+    "predicted30": 510
+  },
+  "release_ready": false,
+  "open_gates": [
+    "external_medical_reviewer_final_approval",
+    "provided_elearning_pdf_provenance_authentication",
+    "explicit_publication_authorization"
+  ]
+}
