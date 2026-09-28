@@ -1,0 +1,41 @@
+{
+  "stage": 110,
+  "version": "v12.7",
+  "date": "2026-09-28",
+  "status": "ROLLBACK_READY",
+  "publication_status": "HOLD",
+  "rollback_target": {
+    "releaseVersion": "2026-09-26.2",
+    "main_commit": "09299c3999448a02ffa8d45c40cbb8036e627317",
+    "manifest_blob_sha": "6ca677981591b23ebf438fb9090ddea69b8ebf2b",
+    "predicted30_role": "common-predicted30",
+    "predicted30_questions": 510,
+    "predicted30_sha256": "4f835ef9d395f6a703294cfba8c9c6fe431ccb77bccd92bd86a72a47b0f1da37",
+    "questionsTotal": 4061,
+    "materials": 114,
+    "sourceOccurrences": 4061
+  },
+  "rollback_triggers": [
+    "manifest_or_overlay_hash_mismatch",
+    "public_dataset_import_failure",
+    "question_total_not_4061",
+    "predicted30_count_not_510",
+    "sourceOccurrence_total_not_4061",
+    "learning_history_reference_regression",
+    "blank_or_unrenderable_predicted30_question",
+    "grading_key_regression",
+    "post_publish_smoke_failure"
+  ],
+  "rollback_sequence": [
+    "stop further release changes",
+    "restore v1.7 predicted30 overlay descriptor and files",
+    "restore manifest releaseVersion 2026-09-26.2 values",
+    "run verify:public-data",
+    "run typecheck lint unit test build and e2e",
+    "publish rollback only after CI passes",
+    "run browser smoke test",
+    "confirm questions=4061 materials=114 occurrences=4061 predicted30=510"
+  ],
+  "history_safety": "Rollback keeps the same 510 question IDs; learningHistory is keyed by questionId and is not cleared by content replacement.",
+  "main_changed_in_stage110": false
+}
