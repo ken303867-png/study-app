@@ -1,0 +1,36 @@
+{
+  "stage": 111,
+  "version": "v12.8",
+  "status": "PREMERGE_CONTRACT",
+  "current_main_sha_at_stage111": "09299c3999448a02ffa8d45c40cbb8036e627317",
+  "runtime_changed_files": 11,
+  "candidate_dataset_original_sha256": "8b3841260fb6080bcc0fe9362e97c2df5807f76371880317c4c225dab95166c8",
+  "candidate_gzip_sha256": "3674ee944a985f8d710e5657bcefaa6bfd9d4d7ffd881eb71df911e12679f85b",
+  "target_releaseVersion": "2026-09-28.1",
+  "target_questionsTotal": 4061,
+  "target_materials": 114,
+  "target_sourceOccurrences": 4061,
+  "target_predicted30": 510,
+  "required_ci": [
+    "verify:public-data",
+    "typecheck",
+    "lint",
+    "unit_test",
+    "build",
+    "playwright_e2e"
+  ],
+  "external_gates": [
+    "external_medical_reviewer_final_approval",
+    "provided_elearning_pdf_provenance_authenticated",
+    "explicit_publication_authorization_received"
+  ],
+  "abort_if": [
+    "main_changed_after_preflight",
+    "runtime_diff_outside_whitelist",
+    "hash_or_count_mismatch",
+    "ci_failure",
+    "external_gate_open"
+  ],
+  "rollback_releaseVersion": "2026-09-26.2",
+  "rollback_predicted30_sha256": "4f835ef9d395f6a703294cfba8c9c6fe431ccb77bccd92bd86a72a47b0f1da37"
+}
