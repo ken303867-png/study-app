@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "releaseVersion": "2026-09-26.2",
+  "releaseVersion": "2026-09-28.1",
   "appMinVersion": "0.17.0",
   "expected": {
     "questionsTotal": 4061,
@@ -74,23 +74,9 @@
       "sha256": "f33f56beb197d8363a032ad2b49f5fa12af28c8153c3173516e070fd988d8276"
     },
     {
-      "role": "common-predicted30",
-      "chunks": [
-        "common-predicted30-v1.7/000.part",
-        "common-predicted30-v1.7/001.part",
-        "common-predicted30-v1.7/002.part",
-        "common-predicted30-v1.7/003.part",
-        "common-predicted30-v1.7/004.part",
-        "common-predicted30-v1.7/005.part",
-        "common-predicted30-v1.7/006.part",
-        "common-predicted30-v1.7/007.part",
-        "common-predicted30-v1.7/008.part",
-        "common-predicted30-v1.7/009.part"
-      ],
-      "encoding": "utf8",
-      "compression": "none",
-      "bytes": 2769881,
-      "sha256": "4f835ef9d395f6a703294cfba8c9c6fe431ccb77bccd92bd86a72a47b0f1da37"
+      "path": "common-predicted30-20260928-v12.9.pack.gz",
+      "compression": "gzip",
+      "sha256": "2f909039a7c123e785d937393df675f777d4c8e91ed46e545807a277b3c8593b"
     }
   ],
   "datasets": [
@@ -133,7 +119,7 @@
     {
       "order": 7,
       "role": "common-predicted30",
-      "originalSha256": "4f835ef9d395f6a703294cfba8c9c6fe431ccb77bccd92bd86a72a47b0f1da37",
+      "originalSha256": "8b3841260fb6080bcc0fe9362e97c2df5807f76371880317c4c225dab95166c8",
       "questionCount": 510
     }
   ]
