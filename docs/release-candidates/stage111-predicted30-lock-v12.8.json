@@ -20,6 +20,17 @@
     "sourceOccurrences": 4061,
     "predicted30": 510
   },
+  "github": {
+    "planning_draft_pr": 49,
+    "head_sha_before_lock_update": "0a72d0c845d9f6c89faa29bde34fa4e1b8ac647c",
+    "main_sha": "09299c3999448a02ffa8d45c40cbb8036e627317",
+    "public_data_changed": false
+  },
+  "ci": {
+    "run_385": "PASS",
+    "quality": "PASS",
+    "e2e": "PASS"
+  },
   "release_ready": false,
   "open_gates": [
     "external_medical_reviewer_final_approval",
